@@ -1,4 +1,4 @@
-.next*
+.*
 !.dockerignore
 !.storybook
 !.circle
@@ -8,6 +8,7 @@
 !.jest
 !.linguirc
 !.prettierrc
+!.nvmrc
 dist
 node_modules
 src/locales/_build

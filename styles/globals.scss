@@ -1,9 +1,15 @@
+/* ensure all pages have Bootstrap CSS */
+@import "~bootstrap/dist/css/bootstrap.min.css";
+@import "./variables.scss";
+@import "../public/fonts/style.scss";
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: Rajdhani, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+    Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  color: $primary-text-color;
 }
 
 a {
@@ -13,4 +19,20 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+.primary {
+  color: $primary-text-color;
+}
+
+.secondary {
+  color: $secondary-text-color;
+}
+
+.primary-bg {
+  background-color: $primary-background-color;
+}
+
+.secondary-bg {
+  background-color: $secondary-background-color;
 }
