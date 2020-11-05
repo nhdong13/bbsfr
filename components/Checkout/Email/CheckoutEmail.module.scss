@@ -1,0 +1,43 @@
+@import "/styles/variables.scss";
+
+.checkoutEmailContainer {
+  padding-top: 12px;
+  .orderSumary {
+    .toggleButton {
+      height: 48px;
+      width: 100%;
+      text-align: left;
+      padding-left: 12px;
+      padding-right: 12px;
+
+      &:after {
+        float: right;
+        margin-top: 7px;
+      }
+    }
+
+    .orderList {
+      border: 1px solid $primary-border-color;
+    }
+  }
+
+  .emailBody {
+    padding-top: 37px;
+
+    h2 {
+      font-family: Rajdhani;
+    }
+
+    p {
+      font-size: 12px;
+      line-height: 20px;
+      margin-bottom: 40px;
+    }
+
+    .btn {
+      font-family: Rajdhani;
+      font-weight: 700;
+      height: 64px;
+    }
+  }
+}
