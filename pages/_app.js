@@ -1,19 +1,20 @@
-import { ApolloProvider } from "@apollo/client"
 import { Provider } from "react-redux"
+import { SaleorProvider } from "@saleor/sdk"
 import { useStore } from "../redux/store"
-import { useApollo } from "../lib/apollo"
-
 import "../styles/globals.scss"
+
+const SALEOR_CONFIG = {
+  apiUrl: process.env.API_URL,
+}
 
 export default function App({ Component, pageProps }) {
   const store = useStore(pageProps.initialReduxState)
-  const apolloClient = useApollo(pageProps.initialApolloState)
 
   return (
     <Provider store={store}>
-      <ApolloProvider client={apolloClient}>
+      <SaleorProvider config={SALEOR_CONFIG}>
         <Component {...pageProps} />
-      </ApolloProvider>
+      </SaleorProvider>
     </Provider>
   )
 }

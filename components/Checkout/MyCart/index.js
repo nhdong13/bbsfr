@@ -3,10 +3,17 @@ import clsx from "clsx"
 
 import ListItemsComponent from "./ListItems"
 import PromotionComponent from "./Promotion"
+import Money from "../../Money"
 
 import styles from "./MyCart.module.scss"
 
-export default function MyCartComponent({ items, nextStep }) {
+export default function MyCartComponent({
+  carts,
+  nextStep,
+  subtotalPrice,
+  totalPrice,
+  itemsCount,
+}) {
   return (
     <Container fluid className={styles.myCartContainer}>
       <Row className={clsx(styles.headerSection, "secondary-bg")}>
@@ -15,14 +22,15 @@ export default function MyCartComponent({ items, nextStep }) {
             <Col md="12" className="text-center">
               <h2 className="font-weight-bold">YOUR CART</h2>
               <span className="font-weight-bold">
-                <span className="secondary mr-1">3 Items</span> $344.85
+                <span className="secondary mr-1">{itemsCount} Items</span>{" "}
+                <Money money={totalPrice.gross} />
               </span>
             </Col>
           </Row>
         </Container>
       </Row>
 
-      <ListItemsComponent />
+      <ListItemsComponent carts={carts} />
 
       <PromotionComponent />
 
@@ -36,9 +44,13 @@ export default function MyCartComponent({ items, nextStep }) {
             </Col>
 
             <Col xs="6" className="text-right">
-              <p>$344.85</p>
+              <p>
+                <Money money={subtotalPrice.gross} />
+              </p>
               <p>FREE</p>
-              <p className="font-weight-bold">$344.85</p>
+              <p className="font-weight-bold">
+                <Money money={totalPrice.gross} />
+              </p>
             </Col>
 
             <Col xs="12" className={styles.fixedButton}>

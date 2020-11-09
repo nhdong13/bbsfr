@@ -3,7 +3,13 @@ import Image from "next/image"
 import clsx from "clsx"
 import styles from "./CheckoutItem.module.scss"
 
-export default function ItemComponent() {
+export default function ItemComponent({
+  name,
+  quantity,
+  thumbnail,
+  totalPrice,
+  onRemove,
+}) {
   return (
     <Container className={styles.item}>
       <Row>
@@ -11,17 +17,15 @@ export default function ItemComponent() {
           <Row>
             <Col xs="3" className="px-0">
               <Image
-                src="/38400ac4812592bef3bb17ec5fd45c37.png"
-                alt="Picture of testing"
+                src={thumbnail.url}
+                alt={thumbnail.alt}
                 width={96}
                 height={96}
               />
             </Col>
             <Col xs="9">
-              <p className={styles.itemName}>
-                Yamaha AX-8 Dual Evo Earth White/Black/Yellow Helmet
-              </p>
-              <p className={styles.itemPrice}>$299</p>
+              <p className={styles.itemName}>{name}</p>
+              <p className={styles.itemPrice}>{totalPrice}</p>
               <Form.Row>
                 <Form.Group controlId="itemSize" as={Col} xs="4">
                   <Form.Label className={styles.formLabel}>Size</Form.Label>
@@ -54,6 +58,7 @@ export default function ItemComponent() {
                   <Button
                     variant="link"
                     className={clsx("secondary", styles.formLabel)}
+                    onClick={() => onRemove()}
                   >
                     Delete
                   </Button>
