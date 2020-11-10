@@ -13,6 +13,7 @@ export default function MyCartComponent({
   subtotalPrice,
   totalPrice,
   itemsCount,
+  shippingPrice,
 }) {
   return (
     <Container fluid className={styles.myCartContainer}>
@@ -23,7 +24,7 @@ export default function MyCartComponent({
               <h2 className="font-weight-bold">YOUR CART</h2>
               <span className="font-weight-bold">
                 <span className="secondary mr-1">{itemsCount} Items</span>{" "}
-                <Money money={totalPrice.gross} />
+                <Money money={totalPrice?.gross} />
               </span>
             </Col>
           </Row>
@@ -45,11 +46,16 @@ export default function MyCartComponent({
 
             <Col xs="6" className="text-right">
               <p>
-                <Money money={subtotalPrice.gross} />
+                <Money money={subtotalPrice?.gross} />
               </p>
-              <p>FREE</p>
+              <p>
+                <Money
+                  money={shippingPrice?.amount ? shippingPrice : null}
+                  defaultValue="FREE"
+                />
+              </p>
               <p className="font-weight-bold">
-                <Money money={totalPrice.gross} />
+                <Money money={totalPrice?.gross} />
               </p>
             </Col>
 

@@ -2,34 +2,25 @@ import React, { useState, useEffect } from "react"
 import { useCart } from "@saleor/sdk"
 
 import MyCartComponent from "./MyCart"
-import CheckoutEmailComponent from "./Email"
-import CheckoutPasswordComponent from "./Password"
+import CheckoutEmailPasswordComponent from "./EmailPassword"
 import Item from "./Item"
 import Money from "../Money"
 
 export default function CheckoutComponent() {
   const [activeStep, setActiveStep] = useState(1)
-  // const [items, setItems] = useState(null)
+  const [userForm, setUserForm] = useState({ email: "", password: "" })
   const {
-    loaded,
     items,
     removeItem,
     updateItem,
     totalPrice,
     subtotalPrice,
     shippingPrice,
-    discount,
   } = useCart()
 
-  console.log(loaded)
-
-  console.log("items", items)
-
-  const ActivePage = [
-    MyCartComponent,
-    CheckoutEmailComponent,
-    CheckoutPasswordComponent,
-  ][activeStep - 1]
+  const ActivePage = [MyCartComponent, CheckoutEmailPasswordComponent][
+    activeStep - 1
+  ]
 
   useEffect(() => {
     const data = {
@@ -170,7 +161,6 @@ export default function CheckoutComponent() {
     }
 
     window.localStorage.setItem("data_checkout", JSON.stringify(data))
-    // setItems(JSON.parse(window.localStorage.getItem("data_checkout"))?.lines)
   }, [])
 
   function nextStep(number) {
@@ -184,15 +174,18 @@ export default function CheckoutComponent() {
   return (
     <ActivePage
       nextStep={nextStep}
-      carts={items && generateCart(items, removeItem, updateItem)}
-      subtotalPrice
-      totalPrice
+      carts={items && generateCart(items, removeItem, updateItem, activeStep)}
+      subtotalPrice={subtotalPrice}
+      totalPrice={totalPrice}
       itemsCount={items?.length}
+      shippingPrice={shippingPrice}
+      userForm={userForm}
+      setUserForm={setUserForm}
     />
   )
 }
 
-const generateCart = (items, removeItem, updateItem) => {
+const generateCart = (items, removeItem, updateItem, activeStep) => {
   return items?.map(({ id, variant, quantity, totalPrice }, index) => (
     <Item
       key={id ? `id-${id}` : `idx-${index}`}
@@ -202,13 +195,14 @@ const generateCart = (items, removeItem, updateItem) => {
       maxQuantity={variant.quantityAvailable || quantity}
       quantity={quantity}
       thumbnail={variant?.product?.thumbnail}
-      totalPrice={<Money money={totalPrice.gross} supStyle={true} />}
+      totalPrice={<Money money={totalPrice?.gross} supStyle={true} />}
       unitPrice={
         <Money money={variant?.pricing?.price?.gross} supStyle={true} />
       }
       onRemove={() => removeItem(variant.id)}
       onQuantityChange={(quantity) => updateItem(variant.id, quantity)}
       sku={variant.sku}
+      viewOnly={activeStep !== 1}
       attributes={variant.attributes?.map((attribute) => {
         return {
           attribute: {
