@@ -27,24 +27,8 @@
       "name": "bbsfr-staging-storefront-container"
     }
   ],
-  "placementConstraints": [],
   "memory": "1024",
-  "compatibilities": [
-    "EC2"
-  ],
-  "taskDefinitionArn": "arn:aws:ecs:ap-southeast-2:569460749621:task-definition/bbsfr-staging-storefront:7",
   "family": "bbsfr-staging-storefront",
-  "requiresAttributes": [
-    {
-      "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
-    },
-    {
-      "name": "com.amazonaws.ecs.capability.ecr-auth"
-    },
-    {
-      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
-    }
-  ],
   "requiresCompatibilities": [
     "EC2"
   ],
