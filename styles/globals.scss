@@ -64,22 +64,51 @@ input::placeholder {
 }
 
 .btn-primary,
-.btn-primary:hover {
+.btn-primary:hover,
+.btn-primary.focus,
+.btn-primary:focus,
+.btn-primary:not(:disabled):not(.disabled).active,
+.btn-primary:not(:disabled):not(.disabled):active,
+.show > .btn-primary.dropdown-toggle {
   background-color: $primary-button-background-color;
   color: $primary-button-color;
   border-color: $primary-button-background-color;
 }
 
+.btn-primary:not(:disabled):not(.disabled).active:focus,
+.btn-primary:not(:disabled):not(.disabled):active:focus,
+.show > .btn-primary.dropdown-toggle:focus {
+  box-shadow: none;
+}
+
 .btn-secondary,
-.btn-secondary:hover {
+.btn-secondary:hover,
+.btn-secondary.focus,
+.btn-secondary:focus,
+.btn-secondary:not(:disabled):not(.disabled).active,
+.btn-secondary:not(:disabled):not(.disabled):active,
+.show > .btn-secondary.dropdown-toggle {
   background-color: $secondary-button-background-color;
   color: $secondary-button-color;
   border-color: $secondary-button-background-color;
+}
+
+.btn-secondary:not(:disabled):not(.disabled).active:focus,
+.btn-secondary:not(:disabled):not(.disabled):active:focus,
+.show > .btn-secondary.dropdown-toggle:focus {
+  box-shadow: none;
 }
 
 .btn-gray,
 .btn-gray:hover {
   background-color: $gray-button-background-color;
   color: $gray-button-color;
+  border-color: $primary-border-color;
+}
+
+.btn-white,
+.btn-white:hover {
+  background-color: $white-button-background-color;
+  color: $white-button-color;
   border-color: $primary-border-color;
 }

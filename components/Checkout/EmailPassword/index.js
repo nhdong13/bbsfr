@@ -1,9 +1,9 @@
 import React, { useState } from "react"
-import { Container, Row, Button, Collapse, Form } from "react-bootstrap"
-import clsx from "clsx"
+import { Container, Form } from "react-bootstrap"
 import { Formik } from "formik"
 import { useAuth } from "@saleor/sdk"
 
+import OrderSumaryComponent from "../OrderSumary"
 import CheckOutEmail from "./Email"
 import CheckoutPassword from "./Password"
 import { EmailPasswordSchema } from "./validate"
@@ -15,7 +15,6 @@ export default function CheckoutEmailPasswordComponent({
   userForm,
   setUserForm,
 }) {
-  const [open, setOpen] = useState(false)
   const [activeStep, setActiveStep] = useState(1)
   const { signIn } = useAuth()
 
@@ -28,14 +27,12 @@ export default function CheckoutEmailPasswordComponent({
   }
 
   const handleSubmit = async (values) => {
-    console.log(values)
-    const { data, dataError } = await signIn(values.email, values.password)
-
+    const { dataError } = await signIn(values.email, values.password)
     if (dataError?.error) {
       console.log(dataError.error)
-    } else if (data) {
+    } else {
       setUserForm(values)
-      alert("Login Success")
+      handleNextStep()
     }
   }
 
@@ -43,24 +40,7 @@ export default function CheckoutEmailPasswordComponent({
 
   return (
     <Container fluid className={styles.checkoutEmailContainer}>
-      <Row className={styles.orderSumary}>
-        <Container>
-          <Button
-            variant="gray"
-            onClick={() => setOpen(!open)}
-            aria-controls="order-list"
-            aria-expanded={open}
-            className={clsx(styles.toggleButton, "dropdown-toggle")}
-          >
-            Order Summary
-          </Button>
-          <Collapse in={open}>
-            <div id="order-list" className={styles.orderList}>
-              {carts}
-            </div>
-          </Collapse>
-        </Container>
-      </Row>
+      <OrderSumaryComponent carts={carts} />
 
       <Formik
         validationSchema={EmailPasswordSchema}

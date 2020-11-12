@@ -2,13 +2,17 @@ import React, { useState, useEffect } from "react"
 import { useCart } from "@saleor/sdk"
 
 import MyCartComponent from "./MyCart"
-import CheckoutEmailPasswordComponent from "./EmailPassword"
+import EmailPasswordComponent from "./EmailPassword"
+import DeliveryComponent from "./Delivery"
 import Item from "./Item"
 import Money from "../Money"
 
 export default function CheckoutComponent() {
   const [activeStep, setActiveStep] = useState(1)
-  const [userForm, setUserForm] = useState({ email: "", password: "" })
+  const [userForm, setUserForm] = useState({
+    email: "admin@example.com",
+    password: "admin",
+  })
   const {
     items,
     removeItem,
@@ -18,9 +22,11 @@ export default function CheckoutComponent() {
     shippingPrice,
   } = useCart()
 
-  const ActivePage = [MyCartComponent, CheckoutEmailPasswordComponent][
-    activeStep - 1
-  ]
+  const ActivePage = [
+    MyCartComponent,
+    EmailPasswordComponent,
+    DeliveryComponent,
+  ][activeStep - 1]
 
   useEffect(() => {
     const data = {
