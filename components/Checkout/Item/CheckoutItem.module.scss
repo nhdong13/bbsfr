@@ -1,0 +1,31 @@
+@import "/styles/variables.scss";
+
+.item {
+  padding-top: 30px;
+  border-bottom: 1px solid $secondary-border-color;
+
+  .itemName {
+    font-family: Rajdhani;
+    line-height: 16px;
+  }
+
+  .itemPrice {
+    font-size: 16px;
+    font-weight: bold;
+    font-family: Rajdhani;
+  }
+
+  p {
+    margin-bottom: 6px;
+  }
+
+  .formLabel {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 20px;
+    margin-bottom: 0;
+  }
+}
+.item:last-child {
+  border-bottom: none;
+}

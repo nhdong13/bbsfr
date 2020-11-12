@@ -1,0 +1,20 @@
+@import "/styles/variables.scss";
+
+.orderSumary {
+  .toggleButton {
+    height: 48px;
+    width: 100%;
+    text-align: left;
+    padding-left: 12px;
+    padding-right: 12px;
+
+    &:after {
+      float: right;
+      margin-top: 7px;
+    }
+  }
+
+  .orderList {
+    border: 1px solid $primary-border-color;
+  }
+}

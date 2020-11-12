@@ -1,17 +1,36 @@
+import { useEffect } from "react"
+import { useDispatch } from "react-redux"
 import Head from "next/head"
-import styles from "../styles/Home.module.scss"
+
+import Header from "../components/Header"
+import CheckoutComponent from "../components/Checkout"
+import { initializeApollo } from "../lib/apollo"
+import { initializeStore } from "../redux/store"
 
 export default function Home() {
   return (
-    <div className={styles.container}>
+    <>
       <Head>
         <title>Bikebiz Replatform</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>Bikebiz Replatform</h1>
+      <Header />
+      <main>
+        <CheckoutComponent />
       </main>
-    </div>
+    </>
   )
+}
+
+export async function getStaticProps() {
+  const reduxStore = initializeStore()
+  const apolloClient = initializeApollo()
+
+  return {
+    props: {
+      initialReduxState: reduxStore.getState(),
+      initialApolloState: apolloClient.cache.extract(),
+    },
+    revalidate: 1,
+  }
 }

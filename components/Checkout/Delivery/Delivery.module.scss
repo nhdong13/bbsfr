@@ -1,0 +1,55 @@
+@import "/styles/variables.scss";
+
+.deliveryContainer {
+  padding-top: 12px;
+  h2 {
+    font-family: Rajdhani;
+  }
+
+  .emailBody {
+    padding-top: 37px;
+
+    p {
+      font-size: 12px;
+      line-height: 20px;
+      margin-bottom: 40px;
+    }
+  }
+
+  .shippingMethods {
+    padding-top: 37px;
+    padding-bottom: 37px;
+    .btn {
+      font-weight: 700;
+      height: 48px;
+      text-align: left;
+      font-size: 14px;
+      padding-left: 17px;
+      padding-right: 17px;
+      margin-bottom: 8px;
+    }
+
+    .btnIcon {
+      display: inline-block;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+
+    .methodPrice {
+      float: right;
+    }
+  }
+
+  .shippingAddress {
+    padding-bottom: 10px;
+    .fullformBtn {
+      text-align: center;
+      font-size: 12px;
+
+      .btnLink {
+        padding: 0 2px 2px;
+        font-size: 12px;
+      }
+    }
+  }
+}

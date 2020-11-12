@@ -1,0 +1,48 @@
+@import "/styles/variables.scss";
+
+.myCartContainer {
+  .headerSection {
+    height: 152px;
+    align-items: center;
+    font-family: Rajdhani;
+  }
+  .listItemSection {
+    align-items: center;
+    padding: 0 8px;
+  }
+
+  .promotionSection {
+    padding: 25px 0;
+
+    input {
+      border: 1px solid $primary-border-color;
+    }
+
+    .btn {
+      font-weight: 700;
+      font-family: Rajdhani;
+      padding-left: 26px;
+      padding-right: 26px;
+      height: 48px;
+    }
+  }
+
+  .footerSection {
+    padding-top: 25px;
+    padding-bottom: 90px;
+
+    .btn {
+      font-weight: 700;
+      font-family: Rajdhani;
+      height: 64px;
+    }
+
+    .fixedButton {
+      position: fixed;
+      bottom: 0;
+      z-index: 2;
+      padding-bottom: 20px;
+      background-color: $primary-background-color;
+    }
+  }
+}
