@@ -2,14 +2,6 @@ image: node:12.15.0
 
 definitions:
   services:
-    installing: &installing
-      name: Packages Installing
-      caches:
-        - node
-      script:
-        - rm -rf package-lock.json
-        - rm -rf node_modules
-        - yarn install
     push-image: &push-image
       name: Build Docker Image
       services:
@@ -43,11 +35,25 @@ definitions:
 pipelines:
   custom: # Pipelines that can only be triggered manually
     staging:
-      - step: *installing
+      - step:
+        name: Packages Installing
+        caches:
+          - node
+        script:
+          - rm -rf package-lock.json
+          - rm -rf node_modules
+          - yarn install
       - step: *push-image
       - step: *deploy-to-ecs
   branches:
     develop:
-      - step: *installing
+      - step:
+        name: Packages Installing
+        caches:
+          - node
+        script:
+          - rm -rf package-lock.json
+          - rm -rf node_modules
+          - yarn install
       - step: *push-image
       - step: *deploy-to-ecs
