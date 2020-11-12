@@ -9,6 +9,7 @@
 !.linguirc
 !.prettierrc
 !.nvmrc
+!.env.example
 dist
 node_modules
 src/locales/_build
