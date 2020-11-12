@@ -6,7 +6,7 @@ import { useApollo } from "../lib/apollo"
 import "../styles/globals.scss"
 
 const SALEOR_CONFIG = {
-  apiUrl: process.env.API_URI,
+  apiUrl: process.env.NEXT_PUBLIC_API_URI,
 }
 
 export default function App({ Component, pageProps }) {
