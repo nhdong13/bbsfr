@@ -38,7 +38,7 @@ export default function ShippingAddress({ values, handleChange }) {
               type="text"
               placeholder="Country"
               name="country"
-              value={values.country}
+              value={values.country.country}
               onChange={handleChange}
             />
           </Form.Group>

@@ -7,12 +7,17 @@ import OrderSumaryComponent from "../OrderSumary"
 import ShippingMethods from "./ShippingMethods"
 import ShippingAddress from "./ShippingAddress"
 import BillingAddress from "./BillingAddress"
+import PaymentComponent from "./Payment"
 import { ShippingAddressSchema } from "./validate"
 
 import styles from "./Delivery.module.scss"
 
 export default function DeliveryComponent({ carts, userForm }) {
-  const { setShippingAddress, setBillingAddress } = useCheckout()
+  const {
+    setShippingAddress,
+    setBillingAddress,
+    setBillingAsShippingAddress,
+  } = useCheckout()
   const [billingDifferentAddress, setBillingDifferentAddress] = useState(false)
   const [shippingMethods, setShippingMethods] = useState([
     {
@@ -49,7 +54,7 @@ export default function DeliveryComponent({ carts, userForm }) {
     // bussinessName: "",
     bussinessName: "thupx",
     city: "Westmead",
-    country: "Australia",
+    country: { code: "AU", country: "Australia" },
     firstName: "Thu",
     lastName: "Pham",
     phoneNumber: "0123456789",
@@ -62,13 +67,19 @@ export default function DeliveryComponent({ carts, userForm }) {
 
   const handleSubmitShipping = async (values) => {
     const shippingData = { ...values }
+    shippingData.countryArea = values.state
     delete shippingData.address
+
     const { data, dataError, functionError } = await setShippingAddress(
       {
         ...shippingData,
       },
-      { shippingEmail: userForm.email }
+      userForm.email
     )
+
+    if (!dataError && !billingDifferentAddress) {
+      await setBillingAsShippingAddress()
+    }
     console.log("data", data)
     console.log("dataError", dataError)
     console.log("functionError", functionError)
@@ -138,6 +149,8 @@ export default function DeliveryComponent({ carts, userForm }) {
               )}
             </Formik>
           )}
+
+          <PaymentComponent />
         </Container>
       </Row>
     </Container>
