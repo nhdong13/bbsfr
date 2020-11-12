@@ -10,6 +10,7 @@
 !.prettierrc
 !.nvmrc
 !.env.example
+!.env.production
 dist
 node_modules
 src/locales/_build
