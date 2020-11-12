@@ -8,6 +8,7 @@ import { initializeApollo } from "../lib/apollo"
 import { initializeStore } from "../redux/store"
 
 export default function Home() {
+  console.log('Working...')
   return (
     <>
       <Head>
