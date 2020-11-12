@@ -3,6 +3,6 @@ module.exports = {
     domains: ["demo.saleor.io"],
   },
   env: {
-    API_URL: process.env.API_URL,
+    API_URI: process.env.API_URI,
   },
 }
