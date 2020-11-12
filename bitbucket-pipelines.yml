@@ -10,35 +10,35 @@ definitions:
         - rm -rf package-lock.json
         - rm -rf node_modules
         - yarn install
-  push-image: &push-image
-    name: Build Docker Image
-    services:
-      - docker
-    image: atlassian/pipelines-awscli
-    script:
-      - export BUILD_ID=$BITBUCKET_BRANCH_$BITBUCKET_COMMIT_$BITBUCKET_BUILD_NUMBER
-      - export ECR_STAGING_REPO_NAME=bbsfr-staging-storefront
-      - export ECR_STAGING_REPO_URI=569460749621.dkr.ecr.ap-southeast-2.amazonaws.com/$ECR_STAGING_REPO_NAME
-      # Login to docker registry on AWS
-      - eval $(aws ecr get-login --no-include-email)
-      # Build image
-      - docker build -t $ECR_STAGING_REPO_NAME .
-      # Push image to private registry
-      - docker tag $ECR_STAGING_REPO_NAME:latest $ECR_STAGING_REPO_URI:latest
-      - docker push $ECR_STAGING_REPO_URI:latest
-  deploy-to-ecs: &deploy-to-ecs
-    name: Deploy to ECS
-    image: atlassian/pipelines-awscli
-    script:
-      - pipe: atlassian/aws-ecs-deploy:1.3.0
-      variables:
-        AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
-        AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
-        AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
-        CLUSTER_NAME: $ECS_STAGING_CLUSTER_NAME
-        SERVICE_NAME: $ECS_STAGING_SERVICE_NAME
-        TASK_DEFINITION: 'staging_task_definition.json'
-        FORCE_NEW_DEPLOYMENT: "true"
+    push-image: &push-image
+      name: Build Docker Image
+      services:
+        - docker
+      image: atlassian/pipelines-awscli
+      script:
+        - export BUILD_ID=$BITBUCKET_BRANCH_$BITBUCKET_COMMIT_$BITBUCKET_BUILD_NUMBER
+        - export ECR_STAGING_REPO_NAME=bbsfr-staging-storefront
+        - export ECR_STAGING_REPO_URI=569460749621.dkr.ecr.ap-southeast-2.amazonaws.com/$ECR_STAGING_REPO_NAME
+        # Login to docker registry on AWS
+        - eval $(aws ecr get-login --no-include-email)
+        # Build image
+        - docker build -t $ECR_STAGING_REPO_NAME .
+        # Push image to private registry
+        - docker tag $ECR_STAGING_REPO_NAME:latest $ECR_STAGING_REPO_URI:latest
+        - docker push $ECR_STAGING_REPO_URI:latest
+    deploy-to-ecs: &deploy-to-ecs
+      name: Deploy to ECS
+      image: atlassian/pipelines-awscli
+      script:
+        - pipe: atlassian/aws-ecs-deploy:1.3.0
+          variables:
+            AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+            AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+            AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
+            CLUSTER_NAME: $ECS_STAGING_CLUSTER_NAME
+            SERVICE_NAME: $ECS_STAGING_SERVICE_NAME
+            TASK_DEFINITION: 'staging_task_definition.json'
+            FORCE_NEW_DEPLOYMENT: "true"
 
 pipelines:
   custom: # Pipelines that can only be triggered manually
