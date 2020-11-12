@@ -33,27 +33,18 @@ definitions:
             FORCE_NEW_DEPLOYMENT: "true"
 
 pipelines:
-  custom: # Pipelines that can only be triggered manually
-    staging:
-      - step:
+  default:
+    - step:
         name: Packages Installing
         caches:
           - node
         script:
-          - rm -rf package-lock.json
-          - rm -rf node_modules
           - yarn install
+  custom: # Pipelines that can only be triggered manually
+    staging:
       - step: *push-image
       - step: *deploy-to-ecs
   branches:
     develop:
-      - step:
-        name: Packages Installing
-        caches:
-          - node
-        script:
-          - rm -rf package-lock.json
-          - rm -rf node_modules
-          - yarn install
       - step: *push-image
       - step: *deploy-to-ecs
