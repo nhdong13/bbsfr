@@ -9,6 +9,13 @@
           "awslogs-stream-prefix": "ecs"
         }
       },
+      "portMappings": [
+        {
+          "hostPort": 0,
+          "protocol": "tcp",
+          "containerPort": 3000
+        }
+      ],
       "command": [
         "yarn",
         "start"
