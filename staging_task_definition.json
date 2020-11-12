@@ -27,10 +27,10 @@
       "name": "bbsfr-staging-storefront-container"
     }
   ],
-  "memory": "1024",
+  "memory": "500",
   "family": "bbsfr-staging-storefront",
   "requiresCompatibilities": [
     "EC2"
   ],
-  "cpu": "1024"
+  "cpu": "500"
 }
