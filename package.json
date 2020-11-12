@@ -5,7 +5,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "build-docker": "docker build -t bbsfr_storefront_app .",
+    "run-docker": "docker run --rm -it -p 3000:3000 bbsfr_storefront_app"
+
   },
   "dependencies": {
     "next": "10.0.0",
