@@ -8,6 +8,7 @@ definitions:
         - docker
       image: atlassian/pipelines-awscli
       script:
+        - export NODE_ENV=staging
         - export BUILD_ID=$BITBUCKET_BRANCH_$BITBUCKET_COMMIT_$BITBUCKET_BUILD_NUMBER
         - export ECR_STAGING_REPO_NAME=bbsfr-staging-storefront
         - export ECR_STAGING_REPO_URI=569460749621.dkr.ecr.ap-southeast-2.amazonaws.com/$ECR_STAGING_REPO_NAME
@@ -21,6 +22,7 @@ definitions:
     deploy-to-ecs: &deploy-to-ecs
       name: Deploy to ECS
       image: atlassian/pipelines-awscli
+      deployment: staging
       script:
         - pipe: atlassian/aws-ecs-deploy:1.3.0
           variables:
@@ -30,7 +32,7 @@ definitions:
             CLUSTER_NAME: $ECS_STAGING_CLUSTER_NAME
             SERVICE_NAME: $ECS_STAGING_SERVICE_NAME
             TASK_DEFINITION: 'staging_task_definition.json'
-            FORCE_NEW_DEPLOYMENT: "true"
+            FORCE_NEW_DEPLOYMENT: true
 
 pipelines:
   default:
