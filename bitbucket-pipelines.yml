@@ -32,7 +32,7 @@ definitions:
             CLUSTER_NAME: $ECS_STAGING_CLUSTER_NAME
             SERVICE_NAME: $ECS_STAGING_SERVICE_NAME
             TASK_DEFINITION: 'staging_task_definition.json'
-            FORCE_NEW_DEPLOYMENT: true
+            FORCE_NEW_DEPLOYMENT: 'true'
 
 pipelines:
   default:
