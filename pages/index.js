@@ -6,7 +6,7 @@ import Header from "../components/Header"
 import CheckoutComponent from "../components/Checkout"
 import { initializeApollo } from "../lib/apollo"
 import { initializeStore } from "../redux/store"
-import basicAuthMiddleware from 'nextjs-basic-auth-middleware'
+import basicAuthMiddleware from '@ray4105/nextjs-basic-auth-middleware'
 
 export default function Home() {
   console.log(process.env.NODE_ENV)
@@ -41,4 +41,3 @@ Home.getInitialProps = async ({req, res}) => {
     revalidate: 1,
   }
 }
-

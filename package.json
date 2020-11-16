@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.2.5",
+    "@ray4105/nextjs-basic-auth-middleware": "^0.1.1",
     "@saleor/sdk": "0.1.0-7",
     "apollo-client": "^2.5.1",
     "bootstrap": "^4.5.3",
@@ -18,7 +19,6 @@
     "formik": "^2.2.3",
     "graphql": "^15.4.0",
     "next": "10.0.0",
-    "nextjs-basic-auth-middleware": "^0.1.0",
     "react": "17.0.1",
     "react-apollo": "^3.1.5",
     "react-bootstrap": "^1.4.0",

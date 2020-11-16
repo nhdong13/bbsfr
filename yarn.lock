@@ -1219,6 +1219,14 @@
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.5.4.tgz#de25b5da9f727985a3757fd59b5d028aba75841a"
   integrity sha512-ZpKr+WTb8zsajqgDkvCEWgp6d5eJT6Q63Ng2neTbzBO76Lbe91vX/iVIW9dikq+Fs3yEo+ls4cxeXABD2LtcbQ==
 
+"@ray4105/nextjs-basic-auth-middleware@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@ray4105/nextjs-basic-auth-middleware/-/nextjs-basic-auth-middleware-0.1.1.tgz#47063dac933f36f3f3802cd8051c7b04b1e91100"
+  integrity sha512-nG93JkI8U4RGE0u4YeuRnstXd2R3XgUDmmz39nUuK7LePGjt5whPnPsSFGgYELmtdgTAR+MXWrvN0vip980Ofw==
+  dependencies:
+    basic-auth "2.0.1"
+    tsscmp "1.0.6"
+
 "@restart/context@^2.1.4":
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/@restart/context/-/context-2.1.4.tgz#a99d87c299a34c28bd85bb489cb07bfd23149c02"
@@ -4051,14 +4059,6 @@ next@10.0.0:
     webpack-sources "1.4.3"
   optionalDependencies:
     sharp "0.26.2"
-
-nextjs-basic-auth-middleware@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/nextjs-basic-auth-middleware/-/nextjs-basic-auth-middleware-0.1.0.tgz#7701626066724e82486b4c0be60ef0ca74ad034d"
-  integrity sha512-AN+2GCIbdYZeRAdKWNC7KO4Q1If4pRRLC3fYRqgnTCBtIL4rcyLW61amzCOnGHc3VRSNqVx/AhQk3zWW5Y+lBg==
-  dependencies:
-    basic-auth "2.0.1"
-    tsscmp "1.0.6"
 
 node-abi@^2.7.0:
   version "2.19.1"
