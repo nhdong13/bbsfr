@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
-import { useCart } from "@saleor/sdk"
+// import { useCart } from "@saleor/sdk"
+import { useCart } from "@sdk/react"
 
 import MyCartComponent from "./MyCart"
 import EmailPasswordComponent from "./EmailPassword"
