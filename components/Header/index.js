@@ -6,12 +6,25 @@ import {
   FormControl,
   Button,
 } from "react-bootstrap"
+import Image from "next/image"
+import Link from "next/link"
+
+import styles from "./Header.module.scss"
 
 export default function Header() {
   return (
     <Navbar bg="dark" expand="lg" variant="dark">
       <Navbar.Brand href="#home">Page Header</Navbar.Brand>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      <div>
+        <span className={styles.cartIcon}>
+          <Link href="/checkout">
+            <Image src="/cart.svg" alt="cart" width={32} height={32} />
+          </Link>
+        </span>
+
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      </div>
+
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
           <Nav.Link href="#home">Home</Nav.Link>

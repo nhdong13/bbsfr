@@ -1,7 +1,8 @@
 import React, { useState } from "react"
 import { Container, Form } from "react-bootstrap"
 import { Formik } from "formik"
-import { useAuth } from "@saleor/sdk"
+// import { useAuth } from "@saleor/sdk"
+import { useSignIn } from "@sdk/react"
 
 import OrderSumaryComponent from "../OrderSumary"
 import CheckOutEmail from "./Email"
@@ -16,7 +17,10 @@ export default function CheckoutEmailPasswordComponent({
   setUserForm,
 }) {
   const [activeStep, setActiveStep] = useState(1)
-  const { signIn } = useAuth()
+
+  // const { signIn } = useAuth()
+  // Will remove when upgrade Saleor v11
+  const [signIn] = useSignIn()
 
   const handleNextStep = () => {
     if (activeStep === 1) {
@@ -27,7 +31,11 @@ export default function CheckoutEmailPasswordComponent({
   }
 
   const handleSubmit = async (values) => {
-    const { dataError } = await signIn(values.email, values.password)
+    const { dataError } = await signIn({
+      email: values.email,
+      password: values.password,
+    })
+
     if (dataError?.error) {
       console.log(dataError.error)
     } else {

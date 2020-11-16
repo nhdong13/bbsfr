@@ -15,7 +15,7 @@ export default function ShippingAddress({ values, handleChange }) {
             <Form.Control
               type="text"
               placeholder="First Name"
-              name="firstName"
+              name="shippingAddress.firstName"
               value={values.firstName}
               onChange={handleChange}
             />
@@ -26,7 +26,7 @@ export default function ShippingAddress({ values, handleChange }) {
             <Form.Control
               type="text"
               placeholder="First Name"
-              name="lastName"
+              name="shippingAddress.lastName"
               value={values.lastName}
               onChange={handleChange}
             />
@@ -37,8 +37,8 @@ export default function ShippingAddress({ values, handleChange }) {
             <Form.Control
               type="text"
               placeholder="Country"
-              name="country"
-              value={values.country}
+              name="shippingAddress.country"
+              value={values.country.country}
               onChange={handleChange}
             />
           </Form.Group>
@@ -49,7 +49,7 @@ export default function ShippingAddress({ values, handleChange }) {
                 <Form.Control
                   type="text"
                   placeholder="e.g 30 Hazelwood st, Alexandria, 2020"
-                  name="address"
+                  name="shippingAddress.address"
                   value={values.address}
                   onChange={handleChange}
                 />
@@ -79,7 +79,7 @@ export default function ShippingAddress({ values, handleChange }) {
                 <Form.Control
                   type="text"
                   placeholder="e.g 30 Beaconsfield St"
-                  name="streetAddress1"
+                  name="shippingAddress.streetAddress1"
                   value={values.streetAddress1}
                   onChange={handleChange}
                 />
@@ -90,7 +90,7 @@ export default function ShippingAddress({ values, handleChange }) {
                 <Form.Control
                   type="text"
                   placeholder="Line 2"
-                  name="streetAddress2"
+                  name="shippingAddress.streetAddress2"
                   value={values.streetAddress2}
                   onChange={handleChange}
                 />
@@ -101,7 +101,7 @@ export default function ShippingAddress({ values, handleChange }) {
                 <Form.Control
                   type="text"
                   placeholder="e.g Alexandria"
-                  name="city"
+                  name="shippingAddress.city"
                   value={values.city}
                   onChange={handleChange}
                 />
@@ -112,7 +112,7 @@ export default function ShippingAddress({ values, handleChange }) {
                 <Form.Control
                   type="text"
                   placeholder="e.g NSW"
-                  name="state"
+                  name="shippingAddress.state"
                   value={values.state}
                   onChange={handleChange}
                 />
@@ -123,7 +123,7 @@ export default function ShippingAddress({ values, handleChange }) {
                 <Form.Control
                   type="text"
                   placeholder="e.g 2015"
-                  name="postalCode"
+                  name="shippingAddress.postalCode"
                   value={values.postalCode}
                   onChange={handleChange}
                 />
@@ -152,7 +152,7 @@ export default function ShippingAddress({ values, handleChange }) {
             <Form.Control
               type="text"
               placeholder="Bussiness Name"
-              name="bussinessName"
+              name="shippingAddress.bussinessName"
               value={values.bussinessName}
               onChange={handleChange}
             />
@@ -163,7 +163,7 @@ export default function ShippingAddress({ values, handleChange }) {
             <Form.Control
               type="text"
               placeholder="Phone Number"
-              name="phoneNumber"
+              name="shippingAddress.phoneNumber"
               value={values.phoneNumber}
               onChange={handleChange}
             />

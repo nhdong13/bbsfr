@@ -1,19 +1,47 @@
 import { useState } from "react"
-import { Container, Form, Row, Col } from "react-bootstrap"
+import { Container, Form, Row, Col, Button } from "react-bootstrap"
 import { Formik } from "formik"
-import { useCheckout } from "@saleor/sdk"
+// import { useCheckout } from "@saleor/sdk"
+import { useCheckout } from "@sdk/react"
+import clsx from "clsx"
 
 import OrderSumaryComponent from "../OrderSumary"
 import ShippingMethods from "./ShippingMethods"
 import ShippingAddress from "./ShippingAddress"
 import BillingAddress from "./BillingAddress"
-import { ShippingAddressSchema } from "./validate"
+import PaymentComponent from "./Payment"
+import { AddressSchema } from "./validate"
 
 import styles from "./Delivery.module.scss"
 
+const ADDRESS = {
+  bussinessName: "thupx",
+  city: "Westmead",
+  country: { code: "AU", country: "Australia" },
+  firstName: "Thu",
+  lastName: "Pham",
+  phoneNumber: "0123456789",
+  postalCode: "2145",
+  state: "NSW",
+  streetAddress1: "83/85 Amos St",
+  streetAddress2: "",
+  address: "",
+}
+
 export default function DeliveryComponent({ carts, userForm }) {
-  const { setShippingAddress, setBillingAddress } = useCheckout()
-  const [billingDifferentAddress, setBillingDifferentAddress] = useState(false)
+  const {
+    setShippingAddress,
+    setBillingAddress,
+    setBillingAsShippingAddress,
+    availableShippingMethods,
+    setShippingMethod,
+  } = useCheckout()
+  const initDeliveryData = {
+    shippingAddress: ADDRESS,
+    billingAddress: ADDRESS,
+    billingDifferentAddress: false,
+  }
+
   const [shippingMethods, setShippingMethods] = useState([
     {
       id: "U2hpcHBpbmdNZXRob2Q6MQ==",
@@ -35,43 +63,62 @@ export default function DeliveryComponent({ carts, userForm }) {
     },
   ])
 
-  const shippingAddress = {
-    // firstName: "",
-    // lastName: "",
-    // phoneNumber: "",
-    // country: "",
-    // city: "",
-    // state: "",
-    // streetAddress1: "",
-    // streetAddress2: "",
-    // postalCode: "",
-    // address: "",
-    // bussinessName: "",
-    bussinessName: "thupx",
-    city: "Westmead",
-    country: "Australia",
-    firstName: "Thu",
-    lastName: "Pham",
-    phoneNumber: "0123456789",
-    postalCode: "2145",
-    state: "NSW",
-    streetAddress1: "83/85 Amos St",
-    streetAddress2: "",
-    address: "",
-  }
-
   const handleSubmitShipping = async (values) => {
-    const shippingData = { ...values }
-    delete shippingData.address
-    const { data, dataError, functionError } = await setShippingAddress(
+    const { shippingAddress, billingAddress } = { ...values }
+    shippingAddress.countryArea = shippingAddress.state
+    delete shippingAddress.address
+
+    const { dataError } = await setShippingAddress(
       {
-        ...shippingData,
+        ...shippingAddress,
       },
-      { shippingEmail: userForm.email }
+      "userForm.email@gmail.com"
     )
-    console.log("data", data)
-    console.log("dataError", dataError)
-    console.log("functionError", functionError)
+
+    if (dataError) {
+      console.log("dataError", dataError)
+      return
+    }
+
+    let billingAddressError
+    if (!values.billingDifferentAddress) {
+      const resBilling = await setBillingAsShippingAddress()
+      billingAddressError = resBilling?.dataError
+    } else {
+      shippingAddress.countryArea = shippingAddress.state
+      delete shippingAddress.address
+      const resSetBilling = await setBillingAddress(
+        {
+          ...billingAddress,
+        },
+        "userForm.email@gmail.com"
+      )
+      billingAddressError = resSetBilling?.dataError
+    }
+
+    if (billingAddressError) {
+      console.log("billingAddressError", billingAddressError)
+      return
+    }
+
+    if (!availableShippingMethods?.length) {
+      console.log("No availableShippingMethods")
+      return
+    }
+
+    const { data, dataError: setShippingMethodError } = await setShippingMethod(
+      availableShippingMethods[0].id
+    )
+
+    if (setShippingMethodError) {
+      console.log("setShippingMethodError", setShippingMethodError)
+      return
+    }
+
+    const totalPrice =
+      data.checkoutShippingMethodUpdate?.checkout?.totalPrice?.gross
+
+    console.log(totalPrice)
   }
 
   return (
@@ -104,40 +151,49 @@ export default function DeliveryComponent({ carts, userForm }) {
           />
 
           <Formik
-            validationSchema={ShippingAddressSchema}
+            validationSchema={AddressSchema}
             onSubmit={handleSubmitShipping}
-            initialValues={shippingAddress}
+            initialValues={initDeliveryData}
           >
             {({ handleSubmit, handleChange, values }) => (
               <Form noValidate onSubmit={handleSubmit}>
-                <ShippingAddress handleChange={handleChange} values={values} />
+                <ShippingAddress
+                  handleChange={handleChange}
+                  values={values.shippingAddress}
+                />
+
+                <Form.Check
+                  type="checkbox"
+                  id="billingDifferentAddress"
+                  label="Bill to a different Address"
+                  name="billingDifferentAddress"
+                  className="pb-4"
+                  onChange={handleChange}
+                />
+
+                {values.billingDifferentAddress && (
+                  <BillingAddress
+                    handleChange={handleChange}
+                    values={values.billingAddress}
+                  />
+                )}
+
+                <PaymentComponent />
+
+                <Row>
+                  <Form.Group controlId="btnPlaceOrder" as={Col} xs="12">
+                    <Button
+                      variant="secondary"
+                      className={clsx(styles.btnPlaceOrder, "w-100")}
+                      type="submit"
+                    >
+                      Place Order
+                    </Button>
+                  </Form.Group>
+                </Row>
               </Form>
             )}
           </Formik>
-
-          <Form.Check
-            type="checkbox"
-            id="billingDifferentAddress"
-            label="Bill to a different Address"
-            className="pb-4"
-            onChange={(event) =>
-              setBillingDifferentAddress(event.target.checked)
-            }
-          />
-
-          {billingDifferentAddress && (
-            <Formik
-              validationSchema={ShippingAddressSchema}
-              onSubmit={handleSubmitShipping}
-              initialValues={shippingAddress}
-            >
-              {({ handleSubmit, handleChange, values }) => (
-                <Form noValidate onSubmit={handleSubmit}>
-                  <BillingAddress handleChange={handleChange} values={values} />
-                </Form>
-              )}
-            </Formik>
-          )}
         </Container>
       </Row>
     </Container>

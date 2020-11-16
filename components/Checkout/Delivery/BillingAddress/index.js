@@ -13,7 +13,7 @@ export default function BillingAddress({ values, handleChange }) {
             <Form.Control
               type="text"
               placeholder="First Name"
-              name="firstName"
+              name="billingAddress.firstName"
               value={values.firstName}
               onChange={handleChange}
             />
@@ -24,7 +24,7 @@ export default function BillingAddress({ values, handleChange }) {
             <Form.Control
               type="text"
               placeholder="First Name"
-              name="lastName"
+              name="billingAddress.lastName"
               value={values.lastName}
               onChange={handleChange}
             />
@@ -35,8 +35,8 @@ export default function BillingAddress({ values, handleChange }) {
             <Form.Control
               type="text"
               placeholder="Country"
-              name="country"
-              value={values.country}
+              name="billingAddress.country"
+              value={values.country.country}
               onChange={handleChange}
             />
           </Form.Group>
@@ -46,7 +46,7 @@ export default function BillingAddress({ values, handleChange }) {
             <Form.Control
               type="text"
               placeholder="e.g 30 Beaconsfield St"
-              name="streetAddress1"
+              name="billingAddress.streetAddress1"
               value={values.streetAddress1}
               onChange={handleChange}
             />
@@ -57,7 +57,7 @@ export default function BillingAddress({ values, handleChange }) {
             <Form.Control
               type="text"
               placeholder="Line 2"
-              name="streetAddress2"
+              name="billingAddress.streetAddress2"
               value={values.streetAddress2}
               onChange={handleChange}
             />
@@ -68,7 +68,7 @@ export default function BillingAddress({ values, handleChange }) {
             <Form.Control
               type="text"
               placeholder="e.g Alexandria"
-              name="city"
+              name="billingAddress.city"
               value={values.city}
               onChange={handleChange}
             />
@@ -79,7 +79,7 @@ export default function BillingAddress({ values, handleChange }) {
             <Form.Control
               type="text"
               placeholder="e.g NSW"
-              name="state"
+              name="billingAddress.state"
               value={values.state}
               onChange={handleChange}
             />
@@ -90,7 +90,7 @@ export default function BillingAddress({ values, handleChange }) {
             <Form.Control
               type="text"
               placeholder="e.g 2015"
-              name="postalCode"
+              name="billingAddress.postalCode"
               value={values.postalCode}
               onChange={handleChange}
             />
@@ -101,7 +101,7 @@ export default function BillingAddress({ values, handleChange }) {
             <Form.Control
               type="text"
               placeholder="Bussiness Name"
-              name="bussinessName"
+              name="billingAddress.bussinessName"
               value={values.bussinessName}
               onChange={handleChange}
             />
@@ -112,7 +112,7 @@ export default function BillingAddress({ values, handleChange }) {
             <Form.Control
               type="text"
               placeholder="Phone Number"
-              name="phoneNumber"
+              name="billingAddress.phoneNumber"
               value={values.phoneNumber}
               onChange={handleChange}
             />
