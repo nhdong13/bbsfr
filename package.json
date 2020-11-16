@@ -12,6 +12,7 @@
   "dependencies": {
     "@apollo/client": "^3.2.5",
     "@ray4105/nextjs-basic-auth-middleware": "^0.1.1",
+    "apollo-cache-inmemory": "^1.6.6",
     "apollo-client": "^2.5.1",
     "apollo-link-batch-http": "^1.2.14",
     "apollo-link-context": "^1.0.20",
