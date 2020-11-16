@@ -25,7 +25,6 @@ export default function PaymentComponent() {
               <Image
                 src={method.icon}
                 alt={method.name}
-                className="sss"
                 width={48}
                 height={16}
               />

@@ -1,34 +1,20 @@
 import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import Head from "next/head"
+import basicAuthMiddleware from "@ray4105/nextjs-basic-auth-middleware"
 
-import Header from "../components/Header"
-import CheckoutComponent from "../components/Checkout"
 import { initializeApollo } from "../lib/apollo"
 import { initializeStore } from "../redux/store"
-import basicAuthMiddleware from '@ray4105/nextjs-basic-auth-middleware'
+import HomePage from "components/HomePage"
 
 export default function Home() {
-  console.log(process.env.NODE_ENV)
-
-  return (
-    <>
-      <Head>
-        <title>Bikebiz Replatform</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <Header />
-      <main>
-        <CheckoutComponent />
-      </main>
-    </>
-  )
+  return <HomePage />
 }
 
-Home.getInitialProps = async ({req, res}) => {
+Home.getInitialProps = async ({ req, res }) => {
   // FIXME only work on other
   // Need to remove on production mode
-  if (process.env.NODE_ENV !== 'development') {
+  if (process.env.NODE_ENV !== "development") {
     await basicAuthMiddleware(req, res, {})
   }
   const reduxStore = initializeStore()

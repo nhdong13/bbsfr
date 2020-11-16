@@ -3,8 +3,10 @@ import { ApolloProvider } from "@apollo/client"
 // import { SaleorProvider } from "@saleor/sdk"
 import { useStore } from "../redux/store"
 import { useApollo } from "../lib/apollo"
-import "../styles/globals.scss"
 import { SaleorProvider } from "../lib/@sdk/react"
+import Layout from "components/Layout"
+
+import "../styles/globals.scss"
 
 const SALEOR_CONFIG = {
   apiUrl: process.env.NEXT_PUBLIC_API_URI,
@@ -28,7 +30,9 @@ export default function App({ Component, pageProps }) {
           config={SALEOR_CONFIG}
           apolloConfig={{ client: apolloClient }}
         >
-          <Component {...pageProps} />
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
         </SaleorProvider>
       </ApolloProvider>
     </Provider>
