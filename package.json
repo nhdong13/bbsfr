@@ -5,10 +5,13 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "build-docker": "docker build -t bbsfr-staging-storefront .",
+    "run-docker": "docker run --rm -it -p 3000:3000 bbsfr_storefront_app"
   },
   "dependencies": {
     "@apollo/client": "^3.2.5",
+    "@ray4105/nextjs-basic-auth-middleware": "^0.1.1",
     "apollo-client": "^2.5.1",
     "apollo-link-batch-http": "^1.2.14",
     "apollo-link-context": "^1.0.20",

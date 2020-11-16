@@ -6,8 +6,11 @@ import Header from "../components/Header"
 import CheckoutComponent from "../components/Checkout"
 import { initializeApollo } from "../lib/apollo"
 import { initializeStore } from "../redux/store"
+import basicAuthMiddleware from '@ray4105/nextjs-basic-auth-middleware'
 
 export default function Home() {
+  console.log(process.env.NODE_ENV)
+
   return (
     <>
       <Head>
@@ -22,10 +25,14 @@ export default function Home() {
   )
 }
 
-export async function getStaticProps() {
+Home.getInitialProps = async ({req, res}) => {
+  // FIXME only work on other
+  // Need to remove on production mode
+  if (process.env.NODE_ENV !== 'development') {
+    await basicAuthMiddleware(req, res, {})
+  }
   const reduxStore = initializeStore()
   const apolloClient = initializeApollo()
-
   return {
     props: {
       initialReduxState: reduxStore.getState(),
