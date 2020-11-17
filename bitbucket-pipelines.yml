@@ -21,7 +21,7 @@ definitions:
         - docker push $ECR_STAGING_REPO_URI:latest
     deploy-to-ecs: &deploy-to-ecs
       name: Deploy to ECS
-      image: atlassian/pipelines-awscli
+      image: atlassian/default-image:2
       deployment: staging
       script:
         - export DOCKER_IMAGE="${DOCKER_IMAGE}"
