@@ -6,14 +6,15 @@ import basicAuthMiddleware from "@ray4105/nextjs-basic-auth-middleware"
 import { initializeApollo } from "../lib/apollo"
 import { initializeStore } from "../redux/store"
 import HomePage from "components/HomePage"
+import { getAllDepartments } from "../lib/prismic/api"
 
-export default function Home() {
-  return <HomePage />
+function Home({ department }) {
+  let list_department = department[0].node.department_link
+  return <HomePage department={list_department} />
 }
 
-Home.getInitialProps = async ({ req, res }) => {
-  // FIXME only work on other
-  // Need to remove on production mode
+export async function getStaticProps({ req, res }) {
+  const department = await getAllDepartments()
   if (process.env.NODE_ENV !== "development") {
     await basicAuthMiddleware(req, res, {})
   }
@@ -23,7 +24,9 @@ Home.getInitialProps = async ({ req, res }) => {
     props: {
       initialReduxState: reduxStore.getState(),
       initialApolloState: apolloClient.cache.extract(),
+      department,
     },
     revalidate: 1,
   }
 }
+export default Home
