@@ -1,3 +1,4 @@
+import React from "react"
 import { Image, Row, Container, Col } from "react-bootstrap"
 import styles from "../HomePage.module.scss"
 import Link from 'next/link'
@@ -5,7 +6,7 @@ import { textCategory } from '../../../services/apartment'
 
 export default function Department(props) {
   let text_category = textCategory(props.title)
-  
+
   return (
     <Link href="/[slug]" as={`/${props.slug}`}>
     <Container className={styles.department}>
@@ -35,9 +36,9 @@ export default function Department(props) {
         </div>
         <div className={styles.department_image}>
           <Image
+            className={styles.max_width_image}
             src={props.image.url}
             alt=""
-            width={270}
             height={216}
           />
         </div>

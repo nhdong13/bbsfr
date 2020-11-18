@@ -6,7 +6,6 @@
 
     .main_group {
       padding-top: $padding-top-department;
-      // padding-bottom: calc(#{$padding-top-department} -10px);
       padding-bottom: 50px;
     }
 
@@ -94,6 +93,10 @@
       transform: translate(0%, -50%);
 
       z-index: 2;
+
+      .max_width_image {
+        max-width: 65vw;
+      }
     }
 
     .style_second {
