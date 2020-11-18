@@ -17,9 +17,9 @@ export default function Header() {
       <Navbar.Brand href="#home">Page Header</Navbar.Brand>
       <div>
         <span className={styles.cartIcon}>
-          <Link href="/checkout">
+          <Nav.Link href="/checkout">
             <Image src="/cart.svg" alt="cart" width={32} height={32} />
-          </Link>
+          </Nav.Link>
         </span>
 
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
