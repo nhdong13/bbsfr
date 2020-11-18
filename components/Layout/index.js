@@ -1,15 +1,15 @@
 import Head from "next/head"
 
 import Header from "../Header"
-import { newrelicSPAMonitoring } from "./newrelic_spa_monitoring"
+import { NewRelicSnippet } from "./newrelic_snippet"
 
 export default function Layout({ children }) {
   return (
     <>
       <Head>
-        <script type="text/javascript" dangerouslySetInnerHTML={{ __html: newrelicSPAMonitoring}} />
         <title>Bikebiz Replatform</title>
         <link rel="icon" href="/favicon.ico" />
+        {NewRelicSnippet}
       </Head>
       <Header />
       <main>{children}</main>
