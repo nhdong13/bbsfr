@@ -2,9 +2,15 @@ import { useState } from "react"
 import { Container, Row, Button, Collapse } from "react-bootstrap"
 import clsx from "clsx"
 import styles from "./OrderSumary.module.scss"
+import { useCart } from "@sdk/react"
 
-export default function OrderSumaryComponent({ carts }) {
+import { generateCart } from "../"
+
+export default function OrderSumaryComponent() {
   const [open, setOpen] = useState(false)
+  const { items, removeItem, updateItem } = useCart()
+  const viewOnly = true
+  const carts = items && generateCart(items, removeItem, updateItem, viewOnly)
 
   return (
     <Row className={styles.orderSumary}>

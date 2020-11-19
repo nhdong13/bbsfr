@@ -4,6 +4,12 @@ export const SHIPPING_METHODS_ICON = {
   Courier: "/delivery-fast.svg",
 }
 
+export const PAYMENT_METHODS_ICON = {
+  "bikebiz.payments.klarna": "/klarna.svg",
+  "plugin.gateway.afterpay": "/afterpay.svg",
+  "bikebiz.payments.zipmoney": "/zip.svg",
+}
+
 export const PAYMENT_METHODS = [
   {
     name: "visa",

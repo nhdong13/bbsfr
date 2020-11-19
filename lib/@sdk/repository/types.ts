@@ -3,7 +3,7 @@ import {
   Checkout_lines_variant_attributes,
   Checkout_lines_variant_pricing,
   Checkout_lines_variant_product,
-} from "../fragments/gqlTypes/Checkout";
+} from "../fragments/gqlTypes/Checkout"
 
 export enum LocalStorageItems {
   JOB_QUEUE_CHECKOUT = "job_queueCheckout",
@@ -12,116 +12,117 @@ export enum LocalStorageItems {
 }
 
 export interface ICheckoutModelLineTotalPrice {
-  gross: ICheckoutModelPriceValue;
-  net: ICheckoutModelPriceValue;
+  gross: ICheckoutModelPriceValue
+  net: ICheckoutModelPriceValue
 }
 
 export interface ICheckoutModelLineVariant {
-  quantityAvailable?: number;
-  id: string;
-  name?: string;
-  sku?: string;
-  pricing?: Checkout_lines_variant_pricing | null;
-  product?: Checkout_lines_variant_product;
-  isAvailable?: boolean | null;
-  attributes?: Checkout_lines_variant_attributes[];
+  quantityAvailable?: number
+  id: string
+  name?: string
+  sku?: string
+  pricing?: Checkout_lines_variant_pricing | null
+  product?: Checkout_lines_variant_product
+  isAvailable?: boolean | null
+  attributes?: Checkout_lines_variant_attributes[]
 }
 
 export interface ICheckoutModelLine {
-  quantity: number;
-  id?: string;
-  variant: ICheckoutModelLineVariant;
-  totalPrice?: ICheckoutModelLineTotalPrice | null;
+  quantity: number
+  id?: string
+  variant: ICheckoutModelLineVariant
+  totalPrice?: ICheckoutModelLineTotalPrice | null
 }
 
 export interface ICheckoutModelPriceValue {
-  amount: number;
-  currency: string;
+  amount: number
+  currency: string
 }
 
 export interface ICheckoutModelPrice {
-  gross: ICheckoutModelPriceValue;
-  net: ICheckoutModelPriceValue;
+  gross: ICheckoutModelPriceValue
+  net: ICheckoutModelPriceValue
 }
 
 export interface ICheckoutAddress {
-  id?: string;
-  firstName?: string;
-  lastName?: string;
-  companyName?: string;
-  streetAddress1?: string;
-  streetAddress2?: string;
-  city?: string;
-  postalCode?: string;
-  countryArea?: string;
-  phone?: string | null;
+  id?: string
+  firstName?: string
+  lastName?: string
+  companyName?: string
+  streetAddress1?: string
+  streetAddress2?: string
+  city?: string
+  postalCode?: string
+  countryArea?: string
+  phone?: string | null
   country?: {
-    code?: string;
-    country?: string;
-  };
+    code?: string
+    country?: string
+  }
 }
 
 export interface ICheckoutModelShippingMethod {
-  id: string;
-  name: string;
-  price: ICheckoutModelPriceValue | null;
+  id: string
+  name: string
+  price: ICheckoutModelPriceValue | null
 }
 
 export interface ICheckoutModelPromoCodeDiscount {
-  voucherCode?: string | null;
-  discount?: ICheckoutModelPriceValue | null;
-  discountName?: string | null;
+  voucherCode?: string | null
+  discount?: ICheckoutModelPriceValue | null
+  discountName?: string | null
 }
 
 export interface IPaymentCreditCard {
   /**
    * Card brand.
    */
-  brand?: string;
+  brand?: string
   /**
    * The host name of the domain.
    */
-  firstDigits?: string;
+  firstDigits?: string
   /**
    * Last 4 digits of the card number.
    */
-  lastDigits?: string;
+  lastDigits?: string
   /**
    * Two-digit number representing the card’s expiration month.
    */
-  expMonth?: number;
+  expMonth?: number
   /**
    * Four-digit number representing the card’s expiration year.
    */
-  expYear?: number;
+  expYear?: number
 }
 
 export interface ICheckoutModel {
-  id?: string;
-  token?: any;
-  email?: string;
-  shippingAddress?: ICheckoutAddress | null;
-  billingAddress?: ICheckoutAddress | null;
-  selectedShippingAddressId?: string;
-  selectedBillingAddressId?: string;
-  billingAsShipping?: boolean;
-  promoCodeDiscount?: ICheckoutModelPromoCodeDiscount;
-  lines?: ICheckoutModelLine[] | null;
-  availableShippingMethods?: Checkout_availableShippingMethods[];
-  shippingMethod?: ICheckoutModelShippingMethod | null;
+  id?: string
+  token?: any
+  email?: string
+  shippingAddress?: ICheckoutAddress | null
+  billingAddress?: ICheckoutAddress | null
+  selectedShippingAddressId?: string
+  selectedBillingAddressId?: string
+  billingAsShipping?: boolean
+  promoCodeDiscount?: ICheckoutModelPromoCodeDiscount
+  lines?: ICheckoutModelLine[] | null
+  availableShippingMethods?: Checkout_availableShippingMethods[]
+  shippingMethod?: ICheckoutModelShippingMethod | null
+  totalPrice?: ICheckoutModelPrice | null
 }
 
 export interface IPaymentModel {
-  id?: string;
-  token?: string;
-  gateway?: string;
-  creditCard?: IPaymentCreditCard | null;
+  id?: string
+  token?: string
+  gateway?: string
+  creditCard?: IPaymentCreditCard | null
 }
 
 export interface IOrderModel {
-  id?: string;
-  token?: string;
-  number?: string | null;
+  id?: string
+  token?: string
+  number?: string | null
 }
 
 // export interface IJobsModel {
@@ -143,8 +144,8 @@ export interface IOrderModel {
 // };
 
 export interface ILocalRepository {
-  getCheckout(): ICheckoutModel | null;
-  setCheckout(checkout: ICheckoutModel | null): void;
-  getPayment(): IPaymentModel | null;
-  setPayment(payment: IPaymentModel | null): void;
+  getCheckout(): ICheckoutModel | null
+  setCheckout(checkout: ICheckoutModel | null): void
+  getPayment(): IPaymentModel | null
+  setPayment(payment: IPaymentModel | null): void
 }

@@ -1,19 +1,12 @@
-import React, { useState, useEffect } from "react"
+import React, { useEffect } from "react"
 // import { useCart } from "@saleor/sdk"
 import { useCart } from "@sdk/react"
 
 import MyCartComponent from "./MyCart"
-import EmailPasswordComponent from "./EmailPassword"
-import DeliveryComponent from "./Delivery"
 import Item from "./Item"
 import Money from "../Money"
 
 export default function CheckoutComponent() {
-  const [activeStep, setActiveStep] = useState(1)
-  const [userForm, setUserForm] = useState({
-    email: "admin@example.com",
-    password: "admin",
-  })
   const {
     items,
     removeItem,
@@ -22,12 +15,6 @@ export default function CheckoutComponent() {
     subtotalPrice,
     shippingPrice,
   } = useCart()
-
-  const ActivePage = [
-    MyCartComponent,
-    EmailPasswordComponent,
-    DeliveryComponent,
-  ][activeStep - 1]
 
   useEffect(() => {
     const data = {
@@ -170,29 +157,18 @@ export default function CheckoutComponent() {
     window.localStorage.setItem("data_checkout", JSON.stringify(data))
   }, [])
 
-  function nextStep(number) {
-    if (!number) {
-      setActiveStep(activeStep + 1)
-    } else {
-      setActiveStep(number)
-    }
-  }
-
   return (
-    <ActivePage
-      nextStep={nextStep}
-      carts={items && generateCart(items, removeItem, updateItem, activeStep)}
+    <MyCartComponent
+      carts={items && generateCart(items, removeItem, updateItem)}
       subtotalPrice={subtotalPrice}
       totalPrice={totalPrice}
       itemsCount={items?.length}
       shippingPrice={shippingPrice}
-      userForm={userForm}
-      setUserForm={setUserForm}
     />
   )
 }
 
-const generateCart = (items, removeItem, updateItem, activeStep) => {
+export const generateCart = (items, removeItem, updateItem, viewOnly) => {
   return items?.map(({ id, variant, quantity, totalPrice }, index) => (
     <Item
       key={id ? `id-${id}` : `idx-${index}`}
@@ -209,7 +185,7 @@ const generateCart = (items, removeItem, updateItem, activeStep) => {
       onRemove={() => removeItem(variant.id)}
       onQuantityChange={(quantity) => updateItem(variant.id, quantity)}
       sku={variant.sku}
-      viewOnly={activeStep !== 1}
+      viewOnly={viewOnly}
       attributes={variant.attributes?.map((attribute) => {
         return {
           attribute: {

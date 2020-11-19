@@ -10,6 +10,12 @@ export default function Layout({ children }) {
         <title>Bikebiz Replatform</title>
         <link rel="icon" href="/favicon.ico" />
         {NewRelicSnippet}
+        <script
+          type="text/javascript"
+          src="https://portal.sandbox.afterpay.com/afterpay-async.js"
+          async
+          defer
+        ></script>
       </Head>
       <Header />
       <main>{children}</main>

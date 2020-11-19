@@ -1,5 +1,6 @@
 import { Container, Col, Row, Button } from "react-bootstrap"
 import clsx from "clsx"
+import { useRouter } from "next/router"
 
 import ListItemsComponent from "./ListItems"
 import PromotionComponent from "./Promotion"
@@ -9,12 +10,16 @@ import styles from "./MyCart.module.scss"
 
 export default function MyCartComponent({
   carts,
-  nextStep,
   subtotalPrice,
   totalPrice,
   itemsCount,
   shippingPrice,
 }) {
+  const router = useRouter()
+  const handleClick = (e) => {
+    e.preventDefault()
+    router.push("/checkout/signup")
+  }
   return (
     <Container fluid className={styles.myCartContainer}>
       <Row className={clsx(styles.headerSection, "secondary-bg")}>
@@ -64,7 +69,7 @@ export default function MyCartComponent({
                 variant="secondary"
                 className={clsx(styles.btn, "w-100")}
                 fixed="bottom"
-                onClick={() => nextStep()}
+                onClick={handleClick}
               >
                 Continue to Checkout
               </Button>
