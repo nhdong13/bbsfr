@@ -1,0 +1,109 @@
+@import "/styles/variables.scss";
+
+.homepageContainer {
+  .department {
+    position: relative;
+
+    .main_group {
+      padding-top: $padding-top-department;
+      padding-bottom: 50px;
+    }
+
+    .group_left {
+      z-index: 2;
+    }
+
+    .text_header {
+      font-family: Rajdhani;
+      font-size: 26px;
+      font-style: normal;
+      font-weight: 700;
+
+      line-height: 26px;
+      letter-spacing: 0px;
+
+      text-align: left;
+      text-transform: uppercase;
+      color: $primary-text-color;
+    }
+
+    .text_category {
+      font-family: Rajdhani;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 200px;
+
+      color: $department-category-color;
+      line-height: 120px;
+
+      text-transform: uppercase;
+
+      position: absolute;
+      overflow: hidden;
+      right: 0px;
+      left: 25%;
+      top: $padding-top-department;
+      z-index: 1;
+    }
+
+    .status_product {
+      font-style: normal;
+      font-weight: bold;
+      font-size: 10px;
+      line-height: 16px;
+      /* identical to box height, or 160% */
+
+      letter-spacing: 1px;
+      text-transform: uppercase;
+
+      color: $status-product-color;
+    }
+
+    .shop_group {
+      display: flex;
+      align-items: center;
+      padding-top: 20px;
+
+      .triangle_right {
+        width: 0;
+        height: 0;
+
+        margin-left: 20px;
+        border-top: 3px solid transparent;
+        border-left: 5px solid $primary-text-color;
+        border-bottom: 3px solid transparent;
+      }
+
+      .text_shop_now {
+        font-family: Rajdhani;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 18px;
+        /* identical to box height */
+
+        color: $primary-text-color;
+      }
+    }
+
+    .department_image {
+      position: absolute;
+      right: 0px;
+      top: 50%;
+      transform: translate(0%, -50%);
+
+      z-index: 2;
+
+      .max_width_image {
+        max-width: 65vw;
+      }
+    }
+
+    .style_second {
+      background: $department-background-sencond-color;
+    }
+    .text_category_second {
+      color: #fff;
+    }
+  }
+}
