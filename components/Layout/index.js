@@ -1,6 +1,7 @@
 import Head from "next/head"
 
 import Header from "../Header"
+import { NewRelicSnippet } from "./newrelic_snippet"
 
 export default function Layout({ children }) {
   return (
@@ -8,6 +9,7 @@ export default function Layout({ children }) {
       <Head>
         <title>Bikebiz Replatform</title>
         <link rel="icon" href="/favicon.ico" />
+        {NewRelicSnippet}
       </Head>
       <Header />
       <main>{children}</main>
