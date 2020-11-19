@@ -14,12 +14,18 @@ import styles from "./Header.module.scss"
 export default function Header() {
   return (
     <Navbar bg="dark" expand="lg" variant="dark">
-      <Navbar.Brand href="#home">Page Header</Navbar.Brand>
+      <Link href="/">
+        <span>
+          <Navbar.Brand>Page Header</Navbar.Brand>
+        </span>
+      </Link>
       <div>
         <span className={styles.cartIcon}>
-          <Nav.Link href="/checkout">
-            <Image src="/cart.svg" alt="cart" width={32} height={32} />
-          </Nav.Link>
+          <Link href="/checkout">
+            <span>
+              <Image src="/cart.svg" alt="cart" width={32} height={32} />
+            </span>
+          </Link>
         </span>
 
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

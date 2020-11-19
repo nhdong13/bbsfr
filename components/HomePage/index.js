@@ -7,7 +7,7 @@ function Home(props) {
   let count_department = -1
   return (
     <div className={styles.homepageContainer}>
-       {departments.map((department, id) => (
+      {departments.map((department, id) => (
         <Department
           key={id}
           count={++count_department}
@@ -16,7 +16,7 @@ function Home(props) {
           slug={department.department_slug}
           image={department.department_image}
         />
-       ))}
+      ))}
     </div>
   )
 }
