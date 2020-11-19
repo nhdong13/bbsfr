@@ -15,9 +15,9 @@ function Home({ department }) {
 
 export async function getStaticProps({ req, res }) {
   const department = await getAllDepartments()
-  if (process.env.NODE_ENV !== "development") {
-    await basicAuthMiddleware(req, res, {})
-  }
+  // if (process.env.NODE_ENV !== "development") {
+  //   await basicAuthMiddleware(req, res, {})
+  // }
   const reduxStore = initializeStore()
   const apolloClient = initializeApollo()
   return {
