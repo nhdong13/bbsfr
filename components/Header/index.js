@@ -18,7 +18,9 @@ export default function Header() {
       <div>
         <span className={styles.cartIcon}>
           <Link href="/checkout">
-            <Image src="/cart.svg" alt="cart" width={32} height={32} />
+            <span>
+              <Image src="/cart.svg" alt="cart" width={32} height={32} />
+            </span>
           </Link>
         </span>
 

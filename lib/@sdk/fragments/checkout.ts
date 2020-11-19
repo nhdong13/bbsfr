@@ -1,4 +1,4 @@
-import gql from "graphql-tag";
+import gql from "graphql-tag"
 
 export const checkoutPriceFragment = gql`
   fragment Price on TaxedMoney {
@@ -11,7 +11,7 @@ export const checkoutPriceFragment = gql`
       currency
     }
   }
-`;
+`
 
 export const checkoutAddressFragment = gql`
   fragment Address on Address {
@@ -32,7 +32,7 @@ export const checkoutAddressFragment = gql`
     isDefaultBillingAddress
     isDefaultShippingAddress
   }
-`;
+`
 
 export const checkoutProductVariantFragment = gql`
   ${checkoutPriceFragment}
@@ -77,7 +77,7 @@ export const checkoutProductVariantFragment = gql`
       }
     }
   }
-`;
+`
 
 export const checkoutShippingMethodFragment = gql`
   fragment ShippingMethod on ShippingMethod {
@@ -88,7 +88,7 @@ export const checkoutShippingMethodFragment = gql`
       amount
     }
   }
-`;
+`
 
 export const checkoutLineFragment = gql`
   ${checkoutPriceFragment}
@@ -103,7 +103,7 @@ export const checkoutLineFragment = gql`
       ...ProductVariant
     }
   }
-`;
+`
 
 export const checkoutFragment = gql`
   ${checkoutLineFragment}
@@ -129,6 +129,14 @@ export const checkoutFragment = gql`
     availableShippingMethods {
       ...ShippingMethod
     }
+    availablePaymentGateways {
+      id
+      name
+      config {
+        field
+        value
+      }
+    }
     shippingMethod {
       ...ShippingMethod
     }
@@ -147,4 +155,4 @@ export const checkoutFragment = gql`
     translatedDiscountName
     voucherCode
   }
-`;
+`

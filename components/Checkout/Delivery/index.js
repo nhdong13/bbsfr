@@ -1,9 +1,12 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useSelector } from "react-redux"
 import { Container, Form, Row, Col, Button } from "react-bootstrap"
 import { Formik } from "formik"
 // import { useCheckout } from "@saleor/sdk"
 import { useCheckout } from "@sdk/react"
 import clsx from "clsx"
+import { useMutation } from "@apollo/client"
+import { useRouter } from "next/router"
 
 import OrderSumaryComponent from "../OrderSumary"
 import ShippingMethods from "./ShippingMethods"
@@ -11,7 +14,7 @@ import ShippingAddress from "./ShippingAddress"
 import BillingAddress from "./BillingAddress"
 import PaymentComponent from "./Payment"
 import { AddressSchema } from "./validate"
-
+import { paymentCheckoutTokenCreate } from "lib/mutations"
 import styles from "./Delivery.module.scss"
 
 const ADDRESS = {
@@ -28,14 +31,48 @@ const ADDRESS = {
   address: "",
 }
 
-export default function DeliveryComponent({ carts, userForm }) {
+export default function DeliveryComponent() {
   const {
     setShippingAddress,
     setBillingAddress,
     setBillingAsShippingAddress,
-    availableShippingMethods,
     setShippingMethod,
+    availablePaymentGateways,
+    createPayment,
+    completeCheckout,
   } = useCheckout()
+  const [createPaymentCheckoutToken] = useMutation(paymentCheckoutTokenCreate)
+  const [paymentMethod, setPaymentMethod] = useState(null)
+  const currentUser = useSelector((state) => state.currentUser)
+  const router = useRouter()
+  const { status, orderToken } = router.query
+
+  useEffect(() => {
+    const sendCreatePayment = async () => {
+      if (status === "SUCCESS" && orderToken) {
+        const paymentGateway = localStorage.getItem("paymentGateway")
+        const { dataError } = await createPayment(paymentGateway, orderToken)
+        if (dataError) {
+          alert(dataError.error?.message)
+          return
+        }
+
+        const {
+          data,
+          dataError: completeCheckoutError,
+        } = await completeCheckout()
+
+        if (completeCheckoutError) {
+          alert(completeCheckoutError.error?.message)
+          return
+        }
+
+        router.push(`/checkout/complete?orderNumber=${data?.number}`)
+      }
+    }
+    sendCreatePayment()
+  }, [status])
+
   const initDeliveryData = {
     shippingAddress: ADDRESS,
     billingAddress: ADDRESS,
@@ -64,24 +101,31 @@ export default function DeliveryComponent({ carts, userForm }) {
   ])
 
   const handleSubmitShipping = async (values) => {
-    const { shippingAddress, billingAddress } = { ...values }
+    if (!paymentMethod) {
+      alert("Please choose payment method!")
+      return
+    }
+    const { shippingAddress, billingAddress, billingDifferentAddress } = {
+      ...values,
+    }
     shippingAddress.countryArea = shippingAddress.state
     delete shippingAddress.address
 
-    const { dataError } = await setShippingAddress(
+    const { data: checkoutData, dataError } = await setShippingAddress(
       {
         ...shippingAddress,
       },
-      "userForm.email@gmail.com"
+      "thupx@nustechnology.com"
     )
 
     if (dataError) {
       console.log("dataError", dataError)
+      alert(dataError.error?.message)
       return
     }
 
     let billingAddressError
-    if (!values.billingDifferentAddress) {
+    if (!billingDifferentAddress) {
       const resBilling = await setBillingAsShippingAddress()
       billingAddressError = resBilling?.dataError
     } else {
@@ -91,39 +135,54 @@ export default function DeliveryComponent({ carts, userForm }) {
         {
           ...billingAddress,
         },
-        "userForm.email@gmail.com"
+        "thupx@nustechnology.com"
       )
       billingAddressError = resSetBilling?.dataError
     }
 
     if (billingAddressError) {
-      console.log("billingAddressError", billingAddressError)
-      return
-    }
-
-    if (!availableShippingMethods?.length) {
-      console.log("No availableShippingMethods")
+      alert(billingAddressError.error?.message)
       return
     }
 
     const { data, dataError: setShippingMethodError } = await setShippingMethod(
-      availableShippingMethods[0].id
+      checkoutData.availableShippingMethods[0].id
     )
 
     if (setShippingMethodError) {
-      console.log("setShippingMethodError", setShippingMethodError)
+      alert(setShippingMethodError.error?.message)
       return
     }
 
-    const totalPrice =
-      data.checkoutShippingMethodUpdate?.checkout?.totalPrice?.gross
+    const { data: paymentCheckoutTokenRes } = await createPaymentCheckoutToken({
+      variables: {
+        checkoutId: checkoutData.id,
+        gateway: paymentMethod.id,
+        amount: data.totalPrice?.gross?.amount,
+      },
+    })
 
-    console.log(totalPrice)
+    const { paymentCheckoutTokenCreate } = paymentCheckoutTokenRes
+
+    if (paymentCheckoutTokenCreate.checkoutErrors?.length) {
+      alert(paymentCheckoutTokenCreate.checkoutErrors.error?.message)
+      return
+    }
+
+    localStorage.setItem("paymentGateway", paymentMethod.id)
+
+    if (paymentMethod.id === "plugin.gateway.afterpay") {
+      const { gatewayCheckoutResponse } = paymentCheckoutTokenCreate
+      AfterPay.initialize({
+        countryCode: "AU",
+      })
+      AfterPay.redirect({ token: gatewayCheckoutResponse.token })
+    }
   }
 
   return (
     <Container fluid className={styles.deliveryContainer}>
-      <OrderSumaryComponent carts={carts} />
+      <OrderSumaryComponent />
 
       <Row>
         <Container>
@@ -140,7 +199,7 @@ export default function DeliveryComponent({ carts, userForm }) {
                 type="email"
                 placeholder="Your email address"
                 name="email"
-                value={userForm.email}
+                value={currentUser?.email}
                 readOnly={true}
               />
             </Form.Group>
@@ -178,7 +237,11 @@ export default function DeliveryComponent({ carts, userForm }) {
                   />
                 )}
 
-                <PaymentComponent />
+                <PaymentComponent
+                  availablePaymentGateways={availablePaymentGateways || []}
+                  paymentMethod={paymentMethod}
+                  setPaymentMethod={setPaymentMethod}
+                />
 
                 <Row>
                   <Form.Group controlId="btnPlaceOrder" as={Col} xs="12">

@@ -1,46 +1,47 @@
-import React, { useState } from "react"
+import { useState } from "react"
+import { useDispatch } from "react-redux"
 import { Container, Form } from "react-bootstrap"
 import { Formik } from "formik"
+import { useRouter } from "next/router"
 // import { useAuth } from "@saleor/sdk"
 import { useSignIn } from "@sdk/react"
 
+import { setCurrentUser } from "../../../redux/reducers/auth"
 import OrderSumaryComponent from "../OrderSumary"
 import CheckOutEmail from "./Email"
 import CheckoutPassword from "./Password"
 import { EmailPasswordSchema } from "./validate"
 import styles from "./CheckoutEmailPassword.module.scss"
 
-export default function CheckoutEmailPasswordComponent({
-  carts,
-  nextStep,
-  userForm,
-  setUserForm,
-}) {
+export default function CheckoutEmailPasswordComponent() {
+  const dispatch = useDispatch()
   const [activeStep, setActiveStep] = useState(1)
+  const initialValues = {
+    email: "admin@example.com",
+    password: "admin",
+  }
+  const router = useRouter()
 
   // const { signIn } = useAuth()
   // Will remove when upgrade Saleor v11
   const [signIn] = useSignIn()
 
   const handleNextStep = () => {
-    if (activeStep === 1) {
-      setActiveStep(2)
-    } else {
-      nextStep()
-    }
+    setActiveStep(activeStep + 1)
   }
 
   const handleSubmit = async (values) => {
-    const { dataError } = await signIn({
+    const { data, dataError } = await signIn({
       email: values.email,
       password: values.password,
     })
 
+    dispatch(setCurrentUser(data?.user))
+
     if (dataError?.error) {
       console.log(dataError.error)
     } else {
-      setUserForm(values)
-      handleNextStep()
+      router.push("/checkout/delivery")
     }
   }
 
@@ -48,12 +49,12 @@ export default function CheckoutEmailPasswordComponent({
 
   return (
     <Container fluid className={styles.checkoutEmailContainer}>
-      <OrderSumaryComponent carts={carts} />
+      <OrderSumaryComponent />
 
       <Formik
         validationSchema={EmailPasswordSchema}
         onSubmit={handleSubmit}
-        initialValues={userForm}
+        initialValues={initialValues}
       >
         {({ handleSubmit, handleChange, values }) => (
           <Form noValidate onSubmit={handleSubmit}>
