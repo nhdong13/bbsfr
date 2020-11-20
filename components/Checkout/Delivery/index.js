@@ -15,6 +15,8 @@ import BillingAddress from "./BillingAddress"
 import PaymentComponent from "./Payment"
 import { AddressSchema } from "./validate"
 import { paymentCheckoutTokenCreate } from "lib/mutations"
+import { initKlarna, authorizeKlarna } from "./klarna"
+import { authorizeAfterpay } from "./afterpay"
 import styles from "./Delivery.module.scss"
 
 const ADDRESS = {
@@ -43,42 +45,8 @@ export default function DeliveryComponent() {
   } = useCheckout()
   const [createPaymentCheckoutToken] = useMutation(paymentCheckoutTokenCreate)
   const [paymentMethod, setPaymentMethod] = useState(null)
+  const [showContinue, setShowContinue] = useState(false)
   const currentUser = useSelector((state) => state.currentUser)
-  const router = useRouter()
-  const { status, orderToken } = router.query
-
-  useEffect(() => {
-    const sendCreatePayment = async () => {
-      if (status === "SUCCESS" && orderToken) {
-        const paymentGateway = localStorage.getItem("paymentGateway")
-        const { dataError } = await createPayment(paymentGateway, orderToken)
-        if (dataError) {
-          alert(dataError.error?.message)
-          return
-        }
-
-        const {
-          data,
-          dataError: completeCheckoutError,
-        } = await completeCheckout()
-
-        if (completeCheckoutError) {
-          alert(completeCheckoutError.error?.message)
-          return
-        }
-
-        router.push(`/checkout/complete?orderNumber=${data?.number}`)
-      }
-    }
-    sendCreatePayment()
-  }, [status])
-
-  const initDeliveryData = {
-    shippingAddress: ADDRESS,
-    billingAddress: ADDRESS,
-    billingDifferentAddress: false,
-  }
-
   const [shippingMethods, setShippingMethods] = useState([
     {
       id: "U2hpcHBpbmdNZXRob2Q6MQ==",
@@ -99,12 +67,50 @@ export default function DeliveryComponent() {
       __typename: "ShippingMethod",
     },
   ])
+  const initDeliveryData = {
+    shippingAddress: ADDRESS,
+    billingAddress: ADDRESS,
+    billingDifferentAddress: false,
+  }
+  const router = useRouter()
+  const { status, orderToken } = router.query
 
-  const handleSubmitShipping = async (values) => {
+  useEffect(() => {
+    if (status === "SUCCESS") {
+      sendCreatePayment(orderToken)
+    }
+  }, [status])
+
+  const sendCreatePayment = async (orderToken) => {
+    if (orderToken) {
+      const paymentGateway = localStorage.getItem("paymentGateway")
+      const { dataError } = await createPayment(paymentGateway, orderToken)
+      if (dataError) {
+        alert(dataError.error?.message)
+        return
+      }
+
+      const {
+        data,
+        dataError: completeCheckoutError,
+      } = await completeCheckout()
+
+      if (completeCheckoutError) {
+        alert(completeCheckoutError.error?.message)
+        return
+      }
+
+      router.push(`/checkout/complete?orderNumber=${data?.number}`)
+    }
+  }
+
+  const handleSubmitCheckout = async (values) => {
     if (!paymentMethod) {
       alert("Please choose payment method!")
       return
     }
+
+    // Set Shipping Address and create Checkout
     const { shippingAddress, billingAddress, billingDifferentAddress } = {
       ...values,
     }
@@ -124,6 +130,7 @@ export default function DeliveryComponent() {
       return
     }
 
+    // Set Billing Address
     let billingAddressError
     if (!billingDifferentAddress) {
       const resBilling = await setBillingAsShippingAddress()
@@ -145,6 +152,7 @@ export default function DeliveryComponent() {
       return
     }
 
+    // Set Shipping method
     const { data, dataError: setShippingMethodError } = await setShippingMethod(
       checkoutData.availableShippingMethods[0].id
     )
@@ -154,6 +162,7 @@ export default function DeliveryComponent() {
       return
     }
 
+    // Create payment checkout token
     const { data: paymentCheckoutTokenRes } = await createPaymentCheckoutToken({
       variables: {
         checkoutId: checkoutData.id,
@@ -168,15 +177,19 @@ export default function DeliveryComponent() {
       alert(paymentCheckoutTokenCreate.checkoutErrors.error?.message)
       return
     }
-
     localStorage.setItem("paymentGateway", paymentMethod.id)
 
-    if (paymentMethod.id === "plugin.gateway.afterpay") {
-      const { gatewayCheckoutResponse } = paymentCheckoutTokenCreate
-      AfterPay.initialize({
-        countryCode: "AU",
-      })
-      AfterPay.redirect({ token: gatewayCheckoutResponse.token })
+    // Authorize payment checkout token
+    const { token } = paymentCheckoutTokenCreate.gatewayCheckoutResponse
+    switch (paymentMethod.id) {
+      case "plugin.gateway.afterpay":
+        authorizeAfterpay(token)
+        break
+      case "bikebiz.payments.klarna":
+        initKlarna(token, () => setShowContinue(true))
+        break
+      default:
+        break
     }
   }
 
@@ -211,7 +224,7 @@ export default function DeliveryComponent() {
 
           <Formik
             validationSchema={AddressSchema}
-            onSubmit={handleSubmitShipping}
+            onSubmit={handleSubmitCheckout}
             initialValues={initDeliveryData}
           >
             {({ handleSubmit, handleChange, values }) => (
@@ -242,18 +255,35 @@ export default function DeliveryComponent() {
                   paymentMethod={paymentMethod}
                   setPaymentMethod={setPaymentMethod}
                 />
+                <div id="klarna-payments-container"></div>
+                {showContinue && (
+                  <Row>
+                    <Form.Group controlId="btnPlaceOrder" as={Col} xs="12">
+                      <Button
+                        variant="secondary"
+                        className={clsx(styles.btnPlaceOrder, "w-100")}
+                        type="button"
+                        onClick={() => authorizeKlarna(sendCreatePayment)}
+                      >
+                        Continue
+                      </Button>
+                    </Form.Group>
+                  </Row>
+                )}
 
-                <Row>
-                  <Form.Group controlId="btnPlaceOrder" as={Col} xs="12">
-                    <Button
-                      variant="secondary"
-                      className={clsx(styles.btnPlaceOrder, "w-100")}
-                      type="submit"
-                    >
-                      Place Order
-                    </Button>
-                  </Form.Group>
-                </Row>
+                {!showContinue && (
+                  <Row>
+                    <Form.Group controlId="btnPlaceOrder" as={Col} xs="12">
+                      <Button
+                        variant="secondary"
+                        className={clsx(styles.btnPlaceOrder, "w-100")}
+                        type="submit"
+                      >
+                        Place Order
+                      </Button>
+                    </Form.Group>
+                  </Row>
+                )}
               </Form>
             )}
           </Formik>
