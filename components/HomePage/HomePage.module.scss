@@ -34,19 +34,21 @@
       font-size: 200px;
 
       color: $department-category-color;
-      line-height: 120px;
+      line-height: 140px;
 
       text-transform: uppercase;
+      white-space: nowrap;
 
       position: absolute;
       overflow: hidden;
       right: 0px;
       left: 25%;
-      top: $padding-top-department;
+      top: $padding-top-department - 10px;
       z-index: 1;
     }
 
     .status_product {
+      padding-bottom: 5px;
       font-style: normal;
       font-weight: bold;
       font-size: 10px;

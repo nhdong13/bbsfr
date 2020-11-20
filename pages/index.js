@@ -26,7 +26,7 @@ export async function getStaticProps({ req, res }) {
       initialApolloState: apolloClient.cache.extract(),
       department,
     },
-    revalidate: 1,
+    revalidate: 600,
   }
 }
 export default Home
