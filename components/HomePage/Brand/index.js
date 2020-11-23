@@ -1,19 +1,33 @@
-import React, { useState } from "react"
-import { Container } from "react-bootstrap"
+import React, { useState, useEffect } from "react"
+import { Container, Row, Col } from "react-bootstrap"
 import styles from "../HomePage.module.scss"
 import Slider from "react-slick"
 import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
-import { pad } from "../../../services/brand.js"
+import { pad, chunks } from "../../../services/brand.js"
+import Image from "next/image"
+import Link from "next/link"
 
 export default function Brand(props) {
   const [activeSlide, setSlide] = useState(1)
+  const [image_width, setImageWidth] = useState(100)
+  const [width, setWidth] = useState(100)
+
+  useEffect(() => {
+    // Update the document title using the browser API
+    let width = window.innerWidth > 720 ? 720 : window.innerWidth
+    setImageWidth(width / 4)
+    setWidth(width - 30)
+  })
+
   let b = []
   b.push(props.brands)
   b.push(props.brands)
   b.push(props.brands)
   b.push(props.brands)
   b = b.flat()
+  console.log(b[0])
+  let brands = chunks(b, 6)
   //use b array clone for test
   let num_pages = Math.floor(b.length / 6) + 1
   const settings = {
@@ -22,9 +36,8 @@ export default function Brand(props) {
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: false,
-    adaptiveHeight: true,
     beforeChange: (current, next) => {
-      console.log(next)
+      setSlide(next + 1)
     },
     responsive: [
       {
@@ -38,38 +51,63 @@ export default function Brand(props) {
     ],
   }
   return (
-    <Container className={styles.brand}>
+    <Container className={styles.brand} id="home_page_brand">
       <div className={styles.striped}></div>
       <div className={styles.group_heading}>
         <h2 className={styles.text_heading_line_40}>shop by brand</h2>
-        <p className={styles.view_all_btn}>view all</p>
+        <Link href="/[slug]" as={`/brands`}>
+          <p className={styles.view_all_btn}>view all</p>
+        </Link>
       </div>
-      <Slider {...settings} className="slider">
-        <div>
-          <h3>1</h3>
-        </div>
-        <div>
-          <h3>2</h3>
-        </div>
-        <div>
-          <h3>3</h3>
-        </div>
-        <div>
-          <h3>4</h3>
-        </div>
-        <div>
-          <h3>5</h3>
-        </div>
-        <div>
-          <h3>6</h3>
-        </div>
+      <Slider {...settings} className={styles.slider_custom}>
+        {brands.map((brand) => (
+          <div>
+            <Row className="auto-clear">
+              {brand.map((b, id) =>
+                (id + 1) / 4 != 1 ? (
+                  <Col className={styles.logo_custom}>
+                    <Image
+                      src={b.brand_logo.url}
+                      alt={b.brand_logo.alt}
+                      height={image_width}
+                      width={image_width}
+                      loading="eager"
+                    ></Image>
+                  </Col>
+                ) : (
+                  [
+                    <div className="w-100"></div>,
+                    <Col className={styles.logo_custom}>
+                      <Image
+                        src={b.brand_logo.url}
+                        alt={b.brand_logo.alt}
+                        height={image_width}
+                        width={image_width}
+                        loading="eager"
+                      ></Image>
+                    </Col>,
+                  ]
+                )
+              )}
+            </Row>
+            <h3 className="d-none"></h3>
+          </div>
+        ))}
       </Slider>
       <div className={styles.num_pages}>
         <p>{pad(activeSlide)}</p>
         <p className={styles.total_num_pages}>{`/${pad(num_pages)}`}</p>
       </div>
       <div className={styles.card_holder}>
-        <div className={`${styles.card} ${styles.bg_gold}`}></div>
+        {brands.map((brand, id) => (
+          <div
+            className={`${styles.card} ${styles.bg_gold} ${
+              activeSlide == id + 1 ? styles.card_active : styles.card_inactive
+            }`}
+            style={{ width: `${width / brands.length}px` }}
+            tyle
+          ></div>
+        ))}
       </div>
     </Container>
   )

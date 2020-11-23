@@ -1,5 +1,8 @@
 @import "/styles/variables.scss";
 
+// Align
+$padding-top-department: 60px;
+
 .homepageContainer {
   .department {
     position: relative;
@@ -110,6 +113,24 @@
   }
 
   .brand {
+    padding-top: 55px;
+    padding-bottom: 60px;
+
+    .slider_custom {
+      padding-top: 35px;
+      padding-bottom: 30px;
+    }
+
+    .logo_custom {
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+      // border-left: 1px solid;
+      // border-bottom: 1px solid;
+
+      display: flex;
+      justify-content: center;
+    }
+
     .num_pages {
       display: flex;
       .total_num_pages {
@@ -126,7 +147,6 @@
       font-size: 5px;
       font-weight: 800;
       height: 1em;
-      width: 64em;
       padding: 0.5em 1em;
       border-radius: 0.25em;
       display: table-cell;
@@ -135,13 +155,19 @@
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
       position: relative;
       top: 1px;
+      opacity: 0;
     }
 
     .bg_gold {
-      background: -webkit-linear-gradient(110deg, #181818 60%, #ffb00f 60%);
-      background: -o-linear-gradient(110deg, #181818 60%, #ffb00f 60%);
-      background: -moz-linear-gradient(110deg, #181818 60%, #ffb00f 60%);
-      background: linear-gradient(110deg, #181818 60%, #ffb00f 60%);
+      background: -webkit-linear-gradient(110deg, #181818 70%, #ffb00f 30%);
+      background: -o-linear-gradient(110deg, #181818 70%, #ffb00f 30%);
+      background: -moz-linear-gradient(110deg, #181818 70%, #ffb00f 30%);
+      background: linear-gradient(110deg, #181818 70%, #ffb00f 30%);
+    }
+
+    .card_active {
+      opacity: 1;
+      transition: all 1500ms ease-out;
     }
   }
 
