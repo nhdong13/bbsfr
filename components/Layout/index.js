@@ -16,6 +16,11 @@ export default function Layout({ children }) {
           async
           defer
         ></script>
+        <script
+          type="text/javascript"
+          src="https://x.klarnacdn.net/kp/lib/v1/api.js"
+          async
+        ></script>
       </Head>
       <Header />
       <main>{children}</main>
