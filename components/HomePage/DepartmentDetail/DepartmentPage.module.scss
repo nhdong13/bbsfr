@@ -1,25 +1,18 @@
 @import "/styles/variables.scss";
+@import "/styles/mixin";
 
-//Mixins 
+//Mixin
 .itemCategoryMixins {
 	.categoryIndex {
-		font-family: Rajdhani;
-		font-size: 12px;
-		font-style: normal;
-		font-weight: 600;
-		letter-spacing: 0px;
-		text-align: left;
-		color: #939393;
-	}
+    @include font-family("Rajdhani", 12px, 600, #939393);
+    text-align: left; 
+  }
+  
 	.categoryTitle {
-		font-family: Rajdhani;
-		font-size: 16px;
-		font-style: normal;
-		font-weight: 600;
-		letter-spacing: 0px;
-		text-align: left;
-		color: #181818;
-	}
+    @include font-family(Rajdhani, 16px, 600, $primary-text-color);
+    text-align: left; 
+  }
+  
 	.categoryLeft{
 		position: relative;
 		.categoryLeftImg{ 
@@ -32,8 +25,15 @@
 			top: 0px;
 			font-size: 12px;
 		}
-	}
+  }
+  
+  .mixin-p {
+    text-transform: uppercase;
+    margin-bottom: unset
+  }
 }
+/* end mixin */
+
 
 //Header
 .departmentContainer {
@@ -52,20 +52,17 @@
 
   .contentMiddle {
     position: absolute;
-    text-transform: uppercase;
-    color: #f6f6f6;
-    font-family: Rajdhani;
-    font-size: 200px;
     font-style: normal;
-    font-weight: 700;
     line-height: 120px;
     letter-spacing: 0px;
     text-align: left;
-    margin-bottom: unset;
     z-index: -1;
     top: 60px;
     right: 0px;
     left: 25%;
+    @extend .mixin-p;
+    @include font-family(Rajdhani, 200px, 700, $department-category-color);
+
   }
 
   .contentLeft {
@@ -74,30 +71,53 @@
     left: 16px;
 
     .note {
-      font-family: Roboto;
-      font-size: 10px;
       font-style: normal;
-      font-weight: 700;
       line-height: 16px;
       letter-spacing: 1px;
       text-align: left;
-      color: #ffb00f;
-      text-transform: uppercase;
-      margin-bottom: unset;
+      @extend .mixin-p;
+      @include font-family(Roboto, 10px, 700, $secondary-button-background-color);
     }
 
     .heading {
-      font-family: Rajdhani;
-      font-size: 31px;
       font-style: normal;
-      font-weight: 700;
       line-height: 31px;
       letter-spacing: 0px;
       text-align: left;
-      color: #181818;
-      text-transform: uppercase;
-      margin-bottom: unset;
+      @extend .mixin-p;
+      @include font-family(Rajdhani, 31px, 700, $primary-text-color);
     }
+  }
+}
+
+//Session search
+.sessionSearch{
+  background: #F6F6F4;
+  padding-top: 40px;
+  padding-bottom: 45px;
+
+  .sessionSearchTitle {
+    font-style: normal;
+    letter-spacing: 0px;
+    text-align: center;
+    @include font-family(Rajdhani, 26px, 700, $primary-text-color);
+  }
+  
+  .sessionSearchText{ 
+    font-style: normal;
+    line-height: 20px;
+    letter-spacing: 0px;
+    text-align: left;
+    @include font-family(Rajdhani, 16px, 600, $primary-text-color);
+
+    .sessionSearchButtonSubmit{
+      background: $secondary-button-background-color;
+      color: $primary-button-color;
+      width: 100%;
+      height: 64px;
+      font-weight: 600;
+      border: unset;
+    } 
   }
 }
 
@@ -108,23 +128,19 @@
 	overflow: hidden;
 
   .sessionTitleCategoryTextRight {
-    font-family: Rajdhani;
-    font-size: 21px;
     font-style: normal;
-    font-weight: 600;
     letter-spacing: 0px;
     text-align: left;
     margin-bottom: unset;
+    @include font-family(Rajdhani, 21px, 600, $primary-text-color);
   }
+
   .sessionTitleCategoryTextLeft {
-    font-family: Roboto;
-    font-size: 12px;
     font-style: normal;
-    font-weight: 700;
     letter-spacing: 0px;
     text-align: right;
-    color: #ffb00f;
     margin-bottom: unset;
+    @include font-family(Roboto, 12px, 700, #ffb00f);
   }
 }
 //List category
