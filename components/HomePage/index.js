@@ -1,10 +1,11 @@
 import React, { useState } from "react"
 import Department from "./Department"
+import Brand from "./Brand"
 import styles from "./HomePage.module.scss"
 
 function Home(props) {
   let departments = props.department
-  console.log(departments)
+  let brands = props.brands
   let count_department = departments.length % 2 == 0 ? -1 : 0
   return (
     <div className={styles.homepageContainer}>
@@ -19,6 +20,7 @@ function Home(props) {
           image={department.department_image}
         />
       ))}
+      <Brand brands={brands} />
     </div>
   )
 }
