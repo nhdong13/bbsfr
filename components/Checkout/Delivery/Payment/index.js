@@ -15,23 +15,26 @@ export default function PaymentComponent({
         <h2 className="font-weight-bold">Payment</h2>
       </Col>
       <Col md="12" className={styles.groupMethod}>
-        {availablePaymentGateways.map((method) => (
-          <Button
-            key={method.id}
-            variant={paymentMethod?.id === method.id ? "secondary" : "gray"}
-            className={styles.btn}
-            onClick={() => setPaymentMethod(method)}
-          >
-            <span className={styles.btnIcon}>
-              <Image
-                src={PAYMENT_METHODS_ICON[method.id]}
-                alt={method.name}
-                width={48}
-                height={16}
-              />
-            </span>
-          </Button>
-        ))}
+        {availablePaymentGateways.map(
+          (method) =>
+            PAYMENT_METHODS_ICON[method.id] && (
+              <Button
+                key={method.id}
+                variant={paymentMethod?.id === method.id ? "secondary" : "gray"}
+                className={styles.btn}
+                onClick={() => setPaymentMethod(method)}
+              >
+                <span className={styles.btnIcon}>
+                  <Image
+                    src={PAYMENT_METHODS_ICON[method.id]}
+                    alt={method.name}
+                    width={48}
+                    height={16}
+                  />
+                </span>
+              </Button>
+            )
+        )}
         <div className={styles.dumbContent}></div>
         <div className={styles.dumbContent}></div>
         <div className={styles.dumbContent}></div>

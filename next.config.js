@@ -3,6 +3,6 @@ module.exports = {
     domains: ["demo.saleor.io", "localhost"],
   },
   experimental: {
-    documentMiddleware: true
+    documentMiddleware: true,
   },
 }

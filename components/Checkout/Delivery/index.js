@@ -1,6 +1,14 @@
 import { useState, useEffect } from "react"
 import { useSelector } from "react-redux"
-import { Container, Form, Row, Col, Button } from "react-bootstrap"
+import {
+  Container,
+  Form,
+  Row,
+  Col,
+  Button,
+  Modal,
+  Spinner,
+} from "react-bootstrap"
 import { Formik } from "formik"
 // import { useCheckout } from "@saleor/sdk"
 import { useCheckout } from "@sdk/react"
@@ -46,6 +54,7 @@ export default function DeliveryComponent() {
   const [createPaymentCheckoutToken] = useMutation(paymentCheckoutTokenCreate)
   const [paymentMethod, setPaymentMethod] = useState(null)
   const [showContinue, setShowContinue] = useState(false)
+  const [showLoading, setShowLoading] = useState(false)
   const currentUser = useSelector((state) => state.currentUser)
   const [shippingMethods, setShippingMethods] = useState([
     {
@@ -73,19 +82,27 @@ export default function DeliveryComponent() {
     billingDifferentAddress: false,
   }
   const router = useRouter()
-  const { status, orderToken } = router.query
+  const { status, orderToken, result, checkoutId } = router.query
 
   useEffect(() => {
+    let token
     if (status === "SUCCESS") {
-      sendCreatePayment(orderToken)
+      token = orderToken
     }
-  }, [status])
+
+    if (result === "approved") {
+      token = checkoutId
+    }
+    sendCreatePayment(token)
+  }, [status, result])
 
   const sendCreatePayment = async (orderToken) => {
     if (orderToken) {
+      setShowLoading(true)
       const paymentGateway = localStorage.getItem("paymentGateway")
       const { dataError } = await createPayment(paymentGateway, orderToken)
       if (dataError) {
+        setShowLoading(false)
         alert(dataError.error?.message)
         return
       }
@@ -96,6 +113,7 @@ export default function DeliveryComponent() {
       } = await completeCheckout()
 
       if (completeCheckoutError) {
+        setShowLoading(false)
         alert(completeCheckoutError.error?.message)
         return
       }
@@ -180,13 +198,20 @@ export default function DeliveryComponent() {
     localStorage.setItem("paymentGateway", paymentMethod.id)
 
     // Authorize payment checkout token
-    const { token } = paymentCheckoutTokenCreate.gatewayCheckoutResponse
+    const {
+      token,
+      checkoutUri,
+    } = paymentCheckoutTokenCreate.gatewayCheckoutResponse
     switch (paymentMethod.id) {
       case "plugin.gateway.afterpay":
         authorizeAfterpay(token)
         break
       case "bikebiz.payments.klarna":
         initKlarna(token, () => setShowContinue(true))
+        break
+      case "bikebiz.payments.zipmoney":
+        console.log("checkoutUri", checkoutUri)
+        router.push(checkoutUri)
         break
       default:
         break
@@ -195,6 +220,20 @@ export default function DeliveryComponent() {
 
   return (
     <Container fluid className={styles.deliveryContainer}>
+      <Row>
+        <Modal
+          show={showLoading}
+          contentClassName={styles.modalContent}
+          dialogClassName={styles.modal}
+        >
+          <Modal.Body className={styles.modalBody}>
+            <Spinner animation="border" role="status">
+              <span className="sr-only">Loading...</span>
+            </Spinner>
+          </Modal.Body>
+        </Modal>
+      </Row>
+
       <OrderSumaryComponent />
 
       <Row>
