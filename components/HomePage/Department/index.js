@@ -8,7 +8,7 @@ export default function Department(props) {
     <Link
        href={`${props.slug}`}
     >
-      <Container className={styles.department}>
+      <Container fluid className={styles.department}>
         <Row
           className={
             props.count % 2 != 0

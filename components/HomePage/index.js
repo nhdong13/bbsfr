@@ -1,9 +1,10 @@
 import React from "react";
 import Department from "./Department"
+import Brand from "./Brand"
 import styles from "./HomePage.module.scss"
 
 function Home(props) {
-  const { department: departments } = props;
+  const { department: departments, brands } = props;
   let count_department = departments.length % 2 == 0 ? -1 : 0;
   return (
     <div className={styles.homepageContainer}>
@@ -18,6 +19,7 @@ function Home(props) {
           image={department.department_image}
         />
       ))}
+      <Brand brands={brands} />
     </div>
   )
 }
