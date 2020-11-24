@@ -1,0 +1,150 @@
+@import "/styles/variables.scss";
+
+//Mixins 
+.itemCategoryMixins {
+	.categoryIndex {
+		font-family: Rajdhani;
+		font-size: 12px;
+		font-style: normal;
+		font-weight: 600;
+		letter-spacing: 0px;
+		text-align: left;
+		color: #939393;
+	}
+	.categoryTitle {
+		font-family: Rajdhani;
+		font-size: 16px;
+		font-style: normal;
+		font-weight: 600;
+		letter-spacing: 0px;
+		text-align: left;
+		color: #181818;
+	}
+	.categoryLeft{
+		position: relative;
+		.categoryLeftImg{ 
+			position: absolute;
+			right:0px;
+		}
+		.categoryLeftIcon{
+			position: absolute;
+			right: 0px;
+			top: 0px;
+			font-size: 12px;
+		}
+	}
+}
+
+//Header
+.departmentContainer {
+  position: relative;
+  height: 216px;
+  width: 100%;
+  border-bottom: 0.5px solid #e5e5e4;
+  overflow: hidden;
+
+  .contentRight {
+    position: absolute;
+    right: -20px;
+    top: 0px;
+    transform: matrix(-1, 0, 0, 1, 0, 0);
+  }
+
+  .contentMiddle {
+    position: absolute;
+    text-transform: uppercase;
+    color: #f6f6f6;
+    font-family: Rajdhani;
+    font-size: 200px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 120px;
+    letter-spacing: 0px;
+    text-align: left;
+    margin-bottom: unset;
+    z-index: -1;
+    top: 60px;
+    right: 0px;
+    left: 25%;
+  }
+
+  .contentLeft {
+    position: absolute;
+    top: 60px;
+    left: 16px;
+
+    .note {
+      font-family: Roboto;
+      font-size: 10px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 16px;
+      letter-spacing: 1px;
+      text-align: left;
+      color: #ffb00f;
+      text-transform: uppercase;
+      margin-bottom: unset;
+    }
+
+    .heading {
+      font-family: Rajdhani;
+      font-size: 31px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 31px;
+      letter-spacing: 0px;
+      text-align: left;
+      color: #181818;
+      text-transform: uppercase;
+      margin-bottom: unset;
+    }
+  }
+}
+
+//Session title Category
+.sessionTitleCategory {
+  height: 100px;
+	line-height: 100px;
+	overflow: hidden;
+
+  .sessionTitleCategoryTextRight {
+    font-family: Rajdhani;
+    font-size: 21px;
+    font-style: normal;
+    font-weight: 600;
+    letter-spacing: 0px;
+    text-align: left;
+    margin-bottom: unset;
+  }
+  .sessionTitleCategoryTextLeft {
+    font-family: Roboto;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    letter-spacing: 0px;
+    text-align: right;
+    color: #ffb00f;
+    margin-bottom: unset;
+  }
+}
+//List category
+.sessionListCategory {
+	background-color: #f6f6f4;
+	
+	.containerItemCategoryLasted{
+    height: 48px;
+		line-height: 48px;
+		border-bottom: unset;
+		@extend .itemCategoryMixins;
+	}
+	
+  .containerItemCategory {
+		overflow: hidden;
+    height: 48px;
+    line-height: 48px;
+		border-bottom: 0.5px solid #e5e5e4;
+		@extend .itemCategoryMixins;
+  }
+}
+
+

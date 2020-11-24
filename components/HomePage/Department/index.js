@@ -5,7 +5,9 @@ import Link from "next/link"
 
 export default function Department(props) {
   return (
-    <Link href="/[slug]" as={`/${props.slug}`}>
+    <Link
+       href={`${props.slug}`}
+    >
       <Container className={styles.department}>
         <Row
           className={
@@ -42,5 +44,5 @@ export default function Department(props) {
         </Row>
       </Container>
     </Link>
-  )
+  );
 }
