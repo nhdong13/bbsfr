@@ -1,7 +1,3 @@
-import { useEffect } from "react"
-import { useDispatch } from "react-redux"
-import Head from "next/head"
-import basicAuthMiddleware from "@ray4105/nextjs-basic-auth-middleware"
 import { initializeApollo } from "../lib/apollo"
 import { initializeStore } from "../redux/store"
 import HomePage from "components/HomePage"

@@ -21,7 +21,6 @@ export default function Brand(props) {
   })
 
   let brands = chunks(props.brands, 6)
-  //use b array clone for test
   let num_pages = Math.floor(brands.length / 6) + 1
   const settings = {
     infinite: true,
