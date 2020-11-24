@@ -10,3 +10,30 @@ export const chunks = (arr, n) => {
   )
   return groups
 }
+
+export const checkID = (id, styles, length = 0) => {
+  let classType
+
+  switch (id) {
+    case 0:
+      classType = length == 1 ? "" : styles.border_right_bottom
+      break
+    case 1:
+      classType =
+        length == 2 ? styles.border_bottom : styles.border_right_bottom
+      break
+    case 2:
+      classType = styles.border_bottom
+      break
+    case 3:
+      classType = length == 4 ? (classType = "") : styles.border_right
+      break
+    case 4:
+      classType = length == 5 ? (classType = "") : styles.border_right
+      break
+    default:
+      classType = ""
+      break
+  }
+  return classType
+}

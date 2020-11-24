@@ -4,7 +4,7 @@ import styles from "../HomePage.module.scss"
 import Slider from "react-slick"
 import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
-import { pad, chunks } from "../../../services/brand.js"
+import { pad, chunks, checkID } from "../../../services/brand.js"
 import Image from "next/image"
 import Link from "next/link"
 
@@ -15,21 +15,14 @@ export default function Brand(props) {
 
   useEffect(() => {
     // Update the document title using the browser API
-    let width = window.innerWidth > 720 ? 720 : window.innerWidth
-    setImageWidth(width / 4)
+    let width = window.innerWidth
+    setImageWidth(width / 4.5)
     setWidth(width - 30)
   })
 
-  let b = []
-  b.push(props.brands)
-  b.push(props.brands)
-  b.push(props.brands)
-  b.push(props.brands)
-  b = b.flat()
-  console.log(b[0])
-  let brands = chunks(b, 6)
+  let brands = chunks(props.brands, 6)
   //use b array clone for test
-  let num_pages = Math.floor(b.length / 6) + 1
+  let num_pages = Math.floor(brands.length / 6) + 1
   const settings = {
     infinite: true,
     speed: 500,
@@ -51,7 +44,7 @@ export default function Brand(props) {
     ],
   }
   return (
-    <Container className={styles.brand} id="home_page_brand">
+    <Container fluid className={styles.brand} id="home_page_brand">
       <div className={styles.striped}></div>
       <div className={styles.group_heading}>
         <h2 className={styles.text_heading_line_40}>shop by brand</h2>
@@ -65,27 +58,41 @@ export default function Brand(props) {
             <Row className="auto-clear">
               {brand.map((b, id) =>
                 (id + 1) / 4 != 1 ? (
-                  <Col className={styles.logo_custom}>
-                    <Image
-                      src={b.brand_logo.url}
-                      alt={b.brand_logo.alt}
-                      height={image_width}
-                      width={image_width}
-                      loading="eager"
-                    ></Image>
-                  </Col>
-                ) : (
-                  [
-                    <div className="w-100"></div>,
-                    <Col className={styles.logo_custom}>
+                  <Link href={b.brand_link}>
+                    <Col
+                      className={`${styles.logo_custom} ${
+                        styles.point_line_brand
+                      } ${checkID(id, styles, brand.length)}`}
+                    >
                       <Image
+                        className={styles.image_logo}
                         src={b.brand_logo.url}
                         alt={b.brand_logo.alt}
                         height={image_width}
                         width={image_width}
                         loading="eager"
                       ></Image>
-                    </Col>,
+                    </Col>
+                  </Link>
+                ) : (
+                  [
+                    <div className="w-100"></div>,
+                    <Link href={b.brand_link}>
+                      <Col
+                        className={`${styles.logo_custom} ${
+                          styles.point_line_brand
+                        } ${checkID(id, styles)}`}
+                      >
+                        <Image
+                          className={styles.image_logo}
+                          src={b.brand_logo.url}
+                          alt={b.brand_logo.alt}
+                          height={image_width}
+                          width={image_width}
+                          loading="eager"
+                        ></Image>
+                      </Col>
+                    </Link>,
                   ]
                 )
               )}
@@ -105,7 +112,6 @@ export default function Brand(props) {
               activeSlide == id + 1 ? styles.card_active : styles.card_inactive
             }`}
             style={{ width: `${width / brands.length}px` }}
-            tyle
           ></div>
         ))}
       </div>

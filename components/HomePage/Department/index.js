@@ -6,7 +6,7 @@ import Link from "next/link"
 export default function Department(props) {
   return (
     <Link href="/[slug]" as={`/${props.slug}`}>
-      <Container className={styles.department}>
+      <Container fluid className={styles.department}>
         <Row
           className={
             props.count % 2 != 0
