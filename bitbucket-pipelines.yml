@@ -31,7 +31,7 @@ definitions:
             AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
             AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
             CLUSTER_NAME: 'bbsfr-staging-storefront-cluster'
-            SERVICE_NAME: 'bbsfr-staging-storefront-service'
+            SERVICE_NAME: 'bbsfr-staging-storefront-service2'
             TASK_DEFINITION: 'staging_task_definition.json'
             FORCE_NEW_DEPLOYMENT: 'true'
 
