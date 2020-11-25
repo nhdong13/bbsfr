@@ -35,7 +35,7 @@ const ServiceComponent = (props) => {
 
   return (
     <div>
-      <SessionHeaderDepartmentComponent props={department} />
+      <SessionHeaderDepartmentComponent department={department} />
       {/* ss search */}
       <Container className={styles.sessionSearch}>
         <div style={{ alignItems: "center", textAlign: "center" }}>
@@ -145,7 +145,7 @@ const ServiceComponent = (props) => {
             </Container>
           ))}
       </Container>
-      <SessionBrowseByCategoryComponent props={collections} />
+      <SessionBrowseByCategoryComponent collections={collections} />
       <Brand brands={brands} />
     </div>
   );
