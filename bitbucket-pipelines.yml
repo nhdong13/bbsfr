@@ -14,11 +14,14 @@ definitions:
         - export ECR_STAGING_REPO_URI=569460749621.dkr.ecr.ap-southeast-2.amazonaws.com/$ECR_STAGING_REPO_NAME
         # Login to docker registry on AWS
         - eval $(aws ecr get-login --no-include-email)
-        # Build image
+        # nextjs
         - docker build -t $ECR_STAGING_REPO_NAME .
-        # Push image to private registry
         - docker tag $ECR_STAGING_REPO_NAME:latest $ECR_STAGING_REPO_URI:latest
         - docker push $ECR_STAGING_REPO_URI:latest
+        # nginx
+        - docker build -t mynginx -f Dockerfile.nginx .
+        - docker tag mynginx:latest 569460749621.dkr.ecr.ap-southeast-2.amazonaws.com/staging-storefront-nginx:latest
+        - docker push 569460749621.dkr.ecr.ap-southeast-2.amazonaws.com/staging-storefront-nginx:latest
     deploy-to-ecs: &deploy-to-ecs
       name: Deploy to ECS
       image: atlassian/default-image:2
@@ -31,7 +34,7 @@ definitions:
             AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
             AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
             CLUSTER_NAME: 'bbsfr-staging-storefront-cluster'
-            SERVICE_NAME: 'bbsfr-staging-storefront-service'
+            SERVICE_NAME: 'bbsfr-staging-storefront-service2'
             TASK_DEFINITION: 'staging_task_definition.json'
             FORCE_NEW_DEPLOYMENT: 'true'
 
