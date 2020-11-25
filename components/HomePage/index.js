@@ -10,9 +10,9 @@ function Home(props) {
   let count_department = departments.length % 2 == 0 ? -1 : 0
   return (
     <div className={styles.homepageContainer}>
-      {departments.map((department, id) => (
+      {departments.map((department, index) => (
         <Department
-          key={id}
+          key={index}
           count={++count_department}
           preHeader={department.department_preHeader[0].text}
           title={department.department_title[0].text}
@@ -27,6 +27,6 @@ function Home(props) {
         pageParagraph={SEO.page_paragraph}
       />
     </div>
-  )
+  );
 }
 export default Home

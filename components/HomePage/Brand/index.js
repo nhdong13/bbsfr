@@ -21,7 +21,7 @@ export default function Brand(props) {
   })
 
   let brands = chunks(props.brands, 6)
-  let num_pages = Math.floor(brands.length / 6) + 1
+  let num_pages = Math.floor(props.brands.length / 6) + 1
   const settings = {
     infinite: true,
     speed: 500,
@@ -52,8 +52,8 @@ export default function Brand(props) {
         </Link>
       </div>
       <Slider {...settings} className={styles.slider_custom}>
-        {brands.map((brand) => (
-          <div>
+        {brands.map((brand, index) => (
+          <div key={index}>
             <Row className="auto-clear">
               {brand.map((b, id) =>
                 (id + 1) / 4 != 1 ? (
@@ -107,6 +107,7 @@ export default function Brand(props) {
       <div className={styles.card_holder}>
         {brands.map((brand, id) => (
           <div
+            key={id}
             className={`${styles.card} ${styles.bg_gold} ${
               activeSlide == id + 1 ? styles.card_active : styles.card_inactive
             }`}
@@ -115,5 +116,5 @@ export default function Brand(props) {
         ))}
       </div>
     </Container>
-  )
+  );
 }

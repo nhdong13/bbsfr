@@ -5,6 +5,29 @@ $padding-top-department: 60px;
 $border_brand_color: #e5e5e5;
 $vertical_border: 2.5px;
 
+//HomePage global
+.view_all_btn {
+  display: flex;
+  align-items: flex-end;
+
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 20px;
+  /* identical to box height, or 167% */
+
+  text-align: right;
+  text-transform: capitalize;
+  color: $status-product-color;
+
+  cursor: pointer;
+}
+
+.group_heading {
+  display: flex;
+  justify-content: space-between;
+}
+
 .homepageContainer {
   //Department
   .department {
@@ -125,9 +148,9 @@ $vertical_border: 2.5px;
       background: $department-background-sencond-color;
     }
   }
-
-  //Brand
 }
+
+//Brand
 .brand {
   padding-top: 55px;
   padding-bottom: 60px;

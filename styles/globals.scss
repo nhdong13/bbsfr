@@ -118,8 +118,10 @@ input::placeholder {
 .custom-select, input, .form-control, .btn{
   font-weight: 600;
 }
+.custom-select-lg{
+  height: calc(1.5em + 1rem + 10px);
+}
 /* End custom input */
-
 
 //Custom for switch global
 .custom-switch .custom-control-label::before {
