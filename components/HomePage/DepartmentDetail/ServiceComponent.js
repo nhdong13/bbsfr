@@ -1,12 +1,12 @@
 import styles from "./DepartmentPage.module.scss";
 import Image from "next/image";
 import { Row, Col, Button, Container, Form } from "react-bootstrap";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Brand from "../Brand";
 import SessionHeaderDepartmentComponent from "./Sesstion/SessionHeaderDepartmentComponent";
 import SessionBrowseByCategoryComponent from "./Sesstion/SessionBrowseByCategoryComponent";
 
-const UsedBikeComponent = (props) => {
+const ServiceComponent = (props) => {
   const [links, setLinks] = useState([
     {
       icon: "/icons/browse.png",
@@ -150,4 +150,4 @@ const UsedBikeComponent = (props) => {
     </div>
   );
 };
-export default UsedBikeComponent;
+export default ServiceComponent;

@@ -1,14 +1,14 @@
 import Brand from "../Brand";
-import SessionHeaderDepartmentComponent from "./Sesstion/SessionHeaderDepartmentComponent";
 import SessionBrowseByCategoryComponent from "./Sesstion/SessionBrowseByCategoryComponent";
+import SessionHeaderDepartmentComponent from "./Sesstion/SessionHeaderDepartmentComponent";
 
-const RoadGearComponent = (props) => {
+const MxGearComponent = (props) => {
   const { department } = props;
   const { collections, shop_by_brand_slider_content } = department;
   const brands =
-    shop_by_brand_slider_content && shop_by_brand_slider_content.length > 0
-      ? shop_by_brand_slider_content
-      : [];
+  shop_by_brand_slider_content && shop_by_brand_slider_content.length > 0
+    ? shop_by_brand_slider_content
+    : [];
   return (
     <div>
       <SessionHeaderDepartmentComponent department={department} />
@@ -17,4 +17,4 @@ const RoadGearComponent = (props) => {
     </div>
   );
 };
-export default RoadGearComponent;
+export default MxGearComponent;

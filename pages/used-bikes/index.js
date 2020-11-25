@@ -1,5 +1,5 @@
-import UsedBikeComponent from "../components/HomePage/DepartmentDetail/UsedBikeComponent";
-import { getDepartmentByUID } from "../lib/prismic/api";
+import UsedBikeComponent from "../../components/HomePage/DepartmentDetail/UsedBikeComponent";
+import { getDepartmentByUID } from "../../lib/prismic/api";
 
 function UsedBikes({ department }) {
   return <UsedBikeComponent department={department} />;

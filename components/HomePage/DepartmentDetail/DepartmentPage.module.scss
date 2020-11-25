@@ -3,43 +3,48 @@
 
 //Mixin
 .itemCategoryMixins {
-	.categoryIndex {
+  .categoryIndex {
     @include font-family("Rajdhani", 12px, 600, #939393);
-    text-align: left; 
+    text-align: left;
   }
-  
-	.categoryTitle {
+
+  .categoryTitle {
     @include font-family(Rajdhani, 16px, 600, $primary-text-color);
-    text-align: left; 
+    text-align: left;
   }
-  
-	.categoryLeft{
-		position: relative;
-		.categoryLeftImg{ 
-			position: absolute;
-			right:0px;
-		}
-		.categoryLeftIcon{
-			position: absolute;
-			right: 0px;
-			top: 0px;
-			font-size: 12px;
-		}
+
+  .categoryLeft {
+    position: relative;
+    .categoryLeftImg {
+      position: absolute;
+      right: 0px;
+    }
+    .categoryLeftIcon {
+      position: absolute;
+      right: 0px;
+      top: 0px;
+      font-size: 12px;
+    }
   }
-  
+
   .mixin-p {
     text-transform: uppercase;
-    margin-bottom: unset
+    margin-bottom: unset;
   }
 }
-/* end mixin */
 
+.padding-session {
+  padding-top: 40px;
+  padding-bottom: 45px;
+}
+/* end mixin */
 
 //Header
 .departmentContainer {
   position: relative;
   height: 216px;
   width: 100%;
+  max-width: unset;
   border-bottom: 0.5px solid #e5e5e4;
   overflow: hidden;
 
@@ -51,18 +56,19 @@
   }
 
   .contentMiddle {
+    overflow: hidden;
     position: absolute;
     font-style: normal;
-    line-height: 120px;
+    line-height: 150px;
     letter-spacing: 0px;
     text-align: left;
     z-index: -1;
     top: 60px;
     right: 0px;
     left: 25%;
+    height: 150px;
     @extend .mixin-p;
     @include font-family(Rajdhani, 200px, 700, $department-category-color);
-
   }
 
   .contentLeft {
@@ -76,7 +82,12 @@
       letter-spacing: 1px;
       text-align: left;
       @extend .mixin-p;
-      @include font-family(Roboto, 10px, 700, $secondary-button-background-color);
+      @include font-family(
+        Roboto,
+        10px,
+        700,
+        $secondary-button-background-color
+      );
     }
 
     .heading {
@@ -91,41 +102,46 @@
 }
 
 //Session search
-.sessionSearch{
-  background: #F6F6F4;
-  padding-top: 40px;
-  padding-bottom: 45px;
-
+.sessionSearch {
+  background: #f6f6f4;
+  max-width: unset;
+  @extend .padding-session;
   .sessionSearchTitle {
     font-style: normal;
     letter-spacing: 0px;
     text-align: center;
+    width: 100%;
     @include font-family(Rajdhani, 26px, 700, $primary-text-color);
   }
-  
-  .sessionSearchText{ 
+
+  .sessionSearchText {
     font-style: normal;
     line-height: 20px;
     letter-spacing: 0px;
     text-align: left;
     @include font-family(Rajdhani, 16px, 600, $primary-text-color);
 
-    .sessionSearchButtonSubmit{
+    .sessionSearchButtonSubmit {
       background: $secondary-button-background-color;
       color: $primary-button-color;
       width: 100%;
       height: 64px;
       font-weight: 600;
       border: unset;
-    } 
+    }
   }
+}
+.sessionSearchForAccessories {
+  background: #e6e6e4;
+  max-width: unset;
 }
 
 //Session title Category
 .sessionTitleCategory {
   height: 100px;
-	line-height: 100px;
-	overflow: hidden;
+  line-height: 100px;
+  overflow: hidden;
+  min-width: unset;
 
   .sessionTitleCategoryTextRight {
     font-style: normal;
@@ -145,22 +161,63 @@
 }
 //List category
 .sessionListCategory {
-	background-color: #f6f6f4;
-	
-	.containerItemCategoryLasted{
-    height: 48px;
-		line-height: 48px;
-		border-bottom: unset;
-		@extend .itemCategoryMixins;
-	}
-	
-  .containerItemCategory {
-		overflow: hidden;
+  background-color: #f6f6f4;
+  .containerItemCategoryLasted {
     height: 48px;
     line-height: 48px;
-		border-bottom: 0.5px solid #e5e5e4;
-		@extend .itemCategoryMixins;
+    border-bottom: unset;
+    @extend .itemCategoryMixins;
+    &:hover {
+      background-color: #90d3ff;
+    }
+  }
+
+  .containerItemCategory {
+    overflow: hidden;
+    height: 48px;
+    line-height: 48px;
+    border-bottom: 0.5px solid #e5e5e4;
+    @extend .itemCategoryMixins;
+    &:hover {
+      background-color: #90d3ff;
+    }
   }
 }
 
+//Session Quick Link
+.sessionQuickLinks {
+  text-align: left;
+  @extend .padding-session;
 
+  .sessionQuickLinksTitle {
+    font-style: normal;
+    letter-spacing: 0px;
+    text-align: left;
+    @include font-family(Rajdhani, 21px, 600, $primary-text-color);
+  }
+
+  .sessionQuickLinksRows {
+    height: 64px;
+    line-height: 64px;
+    margin-bottom: 2%;
+    background: $primary-text-color;
+    .sessionQuickLinksText {
+      padding-left: unset;
+      @include font-family(Rajdhani, 16px, 600, $text-white);
+    }
+    .sessionQuickLinksIcon {
+      position: relative;
+      .sessionQuickLinksIconItem {
+        position: absolute !important;
+        top: 18px;
+        left: 30%;
+      }
+    }
+    .sessionQuickLinksPath {
+      .sessionQuickLinksPathItem {
+        color: $text-white;
+        font-size: 12px;
+      }
+    }
+  }
+}
