@@ -1,6 +1,4 @@
-import { Row, Col, Button, Form, Container } from "react-bootstrap"
-import clsx from "clsx"
-
+import { Row, Col, Button, Form, Container } from "react-bootstrap";
 import styles from "../Delivery.module.scss"
 
 export default function BillingAddress({ values, handleChange }) {

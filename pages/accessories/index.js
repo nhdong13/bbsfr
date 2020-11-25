@@ -1,7 +1,7 @@
-import AccessoriesComponent from "../components/HomePage/DepartmentDetail/AccessoriesComponent";
-import { getDepartmentByUID } from "../lib/prismic/api";
+import { getDepartmentByUID } from "../../lib/prismic/api";
+import AccessoriesComponent from "../../components/HomePage/DepartmentDetail/AccessoriesComponent";
 
-function UsedBikes({ department }) {
+function Accessories({ department }) {
   return <AccessoriesComponent department={department} />;
 }
 
@@ -14,4 +14,4 @@ export async function getStaticProps() {
   };
 }
 
-export default UsedBikes;
+export default Accessories;

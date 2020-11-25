@@ -1,8 +1,11 @@
 import styles from "../DepartmentPage.module.scss";
 import { Container, Row, Col } from "react-bootstrap";
 import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 const SessionBrowseByCategoryComponent = (props) => {
+  const router = useRouter();
   const { collections } = props;
   const collectionsData =
     collections && collections.length > 0
@@ -126,55 +129,59 @@ const SessionBrowseByCategoryComponent = (props) => {
       <div className={styles.sessionListCategory}>
         {collectionsData &&
           collectionsData.map((collection, index) => {
-            console.log("Debug code collection:", collection);
             return (
-              <Container key={index}>
-                <div
-                  className={
-                    collectionsData.length === index + 1
-                      ? styles.containerItemCategoryLasted
-                      : styles.containerItemCategory
-                  }
-                >
-                  <Row>
-                    <Col
-                      className={styles.categoryIndex}
-                      xs={1}
-                      sm={1}
-                      md={1}
-                      lg={1}
-                    >
-                      {index < 10 ? 0 : ""}
-                      {index + 1}
-                    </Col>
-                    <Col
-                      className={styles.categoryTitle}
-                      xs={3}
-                      sm={8}
-                      md={9}
-                      lg={9}
-                    >
-                      {collection.collection_title &&
-                      collection.collection_title.length > 0
-                        ? collection.collection_title[0].text
-                        : "---"}
-                    </Col>
-                    <Col xs={7} sm={3} md={2} lg={2}>
-                      <div className={styles.categoryLeft}>
-                        <div className={styles.categoryLeftImg}>
-                          <Image
-                            src={`${collection.collection_image.url}`}
-                            alt="Img road gear"
-                            width={57}
-                            height={62}
-                          />
+              <Link
+                key={index}
+                href={`${router.pathname}${collection.collection_slug}`}
+              >
+                <Container>
+                  <div
+                    className={
+                      collectionsData.length === index + 1
+                        ? styles.containerItemCategoryLasted
+                        : styles.containerItemCategory
+                    }
+                  >
+                    <Row>
+                      <Col
+                        className={styles.categoryIndex}
+                        xs={1}
+                        sm={1}
+                        md={1}
+                        lg={1}
+                      >
+                        {index < 10 ? 0 : ""}
+                        {index + 1}
+                      </Col>
+                      <Col
+                        className={styles.categoryTitle}
+                        xs={3}
+                        sm={8}
+                        md={9}
+                        lg={9}
+                      >
+                        {collection.collection_title &&
+                        collection.collection_title.length > 0
+                          ? collection.collection_title[0].text
+                          : "---"}
+                      </Col>
+                      <Col xs={7} sm={3} md={2} lg={2}>
+                        <div className={styles.categoryLeft}>
+                          <div className={styles.categoryLeftImg}>
+                            <Image
+                              src={`${collection.collection_image.url}`}
+                              alt="Img road gear"
+                              width={57}
+                              height={62}
+                            />
+                          </div>
+                          <div className={styles.categoryLeftIcon}>{">"}</div>
                         </div>
-                        <div className={styles.categoryLeftIcon}>{">"}</div>
-                      </div>
-                    </Col>
-                  </Row>
-                </div>
-              </Container>
+                      </Col>
+                    </Row>
+                  </div>
+                </Container>
+              </Link>
             );
           })}
       </div>
