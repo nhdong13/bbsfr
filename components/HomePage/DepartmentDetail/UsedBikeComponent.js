@@ -3,6 +3,8 @@ import Image from "next/image";
 import { Row, Col, Button, Container, Form } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
 import Brand from "../Brand";
+import SessionHeaderDepartmentComponent from "./Sesstion/SessionHeaderDepartmentComponent";
+import SessionBrowseByCategoryComponent from "./Sesstion/SessionBrowseByCategoryComponent";
 
 const UsedBikeComponent = (props) => {
   const [links, setLinks] = useState([
