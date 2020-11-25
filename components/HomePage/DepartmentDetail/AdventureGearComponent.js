@@ -1,8 +1,8 @@
 import Brand from "../Brand";
-import SessionHeaderDepartmentComponent from "./Sesstion/SessionHeaderDepartmentComponent";
 import SessionBrowseByCategoryComponent from "./Sesstion/SessionBrowseByCategoryComponent";
+import SessionHeaderDepartmentComponent from "./Sesstion/SessionHeaderDepartmentComponent";
 
-const RoadGearComponent = (props) => {
+const AdventureGearComponent = (props) => {
   const { department } = props;
   const { collections, shop_by_brand_slider_content } = department;
   const brands =
@@ -17,4 +17,4 @@ const RoadGearComponent = (props) => {
     </div>
   );
 };
-export default RoadGearComponent;
+export default AdventureGearComponent;
