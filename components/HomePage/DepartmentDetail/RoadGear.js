@@ -11,8 +11,8 @@ const RoadGearComponent = (props) => {
       : [];
   return (
     <div>
-      <SessionHeaderDepartmentComponent props={department} />
-      <SessionBrowseByCategoryComponent props={collections} />
+      <SessionHeaderDepartmentComponent department={department} />
+      <SessionBrowseByCategoryComponent collections={collections} />
       <Brand brands={brands} />
     </div>
   );

@@ -13,7 +13,7 @@ const AccessoriesComponent = (props) => {
       : [];
   return (
     <div>
-      <SessionHeaderDepartmentComponent props={department} />
+      <SessionHeaderDepartmentComponent department={department} />
       {/* ss search */}
       <Container
         className={`${styles.sessionSearch} ${styles.sessionSearchForAccessories}`}

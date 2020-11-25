@@ -44,6 +44,7 @@
   position: relative;
   height: 216px;
   width: 100%;
+  max-width: unset;
   border-bottom: 0.5px solid #e5e5e4;
   overflow: hidden;
 
@@ -55,15 +56,17 @@
   }
 
   .contentMiddle {
+    overflow: hidden;
     position: absolute;
     font-style: normal;
-    line-height: 120px;
+    line-height: 150px;
     letter-spacing: 0px;
     text-align: left;
     z-index: -1;
     top: 60px;
     right: 0px;
     left: 25%;
+    height: 150px;
     @extend .mixin-p;
     @include font-family(Rajdhani, 200px, 700, $department-category-color);
   }
@@ -101,6 +104,7 @@
 //Session search
 .sessionSearch {
   background: #f6f6f4;
+  max-width: unset;
   @extend .padding-session;
   .sessionSearchTitle {
     font-style: normal;
@@ -129,6 +133,7 @@
 }
 .sessionSearchForAccessories {
   background: #e6e6e4;
+  max-width: unset;
 }
 
 //Session title Category
@@ -136,6 +141,7 @@
   height: 100px;
   line-height: 100px;
   overflow: hidden;
+  min-width: unset;
 
   .sessionTitleCategoryTextRight {
     font-style: normal;

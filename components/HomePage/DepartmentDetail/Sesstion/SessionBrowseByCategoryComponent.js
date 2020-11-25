@@ -134,7 +134,7 @@ const SessionBrowseByCategoryComponent = (props) => {
                 key={index}
                 href={`${router.pathname}${collection.collection_slug}`}
               >
-                <Container>
+                <Container style={{maxWidth: 'unset'}}>
                   <div
                     className={
                       collectionsData.length === index + 1
@@ -149,6 +149,7 @@ const SessionBrowseByCategoryComponent = (props) => {
                         sm={1}
                         md={1}
                         lg={1}
+                        xl={1}
                       >
                         {index < 10 ? 0 : ""}
                         {index + 1}
@@ -159,13 +160,14 @@ const SessionBrowseByCategoryComponent = (props) => {
                         sm={8}
                         md={9}
                         lg={9}
+                        xl={9}
                       >
                         {collection.collection_title &&
                         collection.collection_title.length > 0
                           ? collection.collection_title[0].text
                           : "---"}
                       </Col>
-                      <Col xs={7} sm={3} md={2} lg={2}>
+                      <Col xs={7} sm={3} md={2} lg={2} xl={2}>
                         <div className={styles.categoryLeft}>
                           <div className={styles.categoryLeftImg}>
                             <Image
