@@ -1,10 +1,10 @@
-import React, { useEffect } from "react"
+import React, { useEffect } from "react";
 // import { useCart } from "@saleor/sdk"
-import { useCart } from "@sdk/react"
+import { useCart } from "@sdk/react";
 
-import MyCartComponent from "./MyCart"
-import Item from "./Item"
-import Money from "../Money"
+import MyCartComponent from "./MyCart";
+import Item from "./Item";
+import Money from "../Money";
 
 export default function CheckoutComponent() {
   const {
@@ -14,7 +14,7 @@ export default function CheckoutComponent() {
     totalPrice,
     subtotalPrice,
     shippingPrice,
-  } = useCart()
+  } = useCart();
 
   useEffect(() => {
     const data = {
@@ -152,10 +152,10 @@ export default function CheckoutComponent() {
           },
         },
       ],
-    }
+    };
 
-    window.localStorage.setItem("data_checkout", JSON.stringify(data))
-  }, [])
+    window.localStorage.setItem("data_checkout", JSON.stringify(data));
+  }, []);
 
   return (
     <MyCartComponent
@@ -165,7 +165,7 @@ export default function CheckoutComponent() {
       itemsCount={items?.length}
       shippingPrice={shippingPrice}
     />
-  )
+  );
 }
 
 export const generateCart = (items, removeItem, updateItem, viewOnly) => {
@@ -197,10 +197,10 @@ export const generateCart = (items, removeItem, updateItem, viewOnly) => {
               id: value?.id,
               name: value?.name || "",
               value: value?.value,
-            }
+            };
           }),
-        }
+        };
       })}
     />
-  ))
-}
+  ));
+};

@@ -1,0 +1,6 @@
+@mixin font-family($name, $size, $fw, $color) {
+    color: $color;
+    font-family: $name;
+    font-size: $size;
+    font-weight: $fw;
+}
