@@ -6,7 +6,6 @@ import styles from "./HomePage.module.scss"
 
 function Home(props) {
   const { department: departments, brands, SEO } = props
-  console.log(SEO)
   let count_department = departments.length % 2 == 0 ? -1 : 0
   return (
     <div className={styles.homepageContainer}>
@@ -27,6 +26,6 @@ function Home(props) {
         pageParagraph={SEO.page_paragraph}
       />
     </div>
-  );
+  )
 }
 export default Home

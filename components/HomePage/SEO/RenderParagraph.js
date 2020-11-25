@@ -2,7 +2,6 @@ import React from "react"
 import styles from "../HomePage.module.scss"
 
 export default function renderParagraph({ pageParagraph, showMore, detect }) {
-  console.log(pageParagraph)
   return (
     <div className={styles.page_paragraph}>
       <div className={styles.page_paragraph}>
