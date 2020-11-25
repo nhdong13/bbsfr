@@ -1,9 +1,28 @@
-import { Container, Form } from "react-bootstrap";
 import styles from "./DepartmentPage.module.scss";
 import Image from "next/image";
-import { Row, Col, Button } from "react-bootstrap";
+import { Row, Col, Button, Container, Form } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
 
 const UsedBikeComponent = (props) => {
+  const [links, setLinks] = useState([
+    {
+      icon: "/icons/browse.png",
+      name: "Browse the range",
+    },
+    {
+      icon: "/icons/lams.png",
+      name: "Browse all LAMS",
+    },
+    {
+      icon: "/icons/recently-listed.png",
+      name: "Recently listed",
+    },
+    {
+      icon: "/icons/sell.png",
+      name: "Sell your motorcycle",
+    },
+  ]);
+
   const { department } = props;
   const { collections } = department;
   const urlImg = department?.department_image?.url || "/visa.svg";
@@ -37,10 +56,11 @@ const UsedBikeComponent = (props) => {
         </Row>
       </Container>
 
+      {/* ss search */}
       <Container className={styles.sessionSearch}>
         <div style={{ alignItems: "center", textAlign: "center" }}>
           <p className={styles.sessionSearchTitle}>SEARCH</p>
-          <Col className={styles.sessionSearchText}>
+          <div className={styles.sessionSearchText}>
             <Form>
               <Form.Group controlId="exampleForm.SelectCustomSizeLg">
                 <Form.Control as="select" size="lg" custom>
@@ -98,10 +118,55 @@ const UsedBikeComponent = (props) => {
                 Large button
               </Button>
             </Form>
-          </Col>
+          </div>
         </div>
       </Container>
 
+      {/* SS Quick Links */}
+      <Container className={styles.sessionQuickLinks}>
+        <p className={styles.sessionQuickLinksTitle}>QUICK LINKS</p>
+        {links &&
+          links.map((item) => (
+            <Container className={styles.sessionQuickLinksRows}>
+              <Row>
+                <Col
+                  className={styles.sessionQuickLinksIcon}
+                  xs={2}
+                  sm={1}
+                  md={1}
+                  lg={1}
+                >
+                  <div className={styles.sessionQuickLinksIconItem}>
+                    <Image
+                      src={item.icon}
+                      alt="logo"
+                      width={24}
+                      height={24}
+                    ></Image>
+                  </div>
+                </Col>
+                <Col
+                  className={styles.sessionQuickLinksText}
+                  xs={8}
+                  sm={9}
+                  md={9}
+                  lg={9}
+                >
+                  {item.name || "---"}
+                </Col>
+                <Col xs={1} sm={1} md={1} lg={1}>
+                  <div className={styles.sessionQuickLinksPath}>
+                    <div className={styles.sessionQuickLinksPathItem}>
+                      {">"}
+                    </div>
+                  </div>
+                </Col>
+              </Row>
+            </Container>
+          ))}
+      </Container>
+
+      {/* Category */}
       <Container className={styles.sessionTitleCategory}>
         <Row>
           <Col xs={9} sm={8} md={8} lg={8}>
