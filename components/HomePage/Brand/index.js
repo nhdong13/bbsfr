@@ -21,7 +21,7 @@ export default function Brand(props) {
   })
 
   let brands = chunks(props.brands, 6)
-  let num_pages = Math.floor(brands.length / 6) + 1
+  let num_pages = Math.floor(props.brands.length / 6) + 1
   const settings = {
     infinite: true,
     speed: 500,
