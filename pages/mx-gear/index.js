@@ -1,5 +1,5 @@
-import MxGearComponent from "../components/HomePage/DepartmentDetail/MxGearComponent";
-import { getDepartmentByUID } from "../lib/prismic/api";
+import MxGearComponent from "../../components/HomePage/DepartmentDetail/MxGearComponent";
+import { getDepartmentByUID } from "../../lib/prismic/api";
 
 function MxGear({ department }) {
   return <MxGearComponent department={department} />;

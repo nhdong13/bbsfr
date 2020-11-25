@@ -1,5 +1,5 @@
-import RoadGearComponent from "../components/HomePage/DepartmentDetail/RoadGear";
-import { getDepartmentByUID } from "../lib/prismic/api";
+import RoadGearComponent from "../../components/HomePage/DepartmentDetail/RoadGear";
+import { getDepartmentByUID } from "../../lib/prismic/api";
 
 function RoadGear({ department }) {
   return <RoadGearComponent department={department} />;

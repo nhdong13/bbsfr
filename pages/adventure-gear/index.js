@@ -1,5 +1,5 @@
-import AdventureGearComponent from "../components/HomePage/DepartmentDetail/AdventureGearComponent";
-import { getDepartmentByUID } from "../lib/prismic/api";
+import AdventureGearComponent from "../../components/HomePage/DepartmentDetail/AdventureGearComponent";
+import { getDepartmentByUID } from "../../lib/prismic/api";
 
 function AdventureGear({ department }) {
   return <AdventureGearComponent department={department} />;

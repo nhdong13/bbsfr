@@ -1,5 +1,5 @@
-import NewBikeComponent from "../components/HomePage/DepartmentDetail/NewBikeComponent";
-import { getDepartmentByUID } from "../lib/prismic/api";
+import NewBikeComponent from "../../components/HomePage/DepartmentDetail/NewBikeComponent";
+import { getDepartmentByUID } from "../../lib/prismic/api";
 
 function NewBikes({ department }) {
   return <NewBikeComponent department={department} />;
