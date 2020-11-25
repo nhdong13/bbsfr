@@ -2,16 +2,21 @@ import { Container } from "react-bootstrap";
 import styles from "./DepartmentPage.module.scss";
 import Image from "next/image";
 import { Row, Col } from "react-bootstrap";
+import Brand from "../Brand";
 
 const RoadGearComponent = (props) => {
   const { department } = props;
-  const { collections } = department;
+  const { collections, shop_by_brand_slider_content } = department;
   const urlImg = department?.department_image?.url || "";
   const headingText =
     department?.page_heading_1 && department.page_heading_1.length > 0
       ? department.page_heading_1[0].text
       : "---";
   const textHide = headingText ? headingText.split(" ")[0] : "";
+  const brands =
+    shop_by_brand_slider_content && shop_by_brand_slider_content.length > 0
+      ? shop_by_brand_slider_content
+      : [];
   return (
     <div>
       <Container className={styles.departmentContainer}>
@@ -52,7 +57,7 @@ const RoadGearComponent = (props) => {
           collections.map((collection, index) => {
             console.log("Debug code collection:", collection);
             return (
-              <Container>
+              <Container key={index}>
                 <div
                   className={
                     collections.length === index + 1
@@ -102,6 +107,7 @@ const RoadGearComponent = (props) => {
             );
           })}
       </div>
+      <Brand brands={brands} />
     </div>
   );
 };
