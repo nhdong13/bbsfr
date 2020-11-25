@@ -27,6 +27,7 @@ const SessionHeaderDepartmentComponent = (props) => {
         <Col xs={6} sm={6} md={6} lg={6}>
           <div className={styles.contentRight}>
             <Image
+              className={styles.imgHeader}
               src={`${urlImg}`}
               alt="Img header department"
               width={215}

@@ -1,17 +1,19 @@
 import { initializeApollo } from "../lib/apollo"
 import { initializeStore } from "../redux/store"
 import HomePage from "components/HomePage"
-import { getAllBrands, getAllDepartments } from "../lib/prismic/api"
+import { getAllBrands, getAllDepartments, getAllSEO } from "../lib/prismic/api"
 
-function Home({ department, brands }) {
+function Home({ department, brands, SEO }) {
   let list_department = department[0].node.department_link
-  return <HomePage department={list_department} brands={brands} />
+  return <HomePage department={list_department} brands={brands} SEO={SEO} />
 }
 
 export async function getStaticProps({ req, res }) {
   const department = await getAllDepartments()
-  const resp = await getAllBrands()
-  const brands = resp[0].node.shop_by_brand_slider_content
+  const resp_brands = await getAllBrands()
+  let resp_SEO = await getAllSEO()
+  const SEO = resp_SEO[0].node
+  const brands = resp_brands[0].node.shop_by_brand_slider_content
   // if (process.env.NODE_ENV !== "development") {
   //   await basicAuthMiddleware(req, res, {})
   // }
@@ -23,6 +25,7 @@ export async function getStaticProps({ req, res }) {
       initialApolloState: apolloClient.cache.extract(),
       department,
       brands,
+      SEO,
     },
     revalidate: 600,
   }
