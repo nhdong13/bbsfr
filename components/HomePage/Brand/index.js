@@ -47,7 +47,7 @@ export default function Brand(props) {
       <div className={styles.striped}></div>
       <div className={styles.group_heading}>
         <h2 className={styles.text_heading_line_40}>shop by brand</h2>
-        <Link href="/[slug]" as={`/brands`}>
+        <Link href="/brands">
           <p className={styles.view_all_btn}>view all</p>
         </Link>
       </div>
@@ -57,7 +57,7 @@ export default function Brand(props) {
             <Row className="auto-clear">
               {brand.map((b, id) =>
                 (id + 1) / 4 != 1 ? (
-                  <Link href={b.brand_link}>
+                  <Link href={b.brand_link} key={id}>
                     <Col
                       className={`${styles.logo_custom} ${
                         styles.point_line_brand
@@ -75,8 +75,8 @@ export default function Brand(props) {
                   </Link>
                 ) : (
                   [
-                    <div className="w-100"></div>,
-                    <Link href={b.brand_link}>
+                    <div className="w-100" key={-id.toString()}></div>,
+                    <Link href={b.brand_link} key={id}>
                       <Col
                         className={`${styles.logo_custom} ${
                           styles.point_line_brand
@@ -116,5 +116,5 @@ export default function Brand(props) {
         ))}
       </div>
     </Container>
-  );
+  )
 }

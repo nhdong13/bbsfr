@@ -1,7 +1,6 @@
 import React, { useState } from "react"
 import { Container, Button } from "react-bootstrap"
 import styles from "../HomePage.module.scss"
-import { detectParagraph } from "../../../services/seo.js"
 import RenderParagraph from "./RenderParagraph"
 import Link from "next/link"
 
@@ -11,8 +10,7 @@ export default function SEO(props) {
   function readMore() {
     setRead(!showMore)
   }
-  const limit_char = 480
-  let detect = detectParagraph(pageParagraph, limit_char)
+
   return (
     <Container fluid id="SEO" className={styles.SEO}>
       <h2 className={`${styles.text_heading_line_40} d-flex`}>{heading1}</h2>
@@ -31,11 +29,7 @@ export default function SEO(props) {
           )
         )}
       </div> */}
-      <RenderParagraph
-        pageParagraph={pageParagraph}
-        showMore={showMore}
-        detect={detect}
-      />
+      <RenderParagraph pageParagraph={pageParagraph} showMore={showMore} />
       <div className={styles.read_more_btn} onClick={readMore}>
         {showMore ? "Read Less" : "Read More"}
       </div>

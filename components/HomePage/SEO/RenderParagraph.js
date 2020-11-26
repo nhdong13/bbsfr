@@ -1,25 +1,39 @@
 import React from "react"
 import styles from "../HomePage.module.scss"
+import {
+  replaceNbsps,
+  detectParagraph,
+  updateParagraph,
+} from "../../../services/seo.js"
 
-export default function renderParagraph({ pageParagraph, showMore, detect }) {
-  let s
+export default function renderParagraph({ pageParagraph, showMore }) {
+  console.log(pageParagraph)
+  updateParagraph(pageParagraph)
+  const limit_char = 480
+  let detect = detectParagraph(pageParagraph, limit_char)
   return (
     <div className={styles.page_paragraph}>
       <div className={styles.page_paragraph}>
         {pageParagraph.map((paragraph, id) =>
           showMore ? (
-            <p
+            <div
+              key={id}
               dangerouslySetInnerHTML={{
-                __html: paragraph.text.link("facebook.com"),
+                __html: replaceNbsps(paragraph.text).link(
+                  "https://www.w3schools.com"
+                ),
               }}
-            ></p>
+            ></div>
           ) : id <= detect.position ? (
             id < detect.position ? (
-              <p>{paragraph.text.link("facebook.com")}</p>
+              <div key={id}>{replaceNbsps(paragraph.text)}</div>
             ) : (
-              <p>{`${paragraph.text
-                .substring(0, detect.substring - 1)
-                .link("facebook.com")}...`}</p>
+              <div
+                key={id}
+                dangerouslySetInnerHTML={{
+                  __html: paragraph.text.substring(0, detect.substring),
+                }}
+              ></div>
             )
           ) : (
             ""

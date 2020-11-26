@@ -13,4 +13,28 @@ export const detectParagraph = (p, limit) => {
   return detect
 }
 
-export const upLink = (str) => {}
+export const updateParagraph = (p) => {
+  let result = p.map((x) => {
+    upLink(x)
+  })
+  return result
+}
+
+//substring(0,detect.substring - 1)
+
+const upLink = (p) => {
+  let spans = p.spans
+  let result = []
+  for (let i in spans) {
+    result[i] = p.text
+      .substring(spans[i].start, spans[i].end)
+      .link(spans[i].data.url)
+  }
+  console.log(result)
+  // debugger
+}
+
+export const replaceNbsps = (str) => {
+  var re = new RegExp(String.fromCharCode(160), "g")
+  return str.replace(re, " ")
+}
