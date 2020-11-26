@@ -3,9 +3,10 @@ import Department from "./Department"
 import Brand from "./Brand"
 import SEO_page from "./SEO"
 import styles from "./HomePage.module.scss"
+import FAQComponent from "./FAQ";
 
 function Home(props) {
-  const { department: departments, brands, SEO } = props
+  const { department: departments, brands, SEO, FAQ } = props;
   let count_department = departments.length % 2 == 0 ? -1 : 0
   return (
     <div className={styles.homepageContainer}>
@@ -25,7 +26,8 @@ function Home(props) {
         heading1={SEO.page_heading_1[0].text}
         pageParagraph={SEO.page_paragraph}
       />
+      <FAQComponent FAQ={FAQ}  />
     </div>
-  )
+  );
 }
 export default Home
