@@ -129,15 +129,15 @@ const UsedBikeComponent = (props) => {
                   className={styles.sessionQuickLinksText}
                   xs={8}
                   sm={9}
-                  md={9}
-                  lg={9}
+                  md={10}
+                  lg={10}
                 >
                   {item.name || "---"}
                 </Col>
                 <Col xs={1} sm={1} md={1} lg={1}>
                   <div className={styles.sessionQuickLinksPath}>
                     <div className={styles.sessionQuickLinksPathItem}>
-                      {">"}
+                      <>{">"}</>
                     </div>
                   </div>
                 </Col>

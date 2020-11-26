@@ -157,6 +157,10 @@
     text-align: right;
     margin-bottom: unset;
     @include font-family(Roboto, 12px, 700, #ffb00f);
+    &:hover {
+      color: $color-hover;
+      cursor: pointer;
+    }
   }
 }
 //List category
@@ -168,7 +172,8 @@
     border-bottom: unset;
     @extend .itemCategoryMixins;
     &:hover {
-      background-color: #90d3ff;
+      background-color: $color-hover;
+      cursor: pointer;
     }
   }
 
@@ -179,7 +184,8 @@
     border-bottom: 0.5px solid #e5e5e4;
     @extend .itemCategoryMixins;
     &:hover {
-      background-color: #90d3ff;
+      background-color: $color-hover;
+      cursor: pointer;
     }
   }
 }
@@ -187,6 +193,7 @@
 //Session Quick Link
 .sessionQuickLinks {
   text-align: left;
+  max-width: unset;
   @extend .padding-session;
 
   .sessionQuickLinksTitle {
@@ -197,6 +204,7 @@
   }
 
   .sessionQuickLinksRows {
+    max-width: unset;
     height: 64px;
     line-height: 64px;
     margin-bottom: 2%;
@@ -215,6 +223,7 @@
     }
     .sessionQuickLinksPath {
       .sessionQuickLinksPathItem {
+        text-align: center;
         color: $text-white;
         font-size: 12px;
       }
