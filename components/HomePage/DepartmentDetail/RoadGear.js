@@ -23,7 +23,10 @@ const RoadGearComponent = (props) => {
     page_heading_2 && page_heading_2.length > 0
       ? page_heading_2[0].text
       : "---";
-
+      console.log(
+        "Debug code process.env.NEXT_PUBLIC_REVALIDATE_PAGE_TIME:",
+        process.env.NEXT_PUBLIC_REVALIDATE_PAGE_TIME
+      );
   return (
     <div>
       <SessionHeaderDepartmentComponent department={department} />
