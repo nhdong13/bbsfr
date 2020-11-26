@@ -53,6 +53,9 @@
     right: -20px;
     top: 0px;
     transform: matrix(-1, 0, 0, 1, 0, 0);
+    .imgHeader {
+      max-width: 65vw;
+    }
   }
 
   .contentMiddle {
@@ -141,7 +144,7 @@
   height: 100px;
   line-height: 100px;
   overflow: hidden;
-  min-width: unset;
+  max-width: unset;
 
   .sessionTitleCategoryTextRight {
     font-style: normal;

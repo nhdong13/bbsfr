@@ -150,7 +150,6 @@ $vertical_border: 2.5px;
   }
 }
 
-
 //Brand
 .brand {
   padding-top: 55px;
@@ -252,4 +251,49 @@ $vertical_border: 2.5px;
   text-transform: uppercase;
 
   color: $primary-text-color;
+}
+
+//HomePage global
+.view_all_btn {
+  display: flex;
+  align-items: flex-end;
+
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 20px;
+  /* identical to box height, or 167% */
+
+  text-align: right;
+  text-transform: capitalize;
+  color: $status-product-color;
+
+  cursor: pointer;
+}
+
+.group_heading {
+  display: flex;
+  justify-content: space-between;
+}
+
+//SEO
+.SEO {
+  .read_more {
+    display: none;
+  }
+  .read_more_btn {
+    font-family: Rajdhani;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 20px;
+
+    color: $primary-text-color;
+    cursor: pointer;
+  }
+  .page_paragraph {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 28px;
+  }
 }

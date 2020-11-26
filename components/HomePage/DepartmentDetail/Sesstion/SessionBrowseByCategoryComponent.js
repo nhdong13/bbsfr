@@ -122,7 +122,9 @@ const SessionBrowseByCategoryComponent = (props) => {
             </p>
           </Col>
           <Col style={{ textAlign: "right" }} xs={3} sm={4} md={4} lg={4}>
-            <p className={styles.sessionTitleCategoryTextLeft}>VIEW ALL</p>
+            <Link href={`${router.pathname}/all`}>
+              <p className={styles.sessionTitleCategoryTextLeft}>VIEW ALL</p>
+            </Link>
           </Col>
         </Row>
       </Container>
@@ -134,7 +136,7 @@ const SessionBrowseByCategoryComponent = (props) => {
                 key={index}
                 href={`${router.pathname}${collection.collection_slug}`}
               >
-                <Container style={{maxWidth: 'unset'}}>
+                <Container style={{ maxWidth: "unset" }}>
                   <div
                     className={
                       collectionsData.length === index + 1
