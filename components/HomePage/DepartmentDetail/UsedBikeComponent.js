@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import Brand from "../Brand";
 import SessionHeaderDepartmentComponent from "./Sesstion/SessionHeaderDepartmentComponent";
 import SessionBrowseByCategoryComponent from "./Sesstion/SessionBrowseByCategoryComponent";
+import SEO from "../SEO";
 
 const UsedBikeComponent = (props) => {
   const [links, setLinks] = useState([
@@ -27,11 +28,24 @@ const UsedBikeComponent = (props) => {
   ]);
 
   const { department } = props;
-  const { collections, shop_by_brand_slider_content } = department;
+  const {
+    collections,
+    shop_by_brand_slider_content,
+    page_heading_2,
+    meta_title,
+    page_paragraph,
+    meta_description,
+  } = department;
+  
   const brands =
     shop_by_brand_slider_content && shop_by_brand_slider_content.length > 0
       ? shop_by_brand_slider_content
       : [];
+
+  const heading1 =
+    page_heading_2 && page_heading_2.length > 0
+      ? page_heading_2[0].text
+      : "---";
 
   return (
     <div>
@@ -147,6 +161,7 @@ const UsedBikeComponent = (props) => {
       </Container>
       <SessionBrowseByCategoryComponent collections={collections} />
       <Brand brands={brands} />
+      <SEO heading1={heading1} pageParagraph={page_paragraph || []} />
     </div>
   );
 };
