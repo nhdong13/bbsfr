@@ -36,7 +36,7 @@ const UsedBikeComponent = (props) => {
     page_paragraph,
     meta_description,
   } = department;
-  
+
   const brands =
     shop_by_brand_slider_content && shop_by_brand_slider_content.length > 0
       ? shop_by_brand_slider_content
@@ -133,7 +133,7 @@ const UsedBikeComponent = (props) => {
                   <div className={styles.sessionQuickLinksIconItem}>
                     <Image
                       src={item.icon}
-                      alt="logo"
+                      alt={item?.name ? `Image ${item.name}` : ""}
                       width={24}
                       height={24}
                     ></Image>

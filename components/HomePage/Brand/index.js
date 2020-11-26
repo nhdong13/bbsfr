@@ -20,7 +20,8 @@ export default function Brand(props) {
     setWidth(width - 30)
   })
 
-  let brands = chunks(props.brands, 6)
+  let brands = chunks(props.brands, 6);
+  console.log("Debug code brands:", brands);
   let num_pages = Math.floor(props.brands.length / 6) + 1
   const settings = {
     infinite: true,
@@ -66,7 +67,7 @@ export default function Brand(props) {
                       <Image
                         className={styles.image_logo}
                         src={b.brand_logo.url}
-                        alt={b.brand_logo.alt}
+                        alt={b.brand_logo.alt || ""}
                         height={image_width}
                         width={image_width}
                         loading="eager"
@@ -85,7 +86,7 @@ export default function Brand(props) {
                         <Image
                           className={styles.image_logo}
                           src={b.brand_logo.url}
-                          alt={b.brand_logo.alt}
+                          alt={b.brand_logo.alt || ""}
                           height={image_width}
                           width={image_width}
                           loading="eager"

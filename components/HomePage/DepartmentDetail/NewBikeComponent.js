@@ -28,7 +28,7 @@ const NewBikeComponent = (props) => {
   ]);
 
   const { department } = props;
-  
+
   const {
     collections,
     shop_by_brand_slider_content,
@@ -134,7 +134,7 @@ const NewBikeComponent = (props) => {
                   <div className={styles.sessionQuickLinksIconItem}>
                     <Image
                       src={item.icon}
-                      alt="logo"
+                      alt={item?.name ? `Image ${item.name}` : ""}
                       width={24}
                       height={24}
                     ></Image>

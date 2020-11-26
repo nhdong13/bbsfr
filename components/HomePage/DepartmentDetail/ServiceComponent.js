@@ -132,7 +132,7 @@ const ServiceComponent = (props) => {
                   <div className={styles.sessionQuickLinksIconItem}>
                     <Image
                       src={item.icon}
-                      alt="logo"
+                      alt={item?.name ? `Image ${item.name}` : ""}
                       width={24}
                       height={24}
                     ></Image>

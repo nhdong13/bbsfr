@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 
 const SessionHeaderDepartmentComponent = (props) => {
   const { department } = props;
+  console.log("Debug code department:", department);
   const router = useRouter();
   const currentDepartments = useSelector((state) => state.currentDepartments);
 
@@ -37,9 +38,7 @@ const SessionHeaderDepartmentComponent = (props) => {
       <Row>
         <Col xs={6} sm={6} md={6} lg={6}>
           <div className={styles.contentLeft}>
-            <p className={styles.note}>
-              {preHeader}
-            </p>
+            <p className={styles.note}>{preHeader}</p>
             <p className={styles.heading}>{headingText}</p>
           </div>
         </Col>
@@ -49,7 +48,7 @@ const SessionHeaderDepartmentComponent = (props) => {
             <Image
               className={styles.imgHeader}
               src={`${urlImg}`}
-              alt="Img header department"
+              alt={department?.department_image?.alt || ""}
               width={215}
               height={215}
             />
