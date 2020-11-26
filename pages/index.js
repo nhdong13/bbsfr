@@ -45,7 +45,7 @@ export async function getStaticProps({ req, res }) {
       SEO,
       resPriFAQ,
     },
-    revalidate: process.env.NEXT_PUBLIC_REVALIDATE_PAGE_TIME,
+    revalidate: +process.env.NEXT_PUBLIC_REVALIDATE_PAGE_TIME,
   };
 }
 export default Home
