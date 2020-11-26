@@ -173,8 +173,8 @@ const SessionBrowseByCategoryComponent = (props) => {
                         <div className={styles.categoryLeft}>
                           <div className={styles.categoryLeftImg}>
                             <Image
-                              src={`${collection.collection_image.url}`}
-                              alt="Img road gear"
+                              src={collection.collection_image.url}
+                              alt={collection.collection_image.alt || ""}
                               width={57}
                               height={62}
                             />

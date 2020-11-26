@@ -2,9 +2,13 @@ import { initializeApollo } from "../lib/apollo"
 import { initializeStore } from "../redux/store"
 import HomePage from "components/HomePage"
 import { getAllBrands, getAllDepartments, getAllSEO } from "../lib/prismic/api"
+import { useDispatch } from "react-redux";
+import { setDepartments } from "../redux/reducers/departments";
 
 function Home({ department, brands, SEO }) {
-  let list_department = department[0].node.department_link
+  const dispatch = useDispatch();
+  let list_department = department[0].node.department_link;
+  dispatch(setDepartments(list_department));
   return <HomePage department={list_department} brands={brands} SEO={SEO} />
 }
 
