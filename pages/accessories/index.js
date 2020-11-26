@@ -10,7 +10,7 @@ export async function getStaticProps() {
   const department = await getDepartmentByUID(uid);
   return {
     props: { department },
-    revalidate: 1,
+    revalidate: process.env.REVALIDATE_PAGE_TIME,
   };
 }
 
