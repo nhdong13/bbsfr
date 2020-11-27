@@ -27,10 +27,11 @@
     }
   }
 
-  .mixin-p {
-    text-transform: uppercase;
-    margin-bottom: unset;
-  }
+  
+}
+.mixin-p {
+  text-transform: uppercase;
+  margin-bottom: unset !important;
 }
 
 .padding-session {
@@ -66,7 +67,7 @@
     letter-spacing: 0px;
     text-align: left;
     z-index: -1;
-    top: 60px;
+    top: 70px;
     right: 0px;
     left: 25%;
     height: 150px;
@@ -162,6 +163,7 @@
     @include font-family(Roboto, 12px, 700, #ffb00f);
     &:hover {
       color: $color-hover;
+      cursor: pointer;
     }
   }
 }
@@ -175,6 +177,7 @@
     @extend .itemCategoryMixins;
     &:hover {
       background-color: $color-hover;
+      cursor: pointer;
     }
   }
 
@@ -186,6 +189,7 @@
     @extend .itemCategoryMixins;
     &:hover {
       background-color: $color-hover;
+      cursor: pointer;
     }
   }
 }
@@ -193,6 +197,7 @@
 //Session Quick Link
 .sessionQuickLinks {
   text-align: left;
+  max-width: unset;
   @extend .padding-session;
 
   .sessionQuickLinksTitle {
@@ -203,6 +208,7 @@
   }
 
   .sessionQuickLinksRows {
+    max-width: unset;
     height: 64px;
     line-height: 64px;
     margin-bottom: 2%;
@@ -221,6 +227,7 @@
     }
     .sessionQuickLinksPath {
       .sessionQuickLinksPathItem {
+        text-align: center;
         color: $text-white;
         font-size: 12px;
       }

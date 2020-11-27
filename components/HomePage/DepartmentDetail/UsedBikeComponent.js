@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import Brand from "../Brand";
 import SessionHeaderDepartmentComponent from "./Sesstion/SessionHeaderDepartmentComponent";
 import SessionBrowseByCategoryComponent from "./Sesstion/SessionBrowseByCategoryComponent";
+import SEO from "../SEO";
 
 const UsedBikeComponent = (props) => {
   const [links, setLinks] = useState([
@@ -27,11 +28,24 @@ const UsedBikeComponent = (props) => {
   ]);
 
   const { department } = props;
-  const { collections, shop_by_brand_slider_content } = department;
+  const {
+    collections,
+    shop_by_brand_slider_content,
+    page_heading_2,
+    meta_title,
+    page_paragraph,
+    meta_description,
+  } = department;
+
   const brands =
     shop_by_brand_slider_content && shop_by_brand_slider_content.length > 0
       ? shop_by_brand_slider_content
       : [];
+
+  const heading1 =
+    page_heading_2 && page_heading_2.length > 0
+      ? page_heading_2[0].text
+      : "---";
 
   return (
     <div>
@@ -119,7 +133,7 @@ const UsedBikeComponent = (props) => {
                   <div className={styles.sessionQuickLinksIconItem}>
                     <Image
                       src={item.icon}
-                      alt="logo"
+                      alt={item?.name ? `Image ${item.name}` : ""}
                       width={24}
                       height={24}
                     ></Image>
@@ -129,15 +143,15 @@ const UsedBikeComponent = (props) => {
                   className={styles.sessionQuickLinksText}
                   xs={8}
                   sm={9}
-                  md={9}
-                  lg={9}
+                  md={10}
+                  lg={10}
                 >
                   {item.name || "---"}
                 </Col>
                 <Col xs={1} sm={1} md={1} lg={1}>
                   <div className={styles.sessionQuickLinksPath}>
                     <div className={styles.sessionQuickLinksPathItem}>
-                      {">"}
+                      <>{">"}</>
                     </div>
                   </div>
                 </Col>
@@ -147,6 +161,7 @@ const UsedBikeComponent = (props) => {
       </Container>
       <SessionBrowseByCategoryComponent collections={collections} />
       <Brand brands={brands} />
+      <SEO heading1={heading1} pageParagraph={page_paragraph || []} />
     </div>
   );
 };
