@@ -16,8 +16,10 @@ const DepartmentDetailComponent = (props) => {
     meta_title,
     page_paragraph,
     meta_description,
+    faq,
+    faq_title,
   } = department;
-
+  
   const brands =
     shop_by_brand_slider_content && shop_by_brand_slider_content.length > 0
       ? shop_by_brand_slider_content
@@ -38,7 +40,7 @@ const DepartmentDetailComponent = (props) => {
       )}
       <SessionBrowseByCategoryComponent collections={collections} />
       <Brand brands={brands} />
-      {/* <FAQComponent FAQ={FAQ} /> */}
+      <FAQComponent FAQ={{ faq, faq_title }} />
       <SEO heading1={heading1} pageParagraph={page_paragraph || []} />
     </div>
   );
