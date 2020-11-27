@@ -1,16 +1,18 @@
-import React from "react"
-import Department from "./Department"
-import Brand from "./Brand"
-import SEO_page from "./SEO"
-import styles from "./HomePage.module.scss"
-import FAQComponent from "./FAQ"
-import Head from "next/head"
+import React from "react";
+import Department from "./Department";
+import Brand from "./Brand";
+import SEO_page from "./SEO";
+import styles from "./HomePage.module.scss";
+import FAQComponent from "./FAQ";
+import Head from "next/head";
+import { convertSchemaFAQ } from "../../services/convertSchemaFAQ";
 
 function Home(props) {
-  const { department: departments, brands, SEO, FAQ } = props
-  let count_department = departments.length % 2 == 0 ? -1 : 0
-  let meta_title = SEO && SEO.meta_title
-  let meta_description = SEO && SEO.meta_description
+  const { department: departments, brands, SEO, FAQ } = props;
+  let count_department = departments.length % 2 == 0 ? -1 : 0;
+  let meta_title = SEO && SEO.meta_title;
+  let meta_description = SEO && SEO.meta_description;
+  const jsonFAQ = convertSchemaFAQ(FAQ);
   return (
     <>
       <Head>
@@ -24,6 +26,10 @@ function Home(props) {
         <meta name="og:title" property="og:title" content={meta_title} />
         <meta name="twitter:title" content={meta_title} />
         <meta name="twitter:description" content={meta_description} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: jsonFAQ }}
+        />
       </Head>
       <div className={styles.homepageContainer}>
         {departments.map((department, index) => (
@@ -45,6 +51,6 @@ function Home(props) {
         />
       </div>
     </>
-  )
+  );
 }
-export default Home
+export default Home;

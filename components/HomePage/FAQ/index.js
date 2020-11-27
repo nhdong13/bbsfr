@@ -5,7 +5,6 @@ import Image from "next/image";
 
 const FAQComponent = (props) => {
   const { FAQ } = props;
-  console.log("Debug code FAQ:", FAQ);
   const [faqItemLess, setFaqItemsLess] = useState([]);
   const [faqItemAll, setFaqItemsAll] = useState([]);
 
@@ -74,22 +73,22 @@ const FAQComponent = (props) => {
                     <Col xs={1} sm={1} md={1} lg={1} xl={1}>
                       <div className={styles.questionIcon}>
                         {item.open ? (
+                           <div className={styles.questionIconElement}>
+                           <Image
+                             src="/icons/subtract.svg"
+                             alt="Icon subtract"
+                             height={12}
+                             width={12}
+                             loading="eager"
+                           ></Image>
+                         </div>
+                        ) : (
                           <div className={styles.questionIconElement}>
                             <Image
                               src="/icons/plus.svg"
                               alt="Icon plus"
                               height={12}
                               width={12}
-                            ></Image>
-                          </div>
-                        ) : (
-                          <div className={styles.questionIconElement}>
-                            <Image
-                              src="/icons/subtract.svg"
-                              alt="Icon subtract"
-                              height={12}
-                              width={12}
-                              loading="eager"
                             ></Image>
                           </div>
                         )}
