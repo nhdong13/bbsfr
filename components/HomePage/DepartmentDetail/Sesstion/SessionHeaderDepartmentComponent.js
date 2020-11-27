@@ -7,7 +7,6 @@ import { useRouter } from "next/router";
 
 const SessionHeaderDepartmentComponent = (props) => {
   const { department } = props;
-  console.log("Debug code department:", department);
   const router = useRouter();
   const currentDepartments = useSelector((state) => state.currentDepartments);
 
@@ -20,19 +19,16 @@ const SessionHeaderDepartmentComponent = (props) => {
     department?.department_image?.url ||
     "https://images.prismic.io/slicemachine-blank/6b2bf485-aa12-44ef-8f06-dce6b91b9309_dancing.png?auto=compress,format";
 
-  const departmentFiller = findDepartments(
-    router.pathname,
-    currentDepartments
-  );
+  const departmentFiller = findDepartments(router.asPath, currentDepartments);
   
   const preHeader =
     department?.department_preHeader &&
     department.department_preHeader.length > 0
       ? department.department_preHeader[0].text
-      : departmentFiller?.department_preHeader && departmentFiller?.department_preHeader.length > 0
+      : departmentFiller?.department_preHeader &&
+        departmentFiller?.department_preHeader.length > 0
       ? departmentFiller.department_preHeader[0].text
       : "---";
-
   return (
     <Container className={styles.departmentContainer}>
       <Row>
