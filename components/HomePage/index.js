@@ -22,11 +22,11 @@ function Home(props) {
         />
       ))}
       <Brand brands={brands} />
+      <FAQComponent FAQ={FAQ} />
       <SEO_page
         heading1={SEO.page_heading_1[0].text}
         pageParagraph={SEO.page_paragraph}
       />
-      <FAQComponent FAQ={FAQ}  />
     </div>
   );
 }

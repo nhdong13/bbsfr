@@ -1,10 +1,14 @@
 import Brand from "../Brand";
-import SessionBrowseByCategoryComponent from "./Sesstion/SessionBrowseByCategoryComponent";
 import SessionHeaderDepartmentComponent from "./Sesstion/SessionHeaderDepartmentComponent";
+import SessionBrowseByCategoryComponent from "./Sesstion/SessionBrowseByCategoryComponent";
 import SEO from "../SEO";
+import FAQComponent from "../FAQ";
+import { useRouter } from "next/router";
+import SearchForAccessoriesComponent from "./Sesstion/SearchForAccessoriesComponent";
 
-const MxGearComponent = (props) => {
+const DepartmentDetailComponent = (props) => {
   const { department } = props;
+  const router = useRouter();
   const {
     collections,
     shop_by_brand_slider_content,
@@ -23,13 +27,20 @@ const MxGearComponent = (props) => {
     page_heading_2 && page_heading_2.length > 0
       ? page_heading_2[0].text
       : "---";
+
   return (
     <div>
       <SessionHeaderDepartmentComponent department={department} />
+      {router?.query?.id === "accessories" ? (
+        <SearchForAccessoriesComponent />
+      ) : (
+        <></>
+      )}
       <SessionBrowseByCategoryComponent collections={collections} />
       <Brand brands={brands} />
+      {/* <FAQComponent FAQ={FAQ} /> */}
       <SEO heading1={heading1} pageParagraph={page_paragraph || []} />
     </div>
   );
 };
-export default MxGearComponent;
+export default DepartmentDetailComponent;
