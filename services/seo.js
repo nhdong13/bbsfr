@@ -30,8 +30,14 @@ const upLink = (p) => {
       .substring(spans[i].start, spans[i].end)
       .link(spans[i].data.url)
   }
-  console.log(result)
-  // debugger
+}
+
+export const convertParagraph = (paragraph) => {
+  var re = new RegExp(String.fromCharCode(160), "g")
+  for (let i in paragraph) {
+    paragraph[i].text = paragraph[i].text.replace(re, " ")
+  }
+  return paragraph
 }
 
 export const replaceNbsps = (str) => {
