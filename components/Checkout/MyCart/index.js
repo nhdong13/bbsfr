@@ -71,7 +71,7 @@ export default function MyCartComponent({
                 fixed="bottom"
                 onClick={handleClick}
               >
-                Continue to Checkout
+                CONTINUE TO CHECKOUT
               </Button>
             </Col>
           </Row>

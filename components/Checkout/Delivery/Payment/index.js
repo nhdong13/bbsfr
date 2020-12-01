@@ -1,13 +1,16 @@
 import { Row, Button, Col } from "react-bootstrap"
 import Image from "next/image"
 
+import ErrorMessageWrapper from "../../ErrorMessageWrapper"
 import styles from "../Delivery.module.scss"
 import { PAYMENT_METHODS_ICON } from "../constants"
 
 export default function PaymentComponent({
   availablePaymentGateways,
   paymentMethod,
-  setPaymentMethod,
+  setFieldValue,
+  errors,
+  touched,
 }) {
   return (
     <Row className={styles.paymentBody}>
@@ -22,7 +25,7 @@ export default function PaymentComponent({
                 key={method.id}
                 variant={paymentMethod?.id === method.id ? "secondary" : "gray"}
                 className={styles.btn}
-                onClick={() => setPaymentMethod(method)}
+                onClick={() => setFieldValue("paymentMethod", method)}
               >
                 <span className={styles.btnIcon}>
                   <Image
@@ -38,6 +41,13 @@ export default function PaymentComponent({
         <div className={styles.dumbContent}></div>
         <div className={styles.dumbContent}></div>
         <div className={styles.dumbContent}></div>
+      </Col>
+      <Col md="12">
+        <ErrorMessageWrapper
+          errors={errors}
+          touched={touched}
+          fieldName="paymentMethod"
+        />
       </Col>
     </Row>
   )
