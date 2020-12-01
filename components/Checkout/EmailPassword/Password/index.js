@@ -36,7 +36,7 @@ export default function CheckoutPassword({ values, handleChange }) {
               className={clsx(styles.btn, "w-100")}
               type="submit"
             >
-              Continue
+              CONTINUE
             </Button>
           </Form.Group>
         </Form.Row>
