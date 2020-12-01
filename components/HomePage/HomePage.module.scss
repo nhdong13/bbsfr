@@ -315,11 +315,12 @@ $vertical_border: 2.5px;
     background-color: #f6f6f4;
 
     .question {
-      height: 48px;
+      height: auto;
+      min-height: 48px;
       line-height: 48px;
       &:hover {
         cursor: pointer;
-      }  
+      }
 
       .questionCol {
         display: flex;
@@ -330,10 +331,10 @@ $vertical_border: 2.5px;
           text-align: left;
           @include font-family(Rajdhani, 16px, 600, $primary-text-color);
         }
-        .questionIcon{ 
+        .questionIcon {
           width: 100%;
           position: relative;
-          .questionIconElement{ 
+          .questionIconElement {
             position: absolute;
             top: 20px;
             right: 0;
@@ -359,16 +360,72 @@ $vertical_border: 2.5px;
     }
   }
 
-  .questionLoadMore{
+  .questionLoadMore {
     font-style: normal;
     letter-spacing: 0px;
     text-align: left;
     height: 48px;
     line-height: 48px;
-    @include font-family(Rajdhani, 14px, 600, $primary-text-color); 
+    @include font-family(Rajdhani, 14px, 600, $primary-text-color);
     &:hover {
       color: $color-hover;
       cursor: pointer;
-    } 
+    }
+  }
+}
+
+//testimonials
+.testimonials {
+  background-color: $primary-text-color;
+  height: auto;
+
+  .testimonialsTitle {
+    align-items: center;
+    padding-top: 50px;
+    
+    .testimonialsText {
+      text-align: center;
+      margin: 0px auto;
+      width: 215px;
+      @include font-family(Rajdhani, 26px, 600, $text-white);
+      background: url("/testimonials.svg");
+      background-repeat: no-repeat;
+      background-position: center;
+      height: 90px; 
+      line-height: 20px;
+      padding-top: 25px;
+    }
+  }
+
+  .testimonialsSlider {
+    padding-top: 25px;
+    color: $text-white;
+    text-align: center;
+    align-items: center;
+    height: auto;
+
+    .testimonialsSliderStart {
+      margin: 0px auto;
+      width: 120px;
+    }
+
+    .testimonialsSliderContext {
+      max-width: 500px;
+      margin: 0px auto;
+      font-style: normal;
+      letter-spacing: 0px;
+      text-align: center;
+      margin-top: 10px;
+      @include font-family(Roboto, 16px, 400, $text-white);
+    }
+
+    .testimonialsSliderAuthor {
+      font-style: normal;
+      letter-spacing: 0px;
+      text-align: center;
+      margin-top: 18px;
+      @include font-family(Roboto, 10px, 700, #ffb00f);
+      padding-bottom: 50px;
+    }
   }
 }

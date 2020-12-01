@@ -6,6 +6,7 @@ import styles from "./HomePage.module.scss";
 import FAQComponent from "./FAQ";
 import Head from "next/head";
 import { convertSchemaFAQ } from "../../services/convertSchemaFAQ";
+import TestimonialsComponent from "./Testimonials";
 
 function Home(props) {
   const { department: departments, brands, SEO, FAQ } = props;
@@ -44,6 +45,7 @@ function Home(props) {
           />
         ))}
         <Brand brands={brands} />
+        <TestimonialsComponent />
         <FAQComponent FAQ={FAQ} />
         <SEO_page
           heading1={SEO.page_heading_1[0].text}

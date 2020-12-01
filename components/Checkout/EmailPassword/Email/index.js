@@ -36,7 +36,7 @@ export default function CheckoutEmail({
               className={clsx(styles.btn, "w-100")}
               onClick={handleNextStep}
             >
-              Continue
+              CONTINUE
             </Button>
           </Form.Group>
         </Form.Row>

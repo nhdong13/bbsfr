@@ -1,6 +1,8 @@
 import { Provider } from "react-redux"
 import { ApolloProvider } from "@apollo/client"
 // import { SaleorProvider } from "@saleor/sdk"
+import { ToastProvider } from "react-toast-notifications"
+
 import { useStore } from "../redux/store"
 import { useApollo } from "../lib/apollo"
 import { SaleorProvider } from "../lib/@sdk/react"
@@ -30,9 +32,11 @@ export default function App({ Component, pageProps }) {
           config={SALEOR_CONFIG}
           apolloConfig={{ client: apolloClient }}
         >
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
+          <ToastProvider>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </ToastProvider>
         </SaleorProvider>
       </ApolloProvider>
     </Provider>

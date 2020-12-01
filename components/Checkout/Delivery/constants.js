@@ -40,3 +40,10 @@ export const PAYMENT_METHODS = [
     icon: "/googlepay.svg",
   },
 ]
+
+export const COUNTRIES_RESTRICTION = [
+  {
+    country: "Australia",
+    code: "AU",
+  },
+]

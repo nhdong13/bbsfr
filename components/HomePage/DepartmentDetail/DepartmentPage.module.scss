@@ -175,10 +175,10 @@
     line-height: 48px;
     border-bottom: unset;
     @extend .itemCategoryMixins;
-    &:hover {
-      background-color: $color-hover;
-      cursor: pointer;
-    }
+    // &:hover {
+    //   background-color: $color-hover;
+    //   cursor: pointer;
+    // }
   }
 
   .containerItemCategory {
@@ -187,10 +187,10 @@
     line-height: 48px;
     border-bottom: 0.5px solid #e5e5e4;
     @extend .itemCategoryMixins;
-    &:hover {
-      background-color: $color-hover;
-      cursor: pointer;
-    }
+    // &:hover {
+    //   background-color: $color-hover;
+    //   cursor: pointer;
+    // }
   }
 }
 

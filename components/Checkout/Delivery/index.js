@@ -15,6 +15,7 @@ import { useCheckout } from "@sdk/react"
 import clsx from "clsx"
 import { useMutation } from "@apollo/client"
 import { useRouter } from "next/router"
+import { useToasts } from "react-toast-notifications"
 
 import OrderSumaryComponent from "../OrderSumary"
 import ShippingMethods from "./ShippingMethods"
@@ -25,18 +26,19 @@ import { AddressSchema } from "./validate"
 import { paymentCheckoutTokenCreate } from "lib/mutations"
 import { initKlarna, authorizeKlarna } from "./klarna"
 import { authorizeAfterpay } from "./afterpay"
+import { COUNTRIES_RESTRICTION } from "./constants"
 import styles from "./Delivery.module.scss"
 
 const ADDRESS = {
-  bussinessName: "thupx",
-  city: "Westmead",
-  country: { code: "AU", country: "Australia" },
-  firstName: "Thu",
-  lastName: "Pham",
-  phoneNumber: "0123456789",
-  postalCode: "2145",
-  state: "NSW",
-  streetAddress1: "83/85 Amos St",
+  bussinessName: "",
+  city: "",
+  country: COUNTRIES_RESTRICTION[0],
+  firstName: "",
+  lastName: "",
+  phoneNumber: "",
+  postalCode: "",
+  state: "",
+  streetAddress1: "",
   streetAddress2: "",
   address: "",
 }
@@ -51,8 +53,8 @@ export default function DeliveryComponent() {
     createPayment,
     completeCheckout,
   } = useCheckout()
+  const { addToast } = useToasts()
   const [createPaymentCheckoutToken] = useMutation(paymentCheckoutTokenCreate)
-  const [paymentMethod, setPaymentMethod] = useState(null)
   const [showContinue, setShowContinue] = useState(false)
   const [showLoading, setShowLoading] = useState(false)
   const currentUser = useSelector((state) => state.currentUser)
@@ -77,9 +79,10 @@ export default function DeliveryComponent() {
     },
   ])
   const initDeliveryData = {
-    shippingAddress: ADDRESS,
+    shippingAddress: { ...ADDRESS, useFullForm: false },
     billingAddress: ADDRESS,
     billingDifferentAddress: false,
+    paymentMethod: null,
   }
   const router = useRouter()
   const { status, orderToken, result, checkoutId } = router.query
@@ -122,18 +125,21 @@ export default function DeliveryComponent() {
     }
   }
 
-  const handleSubmitCheckout = async (values) => {
-    if (!paymentMethod) {
-      alert("Please choose payment method!")
-      return
-    }
+  const showToast = () => {
+    addToast("An error has been occurred. Please try again later", {
+      appearance: "error",
+      autoDismiss: true,
+      className: "mt-4 mr-2 w-auto",
+    })
+  }
 
+  const handleSubmitCheckout = async (values, bag) => {
     // Set Shipping Address and create Checkout
     const { shippingAddress, billingAddress, billingDifferentAddress } = {
       ...values,
     }
+
     shippingAddress.countryArea = shippingAddress.state
-    delete shippingAddress.address
 
     const { data: checkoutData, dataError } = await setShippingAddress(
       {
@@ -143,8 +149,15 @@ export default function DeliveryComponent() {
     )
 
     if (dataError) {
-      console.log("dataError", dataError)
-      alert(dataError.error?.message)
+      if (dataError.error.find((error) => error.field === "postalCode")) {
+        bag.setErrors({
+          "shippingAddress.postalCode": "Please check this field and try again",
+        })
+      } else {
+        showToast()
+      }
+
+      bag.setSubmitting(false)
       return
     }
 
@@ -166,7 +179,8 @@ export default function DeliveryComponent() {
     }
 
     if (billingAddressError) {
-      alert(billingAddressError.error?.message)
+      showToast()
+      bag.setSubmitting(false)
       return
     }
 
@@ -176,7 +190,8 @@ export default function DeliveryComponent() {
     )
 
     if (setShippingMethodError) {
-      alert(setShippingMethodError.error?.message)
+      showToast()
+      bag.setSubmitting(false)
       return
     }
 
@@ -184,7 +199,7 @@ export default function DeliveryComponent() {
     const { data: paymentCheckoutTokenRes } = await createPaymentCheckoutToken({
       variables: {
         checkoutId: checkoutData.id,
-        gateway: paymentMethod.id,
+        gateway: values.paymentMethod.id,
         amount: data.totalPrice?.gross?.amount,
       },
     })
@@ -192,17 +207,18 @@ export default function DeliveryComponent() {
     const { paymentCheckoutTokenCreate } = paymentCheckoutTokenRes
 
     if (paymentCheckoutTokenCreate.checkoutErrors?.length) {
-      alert(paymentCheckoutTokenCreate.checkoutErrors.error?.message)
+      showToast()
+      bag.setSubmitting(false)
       return
     }
-    localStorage.setItem("paymentGateway", paymentMethod.id)
+    localStorage.setItem("paymentGateway", values.paymentMethod.id)
 
     // Authorize payment checkout token
     const {
       token,
       checkoutUri,
     } = paymentCheckoutTokenCreate.gatewayCheckoutResponse
-    switch (paymentMethod.id) {
+    switch (values.paymentMethod.id) {
       case "plugin.gateway.afterpay":
         authorizeAfterpay(token)
         break
@@ -210,7 +226,6 @@ export default function DeliveryComponent() {
         initKlarna(token, () => setShowContinue(true))
         break
       case "bikebiz.payments.zipmoney":
-        console.log("checkoutUri", checkoutUri)
         router.push(checkoutUri)
         break
       default:
@@ -220,22 +235,7 @@ export default function DeliveryComponent() {
 
   return (
     <Container fluid className={styles.deliveryContainer}>
-      <Row>
-        <Modal
-          show={showLoading}
-          contentClassName={styles.modalContent}
-          dialogClassName={styles.modal}
-        >
-          <Modal.Body className={styles.modalBody}>
-            <Spinner animation="border" role="status">
-              <span className="sr-only">Loading...</span>
-            </Spinner>
-          </Modal.Body>
-        </Modal>
-      </Row>
-
       <OrderSumaryComponent />
-
       <Row>
         <Container>
           <Row className={styles.emailBody}>
@@ -266,11 +266,36 @@ export default function DeliveryComponent() {
             onSubmit={handleSubmitCheckout}
             initialValues={initDeliveryData}
           >
-            {({ handleSubmit, handleChange, values }) => (
+            {({
+              handleSubmit,
+              handleChange,
+              setFieldValue,
+              isSubmitting,
+              values,
+              touched,
+              errors,
+            }) => (
               <Form noValidate onSubmit={handleSubmit}>
+                <Row>
+                  <Modal
+                    show={showLoading || isSubmitting}
+                    contentClassName={styles.modalContent}
+                    dialogClassName={styles.modal}
+                  >
+                    <Modal.Body className={styles.modalBody}>
+                      <Spinner animation="border" role="status">
+                        <span className="sr-only">Loading...</span>
+                      </Spinner>
+                    </Modal.Body>
+                  </Modal>
+                </Row>
+
                 <ShippingAddress
                   handleChange={handleChange}
                   values={values.shippingAddress}
+                  touched={touched}
+                  errors={errors}
+                  setFieldValue={setFieldValue}
                 />
 
                 <Form.Check
@@ -286,13 +311,17 @@ export default function DeliveryComponent() {
                   <BillingAddress
                     handleChange={handleChange}
                     values={values.billingAddress}
+                    touched={touched}
+                    errors={errors}
                   />
                 )}
 
                 <PaymentComponent
                   availablePaymentGateways={availablePaymentGateways || []}
-                  paymentMethod={paymentMethod}
-                  setPaymentMethod={setPaymentMethod}
+                  paymentMethod={values.paymentMethod}
+                  setFieldValue={setFieldValue}
+                  errors={errors}
+                  touched={touched}
                 />
                 <div id="klarna-payments-container"></div>
                 {showContinue && (
@@ -304,7 +333,7 @@ export default function DeliveryComponent() {
                         type="button"
                         onClick={() => authorizeKlarna(sendCreatePayment)}
                       >
-                        Continue
+                        CONTINUE
                       </Button>
                     </Form.Group>
                   </Row>
@@ -317,8 +346,9 @@ export default function DeliveryComponent() {
                         variant="secondary"
                         className={clsx(styles.btnPlaceOrder, "w-100")}
                         type="submit"
+                        disabled={isSubmitting}
                       >
-                        Place Order
+                        PLACE ORDER
                       </Button>
                     </Form.Group>
                   </Row>
