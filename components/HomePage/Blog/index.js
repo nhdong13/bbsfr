@@ -63,6 +63,7 @@ const BlogComponent = (props) => {
           <div key={id} className="pr-4">
             <div className="position-relative">
               <Image
+                alt={`img-${id}`}
                 className={styles.border_none_image}
                 src="https://s3.amazonaws.com/s3-wp-product/wp-content/uploads/2019/03/25094806/Bikebiz2.jpg"
                 thumbnail
