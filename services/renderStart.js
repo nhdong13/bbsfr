@@ -1,4 +1,4 @@
-import { Image } from "react-bootstrap";
+import Image from "next/image";
 
 export const renderStart = (rate) => {
   let element;
@@ -6,99 +6,99 @@ export const renderStart = (rate) => {
     case 1:
       element = (
         <div style={{ display: "flex" }}>
-          <Image src="/icons/start-full.svg" />
-          <Image src="/icons/start-empty.svg" />
-          <Image src="/icons/start-empty.svg" />
-          <Image src="/icons/start-empty.svg" />
-          <Image src="/icons/start-empty.svg" />
+          <Image width={24} height={24} src="/icons/start-full.svg" />
+          <Image width={24} height={24} src="/icons/start-empty.svg" />
+          <Image width={24} height={24} src="/icons/start-empty.svg" />
+          <Image width={24} height={24} src="/icons/start-empty.svg" />
+          <Image width={24} height={24} src="/icons/start-empty.svg" />
         </div>
       );
       break;
     case 1.5:
       element = (
         <div style={{ display: "flex" }}>
-          <Image src="/icons/start-full.svg" />
-          <Image src="/icons/start-path.svg" />
-          <Image src="/icons/start-empty.svg" />
-          <Image src="/icons/start-empty.svg" />
-          <Image src="/icons/start-empty.svg" />
+          <Image width={24} height={24} src="/icons/start-full.svg" />
+          <Image width={24} height={24} src="/icons/start-path.svg" />
+          <Image width={24} height={24} src="/icons/start-empty.svg" />
+          <Image width={24} height={24} src="/icons/start-empty.svg" />
+          <Image width={24} height={24} src="/icons/start-empty.svg" />
         </div>
       );
       break;
     case 2:
       element = (
         <div style={{ display: "flex" }}>
-          <Image src="/icons/start-full.svg" />
-          <Image src="/icons/start-full.svg" />
-          <Image src="/icons/start-empty.svg" />
-          <Image src="/icons/start-empty.svg" />
-          <Image src="/icons/start-empty.svg" />
+          <Image width={24} height={24} src="/icons/start-full.svg" />
+          <Image width={24} height={24} src="/icons/start-full.svg" />
+          <Image width={24} height={24} src="/icons/start-empty.svg" />
+          <Image width={24} height={24} src="/icons/start-empty.svg" />
+          <Image width={24} height={24} src="/icons/start-empty.svg" />
         </div>
       );
       break;
     case 2.5:
       element = (
         <div style={{ display: "flex" }}>
-          <Image src="/icons/start-full.svg" />
-          <Image src="/icons/start-full.svg" />
-          <Image src="/icons/start-path.svg" />
-          <Image src="/icons/start-empty.svg" />
-          <Image src="/icons/start-empty.svg" />
+          <Image width={24} height={24} src="/icons/start-full.svg" />
+          <Image width={24} height={24} src="/icons/start-full.svg" />
+          <Image width={24} height={24} src="/icons/start-path.svg" />
+          <Image width={24} height={24} src="/icons/start-empty.svg" />
+          <Image width={24} height={24} src="/icons/start-empty.svg" />
         </div>
       );
       break;
     case 3:
       element = (
         <div style={{ display: "flex" }}>
-          <Image src="/icons/start-full.svg" />
-          <Image src="/icons/start-full.svg" />
-          <Image src="/icons/start-full.svg" />
-          <Image src="/icons/start-empty.svg" />
-          <Image src="/icons/start-empty.svg" />
+          <Image width={24} height={24} src="/icons/start-full.svg" />
+          <Image width={24} height={24} src="/icons/start-full.svg" />
+          <Image width={24} height={24} src="/icons/start-full.svg" />
+          <Image width={24} height={24} src="/icons/start-empty.svg" />
+          <Image width={24} height={24} src="/icons/start-empty.svg" />
         </div>
       );
       break;
     case 3.5:
       element = (
         <div style={{ display: "flex" }}>
-          <Image src="/icons/start-full.svg" />
-          <Image src="/icons/start-full.svg" />
-          <Image src="/icons/start-full.svg" />
-          <Image src="/icons/start-path.svg" />
-          <Image src="/icons/start-empty.svg" />
+          <Image width={24} height={24} src="/icons/start-full.svg" />
+          <Image width={24} height={24} src="/icons/start-full.svg" />
+          <Image width={24} height={24} src="/icons/start-full.svg" />
+          <Image width={24} height={24} src="/icons/start-path.svg" />
+          <Image width={24} height={24} src="/icons/start-empty.svg" />
         </div>
       );
       break;
     case 4:
       element = (
         <div style={{ display: "flex" }}>
-          <Image src="/icons/start-full.svg" />
-          <Image src="/icons/start-full.svg" />
-          <Image src="/icons/start-full.svg" />
-          <Image src="/icons/start-full.svg" />
-          <Image src="/icons/start-empty.svg" />
+          <Image width={24} height={24} src="/icons/start-full.svg" />
+          <Image width={24} height={24} src="/icons/start-full.svg" />
+          <Image width={24} height={24} src="/icons/start-full.svg" />
+          <Image width={24} height={24} src="/icons/start-full.svg" />
+          <Image width={24} height={24} src="/icons/start-empty.svg" />
         </div>
       );
       break;
     case 4.5:
       element = (
         <div style={{ display: "flex" }}>
-          <Image src="/icons/start-full.svg" />
-          <Image src="/icons/start-full.svg" />
-          <Image src="/icons/start-full.svg" />
-          <Image src="/icons/start-full.svg" />
-          <Image src="/icons/start-path.svg" />
+          <Image width={24} height={24} src="/icons/start-full.svg" />
+          <Image width={24} height={24} src="/icons/start-full.svg" />
+          <Image width={24} height={24} src="/icons/start-full.svg" />
+          <Image width={24} height={24} src="/icons/start-full.svg" />
+          <Image width={24} height={24} src="/icons/start-path.svg" />
         </div>
       );
       break;
     case 5:
       element = (
         <div style={{ display: "flex" }}>
-          <Image src="/icons/start-full.svg" />
-          <Image src="/icons/start-full.svg" />
-          <Image src="/icons/start-full.svg" />
-          <Image src="/icons/start-full.svg" />
-          <Image src="/icons/start-full.svg" />
+          <Image width={24} height={24} src="/icons/start-full.svg" />
+          <Image width={24} height={24} src="/icons/start-full.svg" />
+          <Image width={24} height={24} src="/icons/start-full.svg" />
+          <Image width={24} height={24} src="/icons/start-full.svg" />
+          <Image width={24} height={24} src="/icons/start-full.svg" />
         </div>
       );
       break;
