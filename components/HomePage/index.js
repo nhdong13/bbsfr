@@ -1,18 +1,21 @@
-import React from "react";
-import Department from "./Department";
-import Brand from "./Brand";
-import SEO_page from "./SEO";
-import styles from "./HomePage.module.scss";
-import FAQComponent from "./FAQ";
-import Head from "next/head";
-import { convertSchemaFAQ } from "../../services/convertSchemaFAQ";
+import React from "react"
+import Department from "./Department"
+import Brand from "./Brand"
+import SEOComponent from "./SEO"
+import styles from "./HomePage.module.scss"
+import FAQComponent from "./FAQ"
+import BlogComponent from "./Blog"
+import Head from "next/head"
+import { convertSchemaFAQ } from "../../services/convertSchemaFAQ"
+import "slick-carousel/slick/slick.css"
+import "slick-carousel/slick/slick-theme.css"
 
 function Home(props) {
-  const { department: departments, brands, SEO, FAQ } = props;
-  let count_department = departments.length % 2 == 0 ? -1 : 0;
-  let meta_title = SEO && SEO.meta_title;
-  let meta_description = SEO && SEO.meta_description;
-  const jsonFAQ = convertSchemaFAQ(FAQ);
+  const { department: departments, brands, SEO, FAQ } = props
+  let count_department = departments.length % 2 == 0 ? -1 : 0
+  let meta_title = SEO && SEO.meta_title
+  let meta_description = SEO && SEO.meta_description
+  const jsonFAQ = convertSchemaFAQ(FAQ)
   return (
     <>
       <Head>
@@ -44,13 +47,14 @@ function Home(props) {
           />
         ))}
         <Brand brands={brands} />
+        <BlogComponent></BlogComponent>
         <FAQComponent FAQ={FAQ} />
-        <SEO_page
+        <SEOComponent
           heading1={SEO.page_heading_1[0].text}
           pageParagraph={SEO.page_paragraph}
         />
       </div>
     </>
-  );
+  )
 }
-export default Home;
+export default Home

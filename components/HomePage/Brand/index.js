@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react"
 import { Container, Row, Col } from "react-bootstrap"
 import styles from "../HomePage.module.scss"
 import Slider from "react-slick"
-import "slick-carousel/slick/slick.css"
-import "slick-carousel/slick/slick-theme.css"
 import { pad, chunks, checkID } from "../../../services/brand.js"
 import Image from "next/image"
 import Link from "next/link"
@@ -20,7 +18,7 @@ export default function Brand(props) {
     setWidth(width - 30)
   })
 
-  let brands = chunks(props.brands, 6);
+  let brands = chunks(props.brands, 6)
   let num_pages = Math.floor(props.brands.length / 6) + 1
   const settings = {
     infinite: true,
