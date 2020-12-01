@@ -5,7 +5,7 @@ import Link from "next/link"
 import Slider from "react-slick"
 import { pad } from "../../../services/brand.js"
 
-const FAQComponent = (props) => {
+const BlogComponent = (props) => {
   const [activeSlide, setSlide] = useState(1)
   const [width, setWidth] = useState(100)
 
@@ -99,4 +99,4 @@ const FAQComponent = (props) => {
   )
 }
 
-export default FAQComponent
+export default BlogComponent
