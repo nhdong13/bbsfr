@@ -58,7 +58,7 @@ const FAQComponent = (props) => {
             return (
               <div key={index}>
                 <div
-                  className={item.open ? styles.questionOpen : styles.question}
+                  className={styles.question}
                   key={index}
                   onClick={() => setOpen(item, !item.open)}
                   aria-controls="example-collapse-text"
@@ -73,15 +73,15 @@ const FAQComponent = (props) => {
                     <Col xs={1} sm={1} md={1} lg={1} xl={1}>
                       <div className={styles.questionIcon}>
                         {item.open ? (
-                           <div className={styles.questionIconElement}>
-                           <Image
-                             src="/icons/subtract.svg"
-                             alt="Icon subtract"
-                             height={12}
-                             width={12}
-                             loading="eager"
-                           ></Image>
-                         </div>
+                          <div className={styles.questionIconElement}>
+                            <Image
+                              src="/icons/subtract.svg"
+                              alt="Icon subtract"
+                              height={12}
+                              width={12}
+                              loading="eager"
+                            ></Image>
+                          </div>
                         ) : (
                           <div className={styles.questionIconElement}>
                             <Image

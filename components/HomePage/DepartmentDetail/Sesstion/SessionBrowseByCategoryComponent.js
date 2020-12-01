@@ -134,7 +134,7 @@ const SessionBrowseByCategoryComponent = (props) => {
             return (
               <Link
                 key={index}
-                href={`${router.pathname}${collection.collection_slug}`}
+                href={`${router?.query?.id}${collection.collection_slug}`}
               >
                 <Container style={{ maxWidth: "unset" }}>
                   <div
