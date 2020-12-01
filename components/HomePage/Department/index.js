@@ -5,8 +5,8 @@ import Link from "next/link"
 
 export default function Department(props) {
   return (
-    <Link href="/[slug]" as={`/${props.slug}`}>
-      <Container className={styles.department}>
+    <Link href={`${props.slug}`}>
+      <Container fluid className={styles.department}>
         <Row
           className={
             props.count % 2 != 0
@@ -15,10 +15,10 @@ export default function Department(props) {
           }
         >
           <Col className={`col-6 ${styles.group_left}`}>
-            <div className={styles.status_product}>{props.pre_header}</div>
+            <div className={styles.status_product}>{props.preHeader}</div>
             <div className={styles.text_header}>{props.title}</div>
             <div className={styles.shop_group}>
-              <div className={styles.text_shop_now}>{props.call_action}</div>
+              <div className={styles.text_shop_now}>{props.callAction}</div>
               <div className={styles.triangle_right}></div>
             </div>
           </Col>
@@ -34,7 +34,7 @@ export default function Department(props) {
           <div className={styles.department_image}>
             <Image
               className={styles.max_width_image}
-              src={props.image.url}
+              src={props.image.url || ""}
               alt=""
               height={216}
             />
@@ -42,5 +42,5 @@ export default function Department(props) {
         </Row>
       </Container>
     </Link>
-  )
+  );
 }

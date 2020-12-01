@@ -1,5 +1,10 @@
 module.exports = {
   images: {
-    domains: ["demo.saleor.io", "localhost", "bbsfrapi.bikebiz.com.au"],
+    domains: [
+      "images.prismic.io",
+      "demo.saleor.io",
+      "localhost",
+      "bbsfrapi.bikebiz.com.au",
+    ],
   },
 }

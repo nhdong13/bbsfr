@@ -30,7 +30,7 @@ export default function PaymentComponent({
                 <span className={styles.btnIcon}>
                   <Image
                     src={PAYMENT_METHODS_ICON[method.id]}
-                    alt={method.name}
+                    alt={method.name || ""}
                     width={48}
                     height={16}
                   />
@@ -50,5 +50,5 @@ export default function PaymentComponent({
         />
       </Col>
     </Row>
-  )
+  );
 }

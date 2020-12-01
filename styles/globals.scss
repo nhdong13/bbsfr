@@ -112,3 +112,30 @@ input::placeholder {
   color: $white-button-color;
   border-color: $primary-border-color;
 }
+
+
+//Custom for input form global
+.custom-select, input, .form-control, .btn{
+  font-weight: 600;
+}
+.custom-select-lg{
+  height: calc(1.5em + 1rem + 10px);
+}
+/* End custom input */
+
+//Custom for switch global
+.custom-switch .custom-control-label::before {
+  width: 50px;
+  height: 32px;
+  border-radius: 15.5px;
+}
+
+.custom-switch .custom-control-label::after {
+  width: 28px;
+  height: 28px;
+  border-radius: 12.5px;
+}
+.custom-switch .custom-control-input:checked ~ .custom-control-label::after {
+  transform: translateX(18px);
+}
+/* End custom switch */

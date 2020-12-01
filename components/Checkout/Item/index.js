@@ -23,7 +23,7 @@ export default function ItemComponent({
               {thumbnail && (
                 <Image
                   src={thumbnail.url}
-                  alt={thumbnail.alt}
+                  alt={thumbnail.alt || ""}
                   width={96}
                   height={96}
                 />
@@ -85,5 +85,5 @@ export default function ItemComponent({
         </Col>
       </Row>
     </Container>
-  )
+  );
 }
