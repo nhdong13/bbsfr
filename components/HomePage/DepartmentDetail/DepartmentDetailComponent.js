@@ -8,6 +8,8 @@ import SearchForAccessoriesComponent from "./Sesstion/SearchForAccessoriesCompon
 import Head from "next/head";
 import { convertSchemaFAQ } from "../../../services/convertSchemaFAQ";
 import TestimonialsComponent from "../Testimonials/index";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const DepartmentDetailComponent = (props) => {
   const { department } = props;
