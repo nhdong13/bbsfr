@@ -1,4 +1,5 @@
 import Image from "next/image";
+
 export const renderStart = (rate) => {
   let element;
   switch (rate) {

@@ -113,12 +113,14 @@ input::placeholder {
   border-color: $primary-border-color;
 }
 
-
 //Custom for input form global
-.custom-select, input, .form-control, .btn{
+.custom-select,
+input,
+.form-control,
+.btn {
   font-weight: 600;
 }
-.custom-select-lg{
+.custom-select-lg {
   height: calc(1.5em + 1rem + 10px);
 }
 /* End custom input */
@@ -139,3 +141,9 @@ input::placeholder {
   transform: translateX(18px);
 }
 /* End custom switch */
+
+//Slick slider
+.slick-arrow {
+  display: none !important;
+}
+// End slick slider

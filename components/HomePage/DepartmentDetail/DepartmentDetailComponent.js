@@ -7,6 +7,9 @@ import { useRouter } from "next/router";
 import SearchForAccessoriesComponent from "./Sesstion/SearchForAccessoriesComponent";
 import Head from "next/head";
 import { convertSchemaFAQ } from "../../../services/convertSchemaFAQ";
+import TestimonialsComponent from "../Testimonials/index";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const DepartmentDetailComponent = (props) => {
   const { department } = props;
@@ -60,6 +63,7 @@ const DepartmentDetailComponent = (props) => {
         )}
         <SessionBrowseByCategoryComponent collections={collections} />
         <Brand brands={brands} />
+        <TestimonialsComponent />
         <FAQComponent FAQ={{ faq, faq_title }} />
         <SEO heading1={heading1} pageParagraph={page_paragraph || []} />
       </div>
