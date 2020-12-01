@@ -342,10 +342,6 @@ $vertical_border: 2.5px;
       }
     }
 
-    .questionOpen {
-      @extend .question;
-    }
-
     .bottomBorder {
       height: 1px;
       max-width: unset;
