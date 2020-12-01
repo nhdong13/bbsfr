@@ -1,11 +1,79 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Row, Col, Button, Form, Container } from "react-bootstrap"
 import clsx from "clsx"
 
+import { COUNTRIES_RESTRICTION } from "../constants"
+import ErrorMessageWrapper from "../../ErrorMessageWrapper"
 import styles from "../Delivery.module.scss"
 
-export default function ShippingAddress({ values, handleChange }) {
-  const [useFullform, setUseFullform] = useState(false)
+export default function ShippingAddress({
+  values,
+  handleChange,
+  errors,
+  touched,
+  setFieldValue,
+}) {
+  useEffect(() => {
+    let autocomplete
+
+    function initAutocomplete() {
+      if (document.getElementById("address")) {
+        autocomplete = new google.maps.places.Autocomplete(
+          document.getElementById("address"),
+          {
+            types: ["geocode"],
+            componentRestrictions: {
+              country: ["au"],
+            },
+          }
+        )
+
+        autocomplete.setFields(["address_component", "formatted_address"])
+        autocomplete.addListener("place_changed", fillInAddress)
+      }
+    }
+
+    function fillInAddress() {
+      const place = autocomplete.getPlace()
+      let streetAddress1 = ""
+
+      place.address_components.forEach((address) => {
+        const type = address.types[0]
+        switch (type) {
+          case "street_number":
+            streetAddress1 += address.short_name
+            break
+          case "route":
+            streetAddress1 += ` ${address.short_name}`
+            break
+          case "locality":
+            setFieldValue("shippingAddress.city", address.short_name)
+            break
+          case "administrative_area_level_1":
+            setFieldValue("shippingAddress.state", address.short_name)
+            break
+          case "postal_code":
+            setFieldValue("shippingAddress.postalCode", address.short_name)
+            break
+          default:
+            break
+        }
+      })
+
+      setFieldValue("shippingAddress.streetAddress1", streetAddress1)
+      setFieldValue("shippingAddress.address", place.formatted_address)
+    }
+
+    initAutocomplete()
+  }, [values.useFullForm])
+
+  const handleChangeCountry = (ev) => {
+    const selectedCountry = COUNTRIES_RESTRICTION.find(
+      (country) => country.code === ev.target.value
+    )
+    setFieldValue("shippingAddress.country", selectedCountry)
+  }
+
   return (
     <Row className={styles.shippingAddress}>
       <Container>
@@ -19,6 +87,11 @@ export default function ShippingAddress({ values, handleChange }) {
               value={values.firstName}
               onChange={handleChange}
             />
+            <ErrorMessageWrapper
+              errors={errors}
+              touched={touched}
+              fieldName="shippingAddress.firstName"
+            />
           </Form.Group>
 
           <Form.Group controlId="lastName" as={Col} xs="12">
@@ -30,19 +103,35 @@ export default function ShippingAddress({ values, handleChange }) {
               value={values.lastName}
               onChange={handleChange}
             />
+            <ErrorMessageWrapper
+              errors={errors}
+              touched={touched}
+              fieldName="shippingAddress.lastName"
+            />
           </Form.Group>
 
           <Form.Group controlId="country" as={Col} xs="12">
             <Form.Label>Country</Form.Label>
             <Form.Control
-              type="text"
-              placeholder="Country"
+              as="select"
               name="shippingAddress.country"
-              value={values.country.country}
-              onChange={handleChange}
+              onChange={handleChangeCountry}
+              value={values.country.code}
+              readOnly={true}
+            >
+              {COUNTRIES_RESTRICTION.map(({ country, code }) => (
+                <option key={code} value={code}>
+                  {country}
+                </option>
+              ))}
+            </Form.Control>
+            <ErrorMessageWrapper
+              errors={errors}
+              touched={touched}
+              fieldName="shippingAddress.country.country"
             />
           </Form.Group>
-          {!useFullform && (
+          {!values.useFullForm && (
             <>
               <Form.Group controlId="address" as={Col} xs="12">
                 <Form.Label>Delivery Address</Form.Label>
@@ -52,6 +141,11 @@ export default function ShippingAddress({ values, handleChange }) {
                   name="shippingAddress.address"
                   value={values.address}
                   onChange={handleChange}
+                />
+                <ErrorMessageWrapper
+                  errors={errors}
+                  touched={touched}
+                  fieldName="shippingAddress.address"
                 />
               </Form.Group>
               <Form.Group
@@ -64,7 +158,9 @@ export default function ShippingAddress({ values, handleChange }) {
                 <Button
                   variant="link"
                   className={clsx("primary", styles.btnLink)}
-                  onClick={() => setUseFullform(true)}
+                  onClick={() =>
+                    setFieldValue("shippingAddress.useFullForm", true)
+                  }
                 >
                   Use the full form
                 </Button>
@@ -72,7 +168,7 @@ export default function ShippingAddress({ values, handleChange }) {
             </>
           )}
 
-          {useFullform && (
+          {values.useFullForm && (
             <>
               <Form.Group controlId="streetAddress1" as={Col} xs="12">
                 <Form.Label>Line 1</Form.Label>
@@ -82,6 +178,11 @@ export default function ShippingAddress({ values, handleChange }) {
                   name="shippingAddress.streetAddress1"
                   value={values.streetAddress1}
                   onChange={handleChange}
+                />
+                <ErrorMessageWrapper
+                  errors={errors}
+                  touched={touched}
+                  fieldName="shippingAddress.streetAddress1"
                 />
               </Form.Group>
 
@@ -105,6 +206,11 @@ export default function ShippingAddress({ values, handleChange }) {
                   value={values.city}
                   onChange={handleChange}
                 />
+                <ErrorMessageWrapper
+                  errors={errors}
+                  touched={touched}
+                  fieldName="shippingAddress.city"
+                />
               </Form.Group>
 
               <Form.Group controlId="state" as={Col} xs="12">
@@ -127,6 +233,11 @@ export default function ShippingAddress({ values, handleChange }) {
                   value={values.postalCode}
                   onChange={handleChange}
                 />
+                <ErrorMessageWrapper
+                  errors={errors}
+                  touched={touched}
+                  fieldName="shippingAddress.postalCode"
+                />
               </Form.Group>
 
               <Form.Group
@@ -139,7 +250,9 @@ export default function ShippingAddress({ values, handleChange }) {
                 <Button
                   variant="link"
                   className={clsx("primary", styles.btnLink)}
-                  onClick={() => setUseFullform(false)}
+                  onClick={() =>
+                    setFieldValue("shippingAddress.useFullForm", false)
+                  }
                 >
                   Address lookup
                 </Button>
@@ -166,6 +279,12 @@ export default function ShippingAddress({ values, handleChange }) {
               name="shippingAddress.phoneNumber"
               value={values.phoneNumber}
               onChange={handleChange}
+            />
+
+            <ErrorMessageWrapper
+              errors={errors}
+              touched={touched}
+              fieldName="shippingAddress.phoneNumber"
             />
           </Form.Group>
         </Form.Row>

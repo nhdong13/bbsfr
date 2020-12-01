@@ -21,6 +21,9 @@ export default function Layout({ children }) {
           src="https://x.klarnacdn.net/kp/lib/v1/api.js"
           async
         ></script>
+        <script
+          src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_API_KEY}&libraries=places,geometry`}
+        ></script>
       </Head>
       <Header />
       <main>{children}</main>

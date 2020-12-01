@@ -7,6 +7,7 @@ import FAQComponent from "./FAQ"
 import BlogComponent from "./Blog"
 import Head from "next/head"
 import { convertSchemaFAQ } from "../../services/convertSchemaFAQ"
+import TestimonialsComponent from "./Testimonials"
 import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
 
@@ -48,6 +49,7 @@ function Home(props) {
         ))}
         <Brand brands={brands} />
         <BlogComponent></BlogComponent>
+        <TestimonialsComponent />
         <FAQComponent FAQ={FAQ} />
         <SEOComponent
           heading1={SEO.page_heading_1[0].text}
