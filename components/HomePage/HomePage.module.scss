@@ -1,6 +1,53 @@
 @import "/styles/variables.scss";
 @import "/styles/mixin";
 
+//Mixin
+@mixin paging_process_bar {
+  .num_pages {
+    display: flex;
+    .total_num_pages {
+      color: #e5e5e5;
+    }
+  }
+  .card_holder {
+    border-bottom: 1px solid #666666;
+  }
+
+  .card {
+    font-family: -apple-system, BlinkMacSystemFont, "Open Sans", sans-serif;
+    font-size: 5px;
+    font-weight: 800;
+    height: 1em;
+    padding: 0.5em 1em;
+    border-radius: 0.25em;
+    display: table-cell;
+    vertical-align: middle;
+    letter-spacing: -2px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    position: relative;
+    top: 1px;
+  }
+
+  .bg_gold {
+    background: -webkit-linear-gradient(110deg, #181818 70%, #ffb00f 30%);
+    background: -o-linear-gradient(110deg, #181818 70%, #ffb00f 30%);
+    background: -moz-linear-gradient(110deg, #181818 70%, #ffb00f 30%);
+    background: linear-gradient(110deg, #181818 70%, #ffb00f 30%);
+  }
+
+  .card_inactive {
+    opacity: 0;
+    transition: all 300ms ease-out;
+  }
+
+  .card_active {
+    opacity: 1;
+    transition: all 1000ms ease-out;
+  }
+}
+
+/* end mixin */
+
 // Align
 $padding-top-department: 60px;
 $border_brand_color: #e5e5e5;
@@ -195,49 +242,7 @@ $vertical_border: 2.5px;
     left: 100%;
     transform: translate(-40%, -45%) scale(1.5);
   }
-
-  .num_pages {
-    display: flex;
-    .total_num_pages {
-      color: #e5e5e5;
-    }
-  }
-
-  .card_holder {
-    border-bottom: 1px solid #666666;
-  }
-
-  .card {
-    font-family: -apple-system, BlinkMacSystemFont, "Open Sans", sans-serif;
-    font-size: 5px;
-    font-weight: 800;
-    height: 1em;
-    padding: 0.5em 1em;
-    border-radius: 0.25em;
-    display: table-cell;
-    vertical-align: middle;
-    letter-spacing: -2px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    position: relative;
-    top: 1px;
-  }
-
-  .bg_gold {
-    background: -webkit-linear-gradient(110deg, #181818 70%, #ffb00f 30%);
-    background: -o-linear-gradient(110deg, #181818 70%, #ffb00f 30%);
-    background: -moz-linear-gradient(110deg, #181818 70%, #ffb00f 30%);
-    background: linear-gradient(110deg, #181818 70%, #ffb00f 30%);
-  }
-
-  .card_inactive {
-    opacity: 0;
-    transition: all 300ms ease-out;
-  }
-
-  .card_active {
-    opacity: 1;
-    transition: all 1500ms ease-out;
-  }
+  @include paging_process_bar;
 }
 
 .text_heading_line_40 {
@@ -319,7 +324,7 @@ $vertical_border: 2.5px;
       line-height: 48px;
       &:hover {
         cursor: pointer;
-      }  
+      }
 
       .questionCol {
         display: flex;
@@ -330,10 +335,10 @@ $vertical_border: 2.5px;
           text-align: left;
           @include font-family(Rajdhani, 16px, 600, $primary-text-color);
         }
-        .questionIcon{ 
+        .questionIcon {
           width: 100%;
           position: relative;
-          .questionIconElement{ 
+          .questionIconElement {
             position: absolute;
             top: 20px;
             right: 0;
@@ -364,16 +369,71 @@ $vertical_border: 2.5px;
     }
   }
 
-  .questionLoadMore{
+  .questionLoadMore {
     font-style: normal;
     letter-spacing: 0px;
     text-align: left;
     height: 48px;
     line-height: 48px;
-    @include font-family(Rajdhani, 14px, 600, $primary-text-color); 
+    @include font-family(Rajdhani, 14px, 600, $primary-text-color);
     &:hover {
       color: $color-hover;
       cursor: pointer;
-    } 
+    }
+  }
+}
+
+//Blog
+.blog {
+  color: $primary-text-color;
+
+  .slider_custom {
+    padding-top: 35px;
+    padding-bottom: 30px;
+  }
+  .heading2 {
+    font-family: Rajdhani;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 20px;
+
+    text-transform: uppercase;
+  }
+  .read_more {
+    font-family: Rajdhani;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  .border_none_image {
+    border: none;
+    padding: 0;
+  }
+  .line_bottom_image {
+    height: 4px;
+    width: 100%;
+
+    position: absolute;
+    bottom: 0;
+    opacity: 0;
+
+    background-color: $status-product-color;
+  }
+
+  .line_image_active {
+    opacity: 1;
+  }
+
+  .content_blog {
+    padding-top: 3rem;
+    padding-bottom: 0.5rem;
+  }
+  @include paging_process_bar;
+
+  button.slick-arrow.slick-next {
+    display: none;
   }
 }

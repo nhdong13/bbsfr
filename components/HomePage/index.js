@@ -1,10 +1,13 @@
 import React from "react"
 import Department from "./Department"
 import Brand from "./Brand"
-import SEO_page from "./SEO"
+import SEOComponent from "./SEO"
 import styles from "./HomePage.module.scss"
 import FAQComponent from "./FAQ"
+import BlogComponent from "./Blog"
 import Head from "next/head"
+import "slick-carousel/slick/slick.css"
+import "slick-carousel/slick/slick-theme.css"
 
 function Home(props) {
   const { department: departments, brands, SEO, FAQ } = props
@@ -38,8 +41,9 @@ function Home(props) {
           />
         ))}
         <Brand brands={brands} />
+        <BlogComponent></BlogComponent>
         <FAQComponent FAQ={FAQ} />
-        <SEO_page
+        <SEOComponent
           heading1={SEO.page_heading_1[0].text}
           pageParagraph={SEO.page_paragraph}
         />

@@ -19,7 +19,7 @@ export default function SEO(props) {
         <RenderParagraph pageParagraph={pageParagraph} showMore={showMore} />
         <Collapse in={open}>
           <div id="collapse-text">
-            <RichText className={styles.message} render={paragraph} />
+            <RichText render={paragraph} />
           </div>
         </Collapse>
         <div
