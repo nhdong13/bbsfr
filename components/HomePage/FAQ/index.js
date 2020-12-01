@@ -5,9 +5,8 @@ import Image from "next/image";
 
 const FAQComponent = (props) => {
   const { FAQ } = props;
-  const { faq } = FAQ;
-  const [faqItemLess, setFaqItemsLess] = useState();
-  const [faqItemAll, setFaqItemsAll] = useState();
+  const [faqItemLess, setFaqItemsLess] = useState([]);
+  const [faqItemAll, setFaqItemsAll] = useState([]);
 
   const setOpen = (item, bol) => {
     const itemChange = { ...item, open: bol };
@@ -28,11 +27,14 @@ const FAQComponent = (props) => {
 
   const refactorFAQ = () => {
     const faqMap =
-      faq &&
-      faq.map((item, index) => ({ ...item, id: index + 1, open: false }));
-    setFaqItemsAll(faqMap);
-    const faqLess = faqMap.slice(0, 5);
-    setFaqItemsLess(faqLess);
+      FAQ &&
+      FAQ.faq &&
+      FAQ.faq.map((item, index) => ({ ...item, id: index + 1, open: false }));
+    if (faqMap) {
+      setFaqItemsAll(faqMap);
+      const faqLess = faqMap.slice(0, 5);
+      setFaqItemsLess(faqLess);
+    }
   };
 
   const showMore = () => {
@@ -44,7 +46,7 @@ const FAQComponent = (props) => {
   };
 
   const title =
-    FAQ?.faq_title && FAQ.faq_title.length > 0 ? FAQ.faq_title[0].text : "---";
+    FAQ?.faq_title && FAQ.faq_title.length > 0 ? FAQ.faq_title[0].text : "";
 
   return (
     <Container className={styles.FAQ}>
@@ -56,7 +58,7 @@ const FAQComponent = (props) => {
             return (
               <div key={index}>
                 <div
-                  className={item.open ? styles.questionOpen : styles.question}
+                  className={styles.question}
                   key={index}
                   onClick={() => setOpen(item, !item.open)}
                   aria-controls="example-collapse-text"
@@ -73,20 +75,20 @@ const FAQComponent = (props) => {
                         {item.open ? (
                           <div className={styles.questionIconElement}>
                             <Image
-                              src="/icons/plus.svg"
-                              alt="Icon plus"
-                              height={12}
-                              width={12}
-                            ></Image>
-                          </div>
-                        ) : (
-                          <div className={styles.questionIconElement}>
-                            <Image
                               src="/icons/subtract.svg"
                               alt="Icon subtract"
                               height={12}
                               width={12}
                               loading="eager"
+                            ></Image>
+                          </div>
+                        ) : (
+                          <div className={styles.questionIconElement}>
+                            <Image
+                              src="/icons/plus.svg"
+                              alt="Icon plus"
+                              height={12}
+                              width={12}
                             ></Image>
                           </div>
                         )}

@@ -5,6 +5,8 @@ import SEO from "../SEO";
 import FAQComponent from "../FAQ";
 import { useRouter } from "next/router";
 import SearchForAccessoriesComponent from "./Sesstion/SearchForAccessoriesComponent";
+import Head from "next/head";
+import { convertSchemaFAQ } from "../../../services/convertSchemaFAQ";
 
 const DepartmentDetailComponent = (props) => {
   const { department } = props;
@@ -16,6 +18,8 @@ const DepartmentDetailComponent = (props) => {
     meta_title,
     page_paragraph,
     meta_description,
+    faq,
+    faq_title,
   } = department;
 
   const brands =
@@ -27,20 +31,39 @@ const DepartmentDetailComponent = (props) => {
     page_heading_2 && page_heading_2.length > 0
       ? page_heading_2[0].text
       : "---";
+  const jsonFAQ = convertSchemaFAQ({ faq, faq_title });
 
   return (
-    <div>
-      <SessionHeaderDepartmentComponent department={department} />
-      {router?.query?.id === "accessories" ? (
-        <SearchForAccessoriesComponent />
-      ) : (
-        <></>
-      )}
-      <SessionBrowseByCategoryComponent collections={collections} />
-      <Brand brands={brands} />
-      {/* <FAQComponent FAQ={FAQ} /> */}
-      <SEO heading1={heading1} pageParagraph={page_paragraph || []} />
-    </div>
+    <>
+      <Head>
+        <title>{meta_title}</title>
+        <meta name="description" content={meta_description} />
+        <meta
+          name="og:description"
+          property="og:description"
+          content={meta_description}
+        />
+        <meta name="og:title" property="og:title" content={meta_title} />
+        <meta name="twitter:title" content={meta_title} />
+        <meta name="twitter:description" content={meta_description} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: jsonFAQ }}
+        />
+      </Head>
+      <div>
+        <SessionHeaderDepartmentComponent department={department} />
+        {router?.query?.id === "accessories" ? (
+          <SearchForAccessoriesComponent />
+        ) : (
+          <></>
+        )}
+        <SessionBrowseByCategoryComponent collections={collections} />
+        <Brand brands={brands} />
+        <FAQComponent FAQ={{ faq, faq_title }} />
+        <SEO heading1={heading1} pageParagraph={page_paragraph || []} />
+      </div>
+    </>
   );
 };
 export default DepartmentDetailComponent;
