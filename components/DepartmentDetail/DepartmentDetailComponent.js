@@ -1,13 +1,13 @@
-import Brand from "../Brand";
+import Brand from "../HomePage/Brand";
 import SessionHeaderDepartmentComponent from "./Sesstion/SessionHeaderDepartmentComponent";
 import SessionBrowseByCategoryComponent from "./Sesstion/SessionBrowseByCategoryComponent";
-import SEO from "../SEO";
-import FAQComponent from "../FAQ";
+import SEO from "../HomePage/SEO";
+import FAQComponent from "../HomePage/FAQ";
 import { useRouter } from "next/router";
 import SearchForAccessoriesComponent from "./Sesstion/SearchForAccessoriesComponent";
 import Head from "next/head";
-import { convertSchemaFAQ } from "../../../services/convertSchemaFAQ";
-import TestimonialsComponent from "../Testimonials/index";
+import { convertSchemaFAQ } from "../../services/convertSchemaFAQ";
+import TestimonialsComponent from "../HomePage/Testimonials/index";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 

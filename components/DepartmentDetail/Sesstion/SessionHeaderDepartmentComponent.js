@@ -2,8 +2,8 @@ import styles from "../DepartmentPage.module.scss";
 import { Container, Row, Col } from "react-bootstrap";
 import Image from "next/image";
 import { useSelector } from "react-redux";
-import { findDepartments } from "../../../../services/findDepartments";
 import { useRouter } from "next/router";
+import { findDepartments } from "../../../services/findDepartments";
 
 const SessionHeaderDepartmentComponent = (props) => {
   const { department } = props;
@@ -20,7 +20,7 @@ const SessionHeaderDepartmentComponent = (props) => {
     "https://images.prismic.io/slicemachine-blank/6b2bf485-aa12-44ef-8f06-dce6b91b9309_dancing.png?auto=compress,format";
 
   const departmentFiller = findDepartments(router.asPath, currentDepartments);
-  
+
   const preHeader =
     department?.department_preHeader &&
     department.department_preHeader.length > 0
