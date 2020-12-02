@@ -122,7 +122,7 @@ const SessionBrowseByCategoryComponent = (props) => {
             </p>
           </Col>
           <Col style={{ textAlign: "right" }} xs={3} sm={4} md={4} lg={4}>
-            <Link href={`${router.pathname}/all`}>
+            <Link href={`${router?.query?.id}/all`}>
               <p className={styles.sessionTitleCategoryTextLeft}>VIEW ALL</p>
             </Link>
           </Col>

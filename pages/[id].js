@@ -1,4 +1,4 @@
-import DepartmentDetailComponent from "../components/HomePage/DepartmentDetail/DepartmentDetailComponent";
+import DepartmentDetailComponent from "../components/DepartmentDetail/DepartmentDetailComponent";
 import { getDepartmentByUID, getAllDepartments } from "../lib/prismic/api";
 
 function DepartmentPage({ department }) {
