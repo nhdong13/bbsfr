@@ -26,8 +26,6 @@
       font-size: 12px;
     }
   }
-
-  
 }
 .mixin-p {
   text-transform: uppercase;
@@ -86,12 +84,9 @@
       letter-spacing: 1px;
       text-align: left;
       @extend .mixin-p;
-      @include font-family(
-        Roboto,
-        10px,
-        700,
-        $secondary-button-background-color
-      );
+      font-size: 10px;
+      font-weight: 700;
+      color: $secondary-button-background-color;
     }
 
     .heading {
@@ -160,7 +155,9 @@
     letter-spacing: 0px;
     text-align: right;
     margin-bottom: unset;
-    @include font-family(Roboto, 12px, 700, #ffb00f);
+    font-size: 12px;
+    font-weight: 700;
+    color: #ffb00f;
     &:hover {
       color: $color-hover;
       cursor: pointer;
@@ -175,10 +172,6 @@
     line-height: 48px;
     border-bottom: unset;
     @extend .itemCategoryMixins;
-    // &:hover {
-    //   background-color: $color-hover;
-    //   cursor: pointer;
-    // }
   }
 
   .containerItemCategory {
@@ -187,10 +180,6 @@
     line-height: 48px;
     border-bottom: 0.5px solid #e5e5e4;
     @extend .itemCategoryMixins;
-    // &:hover {
-    //   background-color: $color-hover;
-    //   cursor: pointer;
-    // }
   }
 }
 
