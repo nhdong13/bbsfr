@@ -1,9 +1,8 @@
-import { useRouter } from "next/router";
+import ResultComponent from "./Components/ResultComponent";
 
+const isServer = () => typeof window === "undefined";
 const CollectionComponent = (props) => {
-  const router = useRouter();
-  console.log("Debug code router:", router);
-  return <></>;
+  return <>{!isServer() && <ResultComponent />}</>;
 };
 
 export default CollectionComponent;
