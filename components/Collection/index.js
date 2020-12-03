@@ -1,8 +1,14 @@
-import ResultComponent from "./Components/ResultComponent";
+import ResultComponent from "./Components/ResultComponent"
+import HeaderCollectionComponent from "./Components/HeaderCollectionComponent"
+const isServer = () => typeof window === "undefined"
+const CollectionComponent = ({ collections }) => {
+  console.log(collections)
+  return (
+    <>
+      <HeaderCollectionComponent />
+      {!isServer() && <ResultComponent />}
+    </>
+  )
+}
 
-const isServer = () => typeof window === "undefined";
-const CollectionComponent = (props) => {
-  return <>{!isServer() && <ResultComponent />}</>;
-};
-
-export default CollectionComponent;
+export default CollectionComponent

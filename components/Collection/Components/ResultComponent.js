@@ -1,28 +1,28 @@
-import { Pipeline, Results, SearchProvider } from "@sajari/react-search-ui";
-import { useEffect, useState } from "react";
-import { Container } from "react-bootstrap";
-import styles from "../Collections.module.scss";
+import { Pipeline, Results, SearchProvider } from "@sajari/react-search-ui"
+import { useEffect, useState } from "react"
+import { Container } from "react-bootstrap"
+import styles from "../Collections.module.scss"
 
 const getWindowDimensions = () => {
-  const { innerWidth: width, innerHeight: height } = window;
-  return { width, height };
-};
+  const { innerWidth: width, innerHeight: height } = window
+  return { width, height }
+}
 
 const ResultComponent = (props) => {
-  const [column, setColumn] = useState(2);
+  const [column, setColumn] = useState(2)
   const [windowDimensions, setWindowDimensions] = useState(
     getWindowDimensions()
-  );
+  )
 
   useEffect(() => {
     function handleResize() {
-      setWindowDimensions(getWindowDimensions());
+      setWindowDimensions(getWindowDimensions())
     }
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
+  }, [])
 
-  useEffect(() => handleShowColumns());
+  useEffect(() => handleShowColumns())
 
   const pipeline = new Pipeline(
     {
@@ -35,23 +35,23 @@ const ResultComponent = (props) => {
     },
     // "app"
     "query"
-  );
+  )
 
-  console.log("Debug:", pipeline);
+  console.log("Debug:", pipeline)
 
   const handleShowColumns = () => {
-    const { width } = windowDimensions;
+    const { width } = windowDimensions
     if (width && width <= 425) {
-      setColumn(2);
+      setColumn(2)
     } else if (width <= 1440) {
-      setColumn(3);
+      setColumn(3)
     } else {
-      setColumn(4);
+      setColumn(4)
     }
-  };
-  
+  }
+
   return (
-    <Container>
+    <Container fluid>
       <SearchProvider
         search={{
           pipeline,
@@ -67,7 +67,7 @@ const ResultComponent = (props) => {
         />
       </SearchProvider>
     </Container>
-  );
-};
+  )
+}
 
-export default ResultComponent;
+export default ResultComponent
