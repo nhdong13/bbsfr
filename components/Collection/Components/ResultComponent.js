@@ -1,9 +1,11 @@
-import { Pipeline, Results, SearchProvider } from "@sajari/react-search-ui"
+import { FilterBuilder, Pipeline, Results, SearchProvider, Variables } from "@sajari/react-search-ui"
+import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { Container } from "react-bootstrap"
 import styles from "../Collections.module.scss"
 
 const getWindowDimensions = () => {
+  const router = useRouter();
   const { innerWidth: width, innerHeight: height } = window
   return { width, height }
 }
@@ -12,7 +14,7 @@ const ResultComponent = (props) => {
   const [column, setColumn] = useState(2)
   const [windowDimensions, setWindowDimensions] = useState(
     getWindowDimensions()
-  )
+  );
 
   useEffect(() => {
     function handleResize() {
@@ -26,16 +28,16 @@ const ResultComponent = (props) => {
 
   const pipeline = new Pipeline(
     {
-      // account: "1606874199975641114",
-      // collection: "jackets-app",
+      account: "1606874199975641114",
+      collection: "jackets-app",
 
-      account: "1594153711901724220",
-      collection: "bestbuy",
-      endpoint: "https://jsonapi-us-valkyrie.sajari.net",
+      // account: "1594153711901724220",
+      // collection: "bestbuy",
+      // endpoint: "https://jsonapi-us-valkyrie.sajari.net",
     },
-    // "app"
-    "query"
-  )
+    "app"
+    // "query"
+  );
 
   console.log("Debug:", pipeline)
 
@@ -50,12 +52,25 @@ const ResultComponent = (props) => {
     }
   }
 
+  // const collectionFilter = new FilterBuilder({
+  //   field: "brand",
+  //   initial: "iphone"
+  // });
+
+  const variables = new Variables({ resultsPerPage: 20 });
+
   return (
-    <Container fluid>
+    <Container fluid style={{marginTop: 15}}>
       <SearchProvider
         search={{
           pipeline,
-          fields: { title: "name", subtitle: "brand" },
+          variables,
+          fields: {
+            title: "name",
+            image: "base_image",
+            // rating: "",
+          },
+          // filters: [collectionFilter],
         }}
         searchOnLoad
       >
