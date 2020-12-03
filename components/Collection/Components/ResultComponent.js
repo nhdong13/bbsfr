@@ -1,67 +1,72 @@
-import {
-  FilterBuilder,
-  Pipeline,
-  Results,
-  SearchProvider,
-} from "@sajari/react-search-ui";
+import { Pipeline, Results, SearchProvider } from "@sajari/react-search-ui";
+import { useEffect, useState } from "react";
+import { Container } from "react-bootstrap";
+import styles from "../Collections.module.scss";
+
+const getWindowDimensions = () => {
+  const { innerWidth: width, innerHeight: height } = window;
+  return { width, height };
+};
 
 const ResultComponent = (props) => {
+  const [column, setColumn] = useState(2);
+  const [windowDimensions, setWindowDimensions] = useState(
+    getWindowDimensions()
+  );
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimensions(getWindowDimensions());
+    }
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => handleShowColumns());
+
   const pipeline = new Pipeline(
     {
+      // account: "1606874199975641114",
+      // collection: "jackets-app",
+
       account: "1594153711901724220",
       collection: "bestbuy",
       endpoint: "https://jsonapi-us-valkyrie.sajari.net",
     },
+    // "app"
     "query"
   );
 
-  console.log("Debug colog:", pipeline);
+  console.log("Debug:", pipeline);
 
-  const brandFilter = new FilterBuilder({
-    name: "brand",
-    field: "brand",
-    options: {
-      Apple: "brand = 'Apple'",
-      Samsung: "brand = 'Samsung'",
-      Dell: "brand = 'Dell'",
-      HP: "brand = 'HP'",
-      Garmin: "brand = 'Garmin'",
-    },
-  });
-
-  const priceFilter = new FilterBuilder({
-    name: "price",
-    options: {
-      High: "price >= 200",
-      Mid: "price >= 50",
-      Low: "price < 50",
-    },
-    multi: false,
-    initial: ["High"],
-  });
-
-  const colorFilter = new FilterBuilder({
-    name: "color",
-    field: "imageTags",
-    array: true,
-  });
-
-  const ratingFilter = new FilterBuilder({
-    name: "rating",
-    field: "rating",
-  });
-
+  const handleShowColumns = () => {
+    const { width } = windowDimensions;
+    if (width && width <= 425) {
+      setColumn(2);
+    } else if (width <= 1440) {
+      setColumn(3);
+    } else {
+      setColumn(4);
+    }
+  };
+  
   return (
-    <SearchProvider
-      search={{
-        pipeline,
-        fields: { title: "name", subtitle: "brand" },
-        filters: [priceFilter, brandFilter, colorFilter, ratingFilter],
-      }}
-      searchOnLoad
-    >
-      <Results appearance="grid" />;
-    </SearchProvider>
+    <Container>
+      <SearchProvider
+        search={{
+          pipeline,
+          fields: { title: "name", subtitle: "brand" },
+        }}
+        searchOnLoad
+      >
+        <Results
+          className={styles.result}
+          columns={column}
+          gap={4}
+          appearance="grid"
+        />
+      </SearchProvider>
+    </Container>
   );
 };
 
