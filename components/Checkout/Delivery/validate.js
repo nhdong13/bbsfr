@@ -11,7 +11,7 @@ export const AddressSchema = Yup.object().shape({
       code: Yup.string(),
     }),
     city: Yup.string().required("This field is required"),
-    state: Yup.string(),
+    state: Yup.string().required("This field is required"),
     streetAddress1: Yup.string().required("This field is required"),
     streetAddress2: Yup.string(),
     postalCode: Yup.string().required("This field is required"),
@@ -23,22 +23,26 @@ export const AddressSchema = Yup.object().shape({
   }),
   billingDifferentAddress: Yup.boolean(),
   billingAddress: Yup.object().shape({
-    firstName: Yup.string().test("require", "This field is required", function (
-      fieldValue
-    ) {
-      if (!this.from[1].value.billingDifferentAddress) {
-        return true
+    firstName: Yup.string().test(
+      "require",
+      "This field is required",
+      function (fieldValue) {
+        if (!this.from[1].value.billingDifferentAddress) {
+          return true
+        }
+        return fieldValue && fieldValue.trim()
       }
-      return fieldValue && fieldValue.trim()
-    }),
-    lastName: Yup.string().test("require", "This field is required", function (
-      fieldValue
-    ) {
-      if (!this.from[1].value.billingDifferentAddress) {
-        return true
+    ),
+    lastName: Yup.string().test(
+      "require",
+      "This field is required",
+      function (fieldValue) {
+        if (!this.from[1].value.billingDifferentAddress) {
+          return true
+        }
+        return fieldValue && fieldValue.trim()
       }
-      return fieldValue && fieldValue.trim()
-    }),
+    ),
     phoneNumber: Yup.string().test(
       "require",
       "This field is required",
@@ -50,24 +54,37 @@ export const AddressSchema = Yup.object().shape({
       }
     ),
     country: Yup.object().shape({
-      country: Yup.string().test("require", "This field is required", function (
-        fieldValue
-      ) {
+      country: Yup.string().test(
+        "require",
+        "This field is required",
+        function (fieldValue) {
+          if (!this.from[1].value.billingDifferentAddress) {
+            return true
+          }
+          return fieldValue && fieldValue.trim()
+        }
+      ),
+    }),
+    city: Yup.string().test(
+      "require",
+      "This field is required",
+      function (fieldValue) {
         if (!this.from[1].value.billingDifferentAddress) {
           return true
         }
         return fieldValue && fieldValue.trim()
-      }),
-    }),
-    city: Yup.string().test("require", "This field is required", function (
-      fieldValue
-    ) {
-      if (!this.from[1].value.billingDifferentAddress) {
-        return true
       }
-      return fieldValue && fieldValue.trim()
-    }),
-    state: Yup.string(),
+    ),
+    state: Yup.string().test(
+      "require",
+      "This field is required",
+      function (fieldValue) {
+        if (!this.from[1].value.billingDifferentAddress) {
+          return true
+        }
+        return fieldValue && fieldValue.trim()
+      }
+    ),
     streetAddress1: Yup.string().test(
       "require",
       "This field is required",

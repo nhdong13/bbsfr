@@ -160,8 +160,9 @@ export default function DeliveryComponent() {
       const resBilling = await setBillingAsShippingAddress()
       billingAddressError = resBilling?.dataError
     } else {
-      shippingAddress.countryArea = shippingAddress.state
-      delete shippingAddress.address
+      billingAddress.countryArea = billingAddress.state
+      delete billingAddress.address
+
       const resSetBilling = await setBillingAddress(
         {
           ...billingAddress,
@@ -172,7 +173,16 @@ export default function DeliveryComponent() {
     }
 
     if (billingAddressError) {
-      showToast()
+      if (
+        billingAddressError.error.find((error) => error.field === "postalCode")
+      ) {
+        bag.setErrors({
+          "billingAddress.postalCode": "Please check this field and try again",
+        })
+      } else {
+        showToast()
+      }
+
       bag.setSubmitting(false)
       return
     }
