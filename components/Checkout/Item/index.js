@@ -1,9 +1,13 @@
 import { Container, Row, Col, Form, Button } from "react-bootstrap"
 import Image from "next/image"
 import clsx from "clsx"
+
+import { useProductDetails } from "@sdk/react"
+import LoadingSpinner from "components/LoadingSpinner"
 import styles from "./CheckoutItem.module.scss"
 
 export default function ItemComponent({
+  id,
   name,
   quantity,
   thumbnail,
@@ -11,11 +15,17 @@ export default function ItemComponent({
   onRemove,
   attributes,
   viewOnly,
+  onQuantityChange,
+  quantityAvailable,
 }) {
   const size = attributes ? attributes[0]?.values[0] : {}
+  const { data, loading } = useProductDetails({ id })
 
   return (
     <Container className={styles.item}>
+      <Row>
+        <LoadingSpinner show={loading} />
+      </Row>
       <Row>
         <Col md="12">
           <Row>
@@ -53,12 +63,18 @@ export default function ItemComponent({
                   {viewOnly ? (
                     ` ${quantity}`
                   ) : (
-                    <Form.Control as="select" custom>
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
+                    <Form.Control
+                      as="select"
+                      custom
+                      onChange={(ev) =>
+                        onQuantityChange(ev.currentTarget.value)
+                      }
+                    >
+                      {Array(quantityAvailable)
+                        .fill()
+                        .map((_, i) => (
+                          <option key={i}>{i + 1}</option>
+                        ))}
                     </Form.Control>
                   )}
                 </Form.Group>
@@ -85,5 +101,5 @@ export default function ItemComponent({
         </Col>
       </Row>
     </Container>
-  );
+  )
 }

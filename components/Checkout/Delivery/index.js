@@ -1,14 +1,6 @@
 import { useState, useEffect } from "react"
 import { useSelector } from "react-redux"
-import {
-  Container,
-  Form,
-  Row,
-  Col,
-  Button,
-  Modal,
-  Spinner,
-} from "react-bootstrap"
+import { Container, Form, Row, Col, Button } from "react-bootstrap"
 import { Formik } from "formik"
 // import { useCheckout } from "@saleor/sdk"
 import { useCheckout } from "@sdk/react"
@@ -17,6 +9,7 @@ import { useMutation } from "@apollo/client"
 import { useRouter } from "next/router"
 import { useToasts } from "react-toast-notifications"
 
+import LoadingSpinner from "components/LoadingSpinner"
 import OrderSumaryComponent from "../OrderSumary"
 import ShippingMethods from "./ShippingMethods"
 import ShippingAddress from "./ShippingAddress"
@@ -167,8 +160,9 @@ export default function DeliveryComponent() {
       const resBilling = await setBillingAsShippingAddress()
       billingAddressError = resBilling?.dataError
     } else {
-      shippingAddress.countryArea = shippingAddress.state
-      delete shippingAddress.address
+      billingAddress.countryArea = billingAddress.state
+      delete billingAddress.address
+
       const resSetBilling = await setBillingAddress(
         {
           ...billingAddress,
@@ -179,7 +173,16 @@ export default function DeliveryComponent() {
     }
 
     if (billingAddressError) {
-      showToast()
+      if (
+        billingAddressError.error.find((error) => error.field === "postalCode")
+      ) {
+        bag.setErrors({
+          "billingAddress.postalCode": "Please check this field and try again",
+        })
+      } else {
+        showToast()
+      }
+
       bag.setSubmitting(false)
       return
     }
@@ -277,17 +280,7 @@ export default function DeliveryComponent() {
             }) => (
               <Form noValidate onSubmit={handleSubmit}>
                 <Row>
-                  <Modal
-                    show={showLoading || isSubmitting}
-                    contentClassName={styles.modalContent}
-                    dialogClassName={styles.modal}
-                  >
-                    <Modal.Body className={styles.modalBody}>
-                      <Spinner animation="border" role="status">
-                        <span className="sr-only">Loading...</span>
-                      </Spinner>
-                    </Modal.Body>
-                  </Modal>
+                  <LoadingSpinner show={showLoading || isSubmitting} />
                 </Row>
 
                 <ShippingAddress

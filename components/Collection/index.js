@@ -1,9 +1,14 @@
-import { useRouter } from "next/router";
+import ResultComponent from "./Components/ResultComponent"
+import HeaderCollectionComponent from "./Components/HeaderCollectionComponent"
+const isServer = () => typeof window === "undefined"
+const CollectionComponent = ({ collections }) => {
+  console.log(collections)
+  return (
+    <>
+      <HeaderCollectionComponent />
+      {!isServer() && <ResultComponent />}
+    </>
+  )
+}
 
-const CollectionComponent = (props) => {
-  const router = useRouter();
-  console.log("Debug code router:", router);
-  return <></>;
-};
-
-export default CollectionComponent;
+export default CollectionComponent
