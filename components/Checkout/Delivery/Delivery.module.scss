@@ -85,22 +85,3 @@
     }
   }
 }
-
-.modal {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-
-  .modalContent {
-    width: 48px;
-    background-color: transparent;
-    border: none;
-
-    .modalBody {
-      display: flex;
-      flex-direction: column;
-      vertical-align: middle;
-      justify-content: center;
-    }
-  }
-}
