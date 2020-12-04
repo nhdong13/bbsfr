@@ -16,7 +16,7 @@ const HeaderCollectionComponent = ({ pageHeading }) => {
   const variables = new Variables({ q: "" })
 
   const SearchPlayground = React.memo(() => {
-    const { results, totalResults } = useSearch({
+    const { totalResults } = useSearch({
       variables,
       pipeline,
       fields: {},
@@ -24,7 +24,7 @@ const HeaderCollectionComponent = ({ pageHeading }) => {
     return (
       <>
         <div className={styles.product_count}>{`${
-          results != undefined ? results.length : 0
+          totalResults != undefined ? totalResults : 0
         } Products`}</div>
       </>
     )
