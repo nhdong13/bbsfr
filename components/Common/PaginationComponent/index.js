@@ -1,5 +1,5 @@
 import { Pagination } from "@sajari/react-search-ui";
-import { Col, Container } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import styles from "./pagination.module.scss";
 
 const PaginationComponent = () => {

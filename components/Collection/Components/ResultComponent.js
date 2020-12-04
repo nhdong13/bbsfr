@@ -36,7 +36,6 @@ const ResultComponent = (props) => {
     {
       account: "1606874199975641114",
       collection: "jackets-app",
-
       // account: "1594153711901724220",
       // collection: "bestbuy",
       // endpoint: "https://jsonapi-us-valkyrie.sajari.net",
@@ -56,17 +55,7 @@ const ResultComponent = (props) => {
     }
   }
 
-  // const collectionFilter = new FilterBuilder({
-  //   field: "brand",
-  //   initial: "iphone"
-  // });
-
-  // const collectionFilter = new FilterBuilder({
-  //   field: "brand",
-  //   initial: "iphone"
-  // });
-
-  const variables = new Variables({ resultsPerPage: 20 })
+  const variables = new Variables({ resultsPerPage: 20 });
 
   return (
     <Container fluid style={{ marginTop: 15 }}>
@@ -79,12 +68,11 @@ const ResultComponent = (props) => {
             image: "base_image",
             rating: "",
           },
-          // filters: [collectionFilter],
         }}
         searchOnLoad
       >
         <Results
-          className={styles.result}
+          className="modifyResult"
           columns={column}
           gap={4}
           appearance="grid"
@@ -92,7 +80,7 @@ const ResultComponent = (props) => {
         <PaginationComponent />
       </SearchProvider>
     </Container>
-  )
+  );
 }
 
 export default ResultComponent
