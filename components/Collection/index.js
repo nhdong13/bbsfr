@@ -3,10 +3,13 @@ import HeaderCollectionComponent from "./Components/HeaderCollectionComponent"
 
 const isServer = () => typeof window === "undefined"
 const CollectionComponent = ({ collections }) => {
-  console.log(collections)
   return (
     <>
-      <HeaderCollectionComponent />
+      {!isServer() && (
+        <HeaderCollectionComponent
+          pageHeading={collections.page_heading_1[0].text}
+        />
+      )}
       {!isServer() && <ResultComponent />}
     </>
   );
