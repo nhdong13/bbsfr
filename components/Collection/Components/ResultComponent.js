@@ -45,8 +45,6 @@ const ResultComponent = (props) => {
     // "query"
   );
 
-  console.log("Debug:", pipeline.analytics.responseUpdated);
-
   const handleShowColumns = () => {
     const { width } = windowDimensions;
     if (width && width <= 425) {
