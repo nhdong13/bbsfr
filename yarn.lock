@@ -1215,7 +1215,14 @@
   dependencies:
     "@emotion/memoize" "0.7.4"
 
-"@emotion/memoize@0.7.4":
+"@emotion/is-prop-valid@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@emotion/is-prop-valid/-/is-prop-valid-1.0.0.tgz#1dbe82e52a12c065d416a702e2d106e552cde5be"
+  integrity sha512-G5X0t7eR9pkhUvAY32QS3lToP9JyNF8It5CcmMvbWjmC9/Yq7IhevaKqxl+me2BKR93iTPiL/h3En1ZX/1G3PQ==
+  dependencies:
+    "@emotion/memoize" "^0.7.4"
+
+"@emotion/memoize@0.7.4", "@emotion/memoize@^0.7.4":
   version "0.7.4"
   resolved "https://registry.yarnpkg.com/@emotion/memoize/-/memoize-0.7.4.tgz#19bf0f5af19149111c40d98bb0cf82119f5d9eeb"
   integrity sha512-Ja/Vfqe3HpuzRsG1oBtWTHk2PGZ7GR+2Vz5iYGelAw8dx32K0y7PjVuxK6z1nMpZOqAFsRUPCkK1YjJ56qJlgw==
@@ -1582,12 +1589,36 @@
     "@sajari/sdk-js" next
     js-cookie "^2.2.1"
 
+"@sajari/react-hooks@^1.0.0-alpha.31":
+  version "1.0.0-alpha.31"
+  resolved "https://registry.yarnpkg.com/@sajari/react-hooks/-/react-hooks-1.0.0-alpha.31.tgz#aff62d99c1604a47a003fc93706ed621bfb84537"
+  integrity sha512-ex8nyno2rDLSc2kKLmkbhBSMxNr/9jc586O2kXrbsV07ceEZrall6cxwiLB99W7fwePEH+QIqiwlB7XXvKujqg==
+  dependencies:
+    "@sajari/react-sdk-utils" "^1.0.0-alpha.20"
+    "@sajari/sdk-js" next
+    js-cookie "^2.2.1"
+
 "@sajari/react-sdk-utils@^1.0.0-alpha.15":
   version "1.0.0-alpha.15"
   resolved "https://registry.yarnpkg.com/@sajari/react-sdk-utils/-/react-sdk-utils-1.0.0-alpha.15.tgz#713fbdb84b68ccd291178627c23d402c5ee0f976"
   integrity sha512-Dnft4neJzuTGZ8el5vbxyYlBBItDhcONg/Cgn/Kl3sngfYTHS4uf4ZUcF15O68QWmI+HqZwa60vOjCnIZwGn7A==
   dependencies:
     "@emotion/core" "^10.1.1"
+    "@emotion/styled" "^10.0.27"
+    "@tailwindcss/ui" "^0.7.2"
+    emotion-theming "^10.0.27"
+    tailwindcss "^1.9.6"
+    tailwindcss-filters "^3.0.0"
+    tailwindcss-truncate-multiline "^1.0.3"
+    twin.macro "^1.12.1"
+
+"@sajari/react-sdk-utils@^1.0.0-alpha.20":
+  version "1.0.0-alpha.20"
+  resolved "https://registry.yarnpkg.com/@sajari/react-sdk-utils/-/react-sdk-utils-1.0.0-alpha.20.tgz#e2f9c7e28a14dd64b1b0eb017a54409e59e21369"
+  integrity sha512-ulKUN/7qedC7szyh582cqq3YJmgZDDu73lxFj8UCjYKNJ1OL5Sb5zQGjZ6DMt9c6YxIM3mLz/xwAgReUx2qCmA==
+  dependencies:
+    "@emotion/core" "^10.1.1"
+    "@emotion/is-prop-valid" "1.0.0"
     "@emotion/styled" "^10.0.27"
     "@tailwindcss/ui" "^0.7.2"
     emotion-theming "^10.0.27"
