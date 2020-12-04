@@ -3,7 +3,7 @@ import { useSelector } from "react-redux"
 import { Container, Form, Row, Col, Button } from "react-bootstrap"
 import { Formik } from "formik"
 // import { useCheckout } from "@saleor/sdk"
-import { useCheckout } from "@sdk/react"
+import { useCheckout, useUserDetails } from "@sdk/react"
 import clsx from "clsx"
 import { useMutation } from "@apollo/client"
 import { useRouter } from "next/router"
@@ -30,7 +30,7 @@ const ADDRESS = {
   lastName: "",
   phoneNumber: "",
   postalCode: "",
-  state: "",
+  countryArea: "",
   streetAddress1: "",
   streetAddress2: "",
   address: "",
@@ -46,11 +46,12 @@ export default function DeliveryComponent() {
     createPayment,
     completeCheckout,
   } = useCheckout()
+  const { data: currentUser } = useUserDetails()
+  console.log("currentUser", currentUser)
   const { addToast } = useToasts()
   const [createPaymentCheckoutToken] = useMutation(paymentCheckoutTokenCreate)
   const [showContinue, setShowContinue] = useState(false)
   const [showLoading, setShowLoading] = useState(false)
-  const currentUser = useSelector((state) => state.currentUser)
   const [shippingMethods, setShippingMethods] = useState([
     {
       id: "U2hpcHBpbmdNZXRob2Q6MQ==",
@@ -132,13 +133,11 @@ export default function DeliveryComponent() {
       ...values,
     }
 
-    shippingAddress.countryArea = shippingAddress.state
-
     const { data: checkoutData, dataError } = await setShippingAddress(
       {
         ...shippingAddress,
       },
-      "thupx@nustechnology.com"
+      currentUser.email
     )
 
     if (dataError) {
@@ -160,14 +159,11 @@ export default function DeliveryComponent() {
       const resBilling = await setBillingAsShippingAddress()
       billingAddressError = resBilling?.dataError
     } else {
-      billingAddress.countryArea = billingAddress.state
-      delete billingAddress.address
-
       const resSetBilling = await setBillingAddress(
         {
           ...billingAddress,
         },
-        "thupx@nustechnology.com"
+        currentUser.email
       )
       billingAddressError = resSetBilling?.dataError
     }
