@@ -1,5 +1,6 @@
 import ResultComponent from "./Components/ResultComponent"
 import HeaderCollectionComponent from "./Components/HeaderCollectionComponent"
+
 const isServer = () => typeof window === "undefined"
 const CollectionComponent = ({ collections }) => {
   return (
@@ -11,7 +12,7 @@ const CollectionComponent = ({ collections }) => {
       )}
       {!isServer() && <ResultComponent />}
     </>
-  )
+  );
 }
 
 export default CollectionComponent

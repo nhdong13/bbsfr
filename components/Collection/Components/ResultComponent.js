@@ -1,6 +1,14 @@
-import { Pipeline, Results, SearchProvider } from "@sajari/react-search-ui"
+import {
+  FilterBuilder,
+  Pipeline,
+  Results,
+  SearchProvider,
+  Variables,
+  Summary,
+} from "@sajari/react-search-ui"
 import { useEffect, useState } from "react"
-import { Container } from "react-bootstrap"
+import { Container, Row } from "react-bootstrap"
+import PaginationComponent from "../../Common/PaginationComponent"
 import styles from "../Collections.module.scss"
 
 const getWindowDimensions = () => {
@@ -26,15 +34,15 @@ const ResultComponent = (props) => {
 
   const pipeline = new Pipeline(
     {
-      // account: "1606874199975641114",
-      // collection: "jackets-app",
+      account: "1606874199975641114",
+      collection: "jackets-app",
 
-      account: "1594153711901724220",
-      collection: "bestbuy",
-      endpoint: "https://jsonapi-us-valkyrie.sajari.net",
+      // account: "1594153711901724220",
+      // collection: "bestbuy",
+      // endpoint: "https://jsonapi-us-valkyrie.sajari.net",
     },
-    // "app"
-    "query"
+    "app"
+    // "query"
   )
 
   console.log("Debug:", pipeline)
@@ -50,12 +58,25 @@ const ResultComponent = (props) => {
     }
   }
 
+  // const collectionFilter = new FilterBuilder({
+  //   field: "brand",
+  //   initial: "iphone"
+  // });
+
+  const variables = new Variables({ resultsPerPage: 20 })
+
   return (
-    <Container fluid>
+    <Container fluid style={{ marginTop: 15 }}>
       <SearchProvider
         search={{
           pipeline,
-          fields: { title: "name", subtitle: "brand" },
+          variables,
+          fields: {
+            title: "name",
+            image: "base_image",
+            rating: "",
+          },
+          // filters: [collectionFilter],
         }}
         searchOnLoad
       >
@@ -65,6 +86,7 @@ const ResultComponent = (props) => {
           gap={4}
           appearance="grid"
         />
+        <PaginationComponent />
       </SearchProvider>
     </Container>
   )
