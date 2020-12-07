@@ -11,7 +11,7 @@ const CollectionComponent = ({ collections }) => {
     page_paragraph,
     meta_description,
     meta_title,
-  } = collections
+  } = collections;
   return (
     <>
       <Head>
@@ -44,6 +44,7 @@ const CollectionComponent = ({ collections }) => {
         categories={collections.categories}
         shopByCategoryText={collections.shop_by_category_text[0].text}
       />
+
       {!isServer() && <ResultComponent />}
       <SEOComponent
         heading1={
@@ -56,7 +57,7 @@ const CollectionComponent = ({ collections }) => {
         }
       />
     </>
-  )
-}
+  );
+};
 
 export default CollectionComponent

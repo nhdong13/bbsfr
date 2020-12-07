@@ -7,6 +7,29 @@ $product-count-color: #939393;
   text-align: left !important;
 }
 
+.headerCollectionPage {
+  background-color: $primary-text-color;
+  .contentHeader {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    .page_heading_1_collection_page{
+      font-family: Rajdhani;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 31px;
+      line-height: 31px;
+      text-transform: uppercase;
+      color: #ffffff;
+    }
+    .product_count_collection_page{
+      font-style: normal;
+      font-weight: normal;
+      font-size: 12px;
+      line-height: 20px;
+      color: $product-count-color;
+    }
+  }
+}
 .categories {
   padding-top: 40px;
   padding-bottom: 40px;
