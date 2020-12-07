@@ -3,6 +3,7 @@ import HeaderCollectionComponent from "./Components/HeaderCollectionComponent"
 import SEOComponent from "../HomePage/SEO/index"
 import CategoriesComponent from "./Components/CategoriesComponent"
 import Head from "next/head"
+import { route } from "next/dist/next-server/server/router"
 
 const isServer = () => typeof window === "undefined"
 const CollectionComponent = ({ collections }) => {
@@ -11,7 +12,8 @@ const CollectionComponent = ({ collections }) => {
     page_paragraph,
     meta_description,
     meta_title,
-  } = collections;
+  } = collections
+
   return (
     <>
       <Head>
@@ -42,7 +44,11 @@ const CollectionComponent = ({ collections }) => {
       />
       <CategoriesComponent
         categories={collections.categories}
-        shopByCategoryText={collections.shop_by_category_text[0].text}
+        shopByCategoryText={
+          collections.shopByCategoryText != undefined &&
+          collections.shopByCategoryText.length &&
+          collections.shop_by_category_text[0].text
+        }
       />
 
       {!isServer() && <ResultComponent />}
@@ -57,7 +63,7 @@ const CollectionComponent = ({ collections }) => {
         }
       />
     </>
-  );
-};
+  )
+}
 
 export default CollectionComponent
