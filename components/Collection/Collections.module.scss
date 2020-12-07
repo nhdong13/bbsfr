@@ -2,6 +2,7 @@
 @import "/styles/mixin";
 
 $product-count-color: #939393;
+$border-color: #e5e5e4;
 
 .result {
   text-align: left !important;
@@ -12,7 +13,7 @@ $product-count-color: #939393;
   .contentHeader {
     padding-top: 40px;
     padding-bottom: 40px;
-    .page_heading_1_collection_page{
+    .page_heading_1_collection_page {
       font-family: Rajdhani;
       font-style: normal;
       font-weight: bold;
@@ -21,7 +22,7 @@ $product-count-color: #939393;
       text-transform: uppercase;
       color: #ffffff;
     }
-    .product_count_collection_page{
+    .product_count_collection_page {
       font-style: normal;
       font-weight: normal;
       font-size: 12px;
@@ -34,7 +35,6 @@ $product-count-color: #939393;
   padding-top: 40px;
   padding-bottom: 40px;
 
-  border-bottom: 1px solid;
   .header_category {
     font-family: Rajdhani;
     font-style: normal;
@@ -78,4 +78,13 @@ $product-count-color: #939393;
     text-decoration: underline;
     color: $primary-text-color;
   }
+}
+
+.pre_page_button {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  border-top: 0.5px solid $border-color;
+
+  display: flex;
+  font-size: 12px;
 }
