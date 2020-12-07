@@ -3,7 +3,6 @@ import HeaderCollectionComponent from "./Components/HeaderCollectionComponent"
 import SEOComponent from "../HomePage/SEO/index"
 import CategoriesComponent from "./Components/CategoriesComponent"
 import Head from "next/head"
-import { route } from "next/dist/next-server/server/router"
 
 const isServer = () => typeof window === "undefined"
 const CollectionComponent = ({ collections }) => {
@@ -39,15 +38,16 @@ const CollectionComponent = ({ collections }) => {
           collections.page_heading_1 &&
           collections.page_heading_1.length > 0
             ? collections.page_heading_1[0].text
-            : ""
+            : "Collections"
         }
       />
       <CategoriesComponent
         categories={collections.categories}
         shopByCategoryText={
-          collections.shopByCategoryText != undefined &&
-          collections.shopByCategoryText.length &&
-          collections.shop_by_category_text[0].text
+          collections.shop_by_category_text != undefined &&
+          collections.shop_by_category_text.length
+            ? collections.shop_by_category_text[0].text
+            : "List Category"
         }
       />
 
