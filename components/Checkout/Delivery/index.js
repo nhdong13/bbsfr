@@ -7,6 +7,7 @@ import clsx from "clsx"
 import { useMutation } from "@apollo/client"
 import { useRouter } from "next/router"
 import { useToasts } from "react-toast-notifications"
+import _ from "lodash"
 
 import LoadingSpinner from "components/LoadingSpinner"
 import OrderSumaryComponent from "../OrderSumary"
@@ -148,15 +149,22 @@ export default function DeliveryComponent() {
     )
 
     if (dataError) {
-      if (dataError.error.find((error) => error.field === "postalCode")) {
-        bag.setErrors({
-          "shippingAddress.postalCode": "Please check this field and try again",
-        })
+      bag.setSubmitting(false)
+      const fieldErrors = _.intersection(
+        dataError.error.map((error) => error.field),
+        ["postalCode", "phone"]
+      )
+
+      if (fieldErrors.length) {
+        fieldErrors.forEach((field) =>
+          bag.setErrors({
+            [`shippingAddress.${field}`]: "Please check this field and try again",
+          })
+        )
       } else {
         showToast()
       }
 
-      bag.setSubmitting(false)
       return
     }
 
@@ -176,17 +184,21 @@ export default function DeliveryComponent() {
     }
 
     if (billingAddressError) {
-      if (
-        billingAddressError.error.find((error) => error.field === "postalCode")
-      ) {
-        bag.setErrors({
-          "billingAddress.postalCode": "Please check this field and try again",
-        })
+      bag.setSubmitting(false)
+      const fieldErrors = _.intersection(
+        billingAddressError.error.map((error) => error.field),
+        ["postalCode", "phone"]
+      )
+
+      if (fieldErrors.length) {
+        fieldErrors.forEach((field) =>
+          bag.setErrors({
+            [`billingAddress.${field}`]: "Please check this field and try again",
+          })
+        )
       } else {
         showToast()
       }
-
-      bag.setSubmitting(false)
       return
     }
 
