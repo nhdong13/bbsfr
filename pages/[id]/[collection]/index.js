@@ -1,5 +1,5 @@
 import CollectionComponent from "../../../components/Collection"
-import { getCollectionByUid } from "../../../lib/prismic/api"
+import { getAllSEO, getCollectionByUid } from "../../../lib/prismic/api";
 import { useRouter } from "next/router"
 
 function Collection({ collections }) {
@@ -18,7 +18,7 @@ export default Collection
 // }
 
 export async function getServerSideProps(params) {
-  const collections = await getCollectionByUid(params.collection)
+  const collections = await getCollectionByUid(params.query.collection);
   return {
     props: { collections },
     // revalidate: +process.env.NEXT_PUBLIC_REVALIDATE_PAGE_TIME,

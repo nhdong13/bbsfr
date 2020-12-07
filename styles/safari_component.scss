@@ -1,34 +1,22 @@
 @import "./variables.scss";
 
-.css-1idjhnv-Result {
-  text-align: left !important;
-}
-
-.css-1cd9max-Result {
-  font-family: Rajdhani;
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.css-12yyq8b-Result {
-   font-family: Rajdhani; 
-   font-weight: bold;
-   color: #181818 !important;
-}
+$product-count-color: #939393;
 
 //Pagination
-.css-1fi3rr6-Pagination {
- font-size: 12px !important;
- max-width: 400px;
- margin: 0px auto;
- justify-content: space-around !important;
-}
-
 .css-q9rddq {
   background: #222222 !important;
   max-width: 30px;
   font-size: 14px !important;
   margin: 5px;
+}
+
+.css-1lfcbrr {
+  border: unset !important;
+  background-color: $text-white !important;
+}
+.css-1vwz9j1 {
+  border: unset !important;
+  background-color: $text-white !important; 
 }
 
 .css-1wkws2a {
@@ -37,24 +25,61 @@
   font-size: 12px !important;
   margin: 5px;
 }
-
-.css-1fi3rr6-Pagination > button:first-of-type {
-  border: unset;
-  background-color: $text-white;
-}
-.css-1fi3rr6-Pagination > button:last-of-type {
-  border: unset;
-  background-color: $text-white; 
-}
-
 .css-1cdx6dw {
-  max-width: 30px;
+  max-width: 30px !important;
   font-size: 12px !important;
-  margin: 5px;
-
+  margin: 5px !important;
 }
 
 .css-xqdxb0 {
   border: unset !important;
   background-color: $text-white !important;
+}
+
+//Result
+.modifyResult {
+  text-align: left !important;
+  align-items: left !important;
+  font-family: Rajdhani;
+  font-size: 14px;
+  font-weight: 500;
+  a {
+    color: #181818 !important;
+  }
+  p {
+    text-align: left !important;
+    color: #181818 !important;
+    font-weight: bold !important;
+  }
+}
+
+.modifyPagination {
+  font-size: 12px !important;
+  max-width: 400px;
+  margin: 0px auto;
+  justify-content: space-around !important;
+}
+
+.headerCollectionPage {
+  background-color: $primary-text-color;
+  .contentHeader {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    .page_heading_1_collection_page{
+      font-family: Rajdhani;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 31px;
+      line-height: 31px;
+      text-transform: uppercase;
+      color: #ffffff;
+    }
+    .product_count_collection_page{
+      font-style: normal;
+      font-weight: normal;
+      font-size: 12px;
+      line-height: 20px;
+      color: $product-count-color;
+    }
+  }
 }
