@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { Container, Row, Col } from "react-bootstrap"
 import styles from "../Collections.module.scss"
 import Link from "next/link"
@@ -10,9 +10,6 @@ const CategoriesComponent = ({ categories = [], shopByCategoryText }) => {
     itemToShow: 16,
     expanded: false,
   })
-  const [isShowPreName, setShowPreName] = useState(false)
-  const [preRoute, setPreRoute] = useState("")
-
   const expandCatefory = () => {
     setItemToShow({
       itemToShow: showItem.expanded ? 16 : categories.length,
@@ -25,8 +22,8 @@ const CategoriesComponent = ({ categories = [], shopByCategoryText }) => {
     <>
       <Container fluid className={styles.categories}>
         <div className={styles.header_category}>{shopByCategoryText}</div>
-        <div className={styles.list_category}>
-          {categories && categories.length && (
+        {categories && categories.length != 0 && (
+          <div className={styles.list_category}>
             <Row>
               {categories &&
                 categories.slice(0, showItem.itemToShow).map((category, id) => (
@@ -40,8 +37,8 @@ const CategoriesComponent = ({ categories = [], shopByCategoryText }) => {
                   </Col>
                 ))}
             </Row>
-          )}
-        </div>
+          </div>
+        )}
         {categories.length >= 16 && (
           <div onClick={expandCatefory} className={styles.show_less_show_more}>
             {showItem.expanded ? "View Less" : "View More"}
