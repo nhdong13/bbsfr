@@ -1,37 +1,36 @@
 @import "/styles/variables.scss";
 @import "/styles/mixin";
 
-$product-count-color: #939393;
+// $product-count-color: #939393;
 
-.header {
-  background-color: $primary-text-color;
-  .content {
-    padding-top: 40px;
-    padding-bottom: 40px;
+// .header {
+//   background-color: $primary-text-color;
+//   .content {
+//     padding-top: 40px;
+//     padding-bottom: 40px;
 
-    .page_heading_1 {
-      font-family: Rajdhani;
-      font-style: normal;
-      font-weight: bold;
-      font-size: 31px;
-      line-height: 31px;
-      /* identical to box height, or 100% */
+//     .page_heading_1 {
+//       font-family: Rajdhani;
+//       font-style: normal;
+//       font-weight: bold;
+//       font-size: 31px;
+//       line-height: 31px;
+//       /* identical to box height, or 100% */
 
-      text-transform: uppercase;
+//       text-transform: uppercase;
 
-      color: #ffffff;
-    }
+//       color: #ffffff;
+//     }
 
-    .product_count {
-      font-family: Roboto;
-      font-style: normal;
-      font-weight: normal;
-      font-size: 12px;
-      line-height: 20px;
-      /* identical to box height, or 167% */
+//     .product_count {
+//       font-style: normal;
+//       font-weight: normal;
+//       font-size: 12px;
+//       line-height: 20px;
+//       /* identical to box height, or 167% */
 
-      color: $product-count-color;
-    }
-  }
-}
+//       color: $product-count-color;
+//     }
+//   }
+// }
 
