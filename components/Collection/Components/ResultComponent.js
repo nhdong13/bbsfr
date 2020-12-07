@@ -4,8 +4,7 @@ import {
   Results,
   SearchProvider,
   Variables,
-  Summary,
-} from "@sajari/react-search-ui"
+} from "@sajari/react-search-ui";
 import { useEffect, useState } from "react"
 import { Container, Row } from "react-bootstrap"
 import PaginationComponent from "../../Common/PaginationComponent";
