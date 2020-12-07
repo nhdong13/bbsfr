@@ -8,8 +8,7 @@ import {
 } from "@sajari/react-search-ui"
 import { useEffect, useState } from "react"
 import { Container, Row } from "react-bootstrap"
-import PaginationComponent from "../../Common/PaginationComponent"
-import styles from "../Collections.module.scss"
+import PaginationComponent from "../../Common/PaginationComponent";
 
 const getWindowDimensions = () => {
   const { innerWidth: width, innerHeight: height } = window
@@ -17,43 +16,39 @@ const getWindowDimensions = () => {
 }
 
 const ResultComponent = (props) => {
-  const [column, setColumn] = useState(2)
+  const [column, setColumn] = useState(2);
   const [windowDimensions, setWindowDimensions] = useState(
     getWindowDimensions()
-  )
+  );
 
   useEffect(() => {
     function handleResize() {
-      setWindowDimensions(getWindowDimensions())
+      setWindowDimensions(getWindowDimensions());
     }
-    window.addEventListener("resize", handleResize)
-    return () => window.removeEventListener("resize", handleResize)
-  }, [])
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-  useEffect(() => handleShowColumns())
+  useEffect(() => handleShowColumns());
 
   const pipeline = new Pipeline(
     {
       account: "1606874199975641114",
       collection: "jackets-app",
-      // account: "1594153711901724220",
-      // collection: "bestbuy",
-      // endpoint: "https://jsonapi-us-valkyrie.sajari.net",
     },
     "app"
-    // "query"
-  )
+  );
 
   const handleShowColumns = () => {
-    const { width } = windowDimensions
+    const { width } = windowDimensions;
     if (width && width <= 425) {
-      setColumn(2)
+      setColumn(2);
     } else if (width <= 1440) {
-      setColumn(3)
+      setColumn(3);
     } else {
-      setColumn(4)
+      setColumn(4);
     }
-  }
+  };
 
   const variables = new Variables({ resultsPerPage: 20 });
 
@@ -81,6 +76,6 @@ const ResultComponent = (props) => {
       </SearchProvider>
     </Container>
   );
-}
+};
 
 export default ResultComponent

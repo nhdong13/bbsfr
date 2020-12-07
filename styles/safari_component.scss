@@ -1,5 +1,7 @@
 @import "./variables.scss";
 
+$product-count-color: #939393;
+
 //Pagination
 .css-q9rddq {
   background: #222222 !important;
@@ -41,6 +43,9 @@
   font-family: Rajdhani;
   font-size: 14px;
   font-weight: 500;
+  a {
+    color: #181818 !important;
+  }
   p {
     text-align: left !important;
     color: #181818 !important;
@@ -53,4 +58,28 @@
   max-width: 400px;
   margin: 0px auto;
   justify-content: space-around !important;
+}
+
+.headerCollectionPage {
+  background-color: $primary-text-color;
+  .contentHeader {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    .page_heading_1_collection_page{
+      font-family: Rajdhani;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 31px;
+      line-height: 31px;
+      text-transform: uppercase;
+      color: #ffffff;
+    }
+    .product_count_collection_page{
+      font-style: normal;
+      font-weight: normal;
+      font-size: 12px;
+      line-height: 20px;
+      color: $product-count-color;
+    }
+  }
 }

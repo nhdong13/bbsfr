@@ -28,17 +28,16 @@ const CollectionComponent = ({ collections }) => {
           dangerouslySetInnerHTML={{ __html: jsonFAQ }}
         /> */}
       </Head>
-      {!isServer() && (
-        <HeaderCollectionComponent
-          pageHeading={
-            collections &&
-            collections.page_heading_1 &&
-            collections.page_heading_1.length > 0
-              ? collections.page_heading_1[0].text
-              : ""
-          }
-        />
-      )}
+      
+      <HeaderCollectionComponent
+        pageHeading={
+          collections &&
+          collections.page_heading_1 &&
+          collections.page_heading_1.length > 0
+            ? collections.page_heading_1[0].text
+            : ""
+        }
+      />
 
       {!isServer() && <ResultComponent />}
       <SEOComponent
