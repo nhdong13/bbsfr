@@ -38,3 +38,53 @@ $product-count-color: #939393;
     }
   }
 }
+
+.categories {
+  padding-top: 40px;
+  padding-bottom: 40px;
+
+  border-bottom: 1px solid;
+  .header_category {
+    font-family: Rajdhani;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 21px;
+    line-height: 21px;
+    /* identical to box height, or 100% */
+
+    text-transform: uppercase;
+  }
+  .list_category {
+    padding-top: 20px;
+    transition: all 100ms ease-out;
+  }
+  .category {
+    padding-top: 5px;
+    display: flex;
+    align-items: center;
+
+    font-family: Rajdhani;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+
+    .count_category {
+      padding-left: 0.5rem;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 16px;
+      color: $product-count-color;
+    }
+  }
+
+  .show_less_show_more {
+    padding-top: 5px;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 20px;
+
+    text-decoration: underline;
+    color: $primary-text-color;
+  }
+}
