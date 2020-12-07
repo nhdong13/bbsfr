@@ -9,6 +9,7 @@ import { SaleorProvider } from "../lib/@sdk/react"
 import Layout from "components/Layout"
 
 import "../styles/globals.scss"
+import NProgressBarComponent from "../components/Common/NProgressBar";
 
 const SALEOR_CONFIG = {
   apiUrl: process.env.NEXT_PUBLIC_API_URI,
@@ -33,6 +34,7 @@ export default function App({ Component, pageProps }) {
           apolloConfig={{ client: apolloClient }}
         >
           <ToastProvider>
+          <NProgressBarComponent  />
             <Layout>
               <Component {...pageProps} />
             </Layout>
@@ -40,5 +42,5 @@ export default function App({ Component, pageProps }) {
         </SaleorProvider>
       </ApolloProvider>
     </Provider>
-  )
+  );
 }

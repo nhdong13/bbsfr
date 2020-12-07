@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { Pipeline, Summary, SearchProvider } from "@sajari/react-search-ui";
+import React, { useEffect, useState } from "react"
+import { Pipeline } from "@sajari/react-search-ui"
 
-import { Container } from "react-bootstrap";
-import styles from "../Collections.module.scss";
-import { useSearch, Variables } from "@sajari/react-hooks";
+import { Container } from "react-bootstrap"
+import styles from "../Collections.module.scss"
+import { useSearch, Variables } from "@sajari/react-hooks"
 
 const HeaderCollectionComponent = ({ pageHeading }) => {
   const pipeline = new Pipeline(
@@ -12,15 +12,15 @@ const HeaderCollectionComponent = ({ pageHeading }) => {
       collection: "jackets-app",
     },
     "app"
-  );
-  const variables = new Variables({ q: "" });
+  )
+  const variables = new Variables({ q: "" })
 
   const { totalResults } = useSearch({
     variables,
     pipeline,
     fields: {},
-  });
-  
+  })
+
   return (
     <Container fluid className={styles.headerCollectionPage}>
       <div className={styles.contentHeader}>
@@ -33,7 +33,7 @@ const HeaderCollectionComponent = ({ pageHeading }) => {
         } Products`}</div>
       </div>
     </Container>
-  );
-};
+  )
+}
 
-export default HeaderCollectionComponent;
+export default HeaderCollectionComponent
