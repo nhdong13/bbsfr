@@ -157,19 +157,19 @@ export default function BillingAddress({
             />
           </Form.Group>
 
-          <Form.Group controlId="phoneNumber" as={Col} xs="12">
+          <Form.Group controlId="phone" as={Col} xs="12">
             <Form.Label>Phone Number</Form.Label>
             <Form.Control
               type="text"
               placeholder="Phone Number"
-              name="billingAddress.phoneNumber"
-              value={values.phoneNumber}
+              name="billingAddress.phone"
+              value={values.phone}
               onChange={handleChange}
             />
             <ErrorMessageWrapper
               errors={errors}
               touched={touched}
-              fieldName="billingAddress.phoneNumber"
+              fieldName="billingAddress.phone"
             />
           </Form.Group>
         </Form.Row>

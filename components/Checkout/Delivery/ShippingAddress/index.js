@@ -276,20 +276,20 @@ export default function ShippingAddress({
             />
           </Form.Group>
 
-          <Form.Group controlId="phoneNumber" as={Col} xs="12">
+          <Form.Group controlId="phone" as={Col} xs="12">
             <Form.Label>Phone Number</Form.Label>
             <Form.Control
               type="text"
               placeholder="Phone Number"
-              name="shippingAddress.phoneNumber"
-              value={values.phoneNumber}
+              name="shippingAddress.phone"
+              value={values.phone}
               onChange={handleChange}
             />
 
             <ErrorMessageWrapper
               errors={errors}
               touched={touched}
-              fieldName="shippingAddress.phoneNumber"
+              fieldName="shippingAddress.phone"
             />
           </Form.Group>
         </Form.Row>
