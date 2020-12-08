@@ -7,6 +7,7 @@ import {
 import CategoriesComponent from "./CategoriesComponent"
 import HeaderCollectionComponent from "./HeaderCollectionComponent"
 import ResultComponent from "./ResultComponent"
+import ShortFilterComponent from "./ShortFilterComponent"
 import SEOComponent from "../../HomePage/SEO/index"
 
 const SessionComponents = ({ collections }) => {
@@ -16,8 +17,6 @@ const SessionComponents = ({ collections }) => {
     categories,
     shop_by_category_text,
   } = collections
-
-  const isServer = () => typeof window === "undefined"
 
   const pipeline = new Pipeline(
     {
@@ -48,7 +47,7 @@ const SessionComponents = ({ collections }) => {
             : "List Category"
         }
       />
-      {!isServer() && <ResultComponent pipeline={pipeline} />}
+      <ShortFilterComponent pipeline={pipeline} />
       <SEOComponent
         heading1={
           page_heading_1 && page_heading_1.length > 0

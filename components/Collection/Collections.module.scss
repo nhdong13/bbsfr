@@ -3,7 +3,8 @@
 
 $product-count-color: #939393;
 $border-color: #e5e5e4;
-$bg-color-sort-filter: #d0d1cf;
+$border-color-sort-filter: #d0d1cf;
+$bg-sort-filter: #f6f6f6;
 .result {
   text-align: left !important;
 }
@@ -89,6 +90,47 @@ $bg-color-sort-filter: #d0d1cf;
   font-size: 12px;
 }
 
-.short_by_filter {
-  background-color: $bg-color-sort-filter;
+.filter_sort_sajari {
+  padding: 16px;
+  background-color: $bg-sort-filter;
+
+  .short_filter {
+    position: relative;
+
+    padding-top: 14px;
+    padding-bottom: 13px;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    border: 1px solid $border-color-sort-filter;
+    border-radius: 4px;
+
+    .title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-basis: 50%;
+
+      font-family: Rajdhani;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 20px;
+      text-align: center;
+
+      img {
+        left: -7.5px !important;
+      }
+    }
+
+    .horizontal_line {
+      position: absolute;
+      width: 1px;
+      top: 20%;
+      background-color: $border-color-sort-filter;
+      height: 60%;
+    }
+  }
 }
