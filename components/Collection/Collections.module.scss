@@ -3,7 +3,7 @@
 
 $product-count-color: #939393;
 $border-color: #e5e5e4;
-
+$bg-color-sort-filter: #d0d1cf;
 .result {
   text-align: left !important;
 }
@@ -87,4 +87,8 @@ $border-color: #e5e5e4;
 
   display: flex;
   font-size: 12px;
+}
+
+.short_by_filter {
+  background-color: $bg-color-sort-filter;
 }

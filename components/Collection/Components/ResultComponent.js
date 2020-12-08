@@ -1,10 +1,14 @@
+import React, { useEffect, useState } from "react"
 import {
   Pipeline,
   Results,
   SearchProvider,
   Variables,
+  FilterBuilder,
+  Filter,
+  FieldDictionary,
+  Sorting,
 } from "@sajari/react-search-ui"
-import { useEffect, useState } from "react"
 import { Container } from "react-bootstrap"
 import PaginationComponent from "../../Common/PaginationComponent"
 
@@ -48,31 +52,100 @@ const ResultComponent = (props) => {
     }
   }
 
-  const variables = new Variables({ resultsPerPage: 20 })
+  // const categoryFilter = new FilterBuilder({
+  //   name: "category",
+  //   field: "categories",
+  // })
+
+  // const SearchPlayground = React.memo(() => (
+  //   <div className="flex flex-col space-y-6">
+  //     <div className="flex -mx-3">
+  //       <div className="w-1/4 px-3 border-gray-100 border-r space-y-6">
+  //         <Filter
+  //           type="list"
+  //           name="category"
+  //           title="Category"
+  //           searchable
+  //           sort="alpha"
+  //         />
+  //       </div>
+  //       <div className="w-3/4 px-3">
+  //         <Results
+  //           className="modifyResult"
+  //           columns={column}
+  //           gap={4}
+  //           appearance="grid"
+  //         />
+  //       </div>
+  //     </div>
+  //   </div>
+  // ))
+
+  // const pipeline = new Pipeline(
+  //   {
+  //     account: "1594153711901724220",
+  //     collection: "bestbuy",
+  //     endpoint: "https://jsonapi-us-valkyrie.sajari.net",
+  //   },
+  //   "query"
+  // )
+
+  // const categoryFilter = new FilterBuilder({
+  //   name: "category",
+  //   field: "name",
+  // })
+
+  const priceRangeFilter = new FilterBuilder({
+    name: "weight",
+    field: "weight",
+  })
+
+  const SearchPlayground = React.memo(() => (
+    <div className="flex flex-col space-y-6">
+      <div className="flex -mx-3">
+        <div className="w-1/4 px-3 border-gray-100 border-r space-y-6">
+          {/* <Filter
+            type="list"
+            name="category"
+            title="Category"
+            searchable
+            sort="alpha"
+          /> */}
+          <Sorting
+            options={[
+              { name: "Most relevant", value: "" },
+              { name: "Name: A to Z", value: "name" },
+              { name: "Name: Z to A", value: "-name" },
+            ]}
+            size="sm"
+          />
+          <Filter type="list" name="weight" title="Range ($)" />
+        </div>
+        <div className="w-3/4 px-3">
+          <Results
+            className="modifyResult"
+            columns={column}
+            gap={4}
+            appearance="grid"
+          />
+        </div>
+      </div>
+    </div>
+  ))
 
   return (
-    <Container fluid style={{ marginTop: 15 }}>
-      <SearchProvider
-        search={{
-          pipeline,
-          variables,
-          fields: {
-            title: "name",
-            image: "base_image",
-            rating: "",
-          },
-        }}
-        searchOnLoad
-      >
-        <Results
-          className="modifyResult"
-          columns={column}
-          gap={4}
-          appearance="grid"
-        />
-        <PaginationComponent />
-      </SearchProvider>
-    </Container>
+    <SearchProvider
+      search={{
+        pipeline,
+        fields: new FieldDictionary({
+          title: "name",
+        }),
+        filters: [priceRangeFilter],
+      }}
+      searchOnLoad
+    >
+      <SearchPlayground />
+    </SearchProvider>
   )
 }
 
