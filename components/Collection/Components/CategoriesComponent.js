@@ -1,11 +1,12 @@
 import React, { useState } from "react"
 import { Container, Row, Col } from "react-bootstrap"
-import styles from "../Collections.module.scss"
+import styles from "./../Collections.module.scss"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { capitalizeString } from "../../../services/collection"
 
 const CategoriesComponent = ({ categories = [], shopByCategoryText }) => {
+  console.log("Debug code categories:", categories)
   const [showItem, setItemToShow] = useState({
     itemToShow: 16,
     expanded: false,
