@@ -1,18 +1,10 @@
-import ResultComponent from "./Components/ResultComponent"
-import HeaderCollectionComponent from "./Components/HeaderCollectionComponent"
-import SEOComponent from "../HomePage/SEO/index"
-import CategoriesComponent from "./Components/CategoriesComponent"
+
 import Head from "next/head"
+import SessionComponents from "./Components"
 
 const isServer = () => typeof window === "undefined"
 const CollectionComponent = ({ collections }) => {
-  const {
-    page_heading_1,
-    page_paragraph,
-    meta_description,
-    meta_title,
-  } = collections
-
+  const { meta_description, meta_title } = collections
   return (
     <>
       <Head>
@@ -31,37 +23,7 @@ const CollectionComponent = ({ collections }) => {
           dangerouslySetInnerHTML={{ __html: jsonFAQ }}
         /> */}
       </Head>
-
-      <HeaderCollectionComponent
-        pageHeading={
-          collections &&
-          collections.page_heading_1 &&
-          collections.page_heading_1.length > 0
-            ? collections.page_heading_1[0].text
-            : "Collections"
-        }
-      />
-      <CategoriesComponent
-        categories={collections.categories}
-        shopByCategoryText={
-          collections.shop_by_category_text != undefined &&
-          collections.shop_by_category_text.length
-            ? collections.shop_by_category_text[0].text
-            : "List Category"
-        }
-      />
-
-      {!isServer() && <ResultComponent />}
-      <SEOComponent
-        heading1={
-          page_heading_1 && page_heading_1.length > 0
-            ? page_heading_1[0].text
-            : ""
-        }
-        pageParagraph={
-          page_paragraph && page_paragraph.length > 0 ? page_paragraph : []
-        }
-      />
+      <SessionComponents collections={collections} />
     </>
   )
 }
