@@ -18,6 +18,7 @@ const getWindowDimensions = () => {
 }
 
 const ResultComponent = (props) => {
+  const { pipeline } = props
   const [column, setColumn] = useState(2)
   const [windowDimensions, setWindowDimensions] = useState(
     getWindowDimensions()
@@ -32,14 +33,6 @@ const ResultComponent = (props) => {
   }, [])
 
   useEffect(() => handleShowColumns())
-
-  const pipeline = new Pipeline(
-    {
-      account: "1606874199975641114",
-      collection: "jackets-app",
-    },
-    "app"
-  )
 
   const handleShowColumns = () => {
     const { width } = windowDimensions
