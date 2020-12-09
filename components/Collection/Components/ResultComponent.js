@@ -1,73 +1,120 @@
-import {
-  Pipeline,
-  Results,
-  SearchProvider,
-  Variables,
-} from "@sajari/react-search-ui"
+import { useSearch } from "@sajari/react-hooks"
+import { Pipeline, SearchProvider, Variables } from "@sajari/react-search-ui"
 import { useEffect, useState } from "react"
-import { Container } from "react-bootstrap"
 import PaginationComponent from "../../Common/PaginationComponent"
-
-const getWindowDimensions = () => {
-  const { innerWidth: width, innerHeight: height } = window
-  return { width, height }
-}
+import Image from "next/image"
+import { renderStart } from "../../../services/renderStart"
+import styles from "../Collections.module.scss"
 
 const ResultComponent = (props) => {
   const { pipeline } = props
-  const [column, setColumn] = useState(2)
-  const [windowDimensions, setWindowDimensions] = useState(
-    getWindowDimensions()
-  )
+  const [windowWidth, setWindowWidths] = useState()
+  const [countUnsetBorder, setCountUnsetBorder] = useState(2)
+  const [widthListProduct, setWidthListProduct] = useState(100)
 
   useEffect(() => {
-    function handleResize() {
-      setWindowDimensions(getWindowDimensions())
-    }
-    window.addEventListener("resize", handleResize)
-    return () => window.removeEventListener("resize", handleResize)
+    const { innerWidth: width, innerHeight: height } = window
+    setWindowWidths(width)
+    window.addEventListener("resize", { width, height })
+    return () => window.removeEventListener("resize", { width, height })
   }, [])
 
-  useEffect(() => handleShowColumns())
+  useEffect(() => {
+    return handleResponsive()
+  })
 
-  const handleShowColumns = () => {
-    const { width } = windowDimensions
-    if (width && width <= 425) {
-      setColumn(2)
-    } else if (width <= 1440) {
-      setColumn(3)
+  //Handle check to responsive product
+  const handleResponsive = () => {
+    if (windowWidth <= 425) {
+      setCountUnsetBorder(2)
+      setWidthListProduct(100)
+    } else if (windowWidth <= 768 && windowWidth > 425) {
+      setCountUnsetBorder(4)
+      setWidthListProduct(100)
+    } else if (windowWidth === 1024 && windowWidth > 768) {
+      setCountUnsetBorder(4)
+      setWidthListProduct(80)
+    } else if (windowWidth === 1440 && windowWidth > 1024) {
+      setCountUnsetBorder(4)
+      setWidthListProduct(58)
     } else {
-      setColumn(4)
+      setCountUnsetBorder(4)
+      setWidthListProduct(30)
     }
   }
 
+  //Map styles to render border
+  const handleStyle = (index, results) => {
+    let concatStyles
+    if ((index + 1) % countUnsetBorder === 0) {
+      concatStyles = styles.containerProductMode
+    } else {
+      concatStyles = styles.containerProduct
+    }
+    //Un set border bottom
+    if (windowWidth <= 425) {
+      if (index + 1 === results.length || index + 1 === results.length - 1) {
+        concatStyles += ` ${styles.unsetBorder}`
+      }
+    } else if (windowWidth >= 768) {
+      if (
+        index + 1 === results.length ||
+        index + 1 === results.length - 1 ||
+        index + 1 === results.length - 2 ||
+        index + 1 === results.length - 3
+      ) {
+        concatStyles += ` ${styles.unsetBorder}`
+      }
+    }
+
+    return concatStyles
+  }
+
   const variables = new Variables({ resultsPerPage: 20 })
+  const { results = [] } = useSearch({ pipeline, variables })
 
   return (
-    <Container fluid style={{ marginTop: 15 }}>
-      {pipeline && (
-        <SearchProvider
-          search={{
-            pipeline,
-            variables,
-            fields: {
-              title: "name",
-              image: "base_image",
-              rating: "",
-            },
-          }}
-          searchOnLoad
-        >
-          <Results
-            className="modifyResult"
-            columns={column}
-            gap={1}
-            appearance="grid"
-          />
-          <PaginationComponent />
-        </SearchProvider>
-      )}
-    </Container>
+    <div
+      style={{ width: `${widthListProduct}%` }}
+      className={styles.listProduct}
+    >
+      {results &&
+        results.map((item, index) => {
+          return (
+            <div key={index}>
+              <div className={handleStyle(index, results)}>
+                <div className={styles.elementProduct}>
+                  <Image
+                    alt
+                    src="https://images.prismic.io/slicemachine-blank/6b2bf485-aa12-44ef-8f06-dce6b91b9309_dancing.png?auto=compress,format"
+                    height={172}
+                    width={172}
+                  ></Image>
+                  <div className={styles.sessionInfo}>
+                    <div className={styles.nameProduct}>
+                      <p>{item.values.name}</p>
+                    </div>
+                    <div className={styles.priceProduct}>
+                      <p>{item.values.price ? `$${item.values.price}` : ""}</p>
+                    </div>
+                    {renderStart(4, "16px", "16px")}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )
+        })}
+
+      <SearchProvider
+        search={{
+          pipeline,
+          variables,
+        }}
+        searchOnLoad
+      >
+        <PaginationComponent />
+      </SearchProvider>
+    </div>
   )
 }
 
