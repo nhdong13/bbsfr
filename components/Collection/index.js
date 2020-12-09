@@ -61,7 +61,7 @@ const CollectionComponent = ({ collections }) => {
             : "List Category"
         }
       />
-      {!isServer() && <ResultComponent pipeline={pipeline} />}
+      <ResultComponent pipeline={pipeline} />
       <SEOComponent
         heading1={
           page_heading_1 && page_heading_1.length > 0
