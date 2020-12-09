@@ -4,7 +4,7 @@ import ResultComponent from "./ResultComponent"
 import styles from "./../Collections.module.scss"
 import Image from "next/image"
 
-const ShortFilterComponent = ({ pipeline }) => {
+const SortFilterComponent = ({ pipeline }) => {
   const isServer = () => typeof window === "undefined"
   return (
     <div>
@@ -21,9 +21,9 @@ const ShortFilterComponent = ({ pipeline }) => {
           <div className={styles.horizontal_line}></div>
         </div>
       </Container>
-      {!isServer() && <ResultComponent pipeline={pipeline} />}
+      <ResultComponent pipeline={pipeline} />
     </div>
   )
 }
 
-export default ShortFilterComponent
+export default SortFilterComponent

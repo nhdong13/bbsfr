@@ -5,9 +5,9 @@ import styles from "./pagination.module.scss";
 const PaginationComponent = () => {
   return (
     <Container className={styles.containerPagination}>
-      <Pagination />
+      <Pagination className={styles.pagination} />
     </Container>
-  );
+  )
 };
 
 export default PaginationComponent;
