@@ -1,18 +1,9 @@
 import React, { useEffect, useState } from "react"
-import { Pipeline } from "@sajari/react-search-ui"
-
 import { Container } from "react-bootstrap"
 import styles from "../Collections.module.scss"
 import { useSearch, Variables } from "@sajari/react-hooks"
 
-const HeaderCollectionComponent = ({ pageHeading }) => {
-  const pipeline = new Pipeline(
-    {
-      account: "1606874199975641114",
-      collection: "jackets-app",
-    },
-    "app"
-  )
+const HeaderCollectionComponent = ({ pageHeading, pipeline }) => {
   const variables = new Variables({ q: "" })
 
   const { totalResults } = useSearch({
