@@ -16,6 +16,7 @@ import SelectAddressModal from "./SelectAddressModal"
 import ShippingAddress from "./ShippingAddress"
 import BillingAddress from "./BillingAddress"
 import PaymentComponent from "./Payment"
+import PromotionComponent from "../MyCart/Promotion"
 import { AddressSchema } from "./validate"
 import { paymentCheckoutTokenCreate } from "lib/mutations"
 import { initKlarna, authorizeKlarna } from "./klarna"
@@ -36,6 +37,7 @@ export default function DeliveryComponent() {
   const { data: currentUser, loading } = useUserDetails()
   const { addToast } = useToasts()
   const [createPaymentCheckoutToken] = useMutation(paymentCheckoutTokenCreate)
+
   const router = useRouter()
   const { status, orderToken, result, checkoutId } = router.query
 
@@ -44,6 +46,14 @@ export default function DeliveryComponent() {
     billingAddress: { country: {} },
     billingDifferentAddress: false,
     paymentMethod: null,
+    promotion: {
+      code: "",
+      valid: false,
+    },
+    giftCard: {
+      code: "",
+      valid: false,
+    },
   })
   const [showContinue, setShowContinue] = useState(false)
   const [showLoading, setShowLoading] = useState(false)
@@ -72,10 +82,9 @@ export default function DeliveryComponent() {
   useEffect(() => {
     const { defaultShippingAddress, defaultBillingAddress } = currentUser || {}
     setInitDeliveryData({
+      ...initDeliveryData,
       shippingAddress: mappingDataAddress(defaultShippingAddress),
       billingAddress: mappingDataAddress(defaultBillingAddress),
-      billingDifferentAddress: false,
-      paymentMethod: null,
     })
   }, [currentUser])
 
@@ -120,10 +129,9 @@ export default function DeliveryComponent() {
   const selectAccountAddress = (id) => {
     const address = currentUser.addresses.find((address) => address.id === id)
     setInitDeliveryData({
+      ...initDeliveryData,
       shippingAddress: mappingDataAddress(address),
       billingAddress: mappingDataAddress(address),
-      billingDifferentAddress: false,
-      paymentMethod: null,
     })
   }
 
@@ -315,6 +323,8 @@ export default function DeliveryComponent() {
                   handleSubmit,
                   handleChange,
                   setFieldValue,
+                  setFieldTouched,
+                  setFieldError,
                   isSubmitting,
                   values,
                   touched,
@@ -350,6 +360,16 @@ export default function DeliveryComponent() {
                         errors={errors}
                       />
                     )}
+
+                    <PromotionComponent
+                      handleChange={handleChange}
+                      values={values}
+                      touched={touched}
+                      errors={errors}
+                      setFieldValue={setFieldValue}
+                      setFieldTouched={setFieldTouched}
+                      setFieldError={setFieldError}
+                    />
 
                     <PaymentComponent
                       availablePaymentGateways={availablePaymentGateways || []}

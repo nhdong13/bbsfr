@@ -11,22 +11,6 @@
     padding: 0 8px;
   }
 
-  .promotionSection {
-    padding: 25px 0;
-
-    input {
-      border: 1px solid $primary-border-color;
-    }
-
-    .btn {
-      font-weight: 700;
-      font-family: Rajdhani;
-      padding-left: 26px;
-      padding-right: 26px;
-      height: 48px;
-    }
-  }
-
   .footerSection {
     padding-top: 25px;
     padding-bottom: 90px;
@@ -44,5 +28,21 @@
       padding-bottom: 20px;
       background-color: $primary-background-color;
     }
+  }
+}
+
+.promotionSection {
+  padding: 25px 0;
+
+  input {
+    border: 1px solid $primary-border-color;
+  }
+
+  .btn {
+    font-weight: 700;
+    font-family: Rajdhani;
+    padding-left: 26px;
+    padding-right: 26px;
+    height: 48px;
   }
 }

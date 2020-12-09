@@ -1,11 +1,60 @@
+import { useState } from "react"
 import { Container, InputGroup, Row, Col, Form, Button } from "react-bootstrap"
 import clsx from "clsx"
+import { useMutation } from "@apollo/client"
+import { useCart } from "@sdk/react"
+
+import LoadingSpinner from "components/LoadingSpinner"
+import { voucherifyValidate } from "lib/mutations"
+import ErrorMessageWrapper from "../../ErrorMessageWrapper"
 import styles from "../MyCart.module.scss"
 
-export default function PromotionComponent() {
+export default function PromotionComponent({
+  values,
+  handleChange,
+  errors,
+  touched,
+  setFieldValue,
+  setFieldTouched,
+  setFieldError,
+}) {
+  const [loading, setLoading] = useState(false)
+  const { items, totalPrice } = useCart()
+  const [validateVoucherify] = useMutation(voucherifyValidate)
+
+  const handleClickApply = async () => {
+    setLoading(true)
+    const { data } = await validateVoucherify({
+      variables: {
+        input: {
+          amount: totalPrice.gross.amount,
+          code: values.promotion.code,
+          lines: items.map((item) => {
+            return {
+              quantity: item.quantity,
+              variantId: item.variant.id,
+            }
+          }),
+        },
+      },
+    })
+
+    const { voucherifyValidate } = data
+    if (voucherifyValidate.voucherify.valid === "true") {
+      setFieldValue("promotion.valid", true)
+    } else {
+      setFieldTouched("promotion.code", true, false)
+      setFieldError("promotion.code", "Invalid promotion code")
+    }
+    setLoading(false)
+  }
+
   return (
     <Row className={clsx(styles.promotionSection, "secondary-bg")}>
       <Container>
+        <Row>
+          <LoadingSpinner show={loading} />
+        </Row>
         <Row>
           <Col md="12">
             <Form.Row>
@@ -15,13 +64,26 @@ export default function PromotionComponent() {
                   <Form.Control
                     type="text"
                     placeholder="Enter promo code number"
+                    name="promotion.code"
+                    value={values.promotion.code}
+                    onChange={handleChange}
                   />
                   <InputGroup.Append>
-                    <Button variant="primary" className={styles.btn}>
+                    <Button
+                      variant="primary"
+                      className={styles.btn}
+                      type="button"
+                      onClick={handleClickApply}
+                    >
                       Apply
                     </Button>
                   </InputGroup.Append>
                 </InputGroup>
+                <ErrorMessageWrapper
+                  errors={errors}
+                  touched={touched}
+                  fieldName="promotion.code"
+                />
               </Form.Group>
             </Form.Row>
 
@@ -33,6 +95,9 @@ export default function PromotionComponent() {
                 <Form.Control
                   type="text"
                   placeholder="Enter gift card number"
+                  name="giftCard.code"
+                  value={values.giftCard.code}
+                  onChange={handleChange}
                 />
               </Form.Group>
 

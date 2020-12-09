@@ -3,7 +3,6 @@ import clsx from "clsx"
 import { useRouter } from "next/router"
 
 import ListItemsComponent from "./ListItems"
-import PromotionComponent from "./Promotion"
 import Money from "../../Money"
 
 import styles from "./MyCart.module.scss"
@@ -37,8 +36,6 @@ export default function MyCartComponent({
       </Row>
 
       <ListItemsComponent carts={carts} />
-
-      <PromotionComponent />
 
       <Row className={styles.footerSection}>
         <Container>
