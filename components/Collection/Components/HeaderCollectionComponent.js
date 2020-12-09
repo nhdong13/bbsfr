@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react"
-import { Pipeline } from "@sajari/react-search-ui"
-
 import { Container } from "react-bootstrap"
 import styles from "../Collections.module.scss"
 import { useSearch, Variables } from "@sajari/react-hooks"
