@@ -1,5 +1,5 @@
 import { useSearch } from "@sajari/react-hooks"
-import { Pipeline, SearchProvider, Variables } from "@sajari/react-search-ui"
+import { Variables } from "@sajari/react-search-ui"
 import { useEffect, useState } from "react"
 import PaginationComponent from "../../Common/PaginationComponent"
 import Image from "next/image"
@@ -66,7 +66,6 @@ const ResultComponent = (props) => {
         concatStyles += ` ${styles.unsetBorder}`
       }
     }
-
     return concatStyles
   }
 
@@ -85,7 +84,7 @@ const ResultComponent = (props) => {
               <div className={handleStyle(index, results)}>
                 <div className={styles.elementProduct}>
                   <Image
-                    alt
+                    alt={item.values.name}
                     src="https://images.prismic.io/slicemachine-blank/6b2bf485-aa12-44ef-8f06-dce6b91b9309_dancing.png?auto=compress,format"
                     height={172}
                     width={172}
@@ -105,15 +104,7 @@ const ResultComponent = (props) => {
           )
         })}
 
-      <SearchProvider
-        search={{
-          pipeline,
-          variables,
-        }}
-        searchOnLoad
-      >
-        <PaginationComponent />
-      </SearchProvider>
+      <PaginationComponent pipeline={pipeline} variables={variables} />
     </div>
   )
 }
