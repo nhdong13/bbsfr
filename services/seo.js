@@ -3,9 +3,9 @@ export const detectParagraph = (p, limit) => {
   let count = 0
   for (let i = 0; i < p.length; i++) {
     let preCount = count + p[i].text.length
-    if (preCount > 480) {
+    if (preCount > limit) {
       detect.position = i
-      detect.substring = 480 - count
+      detect.substring = limit - count
       break
     }
     count = preCount
@@ -15,12 +15,10 @@ export const detectParagraph = (p, limit) => {
 
 export const updateParagraph = (p) => {
   let result = p.map((x) => {
-    upLink(x)
+    x.spans.length != 0 && upLink(x)
   })
   return result
 }
-
-//substring(0,detect.substring - 1)
 
 const upLink = (p) => {
   let spans = p.spans
@@ -30,6 +28,7 @@ const upLink = (p) => {
       .substring(spans[i].start, spans[i].end)
       .link(spans[i].data.url)
   }
+  return result
 }
 
 export const convertParagraph = (paragraph) => {
@@ -43,4 +42,12 @@ export const convertParagraph = (paragraph) => {
 export const replaceNbsps = (str) => {
   var re = new RegExp(String.fromCharCode(160), "g")
   return str.replace(re, " ")
+}
+
+export const countParagrapp = (paragraph) => {
+  let count = 0
+  for (let i of paragraph) {
+    count += i.text.length
+  }
+  return count
 }
