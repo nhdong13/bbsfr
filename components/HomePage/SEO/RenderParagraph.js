@@ -1,13 +1,8 @@
 import React from "react"
 import styles from "../HomePage.module.scss"
-import {
-  replaceNbsps,
-  detectParagraph,
-  updateParagraph,
-} from "../../../services/seo.js"
+import { replaceNbsps, detectParagraph } from "../../../services/seo.js"
 
 export default function renderParagraph({ pageParagraph, showMore }) {
-  updateParagraph(pageParagraph)
   const limit_char = 480
   let detect = detectParagraph(pageParagraph, limit_char)
   return (
