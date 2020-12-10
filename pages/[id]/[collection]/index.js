@@ -1,26 +1,30 @@
 import CollectionComponent from "../../../components/Collection"
 import { getAllSEO, getCollectionByUid } from "../../../lib/prismic/api";
-import { useRouter } from "next/router"
+import { search } from "@sajari/server"
+import { Pipeline } from "@sajari/react-search-ui"
+import { getConfigPipeline } from "../../../services/getPipelineSajari"
 
-function Collection({ collections }) {
-  return <CollectionComponent collections={collections} />
-}
-
-export default Collection
-
-// export async function getStaticPaths() {
-//   return {
-//     paths: [
-//       { params: { id: "road-gear", collection: "road-jackets" } }, // See the "paths" section below
-//     ],
-//     fallback: false,
-//   }
-// }
+const pipeline = new Pipeline({ ...getConfigPipeline("jackets-app") }, "app")
 
 export async function getServerSideProps(params) {
-  const collections = await getCollectionByUid(params.query.collection);
+  const initialResponse = await search({
+    pipeline,
+  })
+  const collections = await getCollectionByUid(params.query.collection)
   return {
-    props: { collections },
-    // revalidate: +process.env.NEXT_PUBLIC_REVALIDATE_PAGE_TIME,
+    props: { collections, initialResponse },
   }
 }
+
+const Collection = ({ collections, initialResponse }) => {
+  return (
+    <CollectionComponent
+      initialResponse={initialResponse}
+      pipeline={pipeline}
+      collections={collections}
+    />
+  )
+}
+export default Collection
+
+

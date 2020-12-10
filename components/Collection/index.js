@@ -1,12 +1,12 @@
-
 import { Pipeline } from "@sajari/react-search-ui"
 import Head from "next/head"
 import CategoriesComponent from "./Components/CategoriesComponent"
 import HeaderCollectionComponent from "./Components/HeaderCollectionComponent"
 import ResultComponent from "./Components/ResultComponent"
 import SEOComponent from "../HomePage/SEO/index"
-const isServer = () => typeof window === "undefined"
-const CollectionComponent = ({ collections }) => {
+import { useSearchContext, SearchProvider } from "@sajari/react-hooks"
+
+const CollectionComponent = ({ collections, initialResponse, pipeline }) => {
   const {
     meta_description,
     meta_title,
@@ -16,13 +16,6 @@ const CollectionComponent = ({ collections }) => {
     shop_by_category_text,
   } = collections
 
-  const pipeline = new Pipeline(
-    {
-      account: process.env.NEXT_PUBLIC_ACCOUNT_SAJARI,
-      collection: "jackets-app",
-    },
-    "app"
-  )
   return (
     <>
       <Head>
@@ -61,7 +54,17 @@ const CollectionComponent = ({ collections }) => {
             : "List Category"
         }
       />
-      <ResultComponent pipeline={pipeline} />
+
+      <SearchProvider
+        search={{
+          pipeline,
+        }}
+        initialResponse={initialResponse}
+        searchOnLoad={!initialResponse}
+      >
+        <ResultComponent pipeline={pipeline} />
+      </SearchProvider>
+
       <SEOComponent
         heading1={
           page_heading_1 && page_heading_1.length > 0
