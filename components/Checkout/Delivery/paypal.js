@@ -1,12 +1,16 @@
-export function authorizePaypal(clientToken, totalPrice, sendCreatePayment) {
+export function authorizePaypal(
+  clientToken,
+  totalPrice,
+  sendCreatePayment,
+  handleError
+) {
   braintree.client.create(
     {
       authorization: clientToken,
     },
     function (clientErr, clientInstance) {
       if (clientErr) {
-        showToast()
-        bag.setSubmitting(false)
+        handleError()
         return
       }
       braintree.paypal.create(
@@ -15,8 +19,7 @@ export function authorizePaypal(clientToken, totalPrice, sendCreatePayment) {
         },
         function (paypalErr, paypalInstance) {
           if (paypalErr) {
-            showToast()
-            bag.setSubmitting(false)
+            handleError()
             return
           }
           paypalInstance.tokenize(
@@ -28,8 +31,7 @@ export function authorizePaypal(clientToken, totalPrice, sendCreatePayment) {
             function (tokenizeErr, payload) {
               // Stop if there was an error.
               if (tokenizeErr) {
-                showToast()
-                bag.setSubmitting(false)
+                handleError()
                 return
               }
 

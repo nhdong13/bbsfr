@@ -155,12 +155,13 @@ export default function DeliveryComponent() {
     })
   }
 
-  const showToast = () => {
+  const handleSubmitError = (bag) => {
     addToast("An error has been occurred. Please try again later", {
       appearance: "error",
       autoDismiss: true,
       className: "mt-4 mr-2 w-auto",
     })
+    bag.setSubmitting(false)
   }
 
   const handleSubmitCheckout = async (values, bag) => {
@@ -177,20 +178,19 @@ export default function DeliveryComponent() {
     )
 
     if (dataError) {
-      bag.setSubmitting(false)
       const fieldErrors = _.intersection(
         dataError.error.map((error) => error.field),
         ["postalCode", "phone"]
       )
-
       if (fieldErrors.length) {
         fieldErrors.forEach((field) =>
           bag.setErrors({
             [`shippingAddress.${field}`]: "Please check this field and try again",
           })
         )
+        bag.setSubmitting(false)
       } else {
-        showToast()
+        handleSubmitError(bag)
       }
 
       return
@@ -212,7 +212,6 @@ export default function DeliveryComponent() {
     }
 
     if (billingAddressError) {
-      bag.setSubmitting(false)
       const fieldErrors = _.intersection(
         billingAddressError.error.map((error) => error.field),
         ["postalCode", "phone"]
@@ -224,8 +223,9 @@ export default function DeliveryComponent() {
             [`billingAddress.${field}`]: "Please check this field and try again",
           })
         )
+        bag.setSubmitting(false)
       } else {
-        showToast()
+        handleSubmitError(bag)
       }
       return
     }
@@ -236,8 +236,7 @@ export default function DeliveryComponent() {
     )
 
     if (setShippingMethodError) {
-      showToast()
-      bag.setSubmitting(false)
+      handleSubmitError(bag)
       return
     }
 
@@ -258,8 +257,7 @@ export default function DeliveryComponent() {
       const { paymentCheckoutTokenCreate } = paymentCheckoutTokenRes
 
       if (paymentCheckoutTokenCreate.checkoutErrors?.length) {
-        showToast()
-        bag.setSubmitting(false)
+        handleSubmitError(bag)
         return
       }
 
@@ -284,10 +282,13 @@ export default function DeliveryComponent() {
       const clientToken = values.paymentMethod.config.find(
         (config) => config.field === "client_token"
       ).value
+
       // Authorize payment checkout token
       switch (values.paymentMethod.subId) {
         case "bikebiz.payments.paypal":
-          authorizePaypal(clientToken, totalPrice, sendCreatePayment)
+          authorizePaypal(clientToken, totalPrice, sendCreatePayment, () =>
+            handleSubmitError(bag)
+          )
           break
         default:
           break
