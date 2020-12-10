@@ -196,3 +196,11 @@ $bg-sort-filter: #f6f6f6;
     border-bottom: unset !important;
   }
 }
+
+@media only screen and (max-width: 320px) { 
+  .listProduct {
+    .containerProduct {
+      width: 150px; 
+    } 
+  }
+}

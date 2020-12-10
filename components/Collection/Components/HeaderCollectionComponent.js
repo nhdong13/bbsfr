@@ -13,17 +13,19 @@ const HeaderCollectionComponent = ({ pageHeading, pipeline }) => {
   })
 
   return (
-    <Container fluid className={styles.headerCollectionPage}>
-      <div className={styles.contentHeader}>
-        <div className={styles.page_heading_1_collection_page}>
-          {pageHeading}
+    <>
+      <Container fluid className={styles.headerCollectionPage}>
+        <div className={styles.contentHeader}>
+          <div className={styles.page_heading_1_collection_page}>
+            {pageHeading}
+          </div>
+          <div className={styles.product_count_collection_page}></div>
+          <div className={styles.product_count_collection_page}>{`${
+            totalResults != undefined ? totalResults : 0
+          } Products`}</div>
         </div>
-        <div className={styles.product_count_collection_page}></div>
-        <div className={styles.product_count_collection_page}>{`${
-          totalResults != undefined ? totalResults : 0
-        } Products`}</div>
-      </div>
-    </Container>
+      </Container>
+    </>
   )
 }
 

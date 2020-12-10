@@ -13,6 +13,8 @@ import PaginationComponent from "../../Common/PaginationComponent"
 import Image from "next/image"
 import { renderStart } from "../../../services/renderStart"
 import styles from "../Collections.module.scss"
+import Link from "next/link"
+import { useSearchContext } from "@sajari/react-hooks"
 
 const ResultComponent = (props) => {
   const { pipeline } = props
@@ -74,7 +76,6 @@ const ResultComponent = (props) => {
         concatStyles += ` ${styles.unsetBorder}`
       }
     }
-
     return concatStyles
   }
 
@@ -117,7 +118,7 @@ const ResultComponent = (props) => {
   ))
 
   const variables = new Variables({ resultsPerPage: 20 })
-  const { results = [] } = useSearch({ pipeline, variables })
+  const { results } = useSearchContext()
 
   return (
     <div
@@ -127,39 +128,35 @@ const ResultComponent = (props) => {
       {results &&
         results.map((item, index) => {
           return (
-            <div key={index}>
-              <div className={handleStyle(index, results)}>
-                <div className={styles.elementProduct}>
-                  <Image
-                    alt
-                    src="https://images.prismic.io/slicemachine-blank/6b2bf485-aa12-44ef-8f06-dce6b91b9309_dancing.png?auto=compress,format"
-                    height={172}
-                    width={172}
-                  ></Image>
-                  <div className={styles.sessionInfo}>
-                    <div className={styles.nameProduct}>
-                      <p>{item.values.name}</p>
+            <Link href="/">
+              <div key={index}>
+                <div className={handleStyle(index, results)}>
+                  <div className={styles.elementProduct}>
+                    <Image
+                      alt={item.values.name}
+                      src="https://images.prismic.io/slicemachine-blank/6b2bf485-aa12-44ef-8f06-dce6b91b9309_dancing.png?auto=compress,format"
+                      height={172}
+                      width={172}
+                    ></Image>
+                    <div className={styles.sessionInfo}>
+                      <div className={styles.nameProduct}>
+                        <p>{item.values.name}</p>
+                      </div>
+                      <div className={styles.priceProduct}>
+                        <p>
+                          {item.values.price ? `$${item.values.price}` : ""}
+                        </p>
+                      </div>
+                      {renderStart(4, "16px", "16px")}
                     </div>
-                    <div className={styles.priceProduct}>
-                      <p>{item.values.price ? `$${item.values.price}` : ""}</p>
-                    </div>
-                    {renderStart(4, "16px", "16px")}
                   </div>
                 </div>
               </div>
-            </div>
+            </Link>
           )
         })}
 
-      <SearchProvider
-        search={{
-          pipeline,
-          variables,
-        }}
-        searchOnLoad
-      >
-        <PaginationComponent />
-      </SearchProvider>
+      <PaginationComponent pipeline={pipeline} variables={variables} />
     </div>
   )
 }
