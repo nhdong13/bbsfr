@@ -70,14 +70,17 @@ export default function DeliveryComponent() {
   ])
 
   useEffect(() => {
-    const { defaultShippingAddress, defaultBillingAddress } = currentUser || {}
-    setInitDeliveryData({
-      shippingAddress: mappingDataAddress(defaultShippingAddress),
-      billingAddress: mappingDataAddress(defaultBillingAddress),
-      billingDifferentAddress: false,
-      paymentMethod: null,
-    })
-  }, [currentUser])
+    if (!loading) {
+      const { defaultShippingAddress, defaultBillingAddress } =
+        currentUser || {}
+      setInitDeliveryData({
+        shippingAddress: mappingDataAddress(defaultShippingAddress),
+        billingAddress: mappingDataAddress(defaultBillingAddress),
+        billingDifferentAddress: false,
+        paymentMethod: null,
+      })
+    }
+  }, [loading])
 
   useEffect(() => {
     let token
