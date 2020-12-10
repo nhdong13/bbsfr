@@ -11,7 +11,6 @@ const ResultComponent = (props) => {
   const { pipeline } = props
   const [windowWidth, setWindowWidths] = useState()
   const [countUnsetBorder, setCountUnsetBorder] = useState(2)
-  const [widthListProduct, setWidthListProduct] = useState(100)
 
   useEffect(() => {
     const { innerWidth: width, innerHeight: height } = window
@@ -28,19 +27,14 @@ const ResultComponent = (props) => {
   const handleResponsive = () => {
     if (windowWidth <= 425) {
       setCountUnsetBorder(2)
-      setWidthListProduct(100)
     } else if (windowWidth <= 768 && windowWidth > 425) {
       setCountUnsetBorder(4)
-      setWidthListProduct(100)
     } else if (windowWidth === 1024 && windowWidth > 768) {
       setCountUnsetBorder(4)
-      setWidthListProduct(80)
     } else if (windowWidth === 1440 && windowWidth > 1024) {
       setCountUnsetBorder(4)
-      setWidthListProduct(58)
     } else {
       setCountUnsetBorder(4)
-      setWidthListProduct(30)
     }
   }
 
@@ -54,15 +48,22 @@ const ResultComponent = (props) => {
     }
     //Un set border bottom
     if (windowWidth <= 425) {
-      if (index + 1 === results.length || index + 1 === results.length - 1) {
+      //Check result per page have even number or odd number
+      if (results.length % 2 === 0 && index + 1 === results.length - 1) {
+        concatStyles += ` ${styles.unsetBorder}`
+      }
+      if (index + 1 === results.length) {
         concatStyles += ` ${styles.unsetBorder}`
       }
     } else if (windowWidth >= 768) {
+      //Check result per page have even number or odd number
+      if (results.length % 2 === 0 && index + 1 === results.length - 3) {
+        concatStyles += ` ${styles.unsetBorder}`
+      }
       if (
         index + 1 === results.length ||
         index + 1 === results.length - 1 ||
-        index + 1 === results.length - 2 ||
-        index + 1 === results.length - 3
+        index + 1 === results.length - 2
       ) {
         concatStyles += ` ${styles.unsetBorder}`
       }
@@ -74,10 +75,7 @@ const ResultComponent = (props) => {
   const { results } = useSearchContext()
 
   return (
-    <div
-      style={{ width: `${widthListProduct}%` }}
-      className={styles.listProduct}
-    >
+    <div className={styles.listProduct}>
       {results &&
         results.map((item, index) => {
           return (
