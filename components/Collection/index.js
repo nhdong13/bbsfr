@@ -15,7 +15,7 @@ const CollectionComponent = ({ collections, initialResponse, pipeline }) => {
     categories,
     shop_by_category_text,
   } = collections
-
+console.log("Debug code pipeline:", pipeline)
   return (
     <>
       <Head>
@@ -46,7 +46,6 @@ const CollectionComponent = ({ collections, initialResponse, pipeline }) => {
         }
       />
       <CategoriesComponent
-        pipeline={pipeline}
         categories={categories}
         shopByCategoryText={
           shop_by_category_text != undefined && shop_by_category_text.length
