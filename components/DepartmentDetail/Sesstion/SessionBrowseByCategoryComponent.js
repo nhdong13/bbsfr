@@ -153,12 +153,12 @@ const SessionBrowseByCategoryComponent = (props) => {
                         lg={1}
                         xl={1}
                       >
-                        {index < 10 ? 0 : ""}
+                        {index + 1 < 10 ? 0 : ""}
                         {index + 1}
                       </Col>
                       <Col
                         className={styles.categoryTitle}
-                        xs={3}
+                        xs={7}
                         sm={8}
                         md={9}
                         lg={9}
@@ -169,7 +169,7 @@ const SessionBrowseByCategoryComponent = (props) => {
                           ? collection.collection_title[0].text
                           : "---"}
                       </Col>
-                      <Col xs={7} sm={3} md={2} lg={2} xl={2}>
+                      <Col xs={3} sm={3} md={2} lg={2} xl={2}>
                         <div className={styles.categoryLeft}>
                           <div className={styles.categoryLeftImg}>
                             <Image
@@ -186,7 +186,7 @@ const SessionBrowseByCategoryComponent = (props) => {
                   </div>
                 </Container>
               </Link>
-            );
+            )
           })}
       </div>
     </>
