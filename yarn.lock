@@ -1574,15 +1574,6 @@
     "@sajari/sdk-js" "2.0.0-alpha.18"
     js-cookie "^2.2.1"
 
-"@sajari/react-hooks@^1.0.0-beta.7":
-  version "1.0.0-beta.7"
-  resolved "https://registry.yarnpkg.com/@sajari/react-hooks/-/react-hooks-1.0.0-beta.7.tgz#d70763c779bcdb5fd29a4567d3d57321a318f803"
-  integrity sha512-Z+LIXNsDINK7z+RAOnNj9cLTFaHWDi+CSksXw66LiOflUxkre0sEYJjawhhG/CI53zxeR478D3byHYIBpgKXmQ==
-  dependencies:
-    "@sajari/react-sdk-utils" "^1.0.0-beta.1"
-    "@sajari/sdk-js" "2.0.0-alpha.17"
-    js-cookie "^2.2.1"
-
 "@sajari/react-sdk-utils@^1.0.0-beta.1":
   version "1.0.0-beta.1"
   resolved "https://registry.yarnpkg.com/@sajari/react-sdk-utils/-/react-sdk-utils-1.0.0-beta.1.tgz#d57af4da4aec025bd8825e19fe4aa5aab484e794"
@@ -1598,24 +1589,19 @@
     tailwindcss-truncate-multiline "^1.0.3"
     twin.macro "^1.12.1"
 
-"@sajari/react-search-ui@1.0.0-beta.10":
-  version "1.0.0-beta.10"
-  resolved "https://registry.yarnpkg.com/@sajari/react-search-ui/-/react-search-ui-1.0.0-beta.10.tgz#d15f7f40676e2b3a9c80c5cd3ab3dabb6efb3993"
-  integrity sha512-ksONhC7mwjlsMMHbwKqFhNEvl46YTaXi+rGoxRe0JMFa7afErKYN6Ums8mjss8yXdx+uy0QhAYPoaEFVF27YmA==
+"@sajari/react-search-ui@1.0.0-beta.11":
+  version "1.0.0-beta.11"
+  resolved "https://registry.yarnpkg.com/@sajari/react-search-ui/-/react-search-ui-1.0.0-beta.11.tgz#18873879d9039355ffdaa1a30dc989af88600ec9"
+  integrity sha512-NRdBhSembQfQSS9Bndyj6mSmeq65P7IIqC2iBExmPlH9+IxuYQ1tCvcCj2bC7/e+E6NfhWPF8EhyupfmzmKVrw==
   dependencies:
     "@react-aria/utils" "3.4.1"
     "@sajari/react-components" "^1.0.0-beta.6"
-    "@sajari/react-hooks" "^1.0.0-beta.7"
+    "@sajari/react-hooks" "^1.0.0-beta.8"
     "@sajari/react-sdk-utils" "^1.0.0-beta.1"
     i18next "19.8.4"
     i18next-browser-languagedetector "^6.0.1"
     react-aria-live "^2.0.5"
     react-i18next "^11.8.0"
-
-"@sajari/sdk-js@2.0.0-alpha.17":
-  version "2.0.0-alpha.17"
-  resolved "https://registry.yarnpkg.com/@sajari/sdk-js/-/sdk-js-2.0.0-alpha.17.tgz#8ea8fe673d16cb877528b6c57003d89a3ef8adb6"
-  integrity sha512-z6DUNN3pUBTS0u7MseyuqCSCRW6Y9w/s5BklmbWX9coKBeGGtIIcayd2eFSFQfyWZfIfM09EOALQ2MJGcUpriw==
 
 "@sajari/sdk-js@2.0.0-alpha.18":
   version "2.0.0-alpha.18"
