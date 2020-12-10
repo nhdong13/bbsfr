@@ -20,6 +20,7 @@ import { AddressSchema } from "./validate"
 import { paymentCheckoutTokenCreate } from "lib/mutations"
 import { initKlarna, authorizeKlarna } from "./klarna"
 import { authorizeAfterpay } from "./afterpay"
+import { authorizePaypal } from "./paypal"
 import { COUNTRIES_RESTRICTION } from "./constants"
 import styles from "./Delivery.module.scss"
 
@@ -40,8 +41,34 @@ export default function DeliveryComponent() {
   const { status, orderToken, result, checkoutId } = router.query
 
   const [initDeliveryData, setInitDeliveryData] = useState({
-    shippingAddress: { country: {} },
-    billingAddress: { country: {} },
+    shippingAddress: {
+      bussinessName: "",
+      city: "",
+      country: COUNTRIES_RESTRICTION[0],
+      firstName: "",
+      lastName: "",
+      phone: "",
+      postalCode: "",
+      countryArea: "",
+      streetAddress1: "",
+      streetAddress2: "",
+      address: "",
+      useFullForm: false,
+    },
+    billingAddress: {
+      bussinessName: "",
+      city: "",
+      country: COUNTRIES_RESTRICTION[0],
+      firstName: "",
+      lastName: "",
+      phone: "",
+      postalCode: "",
+      countryArea: "",
+      streetAddress1: "",
+      streetAddress2: "",
+      address: "",
+      useFullForm: false,
+    },
     billingDifferentAddress: false,
     paymentMethod: null,
   })
@@ -74,10 +101,9 @@ export default function DeliveryComponent() {
       const { defaultShippingAddress, defaultBillingAddress } =
         currentUser || {}
       setInitDeliveryData({
+        ...initDeliveryData,
         shippingAddress: mappingDataAddress(defaultShippingAddress),
         billingAddress: mappingDataAddress(defaultBillingAddress),
-        billingDifferentAddress: false,
-        paymentMethod: null,
       })
     }
   }, [loading])
@@ -123,10 +149,9 @@ export default function DeliveryComponent() {
   const selectAccountAddress = (id) => {
     const address = currentUser.addresses.find((address) => address.id === id)
     setInitDeliveryData({
+      ...initDeliveryData,
       shippingAddress: mappingDataAddress(address),
       billingAddress: mappingDataAddress(address),
-      billingDifferentAddress: false,
-      paymentMethod: null,
     })
   }
 
@@ -216,41 +241,57 @@ export default function DeliveryComponent() {
       return
     }
 
-    // Create payment checkout token
-    const { data: paymentCheckoutTokenRes } = await createPaymentCheckoutToken({
-      variables: {
-        checkoutId: checkoutData.id,
-        gateway: values.paymentMethod.id,
-        amount: data.totalPrice?.gross?.amount,
-      },
-    })
-
-    const { paymentCheckoutTokenCreate } = paymentCheckoutTokenRes
-
-    if (paymentCheckoutTokenCreate.checkoutErrors?.length) {
-      showToast()
-      bag.setSubmitting(false)
-      return
-    }
     localStorage.setItem("paymentGateway", values.paymentMethod.id)
+    const totalPrice = data.totalPrice?.gross?.amount
+    if (values.paymentMethod.id !== "mirumee.payments.braintree") {
+      // Create payment checkout token
+      const {
+        data: paymentCheckoutTokenRes,
+      } = await createPaymentCheckoutToken({
+        variables: {
+          checkoutId: checkoutData.id,
+          gateway: values.paymentMethod.id,
+          amount: totalPrice,
+        },
+      })
 
-    // Authorize payment checkout token
-    const {
-      token,
-      checkoutUri,
-    } = paymentCheckoutTokenCreate.gatewayCheckoutResponse
-    switch (values.paymentMethod.id) {
-      case "plugin.gateway.afterpay":
-        authorizeAfterpay(token)
-        break
-      case "bikebiz.payments.klarna":
-        initKlarna(token, () => setShowContinue(true))
-        break
-      case "bikebiz.payments.zipmoney":
-        router.push(checkoutUri)
-        break
-      default:
-        break
+      const { paymentCheckoutTokenCreate } = paymentCheckoutTokenRes
+
+      if (paymentCheckoutTokenCreate.checkoutErrors?.length) {
+        showToast()
+        bag.setSubmitting(false)
+        return
+      }
+
+      const {
+        token,
+        checkoutUri,
+      } = paymentCheckoutTokenCreate.gatewayCheckoutResponse
+      switch (values.paymentMethod.id) {
+        case "plugin.gateway.afterpay":
+          authorizeAfterpay(token)
+          break
+        case "bikebiz.payments.klarna":
+          initKlarna(token, () => setShowContinue(true))
+          break
+        case "bikebiz.payments.zipmoney":
+          router.push(checkoutUri)
+          break
+        default:
+          break
+      }
+    } else {
+      const clientToken = values.paymentMethod.config.find(
+        (config) => config.field === "client_token"
+      ).value
+      // Authorize payment checkout token
+      switch (values.paymentMethod.subId) {
+        case "bikebiz.payments.paypal":
+          authorizePaypal(clientToken, totalPrice, sendCreatePayment)
+          break
+        default:
+          break
+      }
     }
   }
 
