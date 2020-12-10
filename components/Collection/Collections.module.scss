@@ -84,7 +84,77 @@ $border-color: #e5e5e4;
   padding-top: 3px;
   padding-bottom: 3px;
   border-top: 0.5px solid $border-color;
-
   display: flex;
   font-size: 12px;
+}
+
+//------------->
+.listProduct {
+  display: flex;
+  height: auto;
+  margin: 0px auto;
+  flex-wrap: wrap;
+  justify-content: center;
+  overflow: hidden;
+
+  .containerProduct {
+    border-right: 1px solid #e5e5e5; 
+    border-bottom: 1px solid #e5e5e5;
+    height: 312px;
+    width: 172px;
+    position: relative;
+
+    .elementProduct {
+      padding-top: 15px;
+      padding-bottom: 15px;
+
+      .sessionInfo {
+        padding-left: 15px;
+        padding-right: 15px;
+        .nameProduct {
+          @include font-family(Rajdhani, 14px, 500, $primary-text-color);
+          p {
+            margin-bottom: 0px;
+          }
+        }
+  
+        .priceProduct {
+          @include font-family(Rajdhani, 16px, 600, $primary-text-color);
+          p {
+            margin-bottom: 0px;
+          }
+        }
+      }
+    }
+  }
+
+  .containerProductMode {
+    border-right: unset; 
+    position: relative;
+    @extend .containerProduct;
+  }
+
+  .containerProduct:before {
+      z-index: 1;
+      position: absolute;
+      content: "\25A0";
+      color:white;
+      font-weight: bold;
+      display: inline-block;
+      top: 100%;
+      left: 100%;
+      transform: translate(-40%, -45%) scale(1.5);
+  }
+
+  .unsetBorder {
+    border-bottom: unset !important
+  }
+}
+
+@media only screen and (max-width: 320px) { 
+  .listProduct {
+    .containerProduct {
+      width: 150px; 
+    } 
+  }
 }
