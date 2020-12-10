@@ -1,0 +1,42 @@
+@import "./variables.scss";
+
+$product-count-color: #939393;
+
+// Pagination
+
+.prevPagination {
+  border: unset !important;
+  background-color: $text-white !important;
+  height: 35px;
+  width: 48px;
+  line-height: 35px !important;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+  box-shadow: unset !important;
+}
+.nextPagination {
+  @extend .prevPagination
+}
+
+.activePagination{
+  background-color: $primary-text-color !important; 
+}
+
+.css-xqdxb0 {
+  border: unset !important;
+  background-color: $text-white !important;
+  padding-left: 0px;
+  padding-right: 0px;
+  line-height: 12px;
+}
+
+.buttonPagination {
+  max-width: 30px !important;
+  font-size: 12px !important;
+  margin: 2px !important;
+  height: 30px;
+  line-height: 30px;
+  color: aliceblue;
+}
+
+
