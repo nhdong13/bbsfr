@@ -80,6 +80,7 @@ $padding-top-component: 55px;
 .homepageContainer {
   //Department
   .department {
+    height: 100%;
     position: relative;
 
     .main_group {
@@ -178,18 +179,17 @@ $padding-top-component: 55px;
     }
 
     .department_image {
+      height: 100%;
       position: absolute;
       right: 0px;
       top: 50%;
       transform: translate(0%, -50%);
 
-      padding-top: 15px;
-      padding-bottom: 15px;
-
       z-index: 2;
 
       .max_width_image {
         max-width: 65vw;
+        max-height: 100%;
       }
     }
 
@@ -490,7 +490,7 @@ $padding-top-component: 55px;
         margin-top: 18px;
         font-weight: 700;
         font-size: 10px;
-        color:  #ffb00f;
+        color: #ffb00f;
         padding-bottom: 50px;
       }
     }
