@@ -5,7 +5,6 @@ import styles from "./../Collections.module.scss"
 import Image from "next/image"
 
 const SortFilterComponent = ({ pipeline }) => {
-  const isServer = () => typeof window === "undefined"
   return (
     <div>
       <Container fluid className={styles.filter_sort_sajari}>
@@ -21,7 +20,6 @@ const SortFilterComponent = ({ pipeline }) => {
           <div className={styles.horizontal_line}></div>
         </div>
       </Container>
-      <ResultComponent pipeline={pipeline} />
     </div>
   )
 }
