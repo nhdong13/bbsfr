@@ -28,6 +28,14 @@ export default function Layout({ children }) {
         <script
           src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_API_KEY}&libraries=places,geometry`}
         ></script>
+        <script
+          type="text/javascript"
+          src="https://js.braintreegateway.com/web/3.69.0/js/client.min.js"
+        ></script>
+        <script
+          type="text/javascript"
+          src="https://js.braintreegateway.com/web/3.69.0/js/paypal.min.js"
+        ></script>
       </Head>
       <Header />
       <main>{children}</main>
