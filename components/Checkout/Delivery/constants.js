@@ -50,3 +50,5 @@ export const COUNTRIES_RESTRICTION = [
     code: "AU",
   },
 ]
+
+export const NUMBER_DUMP_CONTENT_FLEXBOX = 3
