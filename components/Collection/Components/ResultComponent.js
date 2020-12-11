@@ -39,7 +39,6 @@ const ResultComponent = (props) => {
     }
   }
 
-  const variables = new Variables({ resultsPerPage: constants.resultPerPage })
   //Map styles to render border
   const handleStyle = (index, results) => {
     let concatStyles
@@ -73,7 +72,7 @@ const ResultComponent = (props) => {
     return concatStyles
   }
 
-  const variables = new Variables({ resultsPerPage: 20 })
+  const variables = new Variables({ resultsPerPage: constants.resultPerPage })
   const { results } = useSearchContext()
 
   return (
@@ -81,7 +80,7 @@ const ResultComponent = (props) => {
       {results &&
         results.map((item, index) => {
           return (
-            <Link href="/">
+            <Link href="/" key={index.toString()}>
               <div key={index}>
                 <div className={handleStyle(index, results)}>
                   <div className={styles.elementProduct}>
