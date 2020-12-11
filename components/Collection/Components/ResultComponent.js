@@ -8,7 +8,7 @@ import {
 import React, { useEffect, useState } from "react"
 import { Container, Modal, Select } from "react-bootstrap"
 import { useSearch, FilterBuilder, useSorting } from "@sajari/react-hooks"
-import { Checkbox, CheckboxGroup } from "@sajari/react-components"
+import { Radio, RadioGroup } from "@sajari/react-components"
 import { constants } from "../../../constant"
 import PaginationComponent from "../../Common/PaginationComponent"
 import Image from "next/image"
@@ -196,26 +196,32 @@ const ResultComponent = (props) => {
     return (
       <div className="">
         <div>
-          <CheckboxGroup
-            selected={sorting}
+          <RadioGroup
             value={sorting}
             onChange={(e) => setSorting(e.target.value)}
-            defaultValue={"price"}
           >
-            <Checkbox value="">Most relevant</Checkbox>
-            <Checkbox value="name">Name: A to Z</Checkbox>
-            <Checkbox value="-name">Name: Z to A</Checkbox>
-            <Checkbox value="price">Price: Low to High</Checkbox>
-            <Checkbox value="-price">Price: High to Low</Checkbox>
-          </CheckboxGroup>
+            <Radio value="">Most relevant</Radio>
+            <Radio value="name">Name: A to Z</Radio>
+            <Radio value="-name">Name: Z to A</Radio>
+            <Radio value="price">Price: Low to High</Radio>
+            <Radio value="-price">Price: High to Low</Radio>
+          </RadioGroup>
         </div>
+        <div>akwjehkweh</div>
+        <Filter
+          type="list"
+          name="category"
+          title="Category"
+          searchable
+          sort="alpha"
+        />
       </div>
     )
   })
   const handleClose = () => setShow(false)
   const variables = new Variables({ resultsPerPage: constants.resultPerPage })
   const { results } = useSearchContext()
-
+  console.log(results)
   return (
     <>
       <SortFilterButton />
@@ -232,21 +238,10 @@ const ResultComponent = (props) => {
           <div className={styles.sort_by}>
             <div>SORT by</div>
             <SortingComponent />
-            <div>akwjehkweh</div>
-            <Filter
-              type="list"
-              name="category"
-              title="Category"
-              searchable
-              sort="alpha"
-            />
           </div>
         </Modal>
       </SearchProvider>
-      <div
-        style={{ width: `${widthListProduct}%` }}
-        className={styles.listProduct}
-      >
+      <div className={styles.listProduct}>
         {results &&
           results.map((item, index) => {
             return (
@@ -269,6 +264,7 @@ const ResultComponent = (props) => {
                             {item.values.price ? `$${item.values.price}` : ""}
                           </p>
                         </div>
+                        {renderStart(4, "16px", "16px")}
                       </div>
                     </div>
                   </div>
