@@ -6,6 +6,7 @@ import {
 } from "@sajari/react-search-ui"
 import { useEffect, useState } from "react"
 import { Container } from "react-bootstrap"
+import { constants } from "../../../constant"
 import PaginationComponent from "../../Common/PaginationComponent"
 
 const getWindowDimensions = () => {
@@ -41,7 +42,7 @@ const ResultComponent = (props) => {
     }
   }
 
-  const variables = new Variables({ resultsPerPage: 20 })
+  const variables = new Variables({ resultsPerPage: constants.resultPerPage })
 
   return (
     <Container fluid style={{ marginTop: 15 }}>
