@@ -1,4 +1,4 @@
-import { Variables } from "@sajari/react-search-ui"
+import { Pagination, Variables } from "@sajari/react-search-ui"
 import { useEffect, useState } from "react"
 import { constants } from "../../../constant"
 import PaginationComponent from "../../Common/PaginationComponent"
@@ -9,7 +9,7 @@ import Link from "next/link"
 import { useSearchContext } from "@sajari/react-hooks"
 
 const ResultComponent = (props) => {
-  const { pipeline } = props
+  const { pipeline, initialResponse } = props
   const [windowWidth, setWindowWidths] = useState()
   const [countUnsetBorder, setCountUnsetBorder] = useState(2)
 
@@ -108,7 +108,11 @@ const ResultComponent = (props) => {
           )
         })}
 
-      <PaginationComponent pipeline={pipeline} variables={variables} />
+      <PaginationComponent
+        initialResponse={initialResponse}
+        pipeline={pipeline}
+        variables={variables}
+      />
     </div>
   )
 }
