@@ -1,9 +1,8 @@
-import { Pagination } from "@sajari/react-search-ui";
+import { Pagination, SearchProvider } from "@sajari/react-search-ui"
 import { Container } from "react-bootstrap";
-import styles from "./pagination.module.scss";
-import { SearchProvider } from "@sajari/react-search-ui"
+import styles from "./pagination.module.scss"
 
-const PaginationComponent = ({ variables, pipeline }) => {
+const PaginationComponent = ({ variables, pipeline, initialResponse }) => {
   return (
     <Container className={styles.containerPagination}>
       <SearchProvider
@@ -11,7 +10,8 @@ const PaginationComponent = ({ variables, pipeline }) => {
           pipeline,
           variables,
         }}
-        searchOnLoad
+        initialResponse={initialResponse}
+        searchOnLoad={!initialResponse}
         customClassNames={{
           pagination: {
             container: "containerPagination",

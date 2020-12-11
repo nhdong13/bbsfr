@@ -39,6 +39,16 @@ const CollectionComponent = ({ collections, initialResponse, pipeline }) => {
         }}
         initialResponse={initialResponse}
         searchOnLoad={!initialResponse}
+        customClassNames={{
+          pagination: {
+            container: "containerPagination",
+            button: "buttonPagination",
+            active: "activePagination",
+            next: "nextPagination",
+            prev: "prevPagination",
+            spacerEllipsis: "spacerEllipsisPagination",
+          },
+        }}
       >
         <HeaderCollectionComponent
           pipeline={pipeline}
@@ -59,7 +69,10 @@ const CollectionComponent = ({ collections, initialResponse, pipeline }) => {
           }
         />
 
-        <ResultComponent pipeline={pipeline} />
+        <ResultComponent
+          pipeline={pipeline}
+          initialResponse={initialResponse}
+        />
       </SearchProvider>
 
       <SEOComponent

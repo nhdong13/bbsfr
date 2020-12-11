@@ -3,8 +3,7 @@ import {
   Variables,
   Filter,
   FieldDictionary,
-  Sorting,
-} from "@sajari/react-search-ui"
+  Pagination} from "@sajari/react-search-ui"
 import React, { useEffect, useState } from "react"
 import { Container, Modal, Select } from "react-bootstrap"
 import { useSearch, FilterBuilder, useSorting } from "@sajari/react-hooks"
@@ -18,7 +17,7 @@ import Link from "next/link"
 import { useSearchContext } from "@sajari/react-hooks"
 
 const ResultComponent = (props) => {
-  const { pipeline } = props
+  const { pipeline, initialResponse } = props
   const [windowWidth, setWindowWidths] = useState()
   const [countUnsetBorder, setCountUnsetBorder] = useState(2)
   const [show, setShow] = useState(false)
@@ -273,8 +272,12 @@ const ResultComponent = (props) => {
             )
           })}
 
-        <PaginationComponent pipeline={pipeline} variables={variables} />
-      </div>
+        <PaginationComponent
+        initialResponse={initialResponse}
+        pipeline={pipeline}
+        variables={variables}
+      />
+    </div>
     </>
   )
 }
