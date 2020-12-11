@@ -141,6 +141,12 @@
   line-height: 100px;
   overflow: hidden;
   max-width: unset;
+  a {
+    text-decoration: none;
+    &:hover {
+      color: $primary-text-color;
+    }
+  }
 
   .sessionTitleCategoryTextRight {
     font-style: normal;
@@ -159,7 +165,7 @@
     font-weight: 700;
     color: #ffb00f;
     &:hover {
-      color: $color-hover;
+      // color: $color-hover;
       cursor: pointer;
     }
   }
@@ -167,6 +173,9 @@
 //List category
 .sessionListCategory {
   background-color: #f6f6f4;
+  a {
+    text-decoration: none;
+  }
   .containerItemCategoryLasted {
     height: 48px;
     line-height: 48px;

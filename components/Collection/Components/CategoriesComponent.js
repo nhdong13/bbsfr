@@ -29,10 +29,12 @@ const CategoriesComponent = ({ categories = [], shopByCategoryText }) => {
                 categories.slice(0, showItem.itemToShow).map((category, id) => (
                   <Col className="col-6 pb-1" key={id}>
                     <Link href={category.category_slug}>
-                      <div className={styles.category}>
-                        {category.category_title[0].text}
-                        <div className={styles.count_category}>(65)</div>
-                      </div>
+                      <a>
+                        <div className={styles.category}>
+                          {category.category_title[0].text}
+                          <div className={styles.count_category}>(65)</div>
+                        </div>
+                      </a>
                     </Link>
                   </Col>
                 ))}
