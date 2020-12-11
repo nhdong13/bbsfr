@@ -6,12 +6,11 @@ import { useRouter } from "next/router"
 import { capitalizeString } from "../../../services/collection"
 
 const CategoriesComponent = ({ categories = [], shopByCategoryText }) => {
-  console.log("Debug code categories:", categories)
   const [showItem, setItemToShow] = useState({
     itemToShow: 16,
     expanded: false,
   })
-  const expandCatefory = () => {
+  const expandCategory = () => {
     setItemToShow({
       itemToShow: showItem.expanded ? 16 : categories.length,
       expanded: !showItem.expanded,
@@ -41,7 +40,7 @@ const CategoriesComponent = ({ categories = [], shopByCategoryText }) => {
           </div>
         )}
         {categories.length >= 16 && (
-          <div onClick={expandCatefory} className={styles.show_less_show_more}>
+          <div onClick={expandCategory} className={styles.show_less_show_more}>
             {showItem.expanded ? "View Less" : "View More"}
           </div>
         )}

@@ -35,12 +35,11 @@ export default function Department(props) {
             <Image
               className={styles.max_width_image}
               src={props.image.url || ""}
-              alt=""
-              height={216}
+              alt="Image"
             />
           </div>
         </Row>
       </Container>
     </Link>
-  );
+  )
 }
