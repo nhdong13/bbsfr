@@ -1,10 +1,9 @@
-import { Pipeline } from "@sajari/react-search-ui"
 import Head from "next/head"
 import CategoriesComponent from "./Components/CategoriesComponent"
 import HeaderCollectionComponent from "./Components/HeaderCollectionComponent"
 import ResultComponent from "./Components/ResultComponent"
 import SEOComponent from "../HomePage/SEO/index"
-import { useSearchContext, SearchProvider } from "@sajari/react-hooks"
+import { SearchProvider } from "@sajari/react-hooks"
 
 const CollectionComponent = ({ collections, initialResponse, pipeline }) => {
   const {

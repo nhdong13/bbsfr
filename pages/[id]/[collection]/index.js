@@ -1,5 +1,5 @@
 import CollectionComponent from "../../../components/Collection"
-import { getAllSEO, getCollectionByUid } from "../../../lib/prismic/api";
+import { getCollectionByUid } from "../../../lib/prismic/api"
 import { search } from "@sajari/server"
 import { Pipeline } from "@sajari/react-search-ui"
 import { getConfigPipeline } from "../../../services/getPipelineSajari"
