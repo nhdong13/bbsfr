@@ -15,6 +15,8 @@ const CollectionComponent = ({ collections, initialResponse, pipeline }) => {
     categories,
     shop_by_category_text,
   } = collections
+  console.log("Debug code pipeline:", pipeline)
+  console.log("Debug code initialResponse:", initialResponse)
   return (
     <>
       <Head>
@@ -60,16 +62,6 @@ const CollectionComponent = ({ collections, initialResponse, pipeline }) => {
         }}
         initialResponse={initialResponse}
         searchOnLoad={!initialResponse}
-        customClassNames={{
-          pagination: {
-            container: "containerPagination",
-            button: "buttonPagination",
-            active: "activePagination",
-            next: "nextPagination",
-            prev: "prevPagination",
-            spacerEllipsis: "spacerEllipsisPagination",
-          },
-        }}
       >
         <ResultComponent
           pipeline={pipeline}
