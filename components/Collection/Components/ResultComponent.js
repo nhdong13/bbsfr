@@ -80,7 +80,7 @@ const ResultComponent = (props) => {
       {results &&
         results.map((item, index) => {
           return (
-            <Link href="/">
+            <Link href="/" key={index.toString()}>
               <div key={index}>
                 <div className={handleStyle(index, results)}>
                   <div className={styles.elementProduct}>
