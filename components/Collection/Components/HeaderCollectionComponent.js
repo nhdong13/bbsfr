@@ -1,12 +1,12 @@
 import React from "react"
 import { Container } from "react-bootstrap"
 import styles from "../Collections.module.scss"
-import { useSearch, Variables } from "@sajari/react-hooks"
+import { useSearch, useSearchContext, Variables } from "@sajari/react-hooks"
 
 const HeaderCollectionComponent = ({ pageHeading, pipeline }) => {
   const variables = new Variables({ q: "" })
 
-  const { totalResults } = useSearch({
+  const { totalResults } = useSearchContext({
     variables,
     pipeline,
     fields: {},
