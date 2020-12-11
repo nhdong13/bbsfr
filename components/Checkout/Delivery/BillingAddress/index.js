@@ -114,19 +114,19 @@ export default function BillingAddress({
             />
           </Form.Group>
 
-          <Form.Group controlId="state" as={Col} xs="12">
+          <Form.Group controlId="countryArea" as={Col} xs="12">
             <Form.Label>State/Province/Region</Form.Label>
             <Form.Control
               type="text"
               placeholder="e.g NSW"
-              name="billingAddress.state"
-              value={values.state}
+              name="billingAddress.countryArea"
+              value={values.countryArea}
               onChange={handleChange}
             />
             <ErrorMessageWrapper
               errors={errors}
               touched={touched}
-              fieldName="billingAddress.state"
+              fieldName="billingAddress.countryArea"
             />
           </Form.Group>
 
@@ -157,19 +157,19 @@ export default function BillingAddress({
             />
           </Form.Group>
 
-          <Form.Group controlId="phoneNumber" as={Col} xs="12">
+          <Form.Group controlId="phone" as={Col} xs="12">
             <Form.Label>Phone Number</Form.Label>
             <Form.Control
               type="text"
               placeholder="Phone Number"
-              name="billingAddress.phoneNumber"
-              value={values.phoneNumber}
+              name="billingAddress.phone"
+              value={values.phone}
               onChange={handleChange}
             />
             <ErrorMessageWrapper
               errors={errors}
               touched={touched}
-              fieldName="billingAddress.phoneNumber"
+              fieldName="billingAddress.phone"
             />
           </Form.Group>
         </Form.Row>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useEffect } from "react"
 import { Row, Col, Button, Form, Container } from "react-bootstrap"
 import clsx from "clsx"
 
@@ -50,7 +50,7 @@ export default function ShippingAddress({
             setFieldValue("shippingAddress.city", address.short_name)
             break
           case "administrative_area_level_1":
-            setFieldValue("shippingAddress.state", address.short_name)
+            setFieldValue("shippingAddress.countryArea", address.short_name)
             break
           case "postal_code":
             setFieldValue("shippingAddress.postalCode", address.short_name)
@@ -213,19 +213,19 @@ export default function ShippingAddress({
                 />
               </Form.Group>
 
-              <Form.Group controlId="state" as={Col} xs="12">
+              <Form.Group controlId="countryArea" as={Col} xs="12">
                 <Form.Label>State/Province/Region</Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="e.g NSW"
-                  name="shippingAddress.state"
-                  value={values.state}
+                  name="shippingAddress.countryArea"
+                  value={values.countryArea}
                   onChange={handleChange}
                 />
                 <ErrorMessageWrapper
                   errors={errors}
                   touched={touched}
-                  fieldName="shippingAddress.state"
+                  fieldName="shippingAddress.countryArea"
                 />
               </Form.Group>
 
@@ -276,20 +276,20 @@ export default function ShippingAddress({
             />
           </Form.Group>
 
-          <Form.Group controlId="phoneNumber" as={Col} xs="12">
+          <Form.Group controlId="phone" as={Col} xs="12">
             <Form.Label>Phone Number</Form.Label>
             <Form.Control
               type="text"
               placeholder="Phone Number"
-              name="shippingAddress.phoneNumber"
-              value={values.phoneNumber}
+              name="shippingAddress.phone"
+              value={values.phone}
               onChange={handleChange}
             />
 
             <ErrorMessageWrapper
               errors={errors}
               touched={touched}
-              fieldName="shippingAddress.phoneNumber"
+              fieldName="shippingAddress.phone"
             />
           </Form.Group>
         </Form.Row>

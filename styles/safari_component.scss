@@ -3,49 +3,23 @@
 $product-count-color: #939393;
 
 // Pagination
-.css-q9rddq {
-  background: #222222 !important;
-  max-width: 30px;
-  font-size: 14px !important;
-  margin: 2px !important;
-  height: 30px;
-  line-height: 30px;
-}
 
-.css-1lfcbrr {
+.prevPagination {
   border: unset !important;
   background-color: $text-white !important;
   height: 35px;
+  width: 48px;
   line-height: 35px !important;
   padding-left: 0px !important;
   padding-right: 0px !important;
   box-shadow: unset !important;
 }
-.css-1vwz9j1 {
-  border: unset !important;
-  background-color: $text-white !important; 
-  height: 35px;
-  line-height: 35px !important;
-  padding-left: 0px !important;
-  padding-right: 0px !important;
-  box-shadow: unset !important;
+.nextPagination {
+  @extend .prevPagination
 }
 
-.css-1wkws2a {
-  background: #222222 !important;  
-  max-width: 30px;
-  font-size: 12px !important;
-  margin: 2px !important;
-  height: 30px;
-  line-height: 30px !important;
-}
-
-.css-1cdx6dw {
-  max-width: 30px !important;
-  font-size: 12px !important;
-  margin: 2px !important;
-  height: 30px;
-  line-height: 30px;
+.activePagination{
+  background-color: $primary-text-color !important; 
 }
 
 .css-xqdxb0 {
@@ -53,28 +27,16 @@ $product-count-color: #939393;
   background-color: $text-white !important;
   padding-left: 0px;
   padding-right: 0px;
+  line-height: 12px;
 }
 
-//Result
-.modifyResult {
-  text-align: left !important;
-  align-items: left !important;
-  font-family: Rajdhani;
-  font-size: 14px;
-  font-weight: 500;
-  a {
-    color: #181818 !important;
-  }
-  p {
-    text-align: left !important;
-    color: #181818 !important;
-    font-weight: bold !important;
-  }
-}
-
-.modifyPagination {
+.buttonPagination {
+  max-width: 30px !important;
   font-size: 12px !important;
-  max-width: 400px;
-  margin: 0px auto;
-  justify-content: space-around !important;
+  margin: 2px !important;
+  height: 30px;
+  line-height: 30px;
+  color: aliceblue;
 }
+
+

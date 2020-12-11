@@ -8,7 +8,10 @@ export const PAYMENT_METHODS_ICON = {
   "bikebiz.payments.klarna": "/klarna.svg",
   "plugin.gateway.afterpay": "/afterpay.svg",
   "bikebiz.payments.zipmoney": "/zip.svg",
+  "bikebiz.payments.paypal": "/paypal.svg",
 }
+
+export const BRAINTREE_SUPPORTED_METHODS = ["bikebiz.payments.paypal"]
 
 export const PAYMENT_METHODS = [
   {

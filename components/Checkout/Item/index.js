@@ -2,8 +2,6 @@ import { Container, Row, Col, Form, Button } from "react-bootstrap"
 import Image from "next/image"
 import clsx from "clsx"
 
-import { useProductDetails } from "@sdk/react"
-import LoadingSpinner from "components/LoadingSpinner"
 import styles from "./CheckoutItem.module.scss"
 
 export default function ItemComponent({
@@ -19,13 +17,9 @@ export default function ItemComponent({
   quantityAvailable,
 }) {
   const size = attributes ? attributes[0]?.values[0] : {}
-  const { data, loading } = useProductDetails({ id })
 
   return (
     <Container className={styles.item}>
-      <Row>
-        <LoadingSpinner show={loading} />
-      </Row>
       <Row>
         <Col md="12">
           <Row>
@@ -45,17 +39,7 @@ export default function ItemComponent({
               <Form.Row>
                 <Form.Group controlId="itemSize" as={Col} xs="4">
                   <Form.Label className={styles.formLabel}>Size</Form.Label>
-                  {viewOnly ? (
-                    ` ${size.value}`
-                  ) : (
-                    <Form.Control as="select" custom>
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
-                    </Form.Control>
-                  )}
+                  {viewOnly ? ` ${size.value}` : <div>{size.value}</div>}
                 </Form.Group>
 
                 <Form.Group controlId="itemQty" as={Col} xs="4">

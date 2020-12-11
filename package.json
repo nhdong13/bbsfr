@@ -11,8 +11,9 @@
   },
   "dependencies": {
     "@apollo/client": "^3.2.5",
-    "@sajari/react-hooks": "^1.0.0-alpha.31",
-    "@sajari/react-search-ui": "^1.0.0-alpha.34",
+    "@sajari/react-hooks": "1.0.0-beta.8",
+    "@sajari/react-search-ui": "1.0.0-beta.11",
+    "@sajari/server": "^1.0.0-beta.3",
     "apollo-cache-inmemory": "^1.6.6",
     "apollo-client": "^2.5.1",
     "apollo-link-batch-http": "^1.2.14",

@@ -58,25 +58,7 @@ const NProgressBarComponent = (props) => {
         -ms-transform: rotate(3deg) translate(0px, -4px);
         transform: rotate(3deg) translate(0px, -4px);
       }
-      #nprogress .spinner {
-        display: "block";
-        position: fixed;
-        z-index: 1031;
-        top: 15px;
-        right: 15px;
-      }
-      #nprogress .spinner-icon {
-        width: 18px;
-        height: 18px;
-        box-sizing: border-box;
-        border: solid 2px transparent;
-        border-top-color: ${init.color};
-        border-left-color: ${init.color};
-        border-radius: 50%;
-        -webkit-animation: nprogresss-spinner 400ms linear infinite;
-        animation: nprogress-spinner 400ms linear infinite;
-      }
-
+     
       .nprogress-custom-parent {
         overflow: hidden;
         position: relative;
@@ -102,6 +84,6 @@ const NProgressBarComponent = (props) => {
         }
       }
     `}</style>
-  );
+  )
 };
 export default NProgressBarComponent;

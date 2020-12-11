@@ -1,12 +1,10 @@
 import { useState } from "react"
-import { useDispatch } from "react-redux"
 import { Container, Form } from "react-bootstrap"
 import { Formik } from "formik"
 import { useRouter } from "next/router"
 // import { useAuth } from "@saleor/sdk"
 import { useSignIn } from "@sdk/react"
 
-import { setCurrentUser } from "../../../redux/reducers/auth"
 import OrderSumaryComponent from "../OrderSumary"
 import CheckOutEmail from "./Email"
 import CheckoutPassword from "./Password"
@@ -14,7 +12,6 @@ import { EmailPasswordSchema } from "./validate"
 import styles from "./CheckoutEmailPassword.module.scss"
 
 export default function CheckoutEmailPasswordComponent() {
-  const dispatch = useDispatch()
   const [activeStep, setActiveStep] = useState(1)
   const initialValues = {
     email: "admin@example.com",
@@ -35,8 +32,6 @@ export default function CheckoutEmailPasswordComponent() {
       email: values.email,
       password: values.password,
     })
-
-    dispatch(setCurrentUser(data?.user))
 
     if (dataError?.error) {
       console.log(dataError.error)
