@@ -55,7 +55,9 @@ const BlogComponent = (props) => {
       <div className={styles.group_heading}>
         <h2 className={styles.text_heading_line_40}>off the press</h2>
         <Link href="/blogs">
-          <p className={styles.view_all_btn}>view all</p>
+          <a>
+            <p className={styles.view_all_btn}>view all</p>
+          </a>
         </Link>
       </div>
       <Slider {...settings} className={styles.slider_custom}>

@@ -46,7 +46,9 @@ export default function Brand(props) {
       <div className={styles.group_heading}>
         <h2 className={styles.text_heading_line_40}>shop by brand</h2>
         <Link href="/brands">
-          <p className={styles.view_all_btn}>view all</p>
+          <a>
+            <p className={styles.view_all_btn}>view all</p>
+          </a>
         </Link>
       </div>
       <Slider {...settings} className={styles.slider_custom}>
@@ -55,31 +57,13 @@ export default function Brand(props) {
             <Row className="auto-clear">
               {brand.map((b, id) =>
                 (id + 1) / 4 != 1 ? (
-                  <Link href={b.brand_link} key={id}>
-                    <Col
-                      className={`${styles.logo_custom} ${
-                        styles.point_line_brand
-                      } ${checkID(id, styles, brand.length)}`}
-                    >
-                      <Image
-                        className={styles.image_logo}
-                        src={b.brand_logo.url}
-                        alt={b.brand_logo.alt || ""}
-                        height={image_width}
-                        width={image_width}
-                        loading="eager"
-                      ></Image>
-                    </Col>
-                  </Link>
-                ) : (
-                  [
-                    <div className="w-100" key={-id.toString()}></div>,
+                  <Col
+                    className={`${styles.logo_custom} ${
+                      styles.point_line_brand
+                    } ${checkID(id, styles, brand.length)}`}
+                  >
                     <Link href={b.brand_link} key={id}>
-                      <Col
-                        className={`${styles.logo_custom} ${
-                          styles.point_line_brand
-                        } ${checkID(id, styles)}`}
-                      >
+                      <a>
                         <Image
                           className={styles.image_logo}
                           src={b.brand_logo.url}
@@ -88,8 +72,31 @@ export default function Brand(props) {
                           width={image_width}
                           loading="eager"
                         ></Image>
-                      </Col>
-                    </Link>,
+                      </a>
+                    </Link>
+                  </Col>
+                ) : (
+                  [
+                    <div className="w-100" key={-id.toString()}></div>,
+
+                    <Col
+                      className={`${styles.logo_custom} ${
+                        styles.point_line_brand
+                      } ${checkID(id, styles)}`}
+                    >
+                      <Link href={b.brand_link} key={id}>
+                        <a>
+                          <Image
+                            className={styles.image_logo}
+                            src={b.brand_logo.url}
+                            alt={b.brand_logo.alt || ""}
+                            height={image_width}
+                            width={image_width}
+                            loading="eager"
+                          ></Image>
+                        </a>
+                      </Link>
+                    </Col>,
                   ]
                 )
               )}

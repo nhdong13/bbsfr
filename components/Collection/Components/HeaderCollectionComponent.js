@@ -4,7 +4,7 @@ import styles from "../Collections.module.scss"
 import { useSearch, Variables } from "@sajari/react-hooks"
 
 const HeaderCollectionComponent = ({ pageHeading, pipeline }) => {
-  const variables = new Variables({ q: "" })
+  const variables = new Variables({ q: "", resultsPerPage: 20 })
 
   const { totalResults } = useSearch({
     variables,

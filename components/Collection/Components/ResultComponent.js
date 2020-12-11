@@ -71,7 +71,7 @@ const ResultComponent = (props) => {
     return concatStyles
   }
 
-  const variables = new Variables({ resultsPerPage: 20 })
+  const variables = new Variables({ resultsPerPage: 20, q: "" })
   const { results } = useSearchContext()
 
   return (
@@ -79,31 +79,34 @@ const ResultComponent = (props) => {
       {results &&
         results.map((item, index) => {
           return (
-            <Link href="/">
-              <div key={index}>
-                <div className={handleStyle(index, results)}>
-                  <div className={styles.elementProduct}>
-                    <Image
-                      alt={item.values.name}
-                      src="https://images.prismic.io/slicemachine-blank/6b2bf485-aa12-44ef-8f06-dce6b91b9309_dancing.png?auto=compress,format"
-                      height={172}
-                      width={172}
-                    ></Image>
-                    <div className={styles.sessionInfo}>
-                      <div className={styles.nameProduct}>
-                        <p>{item.values.name}</p>
+            <div key={index}>
+              <div className={handleStyle(index, results)}>
+                <div className={styles.elementProduct}>
+                  <Link href="/">
+                    <a>
+                      <div>
+                        <Image
+                          alt={item.values.name}
+                          src="https://images.prismic.io/slicemachine-blank/6b2bf485-aa12-44ef-8f06-dce6b91b9309_dancing.png?auto=compress,format"
+                          height={172}
+                          width={172}
+                        ></Image>
                       </div>
-                      <div className={styles.priceProduct}>
-                        <p>
-                          {item.values.price ? `$${item.values.price}` : ""}
-                        </p>
-                      </div>
-                      {renderStart(4, "16px", "16px")}
+                    </a>
+                  </Link>
+
+                  <div className={styles.sessionInfo}>
+                    <div className={styles.nameProduct}>
+                      <p>{item.values.name}</p>
                     </div>
+                    <div className={styles.priceProduct}>
+                      <p>{item.values.price ? `$${item.values.price}` : ""}</p>
+                    </div>
+                    {renderStart(4, "16px", "16px")}
                   </div>
                 </div>
               </div>
-            </Link>
+            </div>
           )
         })}
 

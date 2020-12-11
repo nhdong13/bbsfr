@@ -48,6 +48,12 @@ $border-color: #e5e5e4;
   .list_category {
     padding-top: 20px;
     transition: all 100ms ease-out;
+    a {
+       text-decoration: none;
+      &:hover {
+        color: $primary-text-color;
+      }
+    }
   }
   .category {
     padding-top: 5px;
@@ -74,7 +80,6 @@ $border-color: #e5e5e4;
     font-weight: normal;
     font-size: 12px;
     line-height: 20px;
-
     text-decoration: underline;
     color: $primary-text-color;
   }
@@ -152,7 +157,20 @@ $border-color: #e5e5e4;
   }
 }
 
+
+@media only screen and (max-width: 2560px){
+  .listProduct {
+    width: 28%;
+  }
+}
+
 @media only screen and (max-width: 1920px){
+  .listProduct {
+    width: 40%;
+  }
+}
+
+@media only screen and (max-width: 1440px){
   .listProduct {
     width: 48%;
   }
