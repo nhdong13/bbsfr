@@ -4,10 +4,11 @@ import styles from "./../Collections.module.scss"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { capitalizeString } from "../../../services/collection"
+import { constants } from "../../../constant"
 
 const CategoriesComponent = ({ categories = [], shopByCategoryText }) => {
   const [showItem, setItemToShow] = useState({
-    itemToShow: 16,
+    itemToShow: constants.itemToShowListCategories,
     expanded: false,
   })
   const expandCategory = () => {
@@ -17,7 +18,6 @@ const CategoriesComponent = ({ categories = [], shopByCategoryText }) => {
     })
   }
   const router = useRouter()
-
   return (
     <>
       <Container fluid className={styles.categories}>
@@ -31,6 +31,7 @@ const CategoriesComponent = ({ categories = [], shopByCategoryText }) => {
                     <Link href={category.category_slug}>
                       <div className={styles.category}>
                         {category.category_title[0].text}
+                        {/*TODO: Fetching data from Sajari for COUNT CATEGORY*/}
                         <div className={styles.count_category}>(65)</div>
                       </div>
                     </Link>

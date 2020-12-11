@@ -1,37 +1,38 @@
-import Router from "next/router";
-import NProgress from "nprogress";
-import { useEffect, useState } from "react";
+import Router from "next/router"
+import NProgress from "nprogress"
+import { useEffect } from "react";
 
 const NProgressBarComponent = (props) => {
-  let timer = null;
-  const [init, setInit] = useState({
+  let timer = null
+  
+  const init = {
     color: "#ffb00f",
     startPosition: 0.3,
     stopDelayMs: 200,
     height: 3,
-  });
-
+  }
+  
   useEffect(() => {
-    const { options } = props;
+    const { options } = props
     if (options) {
-      NProgress.configure(options);
+      NProgress.configure(options)
     }
-    Router.events.on("routeChangeStart", routeChangeStart);
-    Router.events.on("routeChangeComplete", routeChangeEnd);
-    Router.events.on("routeChangeError", routeChangeEnd);
-  }, []);
+    Router.events.on("routeChangeStart", routeChangeStart)
+    Router.events.on("routeChangeComplete", routeChangeEnd)
+    Router.events.on("routeChangeError", routeChangeEnd)
+  }, [])
 
   const routeChangeStart = () => {
-    NProgress.set(init.startPosition);
-    NProgress.start();
-  };
+    NProgress.set(init.startPosition)
+    NProgress.start()
+  }
 
   const routeChangeEnd = () => {
-    clearTimeout(timer);
+    clearTimeout(timer)
     timer = setTimeout(() => {
-      NProgress.done(true);
-    }, init.height);
-  };
+      NProgress.done(true)
+    }, init.height)
+  }
   return (
     <style jsx global>{`
       #nprogress {
@@ -57,24 +58,6 @@ const NProgressBarComponent = (props) => {
         -webkit-transform: rotate(3deg) translate(0px, -4px);
         -ms-transform: rotate(3deg) translate(0px, -4px);
         transform: rotate(3deg) translate(0px, -4px);
-      }
-      #nprogress .spinner {
-        display: "block";
-        position: fixed;
-        z-index: 1031;
-        top: 15px;
-        right: 15px;
-      }
-      #nprogress .spinner-icon {
-        width: 18px;
-        height: 18px;
-        box-sizing: border-box;
-        border: solid 2px transparent;
-        border-top-color: ${init.color};
-        border-left-color: ${init.color};
-        border-radius: 50%;
-        -webkit-animation: nprogresss-spinner 400ms linear infinite;
-        animation: nprogress-spinner 400ms linear infinite;
       }
 
       .nprogress-custom-parent {
@@ -102,6 +85,6 @@ const NProgressBarComponent = (props) => {
         }
       }
     `}</style>
-  );
-};
-export default NProgressBarComponent;
+  )
+}
+export default NProgressBarComponent

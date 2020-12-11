@@ -9,6 +9,7 @@ import React, { useEffect, useState } from "react"
 import { Container, Modal, Select } from "react-bootstrap"
 import { useSearch, FilterBuilder, useSorting } from "@sajari/react-hooks"
 import { Checkbox, CheckboxGroup } from "@sajari/react-components"
+import { constants } from "../../../constant"
 import PaginationComponent from "../../Common/PaginationComponent"
 import Image from "next/image"
 import { renderStart } from "../../../services/renderStart"
@@ -20,7 +21,6 @@ const ResultComponent = (props) => {
   const { pipeline } = props
   const [windowWidth, setWindowWidths] = useState()
   const [countUnsetBorder, setCountUnsetBorder] = useState(2)
-  const [widthListProduct, setWidthListProduct] = useState(100)
   const [show, setShow] = useState(false)
 
   useEffect(() => {
@@ -38,19 +38,14 @@ const ResultComponent = (props) => {
   const handleResponsive = () => {
     if (windowWidth <= 425) {
       setCountUnsetBorder(2)
-      setWidthListProduct(100)
     } else if (windowWidth <= 768 && windowWidth > 425) {
       setCountUnsetBorder(4)
-      setWidthListProduct(100)
     } else if (windowWidth === 1024 && windowWidth > 768) {
       setCountUnsetBorder(4)
-      setWidthListProduct(80)
     } else if (windowWidth === 1440 && windowWidth > 1024) {
       setCountUnsetBorder(4)
-      setWidthListProduct(58)
     } else {
       setCountUnsetBorder(4)
-      setWidthListProduct(30)
     }
   }
 
@@ -64,15 +59,22 @@ const ResultComponent = (props) => {
     }
     //Un set border bottom
     if (windowWidth <= 425) {
-      if (index + 1 === results.length || index + 1 === results.length - 1) {
+      //Check result per page have even number or odd number
+      if (results.length % 2 === 0 && index + 1 === results.length - 1) {
+        concatStyles += ` ${styles.unsetBorder}`
+      }
+      if (index + 1 === results.length) {
         concatStyles += ` ${styles.unsetBorder}`
       }
     } else if (windowWidth >= 768) {
+      //Check result per page have even number or odd number
+      if (results.length % 2 === 0 && index + 1 === results.length - 3) {
+        concatStyles += ` ${styles.unsetBorder}`
+      }
       if (
         index + 1 === results.length ||
         index + 1 === results.length - 1 ||
-        index + 1 === results.length - 2 ||
-        index + 1 === results.length - 3
+        index + 1 === results.length - 2
       ) {
         concatStyles += ` ${styles.unsetBorder}`
       }
@@ -211,7 +213,7 @@ const ResultComponent = (props) => {
     )
   })
   const handleClose = () => setShow(false)
-  const variables = new Variables({ resultsPerPage: 20 })
+  const variables = new Variables({ resultsPerPage: constants.resultPerPage })
   const { results } = useSearchContext()
 
   return (
@@ -248,7 +250,7 @@ const ResultComponent = (props) => {
         {results &&
           results.map((item, index) => {
             return (
-              <Link href="/">
+              <Link href="/" key={index.toString()}>
                 <div key={index}>
                   <div className={handleStyle(index, results)}>
                     <div className={styles.elementProduct}>
@@ -267,7 +269,6 @@ const ResultComponent = (props) => {
                             {item.values.price ? `$${item.values.price}` : ""}
                           </p>
                         </div>
-                        {renderStart(4, "16px", "16px")}
                       </div>
                     </div>
                   </div>

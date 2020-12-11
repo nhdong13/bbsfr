@@ -1,17 +1,18 @@
 import { useState, useEffect } from "react"
-import { useSelector } from "react-redux"
 import { Container, Form, Row, Col, Button } from "react-bootstrap"
 import { Formik } from "formik"
 // import { useCheckout } from "@saleor/sdk"
-import { useCheckout } from "@sdk/react"
+import { useCheckout, useUserDetails } from "@sdk/react"
 import clsx from "clsx"
 import { useMutation } from "@apollo/client"
 import { useRouter } from "next/router"
 import { useToasts } from "react-toast-notifications"
+import _ from "lodash"
 
 import LoadingSpinner from "components/LoadingSpinner"
 import OrderSumaryComponent from "../OrderSumary"
 import ShippingMethods from "./ShippingMethods"
+import SelectAddressModal from "./SelectAddressModal"
 import ShippingAddress from "./ShippingAddress"
 import BillingAddress from "./BillingAddress"
 import PaymentComponent from "./Payment"
@@ -19,22 +20,9 @@ import { AddressSchema } from "./validate"
 import { paymentCheckoutTokenCreate } from "lib/mutations"
 import { initKlarna, authorizeKlarna } from "./klarna"
 import { authorizeAfterpay } from "./afterpay"
+import { authorizePaypal } from "./paypal"
 import { COUNTRIES_RESTRICTION } from "./constants"
 import styles from "./Delivery.module.scss"
-
-const ADDRESS = {
-  bussinessName: "",
-  city: "",
-  country: COUNTRIES_RESTRICTION[0],
-  firstName: "",
-  lastName: "",
-  phoneNumber: "",
-  postalCode: "",
-  state: "",
-  streetAddress1: "",
-  streetAddress2: "",
-  address: "",
-}
 
 export default function DeliveryComponent() {
   const {
@@ -46,11 +34,47 @@ export default function DeliveryComponent() {
     createPayment,
     completeCheckout,
   } = useCheckout()
+  const { data: currentUser, loading } = useUserDetails()
   const { addToast } = useToasts()
   const [createPaymentCheckoutToken] = useMutation(paymentCheckoutTokenCreate)
+  const router = useRouter()
+  const { status, orderToken, result, checkoutId } = router.query
+
+  const [initDeliveryData, setInitDeliveryData] = useState({
+    shippingAddress: {
+      bussinessName: "",
+      city: "",
+      country: COUNTRIES_RESTRICTION[0],
+      firstName: "",
+      lastName: "",
+      phone: "",
+      postalCode: "",
+      countryArea: "",
+      streetAddress1: "",
+      streetAddress2: "",
+      address: "",
+      useFullForm: false,
+    },
+    billingAddress: {
+      bussinessName: "",
+      city: "",
+      country: COUNTRIES_RESTRICTION[0],
+      firstName: "",
+      lastName: "",
+      phone: "",
+      postalCode: "",
+      countryArea: "",
+      streetAddress1: "",
+      streetAddress2: "",
+      address: "",
+      useFullForm: false,
+    },
+    billingDifferentAddress: false,
+    paymentMethod: null,
+  })
   const [showContinue, setShowContinue] = useState(false)
   const [showLoading, setShowLoading] = useState(false)
-  const currentUser = useSelector((state) => state.currentUser)
+  const [modalShow, setModalShow] = useState(false)
   const [shippingMethods, setShippingMethods] = useState([
     {
       id: "U2hpcHBpbmdNZXRob2Q6MQ==",
@@ -71,14 +95,18 @@ export default function DeliveryComponent() {
       __typename: "ShippingMethod",
     },
   ])
-  const initDeliveryData = {
-    shippingAddress: { ...ADDRESS, useFullForm: false },
-    billingAddress: ADDRESS,
-    billingDifferentAddress: false,
-    paymentMethod: null,
-  }
-  const router = useRouter()
-  const { status, orderToken, result, checkoutId } = router.query
+
+  useEffect(() => {
+    if (!loading) {
+      const { defaultShippingAddress, defaultBillingAddress } =
+        currentUser || {}
+      setInitDeliveryData({
+        ...initDeliveryData,
+        shippingAddress: mappingDataAddress(defaultShippingAddress),
+        billingAddress: mappingDataAddress(defaultBillingAddress),
+      })
+    }
+  }, [loading])
 
   useEffect(() => {
     let token
@@ -118,12 +146,22 @@ export default function DeliveryComponent() {
     }
   }
 
-  const showToast = () => {
+  const selectAccountAddress = (id) => {
+    const address = currentUser.addresses.find((address) => address.id === id)
+    setInitDeliveryData({
+      ...initDeliveryData,
+      shippingAddress: mappingDataAddress(address),
+      billingAddress: mappingDataAddress(address),
+    })
+  }
+
+  const handleSubmitError = (bag) => {
     addToast("An error has been occurred. Please try again later", {
       appearance: "error",
       autoDismiss: true,
       className: "mt-4 mr-2 w-auto",
     })
+    bag.setSubmitting(false)
   }
 
   const handleSubmitCheckout = async (values, bag) => {
@@ -132,25 +170,29 @@ export default function DeliveryComponent() {
       ...values,
     }
 
-    shippingAddress.countryArea = shippingAddress.state
-
     const { data: checkoutData, dataError } = await setShippingAddress(
       {
         ...shippingAddress,
       },
-      "thupx@nustechnology.com"
+      currentUser.email
     )
 
     if (dataError) {
-      if (dataError.error.find((error) => error.field === "postalCode")) {
-        bag.setErrors({
-          "shippingAddress.postalCode": "Please check this field and try again",
-        })
+      const fieldErrors = _.intersection(
+        dataError.error.map((error) => error.field),
+        ["postalCode", "phone"]
+      )
+      if (fieldErrors.length) {
+        fieldErrors.forEach((field) =>
+          bag.setErrors({
+            [`shippingAddress.${field}`]: "Please check this field and try again",
+          })
+        )
+        bag.setSubmitting(false)
       } else {
-        showToast()
+        handleSubmitError(bag)
       }
 
-      bag.setSubmitting(false)
       return
     }
 
@@ -160,30 +202,31 @@ export default function DeliveryComponent() {
       const resBilling = await setBillingAsShippingAddress()
       billingAddressError = resBilling?.dataError
     } else {
-      billingAddress.countryArea = billingAddress.state
-      delete billingAddress.address
-
       const resSetBilling = await setBillingAddress(
         {
           ...billingAddress,
         },
-        "thupx@nustechnology.com"
+        currentUser.email
       )
       billingAddressError = resSetBilling?.dataError
     }
 
     if (billingAddressError) {
-      if (
-        billingAddressError.error.find((error) => error.field === "postalCode")
-      ) {
-        bag.setErrors({
-          "billingAddress.postalCode": "Please check this field and try again",
-        })
-      } else {
-        showToast()
-      }
+      const fieldErrors = _.intersection(
+        billingAddressError.error.map((error) => error.field),
+        ["postalCode", "phone"]
+      )
 
-      bag.setSubmitting(false)
+      if (fieldErrors.length) {
+        fieldErrors.forEach((field) =>
+          bag.setErrors({
+            [`billingAddress.${field}`]: "Please check this field and try again",
+          })
+        )
+        bag.setSubmitting(false)
+      } else {
+        handleSubmitError(bag)
+      }
       return
     }
 
@@ -193,164 +236,233 @@ export default function DeliveryComponent() {
     )
 
     if (setShippingMethodError) {
-      showToast()
-      bag.setSubmitting(false)
+      handleSubmitError(bag)
       return
     }
 
-    // Create payment checkout token
-    const { data: paymentCheckoutTokenRes } = await createPaymentCheckoutToken({
-      variables: {
-        checkoutId: checkoutData.id,
-        gateway: values.paymentMethod.id,
-        amount: data.totalPrice?.gross?.amount,
-      },
-    })
-
-    const { paymentCheckoutTokenCreate } = paymentCheckoutTokenRes
-
-    if (paymentCheckoutTokenCreate.checkoutErrors?.length) {
-      showToast()
-      bag.setSubmitting(false)
-      return
-    }
     localStorage.setItem("paymentGateway", values.paymentMethod.id)
+    const totalPrice = data.totalPrice?.gross?.amount
+    if (values.paymentMethod.id !== "mirumee.payments.braintree") {
+      // Create payment checkout token
+      const {
+        data: paymentCheckoutTokenRes,
+      } = await createPaymentCheckoutToken({
+        variables: {
+          checkoutId: checkoutData.id,
+          gateway: values.paymentMethod.id,
+          amount: totalPrice,
+        },
+      })
 
-    // Authorize payment checkout token
-    const {
-      token,
-      checkoutUri,
-    } = paymentCheckoutTokenCreate.gatewayCheckoutResponse
-    switch (values.paymentMethod.id) {
-      case "plugin.gateway.afterpay":
-        authorizeAfterpay(token)
-        break
-      case "bikebiz.payments.klarna":
-        initKlarna(token, () => setShowContinue(true))
-        break
-      case "bikebiz.payments.zipmoney":
-        router.push(checkoutUri)
-        break
-      default:
-        break
+      const { paymentCheckoutTokenCreate } = paymentCheckoutTokenRes
+
+      if (paymentCheckoutTokenCreate.checkoutErrors?.length) {
+        handleSubmitError(bag)
+        return
+      }
+
+      const {
+        token,
+        checkoutUri,
+      } = paymentCheckoutTokenCreate.gatewayCheckoutResponse
+      switch (values.paymentMethod.id) {
+        case "plugin.gateway.afterpay":
+          authorizeAfterpay(token)
+          break
+        case "bikebiz.payments.klarna":
+          initKlarna(token, () => setShowContinue(true))
+          break
+        case "bikebiz.payments.zipmoney":
+          router.push(checkoutUri)
+          break
+        default:
+          break
+      }
+    } else {
+      const clientToken = values.paymentMethod.config.find(
+        (config) => config.field === "client_token"
+      ).value
+
+      // Authorize payment checkout token
+      switch (values.paymentMethod.subId) {
+        case "bikebiz.payments.paypal":
+          authorizePaypal(clientToken, totalPrice, sendCreatePayment, () =>
+            handleSubmitError(bag)
+          )
+          break
+        default:
+          break
+      }
     }
   }
 
   return (
     <Container fluid className={styles.deliveryContainer}>
-      <OrderSumaryComponent />
-      <Row>
-        <Container>
-          <Row className={styles.emailBody}>
-            <Col md="12">
-              <h2 className="font-weight-bold">Delivery</h2>
-            </Col>
+      {(loading || showLoading) && (
+        <Row>
+          <LoadingSpinner show={loading || showLoading} />
+        </Row>
+      )}
 
-            <Form.Group controlId="email" as={Col} xs="12">
-              <Form.Label className={styles.formLabel}>
-                Email Address
-              </Form.Label>
-              <Form.Control
-                type="email"
-                placeholder="Your email address"
-                name="email"
-                value={currentUser?.email}
-                readOnly={true}
-              />
-            </Form.Group>
-          </Row>
-          <ShippingMethods
-            shippingMethods={shippingMethods}
-            setShippingMethods={setShippingMethods}
+      {!loading && !showLoading && (
+        <>
+          <OrderSumaryComponent />
+          <SelectAddressModal
+            show={modalShow}
+            onHide={() => setModalShow(false)}
+            onSelectAddress={selectAccountAddress}
+            addresses={currentUser?.addresses}
+            defaultShippingAddress={currentUser?.defaultShippingAddress}
           />
+          <Row>
+            <Container>
+              <Row className={styles.emailBody}>
+                <Col md="12">
+                  <h2 className="font-weight-bold">Delivery</h2>
+                </Col>
 
-          <Formik
-            validationSchema={AddressSchema}
-            onSubmit={handleSubmitCheckout}
-            initialValues={initDeliveryData}
-          >
-            {({
-              handleSubmit,
-              handleChange,
-              setFieldValue,
-              isSubmitting,
-              values,
-              touched,
-              errors,
-            }) => (
-              <Form noValidate onSubmit={handleSubmit}>
-                <Row>
-                  <LoadingSpinner show={showLoading || isSubmitting} />
-                </Row>
-
-                <ShippingAddress
-                  handleChange={handleChange}
-                  values={values.shippingAddress}
-                  touched={touched}
-                  errors={errors}
-                  setFieldValue={setFieldValue}
-                />
-
-                <Form.Check
-                  type="checkbox"
-                  id="billingDifferentAddress"
-                  label="Bill to a different Address"
-                  name="billingDifferentAddress"
-                  className="pb-4"
-                  onChange={handleChange}
-                />
-
-                {values.billingDifferentAddress && (
-                  <BillingAddress
-                    handleChange={handleChange}
-                    values={values.billingAddress}
-                    touched={touched}
-                    errors={errors}
+                <Form.Group controlId="email" as={Col} xs="12">
+                  <Form.Label className={styles.formLabel}>
+                    Email Address
+                  </Form.Label>
+                  <Form.Control
+                    type="email"
+                    placeholder="Your email address"
+                    name="email"
+                    value={currentUser?.email}
+                    readOnly={true}
                   />
-                )}
+                </Form.Group>
+              </Row>
+              <ShippingMethods
+                shippingMethods={shippingMethods}
+                setShippingMethods={setShippingMethods}
+              />
+              <Row>
+                <Form.Group controlId="btnPlaceOrder" as={Col} xs="12">
+                  <Button
+                    variant="link"
+                    className="px-0"
+                    type="button"
+                    onClick={() => setModalShow(true)}
+                  >
+                    Select account {">"}
+                  </Button>
+                </Form.Group>
+              </Row>
+              <Formik
+                enableReinitialize
+                validationSchema={AddressSchema}
+                onSubmit={handleSubmitCheckout}
+                initialValues={initDeliveryData}
+              >
+                {({
+                  handleSubmit,
+                  handleChange,
+                  setFieldValue,
+                  isSubmitting,
+                  values,
+                  touched,
+                  errors,
+                }) => (
+                  <Form noValidate onSubmit={handleSubmit}>
+                    <Row>
+                      <LoadingSpinner show={isSubmitting} />
+                    </Row>
 
-                <PaymentComponent
-                  availablePaymentGateways={availablePaymentGateways || []}
-                  paymentMethod={values.paymentMethod}
-                  setFieldValue={setFieldValue}
-                  errors={errors}
-                  touched={touched}
-                />
-                <div id="klarna-payments-container"></div>
-                {showContinue && (
-                  <Row>
-                    <Form.Group controlId="btnPlaceOrder" as={Col} xs="12">
-                      <Button
-                        variant="secondary"
-                        className={clsx(styles.btnPlaceOrder, "w-100")}
-                        type="button"
-                        onClick={() => authorizeKlarna(sendCreatePayment)}
-                      >
-                        CONTINUE
-                      </Button>
-                    </Form.Group>
-                  </Row>
-                )}
+                    <ShippingAddress
+                      handleChange={handleChange}
+                      values={values.shippingAddress}
+                      touched={touched}
+                      errors={errors}
+                      setFieldValue={setFieldValue}
+                    />
 
-                {!showContinue && (
-                  <Row>
-                    <Form.Group controlId="btnPlaceOrder" as={Col} xs="12">
-                      <Button
-                        variant="secondary"
-                        className={clsx(styles.btnPlaceOrder, "w-100")}
-                        type="submit"
-                        disabled={isSubmitting}
-                      >
-                        PLACE ORDER
-                      </Button>
-                    </Form.Group>
-                  </Row>
+                    <Form.Check
+                      type="checkbox"
+                      id="billingDifferentAddress"
+                      label="Bill to a different Address"
+                      name="billingDifferentAddress"
+                      className="pb-4"
+                      onChange={handleChange}
+                    />
+
+                    {values.billingDifferentAddress && (
+                      <BillingAddress
+                        handleChange={handleChange}
+                        values={values.billingAddress}
+                        touched={touched}
+                        errors={errors}
+                      />
+                    )}
+
+                    <PaymentComponent
+                      availablePaymentGateways={availablePaymentGateways || []}
+                      paymentMethod={values.paymentMethod}
+                      setFieldValue={setFieldValue}
+                      errors={errors}
+                      touched={touched}
+                    />
+                    <div id="klarna-payments-container"></div>
+                    {showContinue && (
+                      <Row>
+                        <Form.Group controlId="btnPlaceOrder" as={Col} xs="12">
+                          <Button
+                            variant="secondary"
+                            className={clsx(styles.btnPlaceOrder, "w-100")}
+                            type="button"
+                            onClick={() => authorizeKlarna(sendCreatePayment)}
+                          >
+                            CONTINUE
+                          </Button>
+                        </Form.Group>
+                      </Row>
+                    )}
+
+                    {!showContinue && (
+                      <Row>
+                        <Form.Group controlId="btnPlaceOrder" as={Col} xs="12">
+                          <Button
+                            variant="secondary"
+                            className={clsx(styles.btnPlaceOrder, "w-100")}
+                            type="submit"
+                            disabled={isSubmitting}
+                          >
+                            PLACE ORDER
+                          </Button>
+                        </Form.Group>
+                      </Row>
+                    )}
+                  </Form>
                 )}
-              </Form>
-            )}
-          </Formik>
-        </Container>
-      </Row>
+              </Formik>
+            </Container>
+          </Row>
+        </>
+      )}
     </Container>
   )
+}
+
+export const mappingDataAddress = (data) => {
+  return {
+    bussinessName: data?.companyName || "",
+    city: data?.city || "",
+    country: data?.country || COUNTRIES_RESTRICTION[0],
+    firstName: data?.firstName || "",
+    lastName: data?.lastName || "",
+    phone: data?.phone || "",
+    postalCode: data?.postalCode || "",
+    countryArea: data?.countryArea || "",
+    streetAddress1: data?.streetAddress1 || "",
+    streetAddress2: data?.streetAddress2 || "",
+    address: data
+      ? [
+          data?.streetAddress1,
+          data?.city,
+          [data?.countryArea, data?.postalCode].join(" "),
+        ].join(", ")
+      : "",
+    useFullForm: false,
+  }
 }
