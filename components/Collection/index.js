@@ -33,26 +33,6 @@ const CollectionComponent = ({ collections, initialResponse, pipeline }) => {
           dangerouslySetInnerHTML={{ __html: jsonFAQ }}
         /> */}
       </Head>
-
-      <HeaderCollectionComponent
-        pipeline={pipeline}
-        pageHeading={
-          collections &&
-          collections.page_heading_1 &&
-          collections.page_heading_1.length > 0
-            ? collections.page_heading_1[0].text
-            : "Collections"
-        }
-      />
-      <CategoriesComponent
-        categories={categories}
-        shopByCategoryText={
-          shop_by_category_text != undefined && shop_by_category_text.length
-            ? shop_by_category_text[0].text
-            : "List Category"
-        }
-      />
-
       <SearchProvider
         search={{
           pipeline,
@@ -60,7 +40,29 @@ const CollectionComponent = ({ collections, initialResponse, pipeline }) => {
         initialResponse={initialResponse}
         searchOnLoad={!initialResponse}
       >
-        <ResultComponent pipeline={pipeline} />
+        <HeaderCollectionComponent
+          pipeline={pipeline}
+          pageHeading={
+            collections &&
+            collections.page_heading_1 &&
+            collections.page_heading_1.length > 0
+              ? collections.page_heading_1[0].text
+              : "Collections"
+          }
+        />
+        <CategoriesComponent
+          categories={categories}
+          shopByCategoryText={
+            shop_by_category_text != undefined && shop_by_category_text.length
+              ? shop_by_category_text[0].text
+              : "List Category"
+          }
+        />
+
+        <ResultComponent
+          pipeline={pipeline}
+          initialResponse={initialResponse}
+        />
       </SearchProvider>
 
       <SEOComponent

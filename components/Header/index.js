@@ -15,16 +15,20 @@ export default function Header() {
   return (
     <Navbar bg="dark" expand="lg" variant="dark">
       <Link href="/">
-        <span>
-          <Navbar.Brand>Page Header</Navbar.Brand>
-        </span>
+        <a>
+          <span>
+            <Navbar.Brand>Page Header</Navbar.Brand>
+          </span>
+        </a>
       </Link>
       <div>
         <span className={styles.cartIcon}>
           <Link href="/checkout">
-            <span>
-              <Image src="/cart.svg" alt="cart" width={32} height={32} />
-            </span>
+            <a>
+              <span>
+                <Image src="/cart.svg" alt="cart" width={32} height={32} />
+              </span>
+            </a>
           </Link>
         </span>
 
@@ -33,8 +37,12 @@ export default function Header() {
 
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          <Nav.Link href="#home">Home</Nav.Link>
-          <Nav.Link href="#link">Link</Nav.Link>
+          <Nav.Link href="#home">
+            Home
+          </Nav.Link>
+          <Nav.Link href="#link">
+            Link
+          </Nav.Link>
           <NavDropdown title="Dropdown" id="basic-nav-dropdown">
             <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
             <NavDropdown.Item href="#action/3.2">
