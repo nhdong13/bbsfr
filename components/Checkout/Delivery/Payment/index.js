@@ -1,6 +1,7 @@
 import { Row, Button, Col } from "react-bootstrap"
 import Image from "next/image"
 
+import CreditCardForm from "./CreditCardForm"
 import ErrorMessageWrapper from "../../ErrorMessageWrapper"
 import styles from "../Delivery.module.scss"
 import {
@@ -12,6 +13,8 @@ import {
 export default function PaymentComponent({
   availablePaymentGateways,
   paymentMethod,
+  creditCard,
+  handleChange,
   setFieldValue,
   errors,
   touched,
@@ -81,6 +84,15 @@ export default function PaymentComponent({
           fieldName="paymentMethod"
         />
       </Col>
+
+      {paymentMethod?.id === "mirumee.payments.braintree" && (
+        <CreditCardForm
+          creditCard={creditCard}
+          errors={errors}
+          touched={touched}
+          handleChange={handleChange}
+        />
+      )}
     </Row>
   )
 }

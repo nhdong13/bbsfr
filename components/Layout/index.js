@@ -36,6 +36,10 @@ export default function Layout({ children }) {
           type="text/javascript"
           src="https://js.braintreegateway.com/web/3.69.0/js/paypal.min.js"
         ></script>
+        <script
+          type="text/javascript"
+          src="https://js.braintreegateway.com/web/3.69.0/js/hosted-fields.min.js"
+        ></script>
       </Head>
       <Header />
       <main>{children}</main>

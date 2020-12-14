@@ -9,9 +9,13 @@ export const PAYMENT_METHODS_ICON = {
   "plugin.gateway.afterpay": "/afterpay.svg",
   "bikebiz.payments.zipmoney": "/zip.svg",
   "bikebiz.payments.paypal": "/paypal.svg",
+  "bikebiz.payments.creditCard": "/visa.svg",
 }
 
-export const BRAINTREE_SUPPORTED_METHODS = ["bikebiz.payments.paypal"]
+export const BRAINTREE_SUPPORTED_METHODS = [
+  "bikebiz.payments.creditCard",
+  "bikebiz.payments.paypal",
+]
 
 export const PAYMENT_METHODS = [
   {
@@ -52,3 +56,18 @@ export const COUNTRIES_RESTRICTION = [
 ]
 
 export const NUMBER_DUMP_CONTENT_FLEXBOX = 3
+
+export const INITIAL_ADDRESS = {
+  bussinessName: "",
+  city: "",
+  country: COUNTRIES_RESTRICTION[0],
+  firstName: "",
+  lastName: "",
+  phone: "",
+  postalCode: "",
+  countryArea: "",
+  streetAddress1: "",
+  streetAddress2: "",
+  address: "",
+  useFullForm: false,
+}

@@ -21,7 +21,8 @@ import { paymentCheckoutTokenCreate } from "lib/mutations"
 import { initKlarna, authorizeKlarna } from "./klarna"
 import { authorizeAfterpay } from "./afterpay"
 import { authorizePaypal } from "./paypal"
-import { COUNTRIES_RESTRICTION } from "./constants"
+import { authorizeCreditCard } from "./creditCard"
+import { COUNTRIES_RESTRICTION, INITIAL_ADDRESS } from "./constants"
 import styles from "./Delivery.module.scss"
 
 export default function DeliveryComponent() {
@@ -33,6 +34,7 @@ export default function DeliveryComponent() {
     availablePaymentGateways,
     createPayment,
     completeCheckout,
+    loaded,
   } = useCheckout()
   const { data: currentUser, loading } = useUserDetails()
   const { addToast } = useToasts()
@@ -41,37 +43,17 @@ export default function DeliveryComponent() {
   const { status, orderToken, result, checkoutId } = router.query
 
   const [initDeliveryData, setInitDeliveryData] = useState({
-    shippingAddress: {
-      bussinessName: "",
-      city: "",
-      country: COUNTRIES_RESTRICTION[0],
-      firstName: "",
-      lastName: "",
-      phone: "",
-      postalCode: "",
-      countryArea: "",
-      streetAddress1: "",
-      streetAddress2: "",
-      address: "",
-      useFullForm: false,
-    },
-    billingAddress: {
-      bussinessName: "",
-      city: "",
-      country: COUNTRIES_RESTRICTION[0],
-      firstName: "",
-      lastName: "",
-      phone: "",
-      postalCode: "",
-      countryArea: "",
-      streetAddress1: "",
-      streetAddress2: "",
-      address: "",
-      useFullForm: false,
-    },
+    shippingAddress: INITIAL_ADDRESS,
+    billingAddress: INITIAL_ADDRESS,
     billingDifferentAddress: false,
     paymentMethod: null,
+    creditCard: {
+      cardNumber: "",
+      expirationDate: "",
+      cvv: "",
+    },
   })
+
   const [showContinue, setShowContinue] = useState(false)
   const [showLoading, setShowLoading] = useState(false)
   const [modalShow, setModalShow] = useState(false)
@@ -99,16 +81,29 @@ export default function DeliveryComponent() {
   ])
 
   useEffect(() => {
-    if (!loading) {
-      const { defaultShippingAddress, defaultBillingAddress } =
-        currentUser || {}
-      setInitDeliveryData({
-        ...initDeliveryData,
-        shippingAddress: mappingDataAddress(defaultShippingAddress),
-        billingAddress: mappingDataAddress(defaultBillingAddress),
-      })
-    }
+    if (loading) return
+    const { defaultShippingAddress, defaultBillingAddress } = currentUser || {}
+    setInitDeliveryData({
+      ...initDeliveryData,
+      shippingAddress: mappingDataAddress(defaultShippingAddress),
+      billingAddress: mappingDataAddress(defaultBillingAddress),
+    })
   }, [loading])
+
+  useEffect(() => {
+    if (!loaded) return
+    const braintreeMethod =
+      availablePaymentGateways &&
+      availablePaymentGateways.find(
+        (method) => method.id === "mirumee.payments.braintree"
+      )
+    setInitDeliveryData({
+      ...initDeliveryData,
+      paymentMethod: braintreeMethod
+        ? { ...braintreeMethod, subId: "bikebiz.payments.creditCard" }
+        : null,
+    })
+  }, [loaded])
 
   useEffect(() => {
     let token
@@ -289,6 +284,8 @@ export default function DeliveryComponent() {
             handleSubmitError(bag)
           )
           break
+        case "bikebiz.payments.creditCard":
+          authorizeCreditCard(clientToken)
         default:
           break
       }
@@ -398,6 +395,8 @@ export default function DeliveryComponent() {
                     <PaymentComponent
                       availablePaymentGateways={availablePaymentGateways || []}
                       paymentMethod={values.paymentMethod}
+                      creditCard={values.creditCard}
+                      handleChange={handleChange}
                       setFieldValue={setFieldValue}
                       errors={errors}
                       touched={touched}
