@@ -86,7 +86,7 @@ const PaginationComponent = ({ variables, pipeline, initialResponse }) => {
   })
 
   const PriceFilter = () => <FilterRender name="type" title="Price (bucket)" />
-  const { results } = useSearchContext()
+  // const { results } = useSearchContext()
 
   return (
     <Container>
@@ -99,14 +99,14 @@ const PaginationComponent = ({ variables, pipeline, initialResponse }) => {
         initialResponse={initialResponse}
         searchOnLoad
       >
-        {/* <Filter
+        <Filter
           name="type"
           title="Category"
           searchable
           sort="count"
           sortAscending={true}
-        /> */}
-        {results && <PriceFilter />}
+        />
+        {/* {results && <PriceFilter />} */}
       </SearchProvider>
     </Container>
   )
