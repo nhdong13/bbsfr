@@ -200,7 +200,7 @@ const ResultComponent = (props) => {
                           {item.values.price ? `$${item.values.price}` : ""}
                         </p>
                       </div>
-                      {renderStart(4, "16px", "16px")}
+                      {renderStart(4.5, "16px", "16px", 5)}
                     </div>
                   </div>
                 </div>
