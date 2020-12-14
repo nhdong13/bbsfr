@@ -14,6 +14,7 @@
     "@sajari/react-hooks": "1.0.0-beta.9",
     "@sajari/react-search-ui": "1.0.0-beta.12",
     "@sajari/server": "^1.0.0-beta.4",
+    "@sajari/react-components": "^1.0.0-beta.6",
     "apollo-cache-inmemory": "^1.6.6",
     "apollo-client": "^2.5.1",
     "apollo-link-batch-http": "^1.2.14",

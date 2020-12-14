@@ -3,7 +3,8 @@
 
 $product-count-color: #939393;
 $border-color: #e5e5e4;
-
+$border-color-sort-filter: #d0d1cf;
+$bg-sort-filter: #f6f6f6;
 .result {
   text-align: left !important;
 }
@@ -48,6 +49,12 @@ $border-color: #e5e5e4;
   .list_category {
     padding-top: 20px;
     transition: all 100ms ease-out;
+    a {
+      text-decoration: none;
+      &:hover {
+        color: $primary-text-color;
+      }
+    }
   }
   .category {
     padding-top: 5px;
@@ -74,7 +81,6 @@ $border-color: #e5e5e4;
     font-weight: normal;
     font-size: 12px;
     line-height: 20px;
-
     text-decoration: underline;
     color: $primary-text-color;
   }
@@ -86,6 +92,51 @@ $border-color: #e5e5e4;
   border-top: 0.5px solid $border-color;
   display: flex;
   font-size: 12px;
+}
+
+.filter_sort_sajari {
+  padding: 16px;
+  background-color: $bg-sort-filter;
+
+  .short_filter {
+    position: relative;
+
+    padding-top: 14px;
+    padding-bottom: 13px;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    border: 1px solid $border-color-sort-filter;
+    border-radius: 4px;
+
+    .title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-basis: 50%;
+
+      font-family: Rajdhani;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 20px;
+      text-align: center;
+
+      img {
+        left: -7.5px !important;
+      }
+    }
+
+    .horizontal_line {
+      position: absolute;
+      width: 1px;
+      top: 20%;
+      background-color: $border-color-sort-filter;
+      height: 60%;
+    }
+  }
 }
 
 //------------->
@@ -152,7 +203,19 @@ $border-color: #e5e5e4;
   }
 }
 
+@media only screen and (max-width: 2560px) {
+  .listProduct {
+    width: 28%;
+  }
+}
+
 @media only screen and (max-width: 1920px) {
+  .listProduct {
+    width: 40%;
+  }
+}
+
+@media only screen and (max-width: 1440px) {
   .listProduct {
     width: 48%;
   }
@@ -164,21 +227,63 @@ $border-color: #e5e5e4;
   }
 }
 
+@media only screen and (max-width: 800px) {
+  .listProduct {
+    width: 88%;
+  }
+}
+
 @media only screen and (max-width: 768px) {
   .listProduct {
     width: 90%;
   }
 }
 
+@media only screen and (max-width: 600px) {
+  .listProduct {
+    width: 60%;
+  }
+}
+
+@media only screen and (max-width: 540px) {
+  .listProduct {
+    width: 65%;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .listProduct {
+    width: 74%;
+  }
+}
+
 @media only screen and (max-width: 425px) {
   .listProduct {
-    width: 82%;
+    width: 84%;
+  }
+}
+
+@media only screen and (max-width: 384px) {
+  .listProduct {
+    width: 91%;
   }
 }
 
 @media only screen and (max-width: 375px) {
   .listProduct {
     width: 92%;
+  }
+}
+
+@media only screen and (max-width: 365px) {
+  .listProduct {
+    width: 95%;
+  }
+}
+
+@media only screen and (max-width: 360px) {
+  .listProduct {
+    width: 96%;
   }
 }
 

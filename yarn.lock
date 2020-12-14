@@ -1544,7 +1544,7 @@
     lodash "^4.17.15"
     lodash-es "^4.17.15"
 
-"@sajari/react-components@^1.0.0-beta.7":
+"@sajari/react-components@^1.0.0-beta.6", "@sajari/react-components@^1.0.0-beta.7":
   version "1.0.0-beta.7"
   resolved "https://registry.yarnpkg.com/@sajari/react-components/-/react-components-1.0.0-beta.7.tgz#4daf63bec702ede9f3226e01e5ee931be247f021"
   integrity sha512-VjpJkr2zfdeVO6FIpPSmfjq/enk2FQuZ4/JNvgLKExpqiZlJXhzEcmJ0/rDfD8Hvuvu+z6O15c8EiLgpfqGaqA==
