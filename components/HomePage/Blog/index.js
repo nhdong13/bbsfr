@@ -15,7 +15,7 @@ const BlogComponent = (props) => {
     // setImageWidth(width / 4.5)
     setWidth(width - 30)
   })
-  //a is array clone
+  //TODO: Clone Array to Testing UI, Temporary Data, Will be remove
   let a = [1, 2, 3]
 
   let num_pages = a.length
@@ -67,6 +67,7 @@ const BlogComponent = (props) => {
               <Image
                 alt={`img-${id}`}
                 className={styles.border_none_image}
+                // TODO: Clone Image to Testing UI, Temporary Data, Will be remove
                 src="https://s3.amazonaws.com/s3-wp-product/wp-content/uploads/2019/03/25094806/Bikebiz2.jpg"
                 thumbnail
               ></Image>

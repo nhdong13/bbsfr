@@ -148,3 +148,20 @@ input,
   display: none !important;
 }
 // End slick slider
+
+//Sorting Sajari Style
+.sorting_style {
+  width: 100%;
+}
+.short_filter_modal {
+  .modal-dialog {
+    height: 100%;
+    margin: 0;
+    .modal-content {
+      // height: 100%;
+      border: none;
+      border-radius: 0;
+    }
+  }
+}
+// End Sorting Sajari Style

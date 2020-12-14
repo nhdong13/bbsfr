@@ -7,7 +7,7 @@ import { renderStart } from "../../../services/renderStart"
 
 const TestimonialsComponent = (props) => {
   const [activeSlide, setSlide] = useState(1)
-  const [data, setData] = useState([
+  const data = [
     {
       rate: 4,
       content:
@@ -26,7 +26,7 @@ const TestimonialsComponent = (props) => {
         "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
       author: "RoBinSon",
     },
-  ])
+  ]
 
   const settings = {
     infinite: true,

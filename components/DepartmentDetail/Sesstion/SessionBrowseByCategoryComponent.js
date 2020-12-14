@@ -1,12 +1,12 @@
-import styles from "../DepartmentPage.module.scss";
-import { Container, Row, Col } from "react-bootstrap";
-import Image from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/router";
+import styles from "../DepartmentPage.module.scss"
+import { Container, Row, Col } from "react-bootstrap"
+import Image from "next/image"
+import Link from "next/link"
+import { useRouter } from "next/router"
 
 const SessionBrowseByCategoryComponent = (props) => {
-  const router = useRouter();
-  const { collections } = props;
+  const router = useRouter()
+  const { collections } = props
   const collectionsData =
     collections && collections.length > 0
       ? collections
@@ -111,7 +111,7 @@ const SessionBrowseByCategoryComponent = (props) => {
             ],
             collection_slug: "/helmets",
           },
-        ];
+        ]
   return (
     <>
       <Container className={styles.sessionTitleCategory}>
@@ -195,5 +195,5 @@ const SessionBrowseByCategoryComponent = (props) => {
       </div>
     </>
   )
-};
-export default SessionBrowseByCategoryComponent;
+}
+export default SessionBrowseByCategoryComponent

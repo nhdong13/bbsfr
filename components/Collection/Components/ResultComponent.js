@@ -1,5 +1,15 @@
-import { Pagination, Variables } from "@sajari/react-search-ui"
-import { useEffect, useState } from "react"
+import {
+  SearchProvider,
+  Variables,
+  Filter,
+  FieldDictionary,
+  Pagination,
+} from "@sajari/react-search-ui"
+import React, { useEffect, useState } from "react"
+import { Container, Modal, Select } from "react-bootstrap"
+import { useSearch, FilterBuilder, useSorting } from "@sajari/react-hooks"
+import { Radio, RadioGroup } from "@sajari/react-components"
+import { constants } from "../../../constant"
 import PaginationComponent from "../../Common/PaginationComponent"
 import Image from "next/image"
 import { renderStart } from "../../../services/renderStart"
@@ -11,6 +21,7 @@ const ResultComponent = (props) => {
   const { pipeline, initialResponse } = props
   const [windowWidth, setWindowWidths] = useState()
   const [countUnsetBorder, setCountUnsetBorder] = useState(2)
+  const [show, setShow] = useState(false)
 
   useEffect(() => {
     const { innerWidth: width, innerHeight: height } = window
@@ -71,51 +82,135 @@ const ResultComponent = (props) => {
     return concatStyles
   }
 
-  const variables = new Variables({ resultsPerPage: 20, q: "" })
+  const SortFilterButton = () => (
+    <Container fluid className={styles.filter_sort_sajari}>
+      <div className={styles.short_filter}>
+        <div className={styles.title} onClick={() => setShow(true)}>
+          <Image src="/sortby.svg" width={7} height={11} />
+          <div>Sort by</div>
+        </div>
+        <div className={styles.title} onClick={() => setShow(true)}>
+          <Image src="/filter.svg" width={11} height={11} />
+          <div>Filter</div>
+        </div>
+        <div className={styles.horizontal_line}></div>
+      </div>
+    </Container>
+  )
+
+  const categoryFilter = new FilterBuilder({
+    name: "category",
+    field: "weight",
+  })
+
+  const SortingComponent = React.memo(() => {
+    const { sorting, setSorting } = useSorting()
+
+    return (
+      <div className="">
+        <div>
+          <RadioGroup
+            value={sorting}
+            onChange={(e) => setSorting(e.target.value)}
+          >
+            <Radio value="">Most relevant</Radio>
+            <Radio value="name">Name: A to Z</Radio>
+            <Radio value="-name">Name: Z to A</Radio>
+            <Radio value="price">Price: Low to High</Radio>
+            <Radio value="-price">Price: High to Low</Radio>
+          </RadioGroup>
+        </div>
+        <div>akwjehkweh</div>
+        <Filter
+          type="list"
+          name="category"
+          title="Category"
+          searchable
+          sort="alpha"
+        />
+      </div>
+    )
+  })
+  const handleClose = () => setShow(false)
+  const variables = new Variables({ resultsPerPage: constants.resultPerPage })
   const { results } = useSearchContext()
-
+  console.log(results)
   return (
-    <div className={styles.listProduct}>
-      {results &&
-        results.map((item, index) => {
-          return (
-            <div key={index}>
-              <div className={handleStyle(index, results)}>
-                <div className={styles.elementProduct}>
-                  <Link href="/">
-                    <a>
-                      <div>
-                        <Image
-                          alt={item.values.name}
-                          src="https://images.prismic.io/slicemachine-blank/6b2bf485-aa12-44ef-8f06-dce6b91b9309_dancing.png?auto=compress,format"
-                          height={172}
-                          width={172}
-                        ></Image>
+    <>
+      <SortFilterButton />
+      <SearchProvider
+        search={{
+          pipeline,
+          variables,
+          fields: new FieldDictionary({
+            title: "name",
+          }),
+          filters: [categoryFilter],
+        }}
+        initialResponse={initialResponse}
+        searchOnLoad={!initialResponse}
+        customClassNames={{
+          pagination: {
+            container: "containerPagination",
+            button: "buttonPagination",
+            active: "activePagination",
+            next: "nextPagination",
+            prev: "prevPagination",
+            spacerEllipsis: "spacerEllipsisPagination",
+          },
+        }}
+      >
+        <Modal show={show} onHide={handleClose} className="short_filter_modal">
+          <div className={styles.sort_by}>
+            <div>SORT by</div>
+            <SortingComponent />
+          </div>
+        </Modal>
+        <Pagination />
+      </SearchProvider>
+      <div className={styles.listProduct}>
+        {results &&
+          results.map((item, index) => {
+            return (
+              <div key={index}>
+                <div className={handleStyle(index, results)}>
+                  <div className={styles.elementProduct}>
+                    <Link href="/">
+                      <a>
+                        <div>
+                          <Image
+                            alt={item.values.name}
+                            src="https://images.prismic.io/slicemachine-blank/6b2bf485-aa12-44ef-8f06-dce6b91b9309_dancing.png?auto=compress,format"
+                            height={172}
+                            width={172}
+                          ></Image>
+                        </div>
+                      </a>
+                    </Link>
+                    <div className={styles.sessionInfo}>
+                      <div className={styles.nameProduct}>
+                        <p>{item.values.name}</p>
                       </div>
-                    </a>
-                  </Link>
-
-                  <div className={styles.sessionInfo}>
-                    <div className={styles.nameProduct}>
-                      <p>{item.values.name}</p>
+                      <div className={styles.priceProduct}>
+                        <p>
+                          {item.values.price ? `$${item.values.price}` : ""}
+                        </p>
+                      </div>
+                      {renderStart(4, "16px", "16px")}
                     </div>
-                    <div className={styles.priceProduct}>
-                      <p>{item.values.price ? `$${item.values.price}` : ""}</p>
-                    </div>
-                    {renderStart(4, "16px", "16px")}
                   </div>
                 </div>
               </div>
-            </div>
-          )
-        })}
+            )
+          })}
 
-      <PaginationComponent
-        initialResponse={initialResponse}
-        pipeline={pipeline}
-        variables={variables}
-      />
-    </div>
+        {/* <PaginationComponent
+          initialResponse={initialResponse}
+          pipeline={pipeline}
+          variables={variables}
+        /> */}
+      </div>
+    </>
   )
 }
 
