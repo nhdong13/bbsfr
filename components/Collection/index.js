@@ -15,8 +15,6 @@ const CollectionComponent = ({ collections, initialResponse, pipeline }) => {
     categories,
     shop_by_category_text,
   } = collections
-  console.log("Debug code pipeline:", pipeline)
-  console.log("Debug code initialResponse:", initialResponse)
   return (
     <>
       <Head>

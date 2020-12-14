@@ -22,6 +22,9 @@ const ResultComponent = (props) => {
   const [windowWidth, setWindowWidths] = useState()
   const [countUnsetBorder, setCountUnsetBorder] = useState(2)
   const [show, setShow] = useState(false)
+  const [params, setParams] = useState({
+    sort: "",
+  })
 
   useEffect(() => {
     const { innerWidth: width, innerHeight: height } = window
@@ -105,13 +108,17 @@ const ResultComponent = (props) => {
 
   const SortingComponent = React.memo(() => {
     const { sorting, setSorting } = useSorting()
-
+    console.log("Debug code sorting:", sorting)
+   
     return (
       <div className="">
         <div>
           <RadioGroup
             value={sorting}
-            onChange={(e) => setSorting(e.target.value)}
+            onChange={(e) => {
+              setSorting(e.target.value)
+              setParams({ ...params, sort: e.target.value })
+            }}
           >
             <Radio value="">Most relevant</Radio>
             <Radio value="name">Name: A to Z</Radio>
@@ -132,9 +139,11 @@ const ResultComponent = (props) => {
     )
   })
   const handleClose = () => setShow(false)
-  const variables = new Variables({ resultsPerPage: constants.resultPerPage })
+  const variables = new Variables({
+    resultsPerPage: constants.resultPerPage,
+    ...params,
+  })
   const { results } = useSearchContext()
-  console.log(results)
   return (
     <>
       <SortFilterButton />
@@ -149,16 +158,6 @@ const ResultComponent = (props) => {
         }}
         initialResponse={initialResponse}
         searchOnLoad={!initialResponse}
-        customClassNames={{
-          pagination: {
-            container: "containerPagination",
-            button: "buttonPagination",
-            active: "activePagination",
-            next: "nextPagination",
-            prev: "prevPagination",
-            spacerEllipsis: "spacerEllipsisPagination",
-          },
-        }}
       >
         <Modal show={show} onHide={handleClose} className="short_filter_modal">
           <div className={styles.sort_by}>
@@ -166,7 +165,12 @@ const ResultComponent = (props) => {
             <SortingComponent />
           </div>
         </Modal>
-        <Pagination />
+
+        <PaginationComponent
+          initialResponse={initialResponse}
+          pipeline={pipeline}
+          variables={variables}
+        />
       </SearchProvider>
       <div className={styles.listProduct}>
         {results &&
@@ -203,12 +207,6 @@ const ResultComponent = (props) => {
               </div>
             )
           })}
-
-        {/* <PaginationComponent
-          initialResponse={initialResponse}
-          pipeline={pipeline}
-          variables={variables}
-        /> */}
       </div>
     </>
   )
