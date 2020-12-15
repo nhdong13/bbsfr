@@ -17,7 +17,15 @@ const PaginationComponent = ({ variables, pipeline, initialResponse }) => {
         initialResponse={initialResponse}
         searchOnLoad
         customClassNames={{
-          filter: { container: "thienprovip369" },
+          filter: {
+            resetButton: "resetButtonFilter",
+            list: {
+              container: "listContainerFilter",
+              checkboxGroup: "checkboxGroupFilter",
+              searchFilter: "searchFilter",
+              toggleButton: "toggleButtonFilter",
+            },
+          },
         }}
       >
         <Filter
