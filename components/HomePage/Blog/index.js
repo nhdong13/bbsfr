@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react"
-import { Image, Container } from "react-bootstrap"
+import { Container } from "react-bootstrap"
 import styles from "../HomePage.module.scss"
 import Link from "next/link"
 import Slider from "react-slick"
 import { pad } from "../../../services/brand.js"
+import Image from "next/image"
 
 const BlogComponent = (props) => {
   const [activeSlide, setSlide] = useState(1)

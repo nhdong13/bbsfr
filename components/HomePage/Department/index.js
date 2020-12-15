@@ -1,8 +1,8 @@
 import React from "react"
-import { Image, Row, Container, Col } from "react-bootstrap"
+import { Row, Container, Col } from "react-bootstrap"
 import styles from "../HomePage.module.scss"
 import Link from "next/link"
-
+import Image from "next/image"
 export default function Department(props) {
   return (
     <Link href={`${props.slug}`}>
