@@ -65,6 +65,8 @@ const BlogComponent = (props) => {
           <div key={id} className="pr-4">
             <div className="position-relative">
               <Image
+                width={242}
+                height={162}
                 alt={`img-${id}`}
                 className={styles.border_none_image}
                 // TODO: Clone Image to Testing UI, Temporary Data, Will be remove
