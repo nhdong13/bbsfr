@@ -11,6 +11,7 @@ import _ from "lodash"
 
 import LoadingSpinner from "components/LoadingSpinner"
 import OrderSumaryComponent from "../OrderSumary"
+import DeliveryHeader from "./Header"
 import ShippingMethods from "./ShippingMethods"
 import SelectAddressModal from "./SelectAddressModal"
 import ShippingAddress from "./ShippingAddress"
@@ -18,10 +19,15 @@ import BillingAddress from "./BillingAddress"
 import PaymentComponent from "./Payment"
 import { AddressSchema } from "./validate"
 import { paymentCheckoutTokenCreate } from "lib/mutations"
-import { initKlarna, authorizeKlarna } from "./klarna"
-import { authorizeAfterpay } from "./afterpay"
-import { authorizePaypal } from "./paypal"
-import { COUNTRIES_RESTRICTION } from "./constants"
+import { authorizeKlarna } from "./klarna"
+import { INITIAL_ADDRESS, DUMP_SHIPPING_DATA } from "./constants"
+import {
+  mappingDataAddress,
+  selectAccountAddress,
+  createCheckout,
+  setBilling,
+  processPayment,
+} from "./helpers"
 import styles from "./Delivery.module.scss"
 
 export default function DeliveryComponent() {
@@ -41,34 +47,8 @@ export default function DeliveryComponent() {
   const { status, orderToken, result, checkoutId } = router.query
 
   const [initDeliveryData, setInitDeliveryData] = useState({
-    shippingAddress: {
-      bussinessName: "",
-      city: "",
-      country: COUNTRIES_RESTRICTION[0],
-      firstName: "",
-      lastName: "",
-      phone: "",
-      postalCode: "",
-      countryArea: "",
-      streetAddress1: "",
-      streetAddress2: "",
-      address: "",
-      useFullForm: false,
-    },
-    billingAddress: {
-      bussinessName: "",
-      city: "",
-      country: COUNTRIES_RESTRICTION[0],
-      firstName: "",
-      lastName: "",
-      phone: "",
-      postalCode: "",
-      countryArea: "",
-      streetAddress1: "",
-      streetAddress2: "",
-      address: "",
-      useFullForm: false,
-    },
+    shippingAddress: INITIAL_ADDRESS,
+    billingAddress: INITIAL_ADDRESS,
     billingDifferentAddress: false,
     paymentMethod: null,
   })
@@ -77,26 +57,7 @@ export default function DeliveryComponent() {
   const [modalShow, setModalShow] = useState(false)
 
   // TODO in the future
-  const [shippingMethods, setShippingMethods] = useState([
-    {
-      id: "U2hpcHBpbmdNZXRob2Q6MQ==",
-      name: "Post",
-      price: { currency: "USD", amount: 0, __typename: "Money" },
-      __typename: "ShippingMethod",
-    },
-    {
-      id: "U2hpcHBpbmdNZXRob2Q6NA==",
-      name: "Click & Collect",
-      price: { currency: "USD", amount: 0, __typename: "Money" },
-      __typename: "ShippingMethod",
-    },
-    {
-      id: "U2hpcHBpbmdNZXRob2Q6Mg==",
-      name: "Courier",
-      price: { currency: "USD", amount: 15, __typename: "Money" },
-      __typename: "ShippingMethod",
-    },
-  ])
+  const [shippingMethods, setShippingMethods] = useState(DUMP_SHIPPING_DATA)
 
   useEffect(() => {
     if (!loading) {
@@ -108,9 +69,7 @@ export default function DeliveryComponent() {
         billingAddress: mappingDataAddress(defaultBillingAddress),
       })
     }
-  }, [loading])
 
-  useEffect(() => {
     let token
     if (status === "SUCCESS") {
       token = orderToken
@@ -120,7 +79,7 @@ export default function DeliveryComponent() {
       token = checkoutId
     }
     sendCreatePayment(token)
-  }, [status, result])
+  }, [loading, status, result])
 
   const sendCreatePayment = async (orderToken) => {
     if (!orderToken) return
@@ -130,7 +89,7 @@ export default function DeliveryComponent() {
     const { dataError } = await createPayment(paymentGateway, orderToken)
     if (dataError) {
       setShowLoading(false)
-      alert(dataError.error?.message)
+      handleSubmitError()
       return
     }
 
@@ -138,20 +97,11 @@ export default function DeliveryComponent() {
 
     if (completeCheckoutError) {
       setShowLoading(false)
-      alert(completeCheckoutError.error?.message)
+      handleSubmitError()
       return
     }
 
     router.push(`/checkout/complete?orderNumber=${data?.number}`)
-  }
-
-  const selectAccountAddress = (id) => {
-    const address = currentUser.addresses.find((address) => address.id === id)
-    setInitDeliveryData({
-      ...initDeliveryData,
-      shippingAddress: mappingDataAddress(address),
-      billingAddress: mappingDataAddress(address),
-    })
   }
 
   const handleSubmitError = (bag) => {
@@ -160,139 +110,65 @@ export default function DeliveryComponent() {
       autoDismiss: true,
       className: "mt-4 mr-2 w-auto",
     })
-    bag.setSubmitting(false)
+    if (bag) {
+      bag.setSubmitting(false)
+    }
   }
 
   const handleSubmitCheckout = async (values, bag) => {
+    const {
+      shippingAddress,
+      billingAddress,
+      billingDifferentAddress,
+      paymentMethod,
+    } = values
+
     // Set Shipping Address and create Checkout
-    const { shippingAddress, billingAddress, billingDifferentAddress } = {
-      ...values,
-    }
-
-    const { data: checkoutData, dataError } = await setShippingAddress(
-      {
-        ...shippingAddress,
-      },
-      currentUser.email
+    const { checkoutData } = await createCheckout(
+      setShippingAddress,
+      shippingAddress,
+      currentUser.email,
+      bag,
+      handleSubmitError
     )
-
-    if (dataError) {
-      const fieldErrors = _.intersection(
-        dataError.error.map((error) => error.field),
-        ["postalCode", "phone"]
-      )
-      if (fieldErrors.length) {
-        fieldErrors.forEach((field) =>
-          bag.setErrors({
-            [`shippingAddress.${field}`]: "Please check this field and try again",
-          })
-        )
-        bag.setSubmitting(false)
-      } else {
-        handleSubmitError(bag)
-      }
-
-      return
-    }
+    if (!checkoutData) return
 
     // Set Billing Address
-    let billingAddressError
-    if (!billingDifferentAddress) {
-      const resBilling = await setBillingAsShippingAddress()
-      billingAddressError = resBilling?.dataError
-    } else {
-      const resSetBilling = await setBillingAddress(
-        {
-          ...billingAddress,
-        },
-        currentUser.email
-      )
-      billingAddressError = resSetBilling?.dataError
-    }
-
-    if (billingAddressError) {
-      const fieldErrors = _.intersection(
-        billingAddressError.error.map((error) => error.field),
-        ["postalCode", "phone"]
-      )
-
-      if (fieldErrors.length) {
-        fieldErrors.forEach((field) =>
-          bag.setErrors({
-            [`billingAddress.${field}`]: "Please check this field and try again",
-          })
-        )
-        bag.setSubmitting(false)
-      } else {
-        handleSubmitError(bag)
-      }
-      return
-    }
+    const { billingData } = await setBilling(
+      setBillingAddress,
+      setBillingAsShippingAddress,
+      billingDifferentAddress,
+      billingAddress,
+      currentUser.email,
+      bag,
+      handleSubmitError
+    )
+    if (!billingData) return
 
     // Set Shipping method
     const { data, dataError: setShippingMethodError } = await setShippingMethod(
       checkoutData.availableShippingMethods[0].id
     )
-
     if (setShippingMethodError) {
       handleSubmitError(bag)
       return
     }
 
-    localStorage.setItem("paymentGateway", values.paymentMethod.id)
+    localStorage.setItem("paymentGateway", paymentMethod.id)
+
     const totalPrice = data.totalPrice?.gross?.amount
-    if (values.paymentMethod.id !== "mirumee.payments.braintree") {
-      // Create payment checkout token
-      const {
-        data: paymentCheckoutTokenRes,
-      } = await createPaymentCheckoutToken({
-        variables: {
-          checkoutId: checkoutData.id,
-          gateway: values.paymentMethod.id,
-          amount: totalPrice,
-        },
-      })
 
-      const { paymentCheckoutTokenCreate } = paymentCheckoutTokenRes
-
-      if (paymentCheckoutTokenCreate.checkoutErrors?.length) {
-        handleSubmitError(bag)
-        return
-      }
-
-      const {
-        token,
-        checkoutUri,
-      } = paymentCheckoutTokenCreate.gatewayCheckoutResponse
-      switch (values.paymentMethod.id) {
-        case "plugin.gateway.afterpay":
-          authorizeAfterpay(token)
-          break
-        case "bikebiz.payments.klarna":
-          initKlarna(token, () => setShowContinue(true))
-          break
-        case "bikebiz.payments.zipmoney":
-          router.push(checkoutUri)
-          break
-        default:
-          break
-      }
-    } else {
-      const clientToken = values.paymentMethod.config.find(
-        (config) => config.field === "client_token"
-      ).value
-
-      // Authorize payment checkout token
-      switch (values.paymentMethod.subId) {
-        case "bikebiz.payments.paypal":
-          authorizePaypal(clientToken, totalPrice, sendCreatePayment, () =>
-            handleSubmitError(bag)
-          )
-          break
-        default:
-          break
-      }
-    }
+    await processPayment(
+      checkoutData,
+      totalPrice,
+      paymentMethod,
+      createPaymentCheckoutToken,
+      bag,
+      handleSubmitError,
+      router,
+      setShowContinue,
+      sendCreatePayment
+    )
   }
 
   return (
@@ -309,30 +185,20 @@ export default function DeliveryComponent() {
           <SelectAddressModal
             show={modalShow}
             onHide={() => setModalShow(false)}
-            onSelectAddress={selectAccountAddress}
+            onSelectAddress={(id) =>
+              selectAccountAddress(
+                currentUser,
+                id,
+                setInitDeliveryData,
+                initDeliveryData
+              )
+            }
             addresses={currentUser?.addresses}
             defaultShippingAddress={currentUser?.defaultShippingAddress}
           />
           <Row>
             <Container>
-              <Row className={styles.emailBody}>
-                <Col md="12">
-                  <h2 className="font-weight-bold">Delivery</h2>
-                </Col>
-
-                <Form.Group controlId="email" as={Col} xs="12">
-                  <Form.Label className={styles.formLabel}>
-                    Email Address
-                  </Form.Label>
-                  <Form.Control
-                    type="email"
-                    placeholder="Your email address"
-                    name="email"
-                    value={currentUser?.email}
-                    readOnly={true}
-                  />
-                </Form.Group>
-              </Row>
+              <DeliveryHeader currentUser={currentUser} />
               <ShippingMethods
                 shippingMethods={shippingMethods}
                 setShippingMethods={setShippingMethods}
@@ -441,27 +307,4 @@ export default function DeliveryComponent() {
       )}
     </Container>
   )
-}
-
-export const mappingDataAddress = (data) => {
-  return {
-    bussinessName: data?.companyName || "",
-    city: data?.city || "",
-    country: data?.country || COUNTRIES_RESTRICTION[0],
-    firstName: data?.firstName || "",
-    lastName: data?.lastName || "",
-    phone: data?.phone || "",
-    postalCode: data?.postalCode || "",
-    countryArea: data?.countryArea || "",
-    streetAddress1: data?.streetAddress1 || "",
-    streetAddress2: data?.streetAddress2 || "",
-    address: data
-      ? [
-          data?.streetAddress1,
-          data?.city,
-          [data?.countryArea, data?.postalCode].join(" "),
-        ].join(", ")
-      : "",
-    useFullForm: false,
-  }
 }
