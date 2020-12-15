@@ -75,6 +75,8 @@ export default function DeliveryComponent() {
   const [showContinue, setShowContinue] = useState(false)
   const [showLoading, setShowLoading] = useState(false)
   const [modalShow, setModalShow] = useState(false)
+
+  // TODO in the future
   const [shippingMethods, setShippingMethods] = useState([
     {
       id: "U2hpcHBpbmdNZXRob2Q6MQ==",
@@ -121,29 +123,26 @@ export default function DeliveryComponent() {
   }, [status, result])
 
   const sendCreatePayment = async (orderToken) => {
-    if (orderToken) {
-      setShowLoading(true)
-      const paymentGateway = localStorage.getItem("paymentGateway")
-      const { dataError } = await createPayment(paymentGateway, orderToken)
-      if (dataError) {
-        setShowLoading(false)
-        alert(dataError.error?.message)
-        return
-      }
+    if (!orderToken) return
 
-      const {
-        data,
-        dataError: completeCheckoutError,
-      } = await completeCheckout()
-
-      if (completeCheckoutError) {
-        setShowLoading(false)
-        alert(completeCheckoutError.error?.message)
-        return
-      }
-
-      router.push(`/checkout/complete?orderNumber=${data?.number}`)
+    setShowLoading(true)
+    const paymentGateway = localStorage.getItem("paymentGateway")
+    const { dataError } = await createPayment(paymentGateway, orderToken)
+    if (dataError) {
+      setShowLoading(false)
+      alert(dataError.error?.message)
+      return
     }
+
+    const { data, dataError: completeCheckoutError } = await completeCheckout()
+
+    if (completeCheckoutError) {
+      setShowLoading(false)
+      alert(completeCheckoutError.error?.message)
+      return
+    }
+
+    router.push(`/checkout/complete?orderNumber=${data?.number}`)
   }
 
   const selectAccountAddress = (id) => {

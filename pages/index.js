@@ -6,14 +6,12 @@ import {
   getAllDepartments,
   getAllSEO,
   getAllFAQ,
-} from "../lib/prismic/api"
-import { useDispatch } from "react-redux"
-import { setDepartments } from "../redux/reducers/departments"
+} from "../lib/prismic/api";
+import { setDepartments } from "../redux/reducers/departments";
 
 function Home({ department, brands, SEO, resPriFAQ }) {
-  const dispatch = useDispatch()
-  let list_department = department[0].node.department_link
-  dispatch(setDepartments(list_department))
+  let list_department = department[0].node.department_link;
+  setDepartments(list_department);
   return (
     <HomePage
       department={list_department}
