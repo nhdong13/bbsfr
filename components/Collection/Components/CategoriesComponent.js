@@ -13,7 +13,9 @@ const CategoriesComponent = ({ categories = [], shopByCategoryText }) => {
   })
   const expandCategory = () => {
     setItemToShow({
-      itemToShow: showItem.expanded ? 16 : categories.length,
+      itemToShow: showItem.expanded
+        ? constants.itemToShowListCategories
+        : categories.length,
       expanded: !showItem.expanded,
     })
   }
