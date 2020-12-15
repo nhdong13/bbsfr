@@ -4,15 +4,9 @@ import {
   FieldDictionary,
 } from "@sajari/react-search-ui"
 import React, { useEffect, useState } from "react"
-import { Container, Modal } from "react-bootstrap"
-import { FilterBuilder, useFilter, useSorting } from "@sajari/react-hooks"
-import {
-  Radio,
-  RadioGroup,
-  CheckboxGroup,
-  Checkbox,
-  Heading,
-} from "@sajari/react-components"
+import { Container, Modal, Collapse, Button } from "react-bootstrap"
+import { useSorting } from "@sajari/react-hooks"
+import { Radio, RadioGroup } from "@sajari/react-components"
 import { constants } from "../../../constant"
 import PaginationComponent from "../../Common/PaginationComponent"
 import FilterComponent from "../../Common/FilterComponent"
@@ -21,17 +15,25 @@ import { renderStart } from "../../../services/renderStart"
 import styles from "../Collections.module.scss"
 import Link from "next/link"
 import { useSearchContext } from "@sajari/react-hooks"
+import Header from "../../Header"
 
 const ResultComponent = (props) => {
   const { pipeline, initialResponse } = props
   const [windowWidth, setWindowWidths] = useState()
   const [countUnsetBorder, setCountUnsetBorder] = useState(2)
   const [show, setShow] = useState(false)
-  const [searchRequest, setSearch] = useState(false)
   const [params, setParams] = useState({
     sort: "",
   })
-
+  const [listSortFilter, setSortFilter] = useState([
+    { name: "Featured", open: false },
+    { name: "Brand", open: false },
+    { name: "Jacket Features", open: false },
+    { name: "Jacket Material", open: false },
+    { name: "Season", open: false },
+    { name: "Ride Style", open: false },
+    { name: "Price", open: false },
+  ])
   useEffect(() => {
     const { innerWidth: width, innerHeight: height } = window
     setWindowWidths(width)
@@ -93,7 +95,6 @@ const ResultComponent = (props) => {
 
   const sortFilter = () => {
     setShow(!show)
-    setSearch(true)
   }
 
   const SortFilterButton = () => (
@@ -119,6 +120,7 @@ const ResultComponent = (props) => {
       <div className="">
         <div>
           <RadioGroup
+            className={styles.radio_sajari}
             value={sorting}
             onChange={(e) => {
               setSorting(e.target.value)
@@ -132,73 +134,16 @@ const ResultComponent = (props) => {
             <Radio value="-price">Price: High to Low</Radio>
           </RadioGroup>
         </div>
-        <div>akwjehkweh</div>
-        {/* if(!searchRequest)
-        {setSearch(true)(
-          <FilterComponent
-            initialResponse={initialResponse}
-            pipeline={pipeline}
-            variables={variables}
-          />
-        )} */}
       </div>
     )
   })
 
-  const FilterRender = React.memo(({ name, title }) => {
-    const { multi, options, selected, setSelected, reset } = useFilter(name)
-
-    if (options.length === 0) {
-      return null
-    }
-
-    const Group = multi ? CheckboxGroup : RadioGroup
-    const Control = multi ? Checkbox : Radio
-
-    return (
-      <div className="mb-4">
-        <div className="flex items-center justify-between mb-2">
-          <Heading
-            as="h6"
-            className="font-medium tracking-wide text-gray-400 uppercase"
-          >
-            {title}
-          </Heading>
-          {selected.length > 0 && multi ? (
-            <button
-              className="text-xs text-blue-500 hover:underline uppercase p-0 bg-transparent focus:outline-none"
-              onClick={reset}
-            >
-              Reset
-            </button>
-          ) : null}
-        </div>
-        <Group
-          name={name}
-          value={selected}
-          onChange={multi ? setSelected : (e) => setSelected([e.target.value])}
-        >
-          {options.map(({ value, label, count }) => (
-            <div
-              className="flex justify-between items-center"
-              key={label + count}
-            >
-              <Control
-                value={label}
-                checked={selected.includes(label)}
-                onChange={() => {}}
-                fontSize="sm"
-              >
-                {label}
-              </Control>
-              <span className="ml-2 text-xs text-gray-400">{count}</span>
-            </div>
-          ))}
-        </Group>
-      </div>
+  const setOpen = (id, bol) => {
+    let listUpdate = listSortFilter.map((item, index) =>
+      index == id ? { name: item.name, open: bol } : item
     )
-  })
-  const BrandFilter = () => <FilterRender name="type" title="Type" />
+    setSortFilter(listUpdate)
+  }
 
   const handleClose = () => setShow(false)
   const variables = new Variables({
@@ -209,11 +154,6 @@ const ResultComponent = (props) => {
   return (
     <>
       <SortFilterButton />
-      <FilterComponent
-        initialResponse={initialResponse}
-        pipeline={pipeline}
-        variables={variables}
-      />
       <SearchProvider
         search={{
           pipeline,
@@ -226,10 +166,43 @@ const ResultComponent = (props) => {
         searchOnLoad={!initialResponse}
       >
         <Modal show={show} onHide={handleClose} className="short_filter_modal">
-          <div className={styles.sort_by}>
-            <div>SORT by</div>
-            <SortingComponent />
-            <div>Filter</div>
+          <Header />
+          <div className={styles.sort_filter_by}>
+            {listSortFilter.map((item, id) => (
+              <div
+                className={`${styles.group_heading} ${
+                  item.open ? styles.active : ""
+                }`}
+                key={id}
+              >
+                <div
+                  onClick={() => setOpen(id, !item.open)}
+                  aria-controls="example2-collapse-text"
+                  aria-expanded={item.open}
+                >
+                  {id == 0 && <div className={styles.sub_heading}>soft by</div>}
+                  {id == 1 && (
+                    <div className={styles.sub_heading}>refined by</div>
+                  )}
+                  <div className={styles.text_heading}>{item.name}</div>
+                </div>
+                <div className={styles.sort_filter_collapse}>
+                  <Collapse in={item.open}>
+                    <div id="example2-collapse-text">
+                      {id == 1 && (
+                        <FilterComponent
+                          initialResponse={initialResponse}
+                          pipeline={pipeline}
+                          variables={variables}
+                        />
+                      )}
+                      {id == 0 && <SortingComponent />}
+                      {id > 1 && <div>UI for Sort/Filter</div>}
+                    </div>
+                  </Collapse>
+                </div>
+              </div>
+            ))}
           </div>
         </Modal>
 

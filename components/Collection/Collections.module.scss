@@ -139,6 +139,53 @@ $bg-sort-filter: #f6f6f6;
   }
 }
 
+//Sort/Filter Sajari
+
+.radio_sajari {
+  input {
+    color: black;
+  }
+}
+
+.sort_filter_by {
+  margin: 0.5rem 0.5rem;
+  .group_heading {
+    border-bottom: 0.5px solid #e5e5e4;
+    .sub_heading {
+      text-transform: uppercase;
+      color: $product-count-color;
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 20px;
+      margin-bottom: -10px;
+      padding-top: 18px;
+      padding-left: 1rem;
+    }
+    .text_heading {
+      font-family: Rajhani;
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 20px;
+      color: $primary-text-color;
+
+      padding: 18px 1rem;
+    }
+    .sort_filter_collapse {
+      padding-left: 1rem;
+      margin-top: -10px;
+      padding-bottom: 10px;
+
+      font-size: 14px !important;
+      text-transform: uppercase;
+      line-height: 20px;
+    }
+  }
+  .group_heading.active {
+    border: none;
+  }
+}
+//End Sort/Filter Sajari
+
 //------------->
 .listProduct {
   display: flex;
