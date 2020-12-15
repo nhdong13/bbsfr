@@ -202,7 +202,7 @@ const ResultComponent = (props) => {
 
   const handleClose = () => setShow(false)
   const variables = new Variables({
-    resultsPerPage: constants.resultPerPage,
+    resultsPerPage: constants.RESULT_PER_PAGE,
     ...params,
   })
   const { results } = useSearchContext()

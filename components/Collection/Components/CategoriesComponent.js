@@ -8,13 +8,13 @@ import { constants } from "../../../constant"
 
 const CategoriesComponent = ({ categories = [], shopByCategoryText }) => {
   const [showItem, setItemToShow] = useState({
-    itemToShow: constants.itemToShowListCategories,
+    itemToShow: constants.ITEM_TO_SHOW,
     expanded: false,
   })
   const expandCategory = () => {
     setItemToShow({
       itemToShow: showItem.expanded
-        ? constants.itemToShowListCategories
+        ? constants.ITEM_TO_SHOW
         : categories.length,
       expanded: !showItem.expanded,
     })
