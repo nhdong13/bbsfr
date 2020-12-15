@@ -17,20 +17,20 @@ export default function ShippingAddress({
     let autocomplete
 
     function initAutocomplete() {
-      if (document.getElementById("address")) {
-        autocomplete = new google.maps.places.Autocomplete(
-          document.getElementById("address"),
-          {
-            types: ["geocode"],
-            componentRestrictions: {
-              country: ["au"],
-            },
-          }
-        )
+      if (!document.getElementById("address")) return
 
-        autocomplete.setFields(["address_component", "formatted_address"])
-        autocomplete.addListener("place_changed", fillInAddress)
-      }
+      autocomplete = new google.maps.places.Autocomplete(
+        document.getElementById("address"),
+        {
+          types: ["geocode"],
+          componentRestrictions: {
+            country: ["au"],
+          },
+        }
+      )
+
+      autocomplete.setFields(["address_component", "formatted_address"])
+      autocomplete.addListener("place_changed", fillInAddress)
     }
 
     function fillInAddress() {

@@ -38,10 +38,10 @@ export default function Header() {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
           <Nav.Link href="#home">
-            <a>Home</a>
+            Home
           </Nav.Link>
           <Nav.Link href="#link">
-            <a>Link</a>
+            Link
           </Nav.Link>
           <NavDropdown title="Dropdown" id="basic-nav-dropdown">
             <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>

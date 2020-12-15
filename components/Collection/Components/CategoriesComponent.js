@@ -8,12 +8,14 @@ import { constants } from "../../../constant"
 
 const CategoriesComponent = ({ categories = [], shopByCategoryText }) => {
   const [showItem, setItemToShow] = useState({
-    itemToShow: constants.itemToShowListCategories,
+    itemToShow: constants.ITEM_TO_SHOW,
     expanded: false,
   })
   const expandCategory = () => {
     setItemToShow({
-      itemToShow: showItem.expanded ? 16 : categories.length,
+      itemToShow: showItem.expanded
+        ? constants.ITEM_TO_SHOW
+        : categories.length,
       expanded: !showItem.expanded,
     })
   }
@@ -28,10 +30,14 @@ const CategoriesComponent = ({ categories = [], shopByCategoryText }) => {
               {categories &&
                 categories.slice(0, showItem.itemToShow).map((category, id) => (
                   <Col className="col-6 pb-1" key={id}>
-                    <Link href={category.category_slug}>
+                    <Link href={category.category_slug || "/"}>
                       <a>
                         <div className={styles.category}>
-                          {category.category_title[0].text}
+                          {category &&
+                          category.category_title &&
+                          category.category_title.length > 0
+                            ? category.category_title[0].text
+                            : "---"}
                           {/*TODO: Fetching data from Sajari for COUNT CATEGORY*/}
                           <div className={styles.count_category}>(65)</div>
                         </div>

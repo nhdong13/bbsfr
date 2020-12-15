@@ -147,7 +147,7 @@ const ResultComponent = (props) => {
 
   const handleClose = () => setShow(false)
   const variables = new Variables({
-    resultsPerPage: constants.resultPerPage,
+    resultsPerPage: constants.RESULT_PER_PAGE,
     ...params,
   })
   const { results } = useSearchContext()
@@ -239,7 +239,7 @@ const ResultComponent = (props) => {
                             {item.values.price ? `$${item.values.price}` : ""}
                           </p>
                         </div>
-                        {renderStart(4, "16px", "16px")}
+                        {renderStart(4.5, "16px", "16px", 5)}
                       </div>
                     </div>
                   </div>
