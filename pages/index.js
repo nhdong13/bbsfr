@@ -31,10 +31,6 @@ export async function getStaticProps({ req, res }) {
   let resp_SEO = await getAllSEO()
   const SEO = resp_SEO[0].node
   const brands = resp_brands[0].node.shop_by_brand_slider_content
-  // if (process.env.NODE_ENV !== "development") {
-  //   await basicAuthMiddleware(req, res, {})
-  // }
-
   const reduxStore = initializeStore()
   const apolloClient = initializeApollo()
   return {
