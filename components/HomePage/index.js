@@ -1,4 +1,4 @@
-import React from "react"
+import React, { lazy } from "react"
 import Department from "./Department"
 import Brand from "./Brand"
 import SEOComponent from "./SEO"
@@ -10,6 +10,7 @@ import { convertSchemaFAQ } from "../../services/convertSchemaFAQ"
 import TestimonialsComponent from "./Testimonials"
 import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
+import Image from "next/image"
 
 function Home(props) {
   const { department: departments, brands, SEO, FAQ } = props

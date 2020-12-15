@@ -5,6 +5,7 @@ module.exports = {
       "demo.saleor.io",
       "localhost",
       "bbsfrapi.bikebiz.com.au",
+      "s3.amazonaws.com",
     ],
   },
 }
