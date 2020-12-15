@@ -1,16 +1,17 @@
-import React, { lazy } from "react"
-import Department from "./Department"
-import Brand from "./Brand"
-import SEOComponent from "./SEO"
+import React from "react"
 import styles from "./HomePage.module.scss"
-import FAQComponent from "./FAQ"
-import BlogComponent from "./Blog"
 import Head from "next/head"
 import { convertSchemaFAQ } from "../../services/convertSchemaFAQ"
-import TestimonialsComponent from "./Testimonials"
 import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
-import Image from "next/image"
+import dynamic from "next/dynamic"
+
+const BrandDynamic = dynamic(() => import("./Brand"))
+const BlogDynamic = dynamic(() => import("./Blog"))
+const FAQDynamic = dynamic(() => import("./FAQ"))
+const TestimonialsDynamic = dynamic(() => import("./Testimonials"))
+const SEODynamic = dynamic(() => import("./SEO"))
+const DepartmentHomeDynamic = dynamic(() => import("./Department"))
 
 function Home(props) {
   const { department: departments, brands, SEO, FAQ } = props
@@ -38,7 +39,7 @@ function Home(props) {
       </Head>
       <div className={styles.homepageContainer}>
         {departments.map((department, index) => (
-          <Department
+          <DepartmentHomeDynamic
             key={index}
             count={++count_department}
             preHeader={department.department_preHeader[0].text}
@@ -48,11 +49,11 @@ function Home(props) {
             image={department.department_image}
           />
         ))}
-        <Brand brands={brands} />
-        <BlogComponent></BlogComponent>
-        <TestimonialsComponent />
-        <FAQComponent FAQ={FAQ} />
-        <SEOComponent
+        <BrandDynamic brands={brands} />
+        <BlogDynamic />
+        <TestimonialsDynamic />
+        <FAQDynamic FAQ={FAQ} />
+        <SEODynamic
           heading1={SEO.page_heading_1[0].text}
           pageParagraph={SEO.page_paragraph}
         />
