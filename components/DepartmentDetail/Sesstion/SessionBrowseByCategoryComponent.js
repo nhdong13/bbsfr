@@ -7,111 +7,6 @@ import { useRouter } from "next/router"
 const SessionBrowseByCategoryComponent = (props) => {
   const router = useRouter()
   const { collections } = props
-  const collectionsData =
-    collections && collections.length > 0
-      ? collections
-      : [
-          {
-            collection_image: {
-              dimensions: {
-                width: 2048,
-                height: 1536,
-              },
-              alt: null,
-              copyright: null,
-              url:
-                "https://images.prismic.io/slicemachine-blank/6b2bf485-aa12-44ef-8f06-dce6b91b9309_dancing.png?auto=compress,format",
-            },
-            collection_title: [
-              {
-                type: "heading3",
-                text: "Belts",
-                spans: [],
-              },
-            ],
-            collection_slug: "/belts",
-          },
-          {
-            collection_image: {
-              dimensions: {
-                width: 2048,
-                height: 1536,
-              },
-              alt: null,
-              copyright: null,
-              url:
-                "https://images.prismic.io/slicemachine-blank/dcea6535-f43b-49a7-8623-bf281aaf1cb2_roller-skating.png?auto=compress,format",
-            },
-            collection_title: [
-              {
-                type: "heading3",
-                text: "Boots",
-                spans: [],
-              },
-            ],
-            collection_slug: "/boots",
-          },
-          {
-            collection_image: {
-              dimensions: {
-                width: 2048,
-                height: 1536,
-              },
-              alt: null,
-              copyright: null,
-              url:
-                "https://images.prismic.io/slicemachine-blank/30d6602b-c832-4379-90ef-100d32c5e4c6_selfie.png?auto=compress,format",
-            },
-            collection_title: [
-              {
-                type: "heading3",
-                text: "Gloves",
-                spans: [],
-              },
-            ],
-            collection_slug: "/gloves",
-          },
-          {
-            collection_image: {
-              dimensions: {
-                width: 2048,
-                height: 1536,
-              },
-              alt: null,
-              copyright: null,
-              url:
-                "https://images.prismic.io/slicemachine-blank/3109b42f-4f55-4de1-91fa-40c734f88e62_ice-cream.png?auto=compress,format",
-            },
-            collection_title: [
-              {
-                type: "heading3",
-                text: "Jackets",
-                spans: [],
-              },
-            ],
-            collection_slug: "/jackets",
-          },
-          {
-            collection_image: {
-              dimensions: {
-                width: 2048,
-                height: 1536,
-              },
-              alt: null,
-              copyright: null,
-              url:
-                "https://images.prismic.io/slicemachine-blank/e608a89b-0298-451c-a826-e56743544836_zombieing.png?auto=compress,format",
-            },
-            collection_title: [
-              {
-                type: "heading3",
-                text: "Helmets",
-                spans: [],
-              },
-            ],
-            collection_slug: "/helmets",
-          },
-        ]
   return (
     <>
       <Container className={styles.sessionTitleCategory}>
@@ -131,8 +26,8 @@ const SessionBrowseByCategoryComponent = (props) => {
         </Row>
       </Container>
       <div className={styles.sessionListCategory}>
-        {collectionsData &&
-          collectionsData.map((collection, index) => {
+        {collections &&
+          collections.map((collection, index) => {
             return (
               <Link
                 key={index}
@@ -142,7 +37,7 @@ const SessionBrowseByCategoryComponent = (props) => {
                   <Container style={{ maxWidth: "unset" }}>
                     <div
                       className={
-                        collectionsData.length === index + 1
+                        collections.length === index + 1
                           ? styles.containerItemCategoryLasted
                           : styles.containerItemCategory
                       }

@@ -3,7 +3,11 @@ import Image from "next/image"
 
 import ErrorMessageWrapper from "../../ErrorMessageWrapper"
 import styles from "../Delivery.module.scss"
-import { PAYMENT_METHODS_ICON, BRAINTREE_SUPPORTED_METHODS } from "../constants"
+import {
+  PAYMENT_METHODS_ICON,
+  BRAINTREE_SUPPORTED_METHODS,
+  NUMBER_DUMP_CONTENT_FLEXBOX,
+} from "../constants"
 
 export default function PaymentComponent({
   availablePaymentGateways,
@@ -64,10 +68,11 @@ export default function PaymentComponent({
             ))
           }
         })}
-
-        <div className={styles.dumbContent}></div>
-        <div className={styles.dumbContent}></div>
-        <div className={styles.dumbContent}></div>
+        {Array(NUMBER_DUMP_CONTENT_FLEXBOX)
+          .fill()
+          .map((_, index) => (
+            <div key={index} className={styles.dumbContent}></div>
+          ))}
       </Col>
       <Col md="12">
         <ErrorMessageWrapper

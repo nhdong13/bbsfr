@@ -1,4 +1,4 @@
 export const constants = {
-  resultPerPage: 20,
-  itemToShowListCategories: 16,
+  RESULT_PER_PAGE: 20,
+  ITEM_TO_SHOW: 16,
 }
