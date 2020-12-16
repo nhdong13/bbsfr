@@ -1,6 +1,6 @@
 import { initializeApollo } from "../lib/apollo"
 import { initializeStore } from "../redux/store"
-import HomePage from "components/HomePage"
+// import HomePage from "components/HomePage"
 import {
   getAllBrands,
   getAllDepartments,
@@ -8,12 +8,14 @@ import {
   getAllFAQ,
 } from "../lib/prismic/api";
 import { setDepartments } from "../redux/reducers/departments";
+import dynamic from "next/dynamic"
+const HomePageDynamic = dynamic(() => import("components/HomePage"))
 
 function Home({ department, brands, SEO, resPriFAQ }) {
   let list_department = department[0].node.department_link;
   setDepartments(list_department);
   return (
-    <HomePage
+    <HomePageDynamic
       department={list_department}
       brands={brands}
       SEO={SEO}
