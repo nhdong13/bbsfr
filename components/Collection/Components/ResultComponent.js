@@ -2,6 +2,8 @@ import {
   SearchProvider,
   Variables,
   FieldDictionary,
+  FilterBuilder,
+  Filter,
 } from "@sajari/react-search-ui"
 import React, { useEffect, useState } from "react"
 import { Container, Modal, Collapse, Button } from "react-bootstrap"
@@ -9,7 +11,6 @@ import { useSorting } from "@sajari/react-hooks"
 import { Radio, RadioGroup } from "@sajari/react-components"
 import { constants } from "../../../constant"
 import PaginationComponent from "../../Common/PaginationComponent"
-import FilterComponent from "../../Common/FilterComponent"
 import Image from "next/image"
 import { renderStart } from "../../../services/renderStart"
 import { countBooleanSortFilter } from "../../../services/collection"
@@ -132,6 +133,11 @@ const ResultComponent = (props) => {
     </Container>
   )
 
+  const productTypeFilter = new FilterBuilder({
+    name: "type",
+    field: "price",
+  })
+
   const SortingComponent = React.memo(() => {
     const { sorting, setSorting } = useSorting()
 
@@ -173,9 +179,22 @@ const ResultComponent = (props) => {
           fields: new FieldDictionary({
             title: "name",
           }),
+          filters: [productTypeFilter],
         }}
         initialResponse={initialResponse}
-        searchOnLoad={!initialResponse}
+        // searchOnLoad={!initialResponse}
+        searchOnLoad
+        customClassNames={{
+          filter: {
+            resetButton: "resetButtonFilter",
+            list: {
+              container: "listContainerFilter",
+              checkboxGroup: "checkboxGroupFilter",
+              searchFilter: "searchFilter",
+              toggleButton: "toggleButtonFilter",
+            },
+          },
+        }}
       >
         <Modal show={show} onHide={handleClose} className="short_filter_modal">
           <Header />
@@ -202,9 +221,12 @@ const ResultComponent = (props) => {
                   <Collapse in={item.open}>
                     <div id="example2-collapse-text">
                       {id == 1 && (
-                        <FilterComponent
-                          initialResponse={initialResponse}
-                          pipeline={pipeline}
+                        <Filter
+                          name="type"
+                          pinSelected={false}
+                          searchable
+                          sort="count"
+                          sortAscending={true}
                         />
                       )}
                       {id == 0 && <SortingComponent />}
