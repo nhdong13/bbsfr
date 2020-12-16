@@ -5,3 +5,9 @@ function capitalize(str) {
 export const capitalizeString = (str) => {
   return str.split("-").map(capitalize).join(" ")
 }
+
+export const countBooleanSortFilter = (arr) => {
+  let countBoolean = 0
+  arr.map((x) => x.open && countBoolean++)
+  return countBoolean
+}

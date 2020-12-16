@@ -184,6 +184,28 @@ $bg-sort-filter: #f6f6f6;
     border: none;
   }
 }
+.button_sajari {
+  margin: 0 0.5rem;
+  padding: 1rem 0;
+  background-color: #fff;
+
+  position: fixed;
+  width: 96%;
+  bottom: 0;
+
+  button {
+    height: 48px;
+    width: 100%;
+    border-radius: 8px;
+
+    font-family: Rajdhani;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 18px;
+    text-align: center;
+  }
+}
 //End Sort/Filter Sajari
 
 //------------->

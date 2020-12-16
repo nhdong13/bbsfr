@@ -12,6 +12,7 @@ import PaginationComponent from "../../Common/PaginationComponent"
 import FilterComponent from "../../Common/FilterComponent"
 import Image from "next/image"
 import { renderStart } from "../../../services/renderStart"
+import { countBooleanSortFilter } from "../../../services/collection"
 import styles from "../Collections.module.scss"
 import Link from "next/link"
 import { useSearchContext } from "@sajari/react-hooks"
@@ -25,6 +26,9 @@ const ResultComponent = (props) => {
   const [params, setParams] = useState({
     sort: "",
   })
+  const [counBol, setCounBol] = useState(0)
+
+  // Clone list sort/filter like UIEvent, waiting data from sajari
   const [listSortFilter, setSortFilter] = useState([
     { name: "Featured", open: false },
     { name: "Brand", open: false },
@@ -34,6 +38,7 @@ const ResultComponent = (props) => {
     { name: "Ride Style", open: false },
     { name: "Price", open: false },
   ])
+
   useEffect(() => {
     const { innerWidth: width, innerHeight: height } = window
     setWindowWidths(width)
@@ -145,7 +150,10 @@ const ResultComponent = (props) => {
     setSortFilter(listUpdate)
   }
 
-  const handleClose = () => setShow(false)
+  const handleClose = () => {
+    setShow(false)
+    setCounBol(countBooleanSortFilter(listSortFilter))
+  }
   const variables = new Variables({
     resultsPerPage: constants.RESULT_PER_PAGE,
     ...params,
@@ -203,6 +211,24 @@ const ResultComponent = (props) => {
                 </div>
               </div>
             ))}
+          </div>
+          <div
+            onClick={handleClose}
+            className={styles.button_sajari}
+            fixed="bottom"
+          >
+            <Button
+              fixed="bottom"
+              variant={
+                counBol != countBooleanSortFilter(listSortFilter)
+                  ? "secondary"
+                  : "primary"
+              }
+            >
+              {counBol != countBooleanSortFilter(listSortFilter)
+                ? "Apply"
+                : "Cancel"}
+            </Button>
           </div>
         </Modal>
 
