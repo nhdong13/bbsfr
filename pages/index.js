@@ -1,21 +1,21 @@
 import { initializeApollo } from "../lib/apollo"
 import { initializeStore } from "../redux/store"
-import HomePage from "components/HomePage"
+// import HomePage from "components/HomePage"
 import {
   getAllBrands,
   getAllDepartments,
   getAllSEO,
   getAllFAQ,
-} from "../lib/prismic/api"
-import { useDispatch } from "react-redux"
-import { setDepartments } from "../redux/reducers/departments"
+} from "../lib/prismic/api";
+import { setDepartments } from "../redux/reducers/departments";
+import dynamic from "next/dynamic"
+const HomePageDynamic = dynamic(() => import("components/HomePage"))
 
 function Home({ department, brands, SEO, resPriFAQ }) {
-  const dispatch = useDispatch()
-  let list_department = department[0].node.department_link
-  dispatch(setDepartments(list_department))
+  let list_department = department[0].node.department_link;
+  setDepartments(list_department);
   return (
-    <HomePage
+    <HomePageDynamic
       department={list_department}
       brands={brands}
       SEO={SEO}
@@ -31,10 +31,6 @@ export async function getStaticProps({ req, res }) {
   let resp_SEO = await getAllSEO()
   const SEO = resp_SEO[0].node
   const brands = resp_brands[0].node.shop_by_brand_slider_content
-  // if (process.env.NODE_ENV !== "development") {
-  //   await basicAuthMiddleware(req, res, {})
-  // }
-
   const reduxStore = initializeStore()
   const apolloClient = initializeApollo()
   return {

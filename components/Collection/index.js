@@ -1,19 +1,15 @@
-import { Pipeline } from "@sajari/react-search-ui"
 import Head from "next/head"
 import CategoriesComponent from "./Components/CategoriesComponent"
 import HeaderCollectionComponent from "./Components/HeaderCollectionComponent"
 import ResultComponent from "./Components/ResultComponent"
 import SEOComponent from "../HomePage/SEO/index"
-import { useSearchContext, SearchProvider } from "@sajari/react-hooks"
+import { SearchProvider } from "@sajari/react-hooks"
 
 const CollectionComponent = ({ collections, initialResponse, pipeline }) => {
   const {
     meta_description,
     meta_title,
-    page_heading_1,
-    page_paragraph,
     categories,
-    shop_by_category_text,
   } = collections
   return (
     <>
@@ -53,8 +49,9 @@ const CollectionComponent = ({ collections, initialResponse, pipeline }) => {
         <CategoriesComponent
           categories={categories}
           shopByCategoryText={
-            shop_by_category_text != undefined && shop_by_category_text.length
-              ? shop_by_category_text[0].text
+            collections.shop_by_category_text != undefined &&
+            collections.shop_by_category_text.length
+              ? collections.shop_by_category_text[0].text
               : "List Category"
           }
         />
@@ -67,12 +64,18 @@ const CollectionComponent = ({ collections, initialResponse, pipeline }) => {
 
       <SEOComponent
         heading1={
-          page_heading_1 && page_heading_1.length > 0
-            ? page_heading_1[0].text
+          collections &&
+          collections.page_heading_1 &&
+          collections.page_heading_1.length > 0
+            ? collections.page_heading_1[0].text
             : ""
         }
         pageParagraph={
-          page_paragraph && page_paragraph.length > 0 ? page_paragraph : []
+          collections &&
+          collections.page_paragraph &&
+          collections.page_paragraph.length > 0
+            ? collections.page_paragraph
+            : []
         }
       />
     </>

@@ -71,3 +71,25 @@ export const INITIAL_ADDRESS = {
   address: "",
   useFullForm: false,
 }
+
+// Will remove in future
+export const DUMP_SHIPPING_DATA = [
+  {
+    id: "U2hpcHBpbmdNZXRob2Q6MQ==",
+    name: "Post",
+    price: { currency: "USD", amount: 0, __typename: "Money" },
+    __typename: "ShippingMethod",
+  },
+  {
+    id: "U2hpcHBpbmdNZXRob2Q6NA==",
+    name: "Click & Collect",
+    price: { currency: "USD", amount: 0, __typename: "Money" },
+    __typename: "ShippingMethod",
+  },
+  {
+    id: "U2hpcHBpbmdNZXRob2Q6Mg==",
+    name: "Courier",
+    price: { currency: "USD", amount: 15, __typename: "Money" },
+    __typename: "ShippingMethod",
+  },
+]
