@@ -26,9 +26,9 @@ const ResultComponent = (props) => {
   const [params, setParams] = useState({
     sort: "",
   })
+  const [sortFitlerChanged, setChanged] = useState(false)
   const [counBol, setCounBol] = useState(0)
-
-  // Clone list sort/filter like UIEvent, waiting data from sajari
+  // Clone list sort/filter like UI Design, waiting data from sajari
   const [listSortFilter, setSortFilter] = useState([
     { name: "Featured", open: false },
     { name: "Brand", open: false },
@@ -130,6 +130,7 @@ const ResultComponent = (props) => {
             onChange={(e) => {
               setSorting(e.target.value)
               setParams({ ...params, sort: e.target.value })
+              setChanged(true)
             }}
           >
             <Radio value="">Most relevant</Radio>
@@ -151,8 +152,10 @@ const ResultComponent = (props) => {
   }
 
   const handleClose = () => {
+    let count = countBooleanSortFilter(listSortFilter)
     setShow(false)
-    setCounBol(countBooleanSortFilter(listSortFilter))
+    setChanged(false)
+    setCounBol(count)
   }
   const variables = new Variables({
     resultsPerPage: constants.RESULT_PER_PAGE,
@@ -220,12 +223,14 @@ const ResultComponent = (props) => {
             <Button
               fixed="bottom"
               variant={
+                sortFitlerChanged ||
                 counBol != countBooleanSortFilter(listSortFilter)
                   ? "secondary"
                   : "primary"
               }
             >
-              {counBol != countBooleanSortFilter(listSortFilter)
+              {sortFitlerChanged ||
+              counBol != countBooleanSortFilter(listSortFilter)
                 ? "Apply"
                 : "Cancel"}
             </Button>

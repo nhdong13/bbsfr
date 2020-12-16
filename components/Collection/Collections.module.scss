@@ -99,6 +99,7 @@ $bg-sort-filter: #f6f6f6;
   background-color: $bg-sort-filter;
 
   .short_filter {
+    cursor: pointer;
     position: relative;
 
     padding-top: 14px;
@@ -169,6 +170,7 @@ $bg-sort-filter: #f6f6f6;
       color: $primary-text-color;
 
       padding: 18px 1rem;
+      cursor: pointer;
     }
     .sort_filter_collapse {
       padding-left: 1rem;

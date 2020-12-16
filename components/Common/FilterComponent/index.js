@@ -1,6 +1,6 @@
 import { Filter, SearchProvider, FilterBuilder } from "@sajari/react-search-ui"
 import React from "react"
-const PaginationComponent = ({ variables, pipeline, initialResponse }) => {
+const FilterComponent = ({ variables, pipeline, initialResponse }) => {
   const productTypeFilter = new FilterBuilder({
     name: "type",
     field: "price",
@@ -40,4 +40,4 @@ const PaginationComponent = ({ variables, pipeline, initialResponse }) => {
   )
 }
 
-export default PaginationComponent
+export default FilterComponent
