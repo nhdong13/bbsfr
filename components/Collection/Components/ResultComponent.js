@@ -28,10 +28,13 @@ const ResultComponent = (props) => {
     sort: "",
   })
   const [sortFitlerChanged, setChanged] = useState(false)
-  const [counBol, setCounBol] = useState(0)
+  const [countBol, setcountBol] = useState(0)
   // TOTO: wating for data from Prismic or Sajari
-  const [listSortFilter, setSortFilter] = useState([
-    { name: "Featured", open: false },
+  const [listSorting, setListSorting] = useState({
+    name: "Featured",
+    open: false,
+  })
+  const [listFilter, setListFilter] = useState([
     { name: "Brand", open: false },
     { name: "Jacket Features", open: false },
     { name: "Jacket Material", open: false },
@@ -103,18 +106,24 @@ const ResultComponent = (props) => {
     setShow(!show)
   }
 
-  const setOpen = (id, bol) => {
-    let listUpdate = listSortFilter.map((item, index) =>
+  const setOpenFilterCollapse = (id, bol) => {
+    let listUpdate = listFilter.map((item, index) =>
       index == id ? { name: item.name, open: bol } : item
     )
-    setSortFilter(listUpdate)
+    setListFilter(listUpdate)
   }
 
+  const setOpenSortingCollapse = (bol) => {
+    let sorting = { name: listSorting.name, open: bol }
+    setListSorting(sorting)
+  }
+
+  //Handcle Close Modal
   const handleClose = () => {
-    let count = countBooleanSortFilter(listSortFilter)
+    let count = countBooleanSortFilter(listFilter)
     setShow(false)
     setChanged(false)
-    setCounBol(count)
+    setcountBol(count)
   }
 
   const SortFilterButton = () => (
@@ -198,8 +207,35 @@ const ResultComponent = (props) => {
       >
         <Modal show={show} onHide={handleClose} className="short_filter_modal">
           <Header />
+          {/*Sorting Feature on Modal*/}
+          <div className={styles.sort_filter_by + " " + styles.sorting}>
+            <div className={styles.sub_heading}>sort by</div>
+            <div
+              className={`${styles.group_heading} ${
+                listSorting.open ? styles.active : ""
+              }`}
+            >
+              <div
+                onClick={() => setOpenSortingCollapse(!listSorting.open)}
+                aria-controls="example2-collapse-text"
+                aria-expanded={listSorting.open}
+              >
+                <div className={styles.text_heading}>{listSorting.name}</div>
+              </div>
+              <div className={styles.sort_filter_collapse}>
+                <Collapse in={listSorting.open}>
+                  <div id="example2-collapse-text">
+                    <SortingComponent />
+                  </div>
+                </Collapse>
+              </div>
+            </div>
+          </div>
+
+          {/* Filter feature on Modal */}
           <div className={styles.sort_filter_by}>
-            {listSortFilter.map((item, id) => (
+            <div className={styles.sub_heading}>refined by</div>
+            {listFilter.map((item, id) => (
               <div
                 className={`${styles.group_heading} ${
                   item.open ? styles.active : ""
@@ -207,30 +243,22 @@ const ResultComponent = (props) => {
                 key={id}
               >
                 <div
-                  onClick={() => setOpen(id, !item.open)}
+                  onClick={() => setOpenFilterCollapse(id, !item.open)}
                   aria-controls="example2-collapse-text"
                   aria-expanded={item.open}
                 >
-                  {id == 0 && <div className={styles.sub_heading}>soft by</div>}
-                  {id == 1 && (
-                    <div className={styles.sub_heading}>refined by</div>
-                  )}
                   <div className={styles.text_heading}>{item.name}</div>
                 </div>
                 <div className={styles.sort_filter_collapse}>
                   <Collapse in={item.open}>
                     <div id="example2-collapse-text">
-                      {id == 1 && (
-                        <Filter
-                          name="type"
-                          pinSelected={false}
-                          searchable
-                          sort="count"
-                          sortAscending={true}
-                        />
-                      )}
-                      {id == 0 && <SortingComponent />}
-                      {id > 1 && <div>UI for Sort/Filter</div>}
+                      <Filter
+                        name="type"
+                        pinSelected={false}
+                        searchable
+                        sort="count"
+                        sortAscending={true}
+                      />
                     </div>
                   </Collapse>
                 </div>
@@ -246,13 +274,13 @@ const ResultComponent = (props) => {
               fixed="bottom"
               variant={
                 sortFitlerChanged ||
-                counBol != countBooleanSortFilter(listSortFilter)
+                countBol != countBooleanSortFilter(listFilter)
                   ? "secondary"
                   : "primary"
               }
             >
               {sortFitlerChanged ||
-              counBol != countBooleanSortFilter(listSortFilter)
+              countBol != countBooleanSortFilter(listFilter)
                 ? "Apply"
                 : "Cancel"}
             </Button>

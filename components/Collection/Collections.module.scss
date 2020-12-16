@@ -150,18 +150,18 @@ $bg-sort-filter: #f6f6f6;
 
 .sort_filter_by {
   margin: 0.5rem 0.5rem;
+  .sub_heading {
+    text-transform: uppercase;
+    color: $product-count-color;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 20px;
+    margin-bottom: -10px;
+    // padding-top: 18px;
+    padding-left: 1rem;
+  }
   .group_heading {
     border-bottom: 0.5px solid #e5e5e4;
-    .sub_heading {
-      text-transform: uppercase;
-      color: $product-count-color;
-      font-size: 12px;
-      font-weight: 400;
-      line-height: 20px;
-      margin-bottom: -10px;
-      padding-top: 18px;
-      padding-left: 1rem;
-    }
     .text_heading {
       font-family: Rajhani;
       font-weight: 600;
@@ -186,6 +186,11 @@ $bg-sort-filter: #f6f6f6;
     border: none;
   }
 }
+
+.sort_filter_by.sorting {
+  margin-top: 1rem;
+}
+
 .button_sajari {
   margin: 0 0.5rem;
   padding: 1rem 0;
