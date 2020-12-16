@@ -5,7 +5,6 @@ export default function Delivery() {
   return (
     <>
       <Head>
-        <title>Checkout Delivery</title>
         <script
           type="text/javascript"
           src="https://portal.sandbox.afterpay.com/afterpay-async.js"
