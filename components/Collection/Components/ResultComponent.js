@@ -220,7 +220,20 @@ const ResultComponent = (props) => {
                 aria-controls="example2-collapse-text"
                 aria-expanded={listSorting.open}
               >
-                <div className={styles.text_heading}>{listSorting.name}</div>
+                <div className={styles.text_heading}>
+                  <div>{listSorting.name}</div>
+                  <Image
+                    src={
+                      listSorting.open
+                        ? "/icons/subtract.svg"
+                        : "/icons/plus.svg"
+                    }
+                    alt={listSorting.open ? "Icon subtract" : "Icon plus"}
+                    height={12}
+                    width={12}
+                    loading="eager"
+                  ></Image>
+                </div>
               </div>
               <div className={styles.sort_filter_collapse}>
                 <Collapse in={listSorting.open}>
@@ -247,7 +260,18 @@ const ResultComponent = (props) => {
                   aria-controls="example2-collapse-text"
                   aria-expanded={item.open}
                 >
-                  <div className={styles.text_heading}>{item.name}</div>
+                  <div className={styles.text_heading}>
+                    <div>{item.name}</div>
+                    <Image
+                      src={
+                        item.open ? "/icons/subtract.svg" : "/icons/plus.svg"
+                      }
+                      alt={item.open ? "Icon subtract" : "Icon plus"}
+                      height={12}
+                      width={12}
+                      loading="eager"
+                    ></Image>
+                  </div>
                 </div>
                 <div className={styles.sort_filter_collapse}>
                   <Collapse in={item.open}>

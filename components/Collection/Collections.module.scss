@@ -163,6 +163,10 @@ $bg-sort-filter: #f6f6f6;
   .group_heading {
     border-bottom: 0.5px solid #e5e5e4;
     .text_heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
       font-family: Rajhani;
       font-weight: 600;
       font-size: 16px;
