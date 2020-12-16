@@ -49,7 +49,6 @@ export default function CheckoutEmail({
               variant="secondary"
               className={clsx(styles.btn, "w-100")}
               type="submit"
-              // onClick={() => handleNextStep(values.email)}
             >
               CONTINUE
             </Button>
