@@ -1,20 +1,17 @@
 import { Filter, SearchProvider, FilterBuilder } from "@sajari/react-search-ui"
 import React from "react"
-const FilterComponent = ({ variables, pipeline, initialResponse }) => {
+const FilterComponent = ({ variables, pipeline }) => {
   const productTypeFilter = new FilterBuilder({
     name: "type",
     field: "price",
   })
-
   return (
     <div>
       <SearchProvider
         search={{
           pipeline,
-          variables,
           filters: [productTypeFilter],
         }}
-        initialResponse={initialResponse}
         searchOnLoad
         customClassNames={{
           filter: {

@@ -102,6 +102,20 @@ const ResultComponent = (props) => {
     setShow(!show)
   }
 
+  const setOpen = (id, bol) => {
+    let listUpdate = listSortFilter.map((item, index) =>
+      index == id ? { name: item.name, open: bol } : item
+    )
+    setSortFilter(listUpdate)
+  }
+
+  const handleClose = () => {
+    let count = countBooleanSortFilter(listSortFilter)
+    setShow(false)
+    setChanged(false)
+    setCounBol(count)
+  }
+
   const SortFilterButton = () => (
     <Container fluid className={styles.filter_sort_sajari}>
       <div className={styles.short_filter}>
@@ -144,19 +158,6 @@ const ResultComponent = (props) => {
     )
   })
 
-  const setOpen = (id, bol) => {
-    let listUpdate = listSortFilter.map((item, index) =>
-      index == id ? { name: item.name, open: bol } : item
-    )
-    setSortFilter(listUpdate)
-  }
-
-  const handleClose = () => {
-    let count = countBooleanSortFilter(listSortFilter)
-    setShow(false)
-    setChanged(false)
-    setCounBol(count)
-  }
   const variables = new Variables({
     resultsPerPage: constants.RESULT_PER_PAGE,
     ...params,
@@ -204,7 +205,6 @@ const ResultComponent = (props) => {
                         <FilterComponent
                           initialResponse={initialResponse}
                           pipeline={pipeline}
-                          variables={variables}
                         />
                       )}
                       {id == 0 && <SortingComponent />}
