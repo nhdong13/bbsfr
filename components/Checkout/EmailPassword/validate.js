@@ -1,9 +1,17 @@
 import * as Yup from "yup"
 
-export const EmailPasswordSchema = Yup.object().shape({
-  email: Yup.string().email("Invalid email").required("Required"),
-  password: Yup.string()
-    .min(2, "Too Short!")
-    .max(50, "Too Long!")
-    .required("Required"),
-})
+export const EmailPasswordSchema = (activeStep) => {
+  return Yup.object().shape({
+    email: Yup.string()
+      .email("Invalid email")
+      .required("This field is required"),
+    password: Yup.string()
+      .min(8, "Password must have at least 6 characters")
+      .test("required", "This field is required", function (fieldValue) {
+        if (activeStep === 1) {
+          return true
+        }
+        return fieldValue && fieldValue.trim()
+      }),
+  })
+}

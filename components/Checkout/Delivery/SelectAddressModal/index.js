@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { Modal, Form } from "react-bootstrap"
-import { mappingDataAddress } from "../index"
+import { mappingDataAddress } from "../helpers"
 export default function SelectAddressModal({
   show,
   onHide,
