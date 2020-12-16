@@ -29,7 +29,7 @@ const ResultComponent = (props) => {
   })
   const [sortFitlerChanged, setChanged] = useState(false)
   const [counBol, setCounBol] = useState(0)
-  // Clone list sort/filter like UI Design, waiting data from sajari
+  // TOTO: wating for data from Prismic or Sajari
   const [listSortFilter, setSortFilter] = useState([
     { name: "Featured", open: false },
     { name: "Brand", open: false },
