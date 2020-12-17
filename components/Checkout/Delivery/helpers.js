@@ -3,6 +3,7 @@ import { COUNTRIES_RESTRICTION } from "./constants"
 import { initKlarna } from "./klarna"
 import { authorizeAfterpay } from "./afterpay"
 import { authorizePaypal } from "./paypal"
+import { hostedFieldsTokenize } from "./credit_card"
 
 export const mappingDataAddress = (data) => {
   return {
@@ -151,7 +152,8 @@ export const processPayment = async (
   handleSubmitError,
   router,
   setShowContinue,
-  sendCreatePayment
+  sendCreatePayment,
+  hostedFieldsInstance
 ) => {
   if (paymentMethod.id !== "mirumee.payments.braintree") {
     // Create payment checkout token
@@ -199,6 +201,13 @@ export const processPayment = async (
           handleSubmitError(bag)
         )
         break
+      case "bikebiz.payments.creditCard":
+        hostedFieldsTokenize(
+          hostedFieldsInstance,
+          totalPrice,
+          sendCreatePayment,
+          () => handleSubmitError(bag)
+        )
       default:
         break
     }
