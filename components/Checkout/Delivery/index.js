@@ -21,6 +21,7 @@ import { AddressSchema } from "./validate"
 import { paymentCheckoutTokenCreate } from "lib/mutations"
 import { authorizeKlarna } from "./klarna"
 import { validateCreditCard, authorizeCreditCard } from "./credit_card"
+import { initGooglePay } from "./google_pay"
 import { INITIAL_ADDRESS, DUMP_SHIPPING_DATA } from "./constants"
 import {
   mappingDataAddress,
@@ -64,6 +65,8 @@ export default function DeliveryComponent() {
   const [showLoading, setShowLoading] = useState(false)
   const [modalShow, setModalShow] = useState(false)
   const [hostedFieldsInstance, setHostedFieldsInstance] = useState(null)
+  const [googlePayInstance, setGooglePayInstance] = useState(null)
+
   // TODO in the future
   const [shippingMethods, setShippingMethods] = useState(DUMP_SHIPPING_DATA)
 
@@ -104,6 +107,7 @@ export default function DeliveryComponent() {
       (config) => config.field === "client_token"
     ).value
     authorizeCreditCard(clientToken, setHostedFieldsInstance)
+    initGooglePay(clientToken, setGooglePayInstance)
   }, [loaded])
 
   useEffect(() => {
@@ -211,7 +215,8 @@ export default function DeliveryComponent() {
       router,
       setShowContinue,
       sendCreatePayment,
-      hostedFieldsInstance
+      hostedFieldsInstance,
+      googlePayInstance
     )
   }
 
@@ -311,6 +316,7 @@ export default function DeliveryComponent() {
                       setFieldValue={setFieldValue}
                       errors={errors}
                       touched={touched}
+                      googlePayInstance={googlePayInstance}
                     />
                     <div id="klarna-payments-container"></div>
                     {showContinue && (

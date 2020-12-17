@@ -4,6 +4,7 @@ import { initKlarna } from "./klarna"
 import { authorizeAfterpay } from "./afterpay"
 import { authorizePaypal } from "./paypal"
 import { hostedFieldsTokenize } from "./credit_card"
+import { authorizeGooglePay } from "./google_pay"
 
 export const mappingDataAddress = (data) => {
   return {
@@ -81,10 +82,12 @@ export const createCheckout = async (
   const { data, dataError } = await setShippingAddress(shippingAddress, email)
 
   if (dataError) {
-    const fieldErrors = _.intersection(
-      dataError.error.map((error) => error.field),
-      ["postalCode", "phone"]
-    )
+    const fieldErrors = dataError?.error?.length
+      ? _.intersection(
+          dataError.error.map((error) => error.field),
+          ["postalCode", "phone"]
+        )
+      : []
 
     if (fieldErrors.length) {
       fieldErrors.forEach((field) =>
@@ -153,7 +156,8 @@ export const processPayment = async (
   router,
   setShowContinue,
   sendCreatePayment,
-  hostedFieldsInstance
+  hostedFieldsInstance,
+  googlePayInstance
 ) => {
   if (paymentMethod.id !== "mirumee.payments.braintree") {
     // Create payment checkout token
@@ -193,21 +197,28 @@ export const processPayment = async (
     const clientToken = paymentMethod.config.find(
       (config) => config.field === "client_token"
     ).value
-
+    const handleError = () => handleSubmitError(bag)
     // Authorize payment checkout token
     switch (paymentMethod.subId) {
       case "bikebiz.payments.paypal":
-        authorizePaypal(clientToken, totalPrice, sendCreatePayment, () =>
-          handleSubmitError(bag)
-        )
+        authorizePaypal(clientToken, totalPrice, sendCreatePayment, handleError)
         break
       case "bikebiz.payments.creditCard":
         hostedFieldsTokenize(
           hostedFieldsInstance,
           totalPrice,
           sendCreatePayment,
-          () => handleSubmitError(bag)
+          handleError
         )
+        break
+      case "bikebiz.payments.googlepay":
+        authorizeGooglePay(
+          googlePayInstance,
+          totalPrice,
+          sendCreatePayment,
+          handleError
+        )
+        break
       default:
         break
     }

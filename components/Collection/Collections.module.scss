@@ -99,6 +99,7 @@ $bg-sort-filter: #f6f6f6;
   background-color: $bg-sort-filter;
 
   .short_filter {
+    cursor: pointer;
     position: relative;
 
     padding-top: 14px;
@@ -138,6 +139,86 @@ $bg-sort-filter: #f6f6f6;
     }
   }
 }
+
+//Sort/Filter Sajari
+
+.radio_sajari {
+  input {
+    color: black;
+  }
+}
+
+.sort_filter_by {
+  margin: 0.5rem 0.5rem;
+  .sub_heading {
+    text-transform: uppercase;
+    color: $product-count-color;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 20px;
+    margin-bottom: -10px;
+    // padding-top: 18px;
+    padding-left: 1rem;
+  }
+  .group_heading {
+    border-bottom: 0.5px solid #e5e5e4;
+    .text_heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      font-family: Rajhani;
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 20px;
+      color: $primary-text-color;
+
+      padding: 18px 1rem;
+      cursor: pointer;
+    }
+    .sort_filter_collapse {
+      padding-left: 1rem;
+      margin-top: -10px;
+      padding-bottom: 10px;
+
+      font-size: 14px !important;
+      text-transform: uppercase;
+      line-height: 20px;
+    }
+  }
+  .group_heading.active {
+    border: none;
+  }
+}
+
+.sort_filter_by.sorting {
+  margin-top: 1rem;
+}
+
+.button_sajari {
+  padding: 1rem 0;
+  background-color: #fff;
+
+  position: sticky;
+  width: 100%;
+  bottom: 0;
+  .modal_button {
+    padding: 0 0.5rem;
+  }
+  button {
+    height: 48px;
+    width: 100%;
+    border-radius: 8px;
+
+    font-family: Rajdhani;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 18px;
+    text-align: center;
+  }
+}
+//End Sort/Filter Sajari
 
 //------------->
 .listProduct {
