@@ -58,6 +58,7 @@ export default function Brand(props) {
               {brand.map((b, id) =>
                 (id + 1) / 4 != 1 ? (
                   <Col
+                    key={id}
                     className={`${styles.logo_custom} ${
                       styles.point_line_brand
                     } ${checkID(id, styles, brand.length)}`}
@@ -78,8 +79,8 @@ export default function Brand(props) {
                 ) : (
                   [
                     <div className="w-100" key={-id.toString()}></div>,
-
                     <Col
+                      key={id}
                       className={`${styles.logo_custom} ${
                         styles.point_line_brand
                       } ${checkID(id, styles)}`}

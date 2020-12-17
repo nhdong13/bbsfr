@@ -38,7 +38,7 @@ export default function Department(props) {
                 height={207}
                 className={styles.max_width_image}
                 src={props.image.url || ""}
-                alt="Image"
+                alt={props.alt}
               />
             </div>
           </Row>

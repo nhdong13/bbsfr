@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Col, Collapse, Container, Row } from "react-bootstrap";
+import { Col, Collapse, Container } from "react-bootstrap"
 import styles from "../HomePage.module.scss";
 import Image from "next/image";
 

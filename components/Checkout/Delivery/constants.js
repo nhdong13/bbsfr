@@ -9,9 +9,13 @@ export const PAYMENT_METHODS_ICON = {
   "plugin.gateway.afterpay": "/afterpay.svg",
   "bikebiz.payments.zipmoney": "/zip.svg",
   "bikebiz.payments.paypal": "/paypal.svg",
+  "bikebiz.payments.creditCard": "/visa.svg",
 }
 
-export const BRAINTREE_SUPPORTED_METHODS = ["bikebiz.payments.paypal"]
+export const BRAINTREE_SUPPORTED_METHODS = [
+  "bikebiz.payments.creditCard",
+  "bikebiz.payments.paypal",
+]
 
 export const PAYMENT_METHODS = [
   {
