@@ -218,12 +218,6 @@ const ResultComponent = (props) => {
             </div>
           </div>
         </Modal>
-
-        <PaginationComponent
-          initialResponse={initialResponse}
-          pipeline={pipeline}
-          variables={variables}
-        />
         <div className={styles.listProduct}>
           {results &&
             results.map((item, index) => {
@@ -260,6 +254,11 @@ const ResultComponent = (props) => {
               )
             })}
         </div>
+        <PaginationComponent
+          initialResponse={initialResponse}
+          pipeline={pipeline}
+          variables={variables}
+        />
       </SearchProvider>
     </>
   )
