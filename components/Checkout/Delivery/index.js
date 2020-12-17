@@ -20,7 +20,7 @@ import PaymentComponent from "./Payment"
 import { AddressSchema } from "./validate"
 import { paymentCheckoutTokenCreate } from "lib/mutations"
 import { authorizeKlarna } from "./klarna"
-import { validateCreditCard, authorizeCreditCard } from "./creditCard"
+import { validateCreditCard, authorizeCreditCard } from "./credit_card"
 import { INITIAL_ADDRESS, DUMP_SHIPPING_DATA } from "./constants"
 import {
   mappingDataAddress,

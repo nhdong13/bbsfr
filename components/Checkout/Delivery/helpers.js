@@ -3,7 +3,7 @@ import { COUNTRIES_RESTRICTION } from "./constants"
 import { initKlarna } from "./klarna"
 import { authorizeAfterpay } from "./afterpay"
 import { authorizePaypal } from "./paypal"
-import { hostedFieldsTokenize } from "./creditCard"
+import { hostedFieldsTokenize } from "./credit_card"
 
 export const mappingDataAddress = (data) => {
   return {
