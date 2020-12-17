@@ -14,9 +14,6 @@ export default function ShippingAddress({
   setFieldValue,
 }) {
   useEffect(() => {
-    if (typeof google === "undefined") {
-      return
-    }
     let autocomplete
 
     function initAutocomplete() {
