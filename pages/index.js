@@ -1,6 +1,5 @@
 import { initializeApollo } from "../lib/apollo"
 import { initializeStore } from "../redux/store"
-// import HomePage from "components/HomePage"
 import {
   getAllBrands,
   getAllDepartments,

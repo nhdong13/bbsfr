@@ -2,35 +2,49 @@ import {
   SearchProvider,
   Variables,
   FieldDictionary,
+  FilterBuilder,
 } from "@sajari/react-search-ui"
 import React, { useEffect, useState } from "react"
-import { Container, Modal } from "react-bootstrap"
-import { FilterBuilder, useFilter, useSorting } from "@sajari/react-hooks"
-import {
-  Radio,
-  RadioGroup,
-  CheckboxGroup,
-  Checkbox,
-  Heading,
-} from "@sajari/react-components"
+import { Container, Modal, Collapse, Button } from "react-bootstrap"
 import { constants } from "../../../constant"
 import PaginationComponent from "../../Common/PaginationComponent"
-import FilterComponent from "../../Common/FilterComponent"
 import Image from "next/image"
 import { renderStart } from "../../../services/renderStart"
+import {
+  countBooleanSortFilter,
+  listUpdate,
+} from "../../../services/collection"
 import styles from "../Collections.module.scss"
 import Link from "next/link"
 import { useSearchContext } from "@sajari/react-hooks"
+import Header from "../../Header"
+import SortFilterComponent from "./SortFilterComponent"
 
 const ResultComponent = (props) => {
   const { pipeline, initialResponse } = props
   const [windowWidth, setWindowWidths] = useState()
   const [countUnsetBorder, setCountUnsetBorder] = useState(2)
   const [show, setShow] = useState(false)
-  const [searchRequest, setSearch] = useState(false)
   const [params, setParams] = useState({
     sort: "",
   })
+  const [sortFitlerChanged, setChanged] = useState(false)
+  const [countBol, setcountBol] = useState(0)
+  // TOTO: wating for data from Prismic or Sajari
+  const [listSorting, setListSorting] = useState([
+    {
+      name: "Featured",
+      open: false,
+    },
+  ])
+  const [listFilter, setListFilter] = useState([
+    { name: "Brand", open: false },
+    { name: "Jacket Features", open: false },
+    { name: "Jacket Material", open: false },
+    { name: "Season", open: false },
+    { name: "Ride Style", open: false },
+    { name: "Price", open: false },
+  ])
 
   useEffect(() => {
     const { innerWidth: width, innerHeight: height } = window
@@ -93,7 +107,22 @@ const ResultComponent = (props) => {
 
   const sortFilter = () => {
     setShow(!show)
-    setSearch(true)
+  }
+
+  const setOpenFilterCollapse = (id, bol) => {
+    setListFilter(listUpdate(listFilter, id, bol))
+  }
+
+  const setOpenSortingCollapse = (id, bol) => {
+    setListSorting(listUpdate(listSorting, id, bol))
+  }
+
+  //Handcle Close Modal
+  const handleClose = () => {
+    let count = countBooleanSortFilter(listFilter)
+    setShow(false)
+    setChanged(false)
+    setcountBol(count)
   }
 
   const SortFilterButton = () => (
@@ -112,95 +141,11 @@ const ResultComponent = (props) => {
     </Container>
   )
 
-  const SortingComponent = React.memo(() => {
-    const { sorting, setSorting } = useSorting()
-
-    return (
-      <div className="">
-        <div>
-          <RadioGroup
-            value={sorting}
-            onChange={(e) => {
-              setSorting(e.target.value)
-              setParams({ ...params, sort: e.target.value })
-            }}
-          >
-            <Radio value="">Most relevant</Radio>
-            <Radio value="name">Name: A to Z</Radio>
-            <Radio value="-name">Name: Z to A</Radio>
-            <Radio value="price">Price: Low to High</Radio>
-            <Radio value="-price">Price: High to Low</Radio>
-          </RadioGroup>
-        </div>
-        <div>akwjehkweh</div>
-        {/* if(!searchRequest)
-        {setSearch(true)(
-          <FilterComponent
-            initialResponse={initialResponse}
-            pipeline={pipeline}
-            variables={variables}
-          />
-        )} */}
-      </div>
-    )
+  const productTypeFilter = new FilterBuilder({
+    name: "type",
+    field: "price",
   })
 
-  const FilterRender = React.memo(({ name, title }) => {
-    const { multi, options, selected, setSelected, reset } = useFilter(name)
-
-    if (options.length === 0) {
-      return null
-    }
-
-    const Group = multi ? CheckboxGroup : RadioGroup
-    const Control = multi ? Checkbox : Radio
-
-    return (
-      <div className="mb-4">
-        <div className="flex items-center justify-between mb-2">
-          <Heading
-            as="h6"
-            className="font-medium tracking-wide text-gray-400 uppercase"
-          >
-            {title}
-          </Heading>
-          {selected.length > 0 && multi ? (
-            <button
-              className="text-xs text-blue-500 hover:underline uppercase p-0 bg-transparent focus:outline-none"
-              onClick={reset}
-            >
-              Reset
-            </button>
-          ) : null}
-        </div>
-        <Group
-          name={name}
-          value={selected}
-          onChange={multi ? setSelected : (e) => setSelected([e.target.value])}
-        >
-          {options.map(({ value, label, count }) => (
-            <div
-              className="flex justify-between items-center"
-              key={label + count}
-            >
-              <Control
-                value={label}
-                checked={selected.includes(label)}
-                onChange={() => {}}
-                fontSize="sm"
-              >
-                {label}
-              </Control>
-              <span className="ml-2 text-xs text-gray-400">{count}</span>
-            </div>
-          ))}
-        </Group>
-      </div>
-    )
-  })
-  const BrandFilter = () => <FilterRender name="type" title="Type" />
-
-  const handleClose = () => setShow(false)
   const variables = new Variables({
     resultsPerPage: constants.RESULT_PER_PAGE,
     ...params,
@@ -209,11 +154,6 @@ const ResultComponent = (props) => {
   return (
     <>
       <SortFilterButton />
-      <FilterComponent
-        initialResponse={initialResponse}
-        pipeline={pipeline}
-        variables={variables}
-      />
       <SearchProvider
         search={{
           pipeline,
@@ -221,23 +161,63 @@ const ResultComponent = (props) => {
           fields: new FieldDictionary({
             title: "name",
           }),
+          filters: [productTypeFilter],
         }}
         initialResponse={initialResponse}
-        searchOnLoad={!initialResponse}
+        // searchOnLoad={!initialResponse}
+        searchOnLoad
+        customClassNames={{
+          filter: {
+            resetButton: "resetButtonFilter",
+            list: {
+              container: "listContainerFilter",
+              checkboxGroup: "checkboxGroupFilter",
+              searchFilter: "searchFilter",
+              toggleButton: "toggleButtonFilter",
+            },
+          },
+        }}
       >
         <Modal show={show} onHide={handleClose} className="short_filter_modal">
-          <div className={styles.sort_by}>
-            <div>SORT by</div>
-            <SortingComponent />
-            <div>Filter</div>
+          <Header />
+          {/*Sorting Feature*/}
+          <SortFilterComponent
+            list={listSorting}
+            setOpen={setOpenSortingCollapse}
+            type={"sort"}
+            setParams={setParams}
+            params={params}
+            setChanged={setChanged}
+          />
+          {/* Filter feature */}
+          <SortFilterComponent
+            list={listFilter}
+            setOpen={setOpenFilterCollapse}
+            type={"filter"}
+          />
+          <div
+            onClick={handleClose}
+            className={styles.button_sajari}
+            fixed="bottom"
+          >
+            <div className={styles.modal_button}>
+              <Button
+                fixed="bottom"
+                variant={
+                  sortFitlerChanged ||
+                  countBol != countBooleanSortFilter(listFilter)
+                    ? "secondary"
+                    : "primary"
+                }
+              >
+                {sortFitlerChanged ||
+                countBol != countBooleanSortFilter(listFilter)
+                  ? "Apply"
+                  : "Cancel"}
+              </Button>
+            </div>
           </div>
         </Modal>
-
-        <PaginationComponent
-          initialResponse={initialResponse}
-          pipeline={pipeline}
-          variables={variables}
-        />
         <div className={styles.listProduct}>
           {results &&
             results.map((item, index) => {
@@ -274,6 +254,11 @@ const ResultComponent = (props) => {
               )
             })}
         </div>
+        <PaginationComponent
+          initialResponse={initialResponse}
+          pipeline={pipeline}
+          variables={variables}
+        />
       </SearchProvider>
     </>
   )
