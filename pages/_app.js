@@ -1,8 +1,6 @@
 import { Provider } from "react-redux"
 import { ApolloProvider } from "@apollo/client"
-// import { SaleorProvider } from "@saleor/sdk"
 import { ToastProvider } from "react-toast-notifications"
-
 import { useStore } from "../redux/store"
 import { useApollo } from "../lib/apollo"
 import { SaleorProvider } from "../lib/@sdk/react"
