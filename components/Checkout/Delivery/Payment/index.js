@@ -1,5 +1,6 @@
 import { Row, Button, Col } from "react-bootstrap"
 import Image from "next/image"
+import clsx from "clsx"
 
 import CreditCardForm from "./CreditCardForm"
 import ErrorMessageWrapper from "../../ErrorMessageWrapper"
@@ -16,6 +17,7 @@ export default function PaymentComponent({
   setFieldValue,
   errors,
   touched,
+  googlePayInstance,
 }) {
   return (
     <Row className={styles.paymentBody}>
@@ -49,7 +51,13 @@ export default function PaymentComponent({
                 variant={
                   paymentMethod?.subId === methodId ? "secondary" : "gray"
                 }
-                className={styles.btn}
+                className={clsx(
+                  styles.btn,
+                  methodId === "bikebiz.payments.googlepay" &&
+                    !googlePayInstance
+                    ? "d-none"
+                    : ""
+                )}
                 onClick={() =>
                   setFieldValue("paymentMethod", {
                     ...method,
@@ -69,6 +77,7 @@ export default function PaymentComponent({
             ))
           }
         })}
+
         {Array(NUMBER_DUMP_CONTENT_FLEXBOX)
           .fill()
           .map((_, index) => (
