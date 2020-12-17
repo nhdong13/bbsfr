@@ -37,6 +37,14 @@ export default function Delivery() {
           type="text/javascript"
           src="https://js.braintreegateway.com/web/3.69.0/js/hosted-fields.min.js"
         ></script>
+        <script
+          type="text/javascript"
+          src="https://pay.google.com/gp/p/js/pay.js"
+        ></script>
+        <script
+          type="text/javascript"
+          src="https://js.braintreegateway.com/web/3.69.0/js/google-payment.min.js"
+        ></script>
       </Head>
       <DeliveryComponent />
     </>
