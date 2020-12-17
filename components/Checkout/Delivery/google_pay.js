@@ -17,7 +17,7 @@ export function initGooglePay(clientToken, setGPayInstance) {
         {
           client: clientInstance,
           googlePayVersion: 2,
-          // googleMerchantId: process.env.NEXT_PUBLIC_GPAY_MERCHANT_ID,
+          googleMerchantId: process.env.NEXT_PUBLIC_GPAY_MERCHANT_ID,
         },
         function (googlePaymentErr, googlePaymentInstance) {
           if (googlePaymentErr) {
