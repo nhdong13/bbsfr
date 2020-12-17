@@ -10,11 +10,13 @@ export const PAYMENT_METHODS_ICON = {
   "bikebiz.payments.zipmoney": "/zip.svg",
   "bikebiz.payments.paypal": "/paypal.svg",
   "bikebiz.payments.creditCard": "/visa.svg",
+  "bikebiz.payments.googlepay": "/googlepay.svg",
 }
 
 export const BRAINTREE_SUPPORTED_METHODS = [
   "bikebiz.payments.creditCard",
   "bikebiz.payments.paypal",
+  "bikebiz.payments.googlepay",
 ]
 
 export const PAYMENT_METHODS = [
