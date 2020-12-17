@@ -146,6 +146,16 @@ input,
 .slick-arrow {
   display: none !important;
 }
+.slick-list {
+  .slick-slide.slick-cloned {
+    visibility: hidden;
+  }
+  .slick-slide[aria-hidden] {
+    a {
+      visibility: hidden;
+    }
+  }
+}
 // End slick slider
 
 //Modal Sort/Filter Sajari Style
