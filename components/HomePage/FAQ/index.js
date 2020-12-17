@@ -61,7 +61,6 @@ const FAQComponent = (props) => {
                   className={styles.question}
                   key={index}
                   onClick={() => setOpen(item, !item.open)}
-                  aria-controls="example-collapse-text"
                   aria-expanded={item.open}
                 >
                   <div className={styles.questionCol}>
@@ -100,7 +99,6 @@ const FAQComponent = (props) => {
                   <Col className={styles.faqText}>
                     <div
                       className={styles.questionAnswer}
-                      id="example-collapse-text"
                     >
                       {item.answer || "---"}
                     </div>
