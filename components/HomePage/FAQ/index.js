@@ -70,7 +70,7 @@ const FAQComponent = (props) => {
                         {item.question}
                       </div>
                     </Col>
-                    <Col xs={1} sm={1} md={1} lg={1} xl={1}>
+                    <Col xs={2} sm={2} md={2} lg={1} xl={1}>
                       <div className={styles.questionIcon}>
                         {item.open ? (
                           <div className={styles.questionIconElement}>
@@ -115,7 +115,7 @@ const FAQComponent = (props) => {
                   ""
                 )}
               </div>
-            );
+            )
           })}
         <Col>
           {faqItemAll &&

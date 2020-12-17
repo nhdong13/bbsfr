@@ -297,8 +297,8 @@ $padding-top-component: 55px;
 
     .question {
       height: auto;
-      min-height: 48px;
-      line-height: 48px;
+      padding-top: 10px;
+      padding-bottom: 9px;
       &:hover {
         cursor: pointer;
       }
@@ -312,16 +312,21 @@ $padding-top-component: 55px;
           text-align: left;
           @include font-family(Rajdhani, 16px, 600, $primary-text-color);
         }
+
         .questionIcon {
-          width: 100%;
           position: relative;
           .questionIconElement {
             position: absolute;
-            top: 20px;
+            top: 2px;
             right: 0;
           }
         }
       }
+    }
+
+    .questionLineHeight {
+      @extend .question;
+      line-height: 16px !important;
     }
 
     .bottomBorder {
