@@ -61,6 +61,11 @@ export default function DeliveryComponent() {
 
   useEffect(() => {
     if (!loading) {
+      if (!currentUser) {
+        localStorage.removeItem("token")
+        router.push(`/checkout/signup`)
+        return
+      }
       const { defaultShippingAddress, defaultBillingAddress } =
         currentUser || {}
       setInitDeliveryData({
