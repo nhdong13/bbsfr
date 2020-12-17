@@ -72,7 +72,6 @@ const BlogComponent = (props) => {
                 className={styles.border_none_image}
                 // TODO: Clone Image to Testing UI, Temporary Data, Will be remove
                 src="https://s3.amazonaws.com/s3-wp-product/wp-content/uploads/2019/03/25094806/Bikebiz2.jpg"
-                thumbnail
               ></Image>
               <div
                 className={`${styles.line_bottom_image} ${

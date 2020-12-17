@@ -47,6 +47,11 @@ function Home(props) {
             slug={department.department_slug}
             callAction={department.department_call_to_action[0].text}
             image={department.department_image}
+            alt={
+              (department.department_image &&
+                department.department_image.alt) ||
+              ""
+            }
           />
         ))}
         <BrandDynamic brands={brands} />
