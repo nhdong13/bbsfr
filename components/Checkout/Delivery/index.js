@@ -20,6 +20,7 @@ import PaymentComponent from "./Payment"
 import { AddressSchema } from "./validate"
 import { paymentCheckoutTokenCreate } from "lib/mutations"
 import { authorizeKlarna } from "./klarna"
+import { validateCreditCard, authorizeCreditCard } from "./creditCard"
 import { INITIAL_ADDRESS, DUMP_SHIPPING_DATA } from "./constants"
 import {
   mappingDataAddress,
@@ -53,7 +54,7 @@ export default function DeliveryComponent() {
     billingDifferentAddress: false,
     paymentMethod: null,
     creditCard: {
-      cardNumber: "",
+      number: "",
       expirationDate: "",
       cvv: "",
     },
@@ -62,40 +63,50 @@ export default function DeliveryComponent() {
   const [showContinue, setShowContinue] = useState(false)
   const [showLoading, setShowLoading] = useState(false)
   const [modalShow, setModalShow] = useState(false)
-
+  const [hostedFieldsInstance, setHostedFieldsInstance] = useState(null)
   // TODO in the future
   const [shippingMethods, setShippingMethods] = useState(DUMP_SHIPPING_DATA)
 
   useEffect(() => {
-    if (!loading) {
-      if (!currentUser) {
-        localStorage.removeItem("token")
-        router.push(`/checkout/signup`)
-        return
-      }
-      const { defaultShippingAddress, defaultBillingAddress } =
-        currentUser || {}
-      setInitDeliveryData({
-        ...initDeliveryData,
-        shippingAddress: mappingDataAddress(defaultShippingAddress),
-        billingAddress: mappingDataAddress(defaultBillingAddress),
-      })
+    if (loading) {
+      return
     }
-
-    if (loaded) {
-      const braintreeMethod =
-        availablePaymentGateways &&
-        availablePaymentGateways.find(
-          (method) => method.id === "mirumee.payments.braintree"
-        )
-      setInitDeliveryData({
-        ...initDeliveryData,
-        paymentMethod: braintreeMethod
-          ? { ...braintreeMethod, subId: "bikebiz.payments.creditCard" }
-          : null,
-      })
+    if (!currentUser) {
+      localStorage.removeItem("token")
+      router.push(`/checkout/signup`)
+      return
     }
+    const { defaultShippingAddress, defaultBillingAddress } = currentUser || {}
 
+    setInitDeliveryData({
+      ...initDeliveryData,
+      shippingAddress: mappingDataAddress(defaultShippingAddress),
+      billingAddress: mappingDataAddress(defaultBillingAddress),
+    })
+  }, [loading])
+
+  useEffect(() => {
+    if (!loaded) {
+      return
+    }
+    const braintreeMethod =
+      availablePaymentGateways &&
+      availablePaymentGateways.find(
+        (method) => method.id === "mirumee.payments.braintree"
+      )
+    setInitDeliveryData({
+      ...initDeliveryData,
+      paymentMethod: braintreeMethod
+        ? { ...braintreeMethod, subId: "bikebiz.payments.creditCard" }
+        : null,
+    })
+    const clientToken = braintreeMethod.config.find(
+      (config) => config.field === "client_token"
+    ).value
+    authorizeCreditCard(clientToken, setHostedFieldsInstance)
+  }, [loaded])
+
+  useEffect(() => {
     let token
     if (status === "SUCCESS") {
       token = orderToken
@@ -105,7 +116,7 @@ export default function DeliveryComponent() {
       token = checkoutId
     }
     sendCreatePayment(token)
-  }, [loading, status, result, loaded])
+  }, [status, result])
 
   const sendCreatePayment = async (orderToken) => {
     if (!orderToken) return
@@ -149,6 +160,13 @@ export default function DeliveryComponent() {
       paymentMethod,
     } = values
 
+    if (paymentMethod.subId === "bikebiz.payments.creditCard") {
+      const validCreditCard = validateCreditCard(hostedFieldsInstance, bag)
+      if (!validCreditCard) {
+        return
+      }
+    }
+
     // Set Shipping Address and create Checkout
     const { checkoutData } = await createCheckout(
       setShippingAddress,
@@ -183,7 +201,6 @@ export default function DeliveryComponent() {
     localStorage.setItem("paymentGateway", paymentMethod.id)
 
     const totalPrice = data.totalPrice?.gross?.amount
-
     await processPayment(
       checkoutData,
       totalPrice,
@@ -193,7 +210,8 @@ export default function DeliveryComponent() {
       handleSubmitError,
       router,
       setShowContinue,
-      sendCreatePayment
+      sendCreatePayment,
+      hostedFieldsInstance
     )
   }
 
@@ -290,8 +308,6 @@ export default function DeliveryComponent() {
                     <PaymentComponent
                       availablePaymentGateways={availablePaymentGateways || []}
                       paymentMethod={values.paymentMethod}
-                      creditCard={values.creditCard}
-                      handleChange={handleChange}
                       setFieldValue={setFieldValue}
                       errors={errors}
                       touched={touched}

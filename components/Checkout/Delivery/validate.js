@@ -113,42 +113,4 @@ export const AddressSchema = Yup.object().shape({
     .required("Please select a payment method to proceed")
     .nullable(),
   creditCard: Yup.object(),
-  // creditCard: Yup.object().shape({
-  //   cardNumber: Yup.string().test(
-  //     "require",
-  //     "This field is required",
-  //     function (fieldValue) {
-  //       if (
-  //         this.from[1].value.paymentMethod?.id !== "bikebiz.payments.creditCard"
-  //       ) {
-  //         return true
-  //       }
-  //       return fieldValue && fieldValue.trim()
-  //     }
-  //   ),
-  //   expirationDate: Yup.string().test(
-  //     "require",
-  //     "This field is required",
-  //     function (fieldValue) {
-  //       if (
-  //         this.from[1].value.paymentMethod?.id !== "bikebiz.payments.creditCard"
-  //       ) {
-  //         return true
-  //       }
-  //       return fieldValue && fieldValue.trim()
-  //     }
-  //   ),
-  //   cvv: Yup.string().test(
-  //     "require",
-  //     "This field is required",
-  //     function (fieldValue) {
-  //       if (
-  //         this.from[1].value.paymentMethod?.id !== "bikebiz.payments.creditCard"
-  //       ) {
-  //         return true
-  //       }
-  //       return fieldValue && fieldValue.trim()
-  //     }
-  //   ),
-  // }),
 })

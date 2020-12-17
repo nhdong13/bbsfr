@@ -1,69 +1,88 @@
-export function authorizeCreditCard(clientToken) {
-  const client = Promise.promisify(braintree.client.create)({
-    authorization: clientToken,
-  })
-  console.log("client", client)
-  // braintree.client.create(
-  //   {
-  //     authorization: clientToken,
-  //   },
-  //   function (err, clientInstance) {
-  //     if (err) {
-  //       console.error(err)
-  //       return
-  //     }
-  //     return createHostedFields(clientInstance)
-  //   }
-  // )
-}
-
-function createHostedFields(clientInstance) {
-  braintree.hostedFields.create(
+export function authorizeCreditCard(clientToken, setHostedFieldsInstance) {
+  braintree.client.create(
     {
-      client: clientInstance,
-      styles: {
-        input: {
-          "font-size": "16px",
-          "font-family": "courier, monospace",
-          "font-weight": "lighter",
-          color: "#ccc",
-        },
-        ":focus": {
-          color: "black",
-        },
-        ".valid": {
-          color: "#8bdda8",
-        },
-      },
-      fields: {
-        number: {
-          selector: "#card-number",
-          placeholder: "4111 1111 1111 1111",
-        },
-        cvv: {
-          selector: "#cvv",
-          placeholder: "123",
-        },
-        expirationDate: {
-          selector: "#expiration-date",
-          placeholder: "MM / YY",
-        },
-      },
+      authorization: clientToken,
     },
-    function (err, hostedFieldsInstance) {
+    function (err, clientInstance) {
       if (err) {
-        console.log("err1", err)
+        console.error(err)
         return
       }
-
-      hostedFieldsInstance.tokenize(function (err, payload) {
-        if (err) {
-          console.log("err", err)
-          return
+      braintree.hostedFields.create(
+        {
+          client: clientInstance,
+          styles: {
+            input: {
+              "font-size": "14px",
+            },
+          },
+          fields: {
+            number: {
+              selector: "#card-number",
+              placeholder: "4111 1111 1111 1111",
+            },
+            cvv: {
+              selector: "#cvv",
+              placeholder: "123",
+            },
+            expirationDate: {
+              selector: "#expiration-date",
+              placeholder: "MM / YY",
+            },
+          },
+        },
+        function (err, hostedFieldsInstance) {
+          if (err) {
+            console.log("err1", err)
+            return
+          }
+          setHostedFieldsInstance(hostedFieldsInstance)
         }
+      )
+    }
+  )
+}
 
-        alert("Submit your nonce (" + payload.nonce + ") to your server here!")
-      })
+export function validateCreditCard(hostedFieldsInstance, bag) {
+  let valid = true
+  const state = hostedFieldsInstance.getState()
+  Object.keys(state.fields).forEach(function (field) {
+    const fieldData = state.fields[field]
+    if (fieldData.isEmpty) {
+      valid = false
+      bag.setFieldError(`creditCard.${field}`, "This field is required")
+    } else if (!fieldData.isValid) {
+      valid = false
+      bag.setFieldError(
+        `creditCard.${field}`,
+        field === "expirationDate"
+          ? "Please enter a valid date"
+          : "Please enter a valid number"
+      )
+    }
+  })
+
+  bag.setSubmitting(false)
+  return valid
+}
+
+export function hostedFieldsTokenize(
+  hostedFieldsInstance,
+  totalPrice,
+  sendCreatePayment,
+  handleError
+) {
+  hostedFieldsInstance.tokenize(
+    {
+      amount: totalPrice,
+      currency: "AUD",
+    },
+    function (err, payload) {
+      if (err) {
+        handleError()
+        return
+      }
+      sendCreatePayment(payload.nonce)
     }
   )
 }

@@ -13,8 +13,6 @@ import {
 export default function PaymentComponent({
   availablePaymentGateways,
   paymentMethod,
-  creditCard,
-  handleChange,
   setFieldValue,
   errors,
   touched,
@@ -85,14 +83,14 @@ export default function PaymentComponent({
         />
       </Col>
 
-      {paymentMethod?.id === "mirumee.payments.braintree" && (
-        <CreditCardForm
-          creditCard={creditCard}
-          errors={errors}
-          touched={touched}
-          handleChange={handleChange}
-        />
-      )}
+      <CreditCardForm
+        errors={errors}
+        touched={touched}
+        show={
+          paymentMethod?.id === "mirumee.payments.braintree" &&
+          paymentMethod?.subId === "bikebiz.payments.creditCard"
+        }
+      />
     </Row>
   )
 }

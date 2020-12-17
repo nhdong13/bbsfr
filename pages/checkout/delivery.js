@@ -1,5 +1,10 @@
+import dynamic from "next/dynamic"
 import Head from "next/head"
-import DeliveryComponent from "../../components/Checkout/Delivery"
+
+const DeliveryComponent = dynamic(
+  () => import("../../components/Checkout/Delivery"),
+  { ssr: false }
+)
 
 export default function Delivery() {
   return (

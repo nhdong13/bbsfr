@@ -83,5 +83,21 @@
         height: 1px;
       }
     }
+
+    .hostedField {
+      height: 50px;
+      box-sizing: border-box;
+      width: 100%;
+      padding: 12px;
+      display: inline-block;
+      box-shadow: none;
+      font-weight: 600;
+      font-size: 14px;
+      border: 1px solid #dddddd;
+      line-height: 20px;
+      background-size: 200% 100%;
+      background-position: right bottom;
+      transition: all 300ms ease-in-out;
+    }
   }
 }
