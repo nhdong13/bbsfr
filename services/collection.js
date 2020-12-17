@@ -11,3 +11,9 @@ export const countBooleanSortFilter = (arr) => {
   arr.map((x) => x.open && countBoolean++)
   return countBoolean
 }
+
+export const listUpdate = (arr, id, bol) => {
+  return arr.map((item, index) =>
+    index == id ? { name: item.name, open: bol } : item
+  )
+}

@@ -3,21 +3,22 @@ import {
   Variables,
   FieldDictionary,
   FilterBuilder,
-  Filter,
 } from "@sajari/react-search-ui"
 import React, { useEffect, useState } from "react"
 import { Container, Modal, Collapse, Button } from "react-bootstrap"
-import { useSorting } from "@sajari/react-hooks"
-import { Radio, RadioGroup } from "@sajari/react-components"
 import { constants } from "../../../constant"
 import PaginationComponent from "../../Common/PaginationComponent"
 import Image from "next/image"
 import { renderStart } from "../../../services/renderStart"
-import { countBooleanSortFilter } from "../../../services/collection"
+import {
+  countBooleanSortFilter,
+  listUpdate,
+} from "../../../services/collection"
 import styles from "../Collections.module.scss"
 import Link from "next/link"
 import { useSearchContext } from "@sajari/react-hooks"
 import Header from "../../Header"
+import SortFilterComponent from "./SortFilterComponent"
 
 const ResultComponent = (props) => {
   const { pipeline, initialResponse } = props
@@ -30,10 +31,12 @@ const ResultComponent = (props) => {
   const [sortFitlerChanged, setChanged] = useState(false)
   const [countBol, setcountBol] = useState(0)
   // TOTO: wating for data from Prismic or Sajari
-  const [listSorting, setListSorting] = useState({
-    name: "Featured",
-    open: false,
-  })
+  const [listSorting, setListSorting] = useState([
+    {
+      name: "Featured",
+      open: false,
+    },
+  ])
   const [listFilter, setListFilter] = useState([
     { name: "Brand", open: false },
     { name: "Jacket Features", open: false },
@@ -107,15 +110,11 @@ const ResultComponent = (props) => {
   }
 
   const setOpenFilterCollapse = (id, bol) => {
-    let listUpdate = listFilter.map((item, index) =>
-      index == id ? { name: item.name, open: bol } : item
-    )
-    setListFilter(listUpdate)
+    setListFilter(listUpdate(listFilter, id, bol))
   }
 
-  const setOpenSortingCollapse = (bol) => {
-    let sorting = { name: listSorting.name, open: bol }
-    setListSorting(sorting)
+  const setOpenSortingCollapse = (id, bol) => {
+    setListSorting(listUpdate(listSorting, id, bol))
   }
 
   //Handcle Close Modal
@@ -145,32 +144,6 @@ const ResultComponent = (props) => {
   const productTypeFilter = new FilterBuilder({
     name: "type",
     field: "price",
-  })
-
-  const SortingComponent = React.memo(() => {
-    const { sorting, setSorting } = useSorting()
-
-    return (
-      <div className="">
-        <div>
-          <RadioGroup
-            className={styles.radio_sajari}
-            value={sorting}
-            onChange={(e) => {
-              setSorting(e.target.value)
-              setParams({ ...params, sort: e.target.value })
-              setChanged(true)
-            }}
-          >
-            <Radio value="">Most relevant</Radio>
-            <Radio value="name">Name: A to Z</Radio>
-            <Radio value="-name">Name: Z to A</Radio>
-            <Radio value="price">Price: Low to High</Radio>
-            <Radio value="-price">Price: High to Low</Radio>
-          </RadioGroup>
-        </div>
-      </div>
-    )
   })
 
   const variables = new Variables({
@@ -207,107 +180,42 @@ const ResultComponent = (props) => {
       >
         <Modal show={show} onHide={handleClose} className="short_filter_modal">
           <Header />
-          {/*Sorting Feature on Modal*/}
-          <div className={styles.sort_filter_by + " " + styles.sorting}>
-            <div className={styles.sub_heading}>sort by</div>
-            <div
-              className={`${styles.group_heading} ${
-                listSorting.open ? styles.active : ""
-              }`}
-            >
-              <div
-                onClick={() => setOpenSortingCollapse(!listSorting.open)}
-                aria-controls="example2-collapse-text"
-                aria-expanded={listSorting.open}
-              >
-                <div className={styles.text_heading}>
-                  <div>{listSorting.name}</div>
-                  <Image
-                    src={
-                      listSorting.open
-                        ? "/icons/subtract.svg"
-                        : "/icons/plus.svg"
-                    }
-                    alt={listSorting.open ? "Icon subtract" : "Icon plus"}
-                    height={12}
-                    width={12}
-                    loading="eager"
-                  ></Image>
-                </div>
-              </div>
-              <div className={styles.sort_filter_collapse}>
-                <Collapse in={listSorting.open}>
-                  <div id="example2-collapse-text">
-                    <SortingComponent />
-                  </div>
-                </Collapse>
-              </div>
-            </div>
-          </div>
-
-          {/* Filter feature on Modal */}
-          <div className={styles.sort_filter_by}>
-            <div className={styles.sub_heading}>refined by</div>
-            {listFilter.map((item, id) => (
-              <div
-                className={`${styles.group_heading} ${
-                  item.open ? styles.active : ""
-                }`}
-                key={id}
-              >
-                <div
-                  onClick={() => setOpenFilterCollapse(id, !item.open)}
-                  aria-controls="example2-collapse-text"
-                  aria-expanded={item.open}
-                >
-                  <div className={styles.text_heading}>
-                    <div>{item.name}</div>
-                    <Image
-                      src={
-                        item.open ? "/icons/subtract.svg" : "/icons/plus.svg"
-                      }
-                      alt={item.open ? "Icon subtract" : "Icon plus"}
-                      height={12}
-                      width={12}
-                      loading="eager"
-                    ></Image>
-                  </div>
-                </div>
-                <div className={styles.sort_filter_collapse}>
-                  <Collapse in={item.open}>
-                    <div id="example2-collapse-text">
-                      <Filter
-                        name="type"
-                        pinSelected={false}
-                        searchable
-                        sort="count"
-                        sortAscending={true}
-                      />
-                    </div>
-                  </Collapse>
-                </div>
-              </div>
-            ))}
-          </div>
+          {/*Sorting Feature*/}
+          <SortFilterComponent
+            list={listSorting}
+            setOpen={setOpenSortingCollapse}
+            type={"sort"}
+            setParams={setParams}
+            params={params}
+            setChanged={setChanged}
+          />
+          {/* Filter feature */}
+          <SortFilterComponent
+            list={listFilter}
+            setOpen={setOpenFilterCollapse}
+            type={"filter"}
+          />
           <div
             onClick={handleClose}
             className={styles.button_sajari}
             fixed="bottom"
           >
-            <Button
-              fixed="bottom"
-              variant={
-                sortFitlerChanged ||
+            <div className={styles.modal_button}>
+              <Button
+                fixed="bottom"
+                variant={
+                  sortFitlerChanged ||
+                  countBol != countBooleanSortFilter(listFilter)
+                    ? "secondary"
+                    : "primary"
+                }
+              >
+                {sortFitlerChanged ||
                 countBol != countBooleanSortFilter(listFilter)
-                  ? "secondary"
-                  : "primary"
-              }
-            >
-              {sortFitlerChanged ||
-              countBol != countBooleanSortFilter(listFilter)
-                ? "Apply"
-                : "Cancel"}
-            </Button>
+                  ? "Apply"
+                  : "Cancel"}
+              </Button>
+            </div>
           </div>
         </Modal>
 

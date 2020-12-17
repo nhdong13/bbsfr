@@ -196,14 +196,15 @@ $bg-sort-filter: #f6f6f6;
 }
 
 .button_sajari {
-  margin: 0 0.5rem;
   padding: 1rem 0;
   background-color: #fff;
 
   position: fixed;
-  width: 96%;
+  width: 100%;
   bottom: 0;
-
+  .modal_button {
+    padding: 0 0.5rem;
+  }
   button {
     height: 48px;
     width: 100%;
