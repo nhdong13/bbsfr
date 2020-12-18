@@ -36,7 +36,6 @@ export default function Department(props) {
               <Image
                 width={236}
                 height={177}
-                layout="intrinsic"
                 src={props.image.url || ""}
                 alt={props.alt}
               />
