@@ -160,6 +160,12 @@ $padding-top-component: 55px;
       top: 10%;
       // transform: translate(0%, -50%);
       z-index: 2;
+      div {
+        // max-height: 100%;
+        div {
+          position: unset !important;
+        }
+      }
     }
 
     .style_second {
