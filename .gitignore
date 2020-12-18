@@ -11,6 +11,7 @@
 !.prettierrc
 !.nvmrc
 !.env.example
+!.env.local
 !.env.production
 dist
 node_modules
