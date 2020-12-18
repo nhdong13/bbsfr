@@ -29,35 +29,6 @@ export const mappingDataAddress = (data) => {
   }
 }
 
-export const sendCreatePayment = async (
-  orderToken,
-  createPayment,
-  completeCheckout,
-  setShowLoading,
-  router
-) => {
-  if (!orderToken) return
-
-  setShowLoading(true)
-  const paymentGateway = localStorage.getItem("paymentGateway")
-  const { dataError } = await createPayment(paymentGateway, orderToken)
-  if (dataError) {
-    setShowLoading(false)
-    handleSubmitError()
-    return
-  }
-
-  const { data, dataError: completeCheckoutError } = await completeCheckout()
-
-  if (completeCheckoutError) {
-    setShowLoading(false)
-    handleSubmitError()
-    return
-  }
-
-  router.push(`/checkout/complete?orderNumber=${data?.number}`)
-}
-
 export const selectAccountAddress = (
   currentUser,
   id,

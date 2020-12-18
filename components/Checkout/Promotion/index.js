@@ -6,8 +6,8 @@ import { useCart } from "@sdk/react"
 
 import LoadingSpinner from "components/LoadingSpinner"
 import { voucherifyValidate } from "lib/mutations"
-import ErrorMessageWrapper from "../../ErrorMessageWrapper"
-import styles from "../MyCart.module.scss"
+import ErrorMessageWrapper from "../ErrorMessageWrapper"
+import styles from "../Checkout.module.scss"
 
 export default function PromotionComponent({
   values,
