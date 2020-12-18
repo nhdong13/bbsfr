@@ -113,4 +113,5 @@ export const AddressSchema = Yup.object().shape({
     .required("Please select a payment method to proceed")
     .nullable(),
   promotion: Yup.object(),
+  creditCard: Yup.object(),
 })

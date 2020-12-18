@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Col, Collapse, Container, Row } from "react-bootstrap";
+import { Col, Collapse, Container } from "react-bootstrap"
 import styles from "../HomePage.module.scss";
 import Image from "next/image";
 
@@ -61,7 +61,6 @@ const FAQComponent = (props) => {
                   className={styles.question}
                   key={index}
                   onClick={() => setOpen(item, !item.open)}
-                  aria-controls="example-collapse-text"
                   aria-expanded={item.open}
                 >
                   <div className={styles.questionCol}>
@@ -70,7 +69,7 @@ const FAQComponent = (props) => {
                         {item.question}
                       </div>
                     </Col>
-                    <Col xs={1} sm={1} md={1} lg={1} xl={1}>
+                    <Col xs={2} sm={2} md={2} lg={1} xl={1}>
                       <div className={styles.questionIcon}>
                         {item.open ? (
                           <div className={styles.questionIconElement}>
@@ -100,7 +99,6 @@ const FAQComponent = (props) => {
                   <Col className={styles.faqText}>
                     <div
                       className={styles.questionAnswer}
-                      id="example-collapse-text"
                     >
                       {item.answer || "---"}
                     </div>
@@ -115,7 +113,7 @@ const FAQComponent = (props) => {
                   ""
                 )}
               </div>
-            );
+            )
           })}
         <Col>
           {faqItemAll &&

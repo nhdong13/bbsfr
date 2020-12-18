@@ -1,14 +1,13 @@
 import { Provider } from "react-redux"
 import { ApolloProvider } from "@apollo/client"
-// import { SaleorProvider } from "@saleor/sdk"
 import { ToastProvider } from "react-toast-notifications"
-
 import { useStore } from "../redux/store"
 import { useApollo } from "../lib/apollo"
 import { SaleorProvider } from "../lib/@sdk/react"
 import Layout from "components/Layout"
 
 import "../styles/globals.scss"
+import NProgressBarComponent from "../components/Common/NProgressBar";
 
 const SALEOR_CONFIG = {
   apiUrl: process.env.NEXT_PUBLIC_API_URI,
@@ -33,6 +32,7 @@ export default function App({ Component, pageProps }) {
           apolloConfig={{ client: apolloClient }}
         >
           <ToastProvider>
+          <NProgressBarComponent  />
             <Layout>
               <Component {...pageProps} />
             </Layout>
@@ -40,5 +40,5 @@ export default function App({ Component, pageProps }) {
         </SaleorProvider>
       </ApolloProvider>
     </Provider>
-  )
+  );
 }

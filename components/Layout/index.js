@@ -10,24 +10,15 @@ export default function Layout({ children }) {
         <title>Bikebiz Replatform</title>
         <meta
           name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=1"
+          content="width=device-width, initial-scale=1, maximum-scale=5"
         />
         <link rel="icon" href="/favicon.ico" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
         {NewRelicSnippet}
-        <script
-          type="text/javascript"
-          src="https://portal.sandbox.afterpay.com/afterpay-async.js"
-          async
-          defer
-        ></script>
-        <script
-          type="text/javascript"
-          src="https://x.klarnacdn.net/kp/lib/v1/api.js"
-          async
-        ></script>
-        <script
-          src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_API_KEY}&libraries=places,geometry`}
-        ></script>
       </Head>
       <Header />
       <main>{children}</main>

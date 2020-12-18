@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react"
-import { Image, Container } from "react-bootstrap"
+import { Container } from "react-bootstrap"
 import styles from "../HomePage.module.scss"
 import Link from "next/link"
 import Slider from "react-slick"
 import { pad } from "../../../services/brand.js"
+import Image from "next/image"
 
 const BlogComponent = (props) => {
   const [activeSlide, setSlide] = useState(1)
@@ -15,7 +16,7 @@ const BlogComponent = (props) => {
     // setImageWidth(width / 4.5)
     setWidth(width - 30)
   })
-  //a is array clone
+  //TODO: Clone Array to Testing UI, Temporary Data, Will be remove
   let a = [1, 2, 3]
 
   let num_pages = a.length
@@ -55,7 +56,9 @@ const BlogComponent = (props) => {
       <div className={styles.group_heading}>
         <h2 className={styles.text_heading_line_40}>off the press</h2>
         <Link href="/blogs">
-          <p className={styles.view_all_btn}>view all</p>
+          <a>
+            <p className={styles.view_all_btn}>view all</p>
+          </a>
         </Link>
       </div>
       <Slider {...settings} className={styles.slider_custom}>
@@ -63,10 +66,12 @@ const BlogComponent = (props) => {
           <div key={id} className="pr-4">
             <div className="position-relative">
               <Image
+                width={242}
+                height={162}
                 alt={`img-${id}`}
                 className={styles.border_none_image}
+                // TODO: Clone Image to Testing UI, Temporary Data, Will be remove
                 src="https://s3.amazonaws.com/s3-wp-product/wp-content/uploads/2019/03/25094806/Bikebiz2.jpg"
-                thumbnail
               ></Image>
               <div
                 className={`${styles.line_bottom_image} ${
