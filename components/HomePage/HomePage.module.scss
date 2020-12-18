@@ -115,9 +115,11 @@ $vertical_border: 2.5px;
       padding-bottom: 15px;
 
       z-index: 2;
-
-      .max_width_image {
-        max-width: 65vw;
+      div {
+        max-height: 100%;
+        div {
+          position: unset !important;
+        }
       }
     }
 
