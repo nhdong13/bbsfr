@@ -1,7 +1,7 @@
 /* ensure all pages have Bootstrap CSS */
 @import "~bootstrap/dist/css/bootstrap.min.css";
 @import "./variables.scss";
-@import "../public/fonts/style.scss";
+@import "./sajari_component.scss";
 
 html,
 body {
@@ -15,7 +15,7 @@ body {
 
 a {
   color: inherit;
-  text-decoration: none;
+  text-decoration: none !important;
 }
 
 * {
@@ -113,13 +113,17 @@ input::placeholder {
   border-color: $primary-border-color;
 }
 
-
 //Custom for input form global
-.custom-select, input, .form-control, .btn{
+.custom-select,
+input,
+.form-control,
+.btn {
   font-weight: 600;
 }
+.custom-select-lg {
+  height: calc(1.5em + 1rem + 10px);
+}
 /* End custom input */
-
 
 //Custom for switch global
 .custom-switch .custom-control-label::before {
@@ -137,3 +141,48 @@ input::placeholder {
   transform: translateX(18px);
 }
 /* End custom switch */
+
+//Slick slider
+.slick-arrow {
+  display: none !important;
+}
+.slick-list {
+  .slick-slide.slick-cloned {
+    visibility: hidden;
+  }
+  .slick-slide[aria-hidden] {
+    a {
+      visibility: hidden;
+    }
+  }
+}
+// End slick slider
+
+//Modal Sort/Filter Sajari Style
+.sorting_style {
+  width: 100vw;
+}
+
+.short_filter_modal {
+  background-color: #fff;
+  height: 100% !important;
+  .modal-dialog {
+    max-height: 100vh;
+    max-width: 100vw;
+    margin: 0;
+    .modal-content {
+      padding-bottom: 10vh;
+      height: 100%;
+      max-height: 500vh;
+      border: none;
+      border-radius: 0;
+    }
+  }
+}
+
+#list-type {
+  input {
+    color: black;
+  }
+}
+// End Modal Sajari Style

@@ -83,24 +83,21 @@
         height: 1px;
       }
     }
-  }
-}
 
-.modal {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-
-  .modalContent {
-    width: 48px;
-    background-color: transparent;
-    border: none;
-
-    .modalBody {
-      display: flex;
-      flex-direction: column;
-      vertical-align: middle;
-      justify-content: center;
+    .hostedField {
+      height: 50px;
+      box-sizing: border-box;
+      width: 100%;
+      padding: 12px;
+      display: inline-block;
+      box-shadow: none;
+      font-weight: 600;
+      font-size: 14px;
+      border: 1px solid #dddddd;
+      line-height: 20px;
+      background-size: 200% 100%;
+      background-position: right bottom;
+      transition: all 300ms ease-in-out;
     }
   }
 }

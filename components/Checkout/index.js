@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from "react"
 // import { useCart } from "@saleor/sdk"
-import { useCart } from "@sdk/react";
+import { useCart } from "@sdk/react"
 
-import MyCartComponent from "./MyCart";
-import Item from "./Item";
-import Money from "../Money";
+import MyCartComponent from "./MyCart"
+import Item from "./Item"
+import Money from "../Money"
 
 export default function CheckoutComponent() {
   const {
@@ -14,16 +14,26 @@ export default function CheckoutComponent() {
     totalPrice,
     subtotalPrice,
     shippingPrice,
-  } = useCart();
+  } = useCart()
 
   useEffect(() => {
     const data = {
       lines: [
         {
+          id: "Q2hlY2tvdXRMaW5lOjIxMA==",
           quantity: 1,
           totalPrice: {
-            gross: { amount: 21, currency: "USD", __typename: "Money" },
-            net: { amount: 21, currency: "USD", __typename: "Money" },
+            gross: {
+              amount: 30,
+              currency: "AUD",
+              __typename: "Money",
+            },
+            net: {
+              amount: 30,
+              currency: "AUD",
+              __typename: "Money",
+            },
+            __typename: "TaxedMoney",
           },
           variant: {
             attributes: [
@@ -48,15 +58,31 @@ export default function CheckoutComponent() {
             isAvailable: true,
             name: "L",
             pricing: {
-              onSale: true,
+              onSale: false,
               priceUndiscounted: {
-                gross: { amount: 30, currency: "USD", __typename: "Money" },
-                net: { amount: 30, currency: "USD", __typename: "Money" },
+                gross: {
+                  amount: 30,
+                  currency: "AUD",
+                  __typename: "Money",
+                },
+                net: {
+                  amount: 30,
+                  currency: "AUD",
+                  __typename: "Money",
+                },
                 __typename: "TaxedMoney",
               },
               price: {
-                gross: { amount: 21, currency: "USD", __typename: "Money" },
-                net: { amount: 21, currency: "USD", __typename: "Money" },
+                gross: {
+                  amount: 30,
+                  currency: "AUD",
+                  __typename: "Money",
+                },
+                net: {
+                  amount: 30,
+                  currency: "AUD",
+                  __typename: "Money",
+                },
                 __typename: "TaxedMoney",
               },
               __typename: "VariantPricingInfo",
@@ -66,13 +92,13 @@ export default function CheckoutComponent() {
               name: "White Hoodie",
               thumbnail: {
                 url:
-                  "https://demo.saleor.io/media/__sized__/products/saleordemoproduct_cl_bogo04_1-thumbnail-255x255.png",
+                  "https://bbsfrapi.bikebiz.com.au/static/images/placeholder255x255.png",
                 alt: "",
                 __typename: "Image",
               },
               thumbnail2x: {
                 url:
-                  "https://demo.saleor.io/media/__sized__/products/saleordemoproduct_cl_bogo04_1-thumbnail-510x510.png",
+                  "https://bbsfrapi.bikebiz.com.au/static/images/placeholder540x540.png",
                 __typename: "Image",
               },
               productType: {
@@ -86,10 +112,20 @@ export default function CheckoutComponent() {
           },
         },
         {
+          id: "Q2hlY2tvdXRMaW5lOjIxMQ==",
           quantity: 1,
           totalPrice: {
-            gross: { amount: 44.1, currency: "USD", __typename: "Money" },
-            net: { amount: 44.1, currency: "USD", __typename: "Money" },
+            gross: {
+              amount: 49,
+              currency: "AUD",
+              __typename: "Money",
+            },
+            net: {
+              amount: 49,
+              currency: "AUD",
+              __typename: "Money",
+            },
+            __typename: "TaxedMoney",
           },
           variant: {
             attributes: [
@@ -114,15 +150,31 @@ export default function CheckoutComponent() {
             isAvailable: true,
             name: "41",
             pricing: {
-              onSale: true,
+              onSale: false,
               priceUndiscounted: {
-                gross: { amount: 49, currency: "USD", __typename: "Money" },
-                net: { amount: 49, currency: "USD", __typename: "Money" },
+                gross: {
+                  amount: 49,
+                  currency: "AUD",
+                  __typename: "Money",
+                },
+                net: {
+                  amount: 49,
+                  currency: "AUD",
+                  __typename: "Money",
+                },
                 __typename: "TaxedMoney",
               },
               price: {
-                gross: { amount: 44.1, currency: "USD", __typename: "Money" },
-                net: { amount: 44.1, currency: "USD", __typename: "Money" },
+                gross: {
+                  amount: 49,
+                  currency: "AUD",
+                  __typename: "Money",
+                },
+                net: {
+                  amount: 49,
+                  currency: "AUD",
+                  __typename: "Money",
+                },
                 __typename: "TaxedMoney",
               },
               __typename: "VariantPricingInfo",
@@ -132,13 +184,13 @@ export default function CheckoutComponent() {
               name: "White Plimsolls",
               thumbnail: {
                 url:
-                  "https://demo.saleor.io/media/__sized__/products/saleordemoproduct_sneakers_02_1-thumbnail-255x255.png",
+                  "https://bbsfrapi.bikebiz.com.au/static/images/placeholder255x255.png",
                 alt: "",
                 __typename: "Image",
               },
               thumbnail2x: {
                 url:
-                  "https://demo.saleor.io/media/__sized__/products/saleordemoproduct_sneakers_02_1-thumbnail-510x510.png",
+                  "https://bbsfrapi.bikebiz.com.au/static/images/placeholder540x540.png",
                 __typename: "Image",
               },
               productType: {
@@ -152,10 +204,10 @@ export default function CheckoutComponent() {
           },
         },
       ],
-    };
+    }
 
-    window.localStorage.setItem("data_checkout", JSON.stringify(data));
-  }, []);
+    window.localStorage.setItem("data_checkout", JSON.stringify(data))
+  }, [])
 
   return (
     <MyCartComponent
@@ -165,7 +217,7 @@ export default function CheckoutComponent() {
       itemsCount={items?.length}
       shippingPrice={shippingPrice}
     />
-  );
+  )
 }
 
 export const generateCart = (items, removeItem, updateItem, viewOnly) => {
@@ -186,6 +238,7 @@ export const generateCart = (items, removeItem, updateItem, viewOnly) => {
       onQuantityChange={(quantity) => updateItem(variant.id, quantity)}
       sku={variant.sku}
       viewOnly={viewOnly}
+      quantityAvailable={variant.quantityAvailable}
       attributes={variant.attributes?.map((attribute) => {
         return {
           attribute: {
@@ -197,10 +250,10 @@ export const generateCart = (items, removeItem, updateItem, viewOnly) => {
               id: value?.id,
               name: value?.name || "",
               value: value?.value,
-            };
+            }
           }),
-        };
+        }
       })}
     />
-  ));
-};
+  ))
+}

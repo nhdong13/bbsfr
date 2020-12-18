@@ -1,9 +1,11 @@
 import { Container, Row, Col, Form, Button } from "react-bootstrap"
 import Image from "next/image"
 import clsx from "clsx"
+
 import styles from "./CheckoutItem.module.scss"
 
 export default function ItemComponent({
+  id,
   name,
   quantity,
   thumbnail,
@@ -11,6 +13,8 @@ export default function ItemComponent({
   onRemove,
   attributes,
   viewOnly,
+  onQuantityChange,
+  quantityAvailable,
 }) {
   const size = attributes ? attributes[0]?.values[0] : {}
 
@@ -23,7 +27,7 @@ export default function ItemComponent({
               {thumbnail && (
                 <Image
                   src={thumbnail.url}
-                  alt={thumbnail.alt}
+                  alt={thumbnail.alt || ""}
                   width={96}
                   height={96}
                 />
@@ -35,17 +39,7 @@ export default function ItemComponent({
               <Form.Row>
                 <Form.Group controlId="itemSize" as={Col} xs="4">
                   <Form.Label className={styles.formLabel}>Size</Form.Label>
-                  {viewOnly ? (
-                    ` ${size.value}`
-                  ) : (
-                    <Form.Control as="select" custom>
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
-                    </Form.Control>
-                  )}
+                  {viewOnly ? ` ${size.value}` : <div>{size.value}</div>}
                 </Form.Group>
 
                 <Form.Group controlId="itemQty" as={Col} xs="4">
@@ -53,12 +47,18 @@ export default function ItemComponent({
                   {viewOnly ? (
                     ` ${quantity}`
                   ) : (
-                    <Form.Control as="select" custom>
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
+                    <Form.Control
+                      as="select"
+                      custom
+                      onChange={(ev) =>
+                        onQuantityChange(ev.currentTarget.value)
+                      }
+                    >
+                      {Array(quantityAvailable)
+                        .fill()
+                        .map((_, i) => (
+                          <option key={i}>{i + 1}</option>
+                        ))}
                     </Form.Control>
                   )}
                 </Form.Group>

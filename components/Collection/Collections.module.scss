@@ -1,0 +1,378 @@
+@import "/styles/variables.scss";
+@import "/styles/mixin";
+
+$product-count-color: #939393;
+$border-color: #e5e5e4;
+$border-color-sort-filter: #d0d1cf;
+$bg-sort-filter: #f6f6f6;
+.result {
+  text-align: left !important;
+}
+
+.headerCollectionPage {
+  background-color: $primary-text-color;
+  .contentHeader {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    .page_heading_1_collection_page {
+      font-family: Rajdhani;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 31px;
+      line-height: 31px;
+      text-transform: uppercase;
+      color: #ffffff;
+    }
+    .product_count_collection_page {
+      font-style: normal;
+      font-weight: normal;
+      font-size: 12px;
+      line-height: 20px;
+      color: $product-count-color;
+    }
+  }
+}
+.categories {
+  padding-top: 40px;
+  padding-bottom: 40px;
+
+  .header_category {
+    font-family: Rajdhani;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 21px;
+    line-height: 21px;
+    /* identical to box height, or 100% */
+
+    text-transform: uppercase;
+  }
+  .list_category {
+    padding-top: 20px;
+    transition: all 100ms ease-out;
+    a {
+      text-decoration: none;
+      &:hover {
+        color: $primary-text-color;
+      }
+    }
+  }
+  .category {
+    padding-top: 5px;
+    display: flex;
+    align-items: center;
+
+    font-family: Rajdhani;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+
+    .count_category {
+      padding-left: 0.5rem;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 16px;
+      color: $product-count-color;
+    }
+  }
+
+  .show_less_show_more {
+    padding-top: 5px;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 20px;
+    text-decoration: underline;
+    color: $primary-text-color;
+  }
+}
+
+.pre_page_button {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  border-top: 0.5px solid $border-color;
+  display: flex;
+  font-size: 12px;
+}
+
+.filter_sort_sajari {
+  padding: 16px;
+  background-color: $bg-sort-filter;
+
+  .short_filter {
+    cursor: pointer;
+    position: relative;
+
+    padding-top: 14px;
+    padding-bottom: 13px;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    border: 1px solid $border-color-sort-filter;
+    border-radius: 4px;
+
+    .title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-basis: 50%;
+
+      font-family: Rajdhani;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 20px;
+      text-align: center;
+
+      img {
+        left: -7.5px !important;
+      }
+    }
+
+    .horizontal_line {
+      position: absolute;
+      width: 1px;
+      top: 20%;
+      background-color: $border-color-sort-filter;
+      height: 60%;
+    }
+  }
+}
+
+//Sort/Filter Sajari
+
+.radio_sajari {
+  input {
+    color: black;
+  }
+}
+
+.sort_filter_by {
+  margin: 0.5rem 0.5rem;
+  .sub_heading {
+    text-transform: uppercase;
+    color: $product-count-color;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 20px;
+    margin-bottom: -10px;
+    // padding-top: 18px;
+    padding-left: 1rem;
+  }
+  .group_heading {
+    border-bottom: 0.5px solid #e5e5e4;
+    .text_heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      font-family: Rajhani;
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 20px;
+      color: $primary-text-color;
+
+      padding: 18px 1rem;
+      cursor: pointer;
+    }
+    .sort_filter_collapse {
+      padding-left: 1rem;
+      margin-top: -10px;
+      padding-bottom: 10px;
+
+      font-size: 14px !important;
+      text-transform: uppercase;
+      line-height: 20px;
+    }
+  }
+  .group_heading.active {
+    border: none;
+  }
+}
+
+.sort_filter_by.sorting {
+  margin-top: 1rem;
+}
+
+.button_sajari {
+  padding: 1rem 0;
+  background-color: #fff;
+
+  position: sticky;
+  width: 100%;
+  bottom: 0;
+  .modal_button {
+    padding: 0 0.5rem;
+  }
+  button {
+    height: 48px;
+    width: 100%;
+    border-radius: 8px;
+
+    font-family: Rajdhani;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 18px;
+    text-align: center;
+  }
+}
+//End Sort/Filter Sajari
+
+//------------->
+.listProduct {
+  display: flex;
+  height: auto;
+  margin: 0px auto;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  overflow: hidden;
+  width: 30%;
+
+  .containerProduct {
+    border-right: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
+    height: 312px;
+    width: 172px;
+    position: relative;
+
+    .elementProduct {
+      padding-top: 15px;
+      padding-bottom: 15px;
+
+      .sessionInfo {
+        padding-left: 15px;
+        padding-right: 15px;
+        .nameProduct {
+          @include font-family(Rajdhani, 14px, 500, $primary-text-color);
+          p {
+            margin-bottom: 0px;
+          }
+        }
+
+        .priceProduct {
+          @include font-family(Rajdhani, 16px, 600, $primary-text-color);
+          p {
+            margin-bottom: 0px;
+          }
+        }
+      }
+    }
+  }
+
+  .containerProductMode {
+    border-right: unset;
+    position: relative;
+    @extend .containerProduct;
+  }
+
+  .containerProduct:before {
+    z-index: 1;
+    position: absolute;
+    content: "\25A0";
+    color: white;
+    font-weight: bold;
+    display: inline-block;
+    top: 100%;
+    left: 100%;
+    transform: translate(-40%, -45%) scale(1.5);
+  }
+
+  .unsetBorder {
+    border-bottom: unset !important;
+  }
+}
+
+@media only screen and (max-width: 2560px) {
+  .listProduct {
+    width: 28%;
+  }
+}
+
+@media only screen and (max-width: 1920px) {
+  .listProduct {
+    width: 40%;
+  }
+}
+
+@media only screen and (max-width: 1440px) {
+  .listProduct {
+    width: 48%;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .listProduct {
+    width: 70%;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .listProduct {
+    width: 88%;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .listProduct {
+    width: 90%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .listProduct {
+    width: 60%;
+  }
+}
+
+@media only screen and (max-width: 540px) {
+  .listProduct {
+    width: 65%;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .listProduct {
+    width: 74%;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .listProduct {
+    width: 84%;
+  }
+}
+
+@media only screen and (max-width: 384px) {
+  .listProduct {
+    width: 91%;
+  }
+}
+
+@media only screen and (max-width: 375px) {
+  .listProduct {
+    width: 92%;
+  }
+}
+
+@media only screen and (max-width: 365px) {
+  .listProduct {
+    width: 95%;
+  }
+}
+
+@media only screen and (max-width: 360px) {
+  .listProduct {
+    width: 96%;
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  .listProduct {
+    width: 94%;
+    .containerProduct {
+      width: 150px;
+    }
+  }
+}

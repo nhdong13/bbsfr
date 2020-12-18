@@ -32,7 +32,7 @@ export default function ShippingMethods({
             <span className={styles.btnIcon}>
               <Image
                 src={SHIPPING_METHODS_ICON[method.name]}
-                alt={method.name}
+                alt={method.name || ""}
                 width={16}
                 height={16}
               />
@@ -49,5 +49,5 @@ export default function ShippingMethods({
         ))}
       </Col>
     </Row>
-  )
+  );
 }

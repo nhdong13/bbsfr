@@ -2,18 +2,30 @@ import React from "react"
 import { Row, Col, Button, Form, Container } from "react-bootstrap"
 import clsx from "clsx"
 
+import ErrorMessageWrapper from "../../ErrorMessageWrapper"
 import styles from "../CheckoutEmailPassword.module.scss"
 
-export default function CheckoutPassword({ values, handleChange }) {
+export default function CheckoutPassword({
+  values,
+  handleChange,
+  existedEmailChecking,
+  errors,
+  touched,
+}) {
   return (
     <Row className={styles.emailBody}>
       <Container>
         <Row>
           <Col md="12">
-            <h2 className="font-weight-bold">Looks like you’re new here,</h2>
-            <p>
-              Please enter a password to create your account continue to
-              delivery and payment
+            <h2 className="font-weight-bold">
+              {existedEmailChecking
+                ? "Looks like you’ve been here,"
+                : "Looks like you’re new here,"}
+            </h2>
+            <p className={styles.content}>
+              {existedEmailChecking
+                ? "Please enter a password to login your account continue to delivery and payment"
+                : "Please enter a password to create your account continue to delivery and payment"}
             </p>
           </Col>
         </Row>
@@ -28,6 +40,11 @@ export default function CheckoutPassword({ values, handleChange }) {
               value={values.password}
               onChange={handleChange}
             />
+            <ErrorMessageWrapper
+              errors={errors}
+              touched={touched}
+              fieldName="password"
+            />
           </Form.Group>
 
           <Form.Group controlId="giftCardNumber" as={Col} xs="12">
@@ -36,7 +53,7 @@ export default function CheckoutPassword({ values, handleChange }) {
               className={clsx(styles.btn, "w-100")}
               type="submit"
             >
-              Continue
+              CONTINUE
             </Button>
           </Form.Group>
         </Form.Row>

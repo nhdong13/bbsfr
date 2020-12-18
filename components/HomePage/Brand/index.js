@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react"
 import { Container, Row, Col } from "react-bootstrap"
 import styles from "../HomePage.module.scss"
 import Slider from "react-slick"
-import "slick-carousel/slick/slick.css"
-import "slick-carousel/slick/slick-theme.css"
 import { pad, chunks, checkID } from "../../../services/brand.js"
 import Image from "next/image"
 import Link from "next/link"
@@ -21,7 +19,7 @@ export default function Brand(props) {
   })
 
   let brands = chunks(props.brands, 6)
-  let num_pages = Math.floor(brands.length / 6) + 1
+  let num_pages = Math.floor(props.brands.length / 6) + 1
   const settings = {
     infinite: true,
     speed: 500,
@@ -47,51 +45,59 @@ export default function Brand(props) {
       <div className={styles.striped}></div>
       <div className={styles.group_heading}>
         <h2 className={styles.text_heading_line_40}>shop by brand</h2>
-        <Link href="/[slug]" as={`/brands`}>
-          <p className={styles.view_all_btn}>view all</p>
+        <Link href="/brands">
+          <a>
+            <p className={styles.view_all_btn}>view all</p>
+          </a>
         </Link>
       </div>
       <Slider {...settings} className={styles.slider_custom}>
-        {brands.map((brand) => (
-          <div>
+        {brands.map((brand, index) => (
+          <div key={index}>
             <Row className="auto-clear">
               {brand.map((b, id) =>
                 (id + 1) / 4 != 1 ? (
-                  <Link href={b.brand_link}>
-                    <Col
-                      className={`${styles.logo_custom} ${
-                        styles.point_line_brand
-                      } ${checkID(id, styles, brand.length)}`}
-                    >
-                      <Image
-                        className={styles.image_logo}
-                        src={b.brand_logo.url}
-                        alt={b.brand_logo.alt}
-                        height={image_width}
-                        width={image_width}
-                        loading="eager"
-                      ></Image>
-                    </Col>
-                  </Link>
-                ) : (
-                  [
-                    <div className="w-100"></div>,
-                    <Link href={b.brand_link}>
-                      <Col
-                        className={`${styles.logo_custom} ${
-                          styles.point_line_brand
-                        } ${checkID(id, styles)}`}
-                      >
+                  <Col
+                    key={id}
+                    className={`${styles.logo_custom} ${
+                      styles.point_line_brand
+                    } ${checkID(id, styles, brand.length)}`}
+                  >
+                    <Link href={b.brand_link} key={id}>
+                      <a>
                         <Image
                           className={styles.image_logo}
                           src={b.brand_logo.url}
-                          alt={b.brand_logo.alt}
+                          alt={b.brand_logo.alt || ""}
                           height={image_width}
                           width={image_width}
                           loading="eager"
                         ></Image>
-                      </Col>
-                    </Link>,
+                      </a>
+                    </Link>
+                  </Col>
+                ) : (
+                  [
+                    <div className="w-100" key={-id.toString()}></div>,
+                    <Col
+                      key={id}
+                      className={`${styles.logo_custom} ${
+                        styles.point_line_brand
+                      } ${checkID(id, styles)}`}
+                    >
+                      <Link href={b.brand_link} key={id}>
+                        <a>
+                          <Image
+                            className={styles.image_logo}
+                            src={b.brand_logo.url}
+                            alt={b.brand_logo.alt || ""}
+                            height={image_width}
+                            width={image_width}
+                            loading="eager"
+                          ></Image>
+                        </a>
+                      </Link>
+                    </Col>,
                   ]
                 )
               )}
@@ -107,6 +113,7 @@ export default function Brand(props) {
       <div className={styles.card_holder}>
         {brands.map((brand, id) => (
           <div
+            key={id}
             className={`${styles.card} ${styles.bg_gold} ${
               activeSlide == id + 1 ? styles.card_active : styles.card_inactive
             }`}

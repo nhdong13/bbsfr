@@ -1,9 +1,23 @@
-import { Row, Col, Button, Form, Container } from "react-bootstrap"
-import clsx from "clsx"
+import { Row, Col, Form, Container } from "react-bootstrap"
 
+import ErrorMessageWrapper from "../../ErrorMessageWrapper"
+import { COUNTRIES_RESTRICTION } from "../constants"
 import styles from "../Delivery.module.scss"
 
-export default function BillingAddress({ values, handleChange }) {
+export default function BillingAddress({
+  values,
+  handleChange,
+  errors,
+  touched,
+  setFieldValue,
+}) {
+  const handleChangeCountry = (ev) => {
+    const selectedCountry = COUNTRIES_RESTRICTION.find(
+      (country) => country.code === ev.target.value
+    )
+    setFieldValue("billingAddress.country", selectedCountry)
+  }
+
   return (
     <Row className={styles.shippingAddress}>
       <Container>
@@ -17,6 +31,11 @@ export default function BillingAddress({ values, handleChange }) {
               value={values.firstName}
               onChange={handleChange}
             />
+            <ErrorMessageWrapper
+              errors={errors}
+              touched={touched}
+              fieldName="billingAddress.firstName"
+            />
           </Form.Group>
 
           <Form.Group controlId="lastName" as={Col} xs="12">
@@ -28,17 +47,28 @@ export default function BillingAddress({ values, handleChange }) {
               value={values.lastName}
               onChange={handleChange}
             />
+            <ErrorMessageWrapper
+              errors={errors}
+              touched={touched}
+              fieldName="billingAddress.lastName"
+            />
           </Form.Group>
 
           <Form.Group controlId="country" as={Col} xs="12">
             <Form.Label>Country</Form.Label>
             <Form.Control
-              type="text"
-              placeholder="Country"
+              as="select"
               name="billingAddress.country"
-              value={values.country.country}
-              onChange={handleChange}
-            />
+              onChange={handleChangeCountry}
+              value={values.country.code}
+              readOnly={true}
+            >
+              {COUNTRIES_RESTRICTION.map(({ country, code }) => (
+                <option key={code} value={code}>
+                  {country}
+                </option>
+              ))}
+            </Form.Control>
           </Form.Group>
 
           <Form.Group controlId="streetAddress1" as={Col} xs="12">
@@ -49,6 +79,11 @@ export default function BillingAddress({ values, handleChange }) {
               name="billingAddress.streetAddress1"
               value={values.streetAddress1}
               onChange={handleChange}
+            />
+            <ErrorMessageWrapper
+              errors={errors}
+              touched={touched}
+              fieldName="billingAddress.streetAddress1"
             />
           </Form.Group>
 
@@ -72,16 +107,26 @@ export default function BillingAddress({ values, handleChange }) {
               value={values.city}
               onChange={handleChange}
             />
+            <ErrorMessageWrapper
+              errors={errors}
+              touched={touched}
+              fieldName="billingAddress.city"
+            />
           </Form.Group>
 
-          <Form.Group controlId="state" as={Col} xs="12">
-            <Form.Label>State/Province/Region (optional)</Form.Label>
+          <Form.Group controlId="countryArea" as={Col} xs="12">
+            <Form.Label>State/Province/Region</Form.Label>
             <Form.Control
               type="text"
               placeholder="e.g NSW"
-              name="billingAddress.state"
-              value={values.state}
+              name="billingAddress.countryArea"
+              value={values.countryArea}
               onChange={handleChange}
+            />
+            <ErrorMessageWrapper
+              errors={errors}
+              touched={touched}
+              fieldName="billingAddress.countryArea"
             />
           </Form.Group>
 
@@ -93,6 +138,11 @@ export default function BillingAddress({ values, handleChange }) {
               name="billingAddress.postalCode"
               value={values.postalCode}
               onChange={handleChange}
+            />
+            <ErrorMessageWrapper
+              errors={errors}
+              touched={touched}
+              fieldName="billingAddress.postalCode"
             />
           </Form.Group>
 
@@ -107,14 +157,19 @@ export default function BillingAddress({ values, handleChange }) {
             />
           </Form.Group>
 
-          <Form.Group controlId="phoneNumber" as={Col} xs="12">
+          <Form.Group controlId="phone" as={Col} xs="12">
             <Form.Label>Phone Number</Form.Label>
             <Form.Control
               type="text"
               placeholder="Phone Number"
-              name="billingAddress.phoneNumber"
-              value={values.phoneNumber}
+              name="billingAddress.phone"
+              value={values.phone}
               onChange={handleChange}
+            />
+            <ErrorMessageWrapper
+              errors={errors}
+              touched={touched}
+              fieldName="billingAddress.phone"
             />
           </Form.Group>
         </Form.Row>

@@ -25,12 +25,40 @@
       "mountPoints": [],
       "image": "569460749621.dkr.ecr.ap-southeast-2.amazonaws.com/bbsfr-staging-storefront:latest",
       "name": "bbsfr-staging-storefront-container"
+    },
+    {
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/bbsfr-staging-storefront",
+          "awslogs-region": "ap-southeast-2",
+          "awslogs-stream-prefix": "ecs"
+        }
+      },
+      "portMappings": [
+        {
+          "hostPort": 0,
+          "protocol": "tcp",
+          "containerPort": 80
+        }
+      ],
+      "cpu": 0,
+      "memory": 500,
+      "environment": [],
+      "mountPoints": [],
+      "image": "569460749621.dkr.ecr.ap-southeast-2.amazonaws.com/staging-storefront-nginx:latest",
+      "essential": true,
+      "links": [
+        "bbsfr-staging-storefront-container:web"
+      ],
+      "name": "bbsfr-staging-nginx-container"
     }
   ],
-  "memory": "500",
+  "memory": "950",
   "family": "bbsfr-staging-storefront",
   "requiresCompatibilities": [
     "EC2"
   ],
-  "cpu": "500"
+  "networkMode": "bridge",
+  "cpu": "1024"
 }

@@ -8,13 +8,14 @@ $primary-text-color: #181818;
 $secondary-text-color: #939393;
 $department-category-color: #f6f6f6;
 $status-product-color: #ffb00f;
+$text-white: #ffffff;
 
 // Button
 $primary-button-background-color: #222222;
 $primary-button-color: #fff;
 
 $secondary-button-background-color: #ffb00f;
-$secondary-button-color: $primary-text-color;
+$secondary-button-color: $text-white;
 
 $gray-button-background-color: #f4f4f4;
 $gray-button-color: $primary-text-color;
@@ -25,3 +26,6 @@ $white-button-color: $primary-text-color;
 // Border
 $primary-border-color: #dbdbdb;
 $secondary-border-color: #e5e5e5;
+
+//Hover
+$color-hover: #90d3ff;
