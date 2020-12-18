@@ -1,12 +1,17 @@
 image: node:12.15.0
+options:
+  docker: true
+  size: 2x
 
 definitions:
   services:
     push-image: &push-image
       name: Build Docker Image
       services:
-        - docker
+        docker:
+          memory: 2048
       image: atlassian/pipelines-awscli
+      size: 2x
       script:
         - export NODE_ENV=staging
         - export BUILD_ID=$BITBUCKET_BRANCH_$BITBUCKET_COMMIT_$BITBUCKET_BUILD_NUMBER
