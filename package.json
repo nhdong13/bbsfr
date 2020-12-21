@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "dev-other-port": "next dev -p 4100",
     "build": "next build",
     "start": "next start",
     "build-docker": "docker build -t bbsfr-staging-storefront .",
