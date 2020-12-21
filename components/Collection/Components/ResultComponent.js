@@ -1,10 +1,9 @@
 import {
   SearchProvider,
-  Variables,
   FieldDictionary,
   FilterBuilder,
 } from "@sajari/react-search-ui"
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useMemo } from "react"
 import { Container, Modal, Collapse, Button } from "react-bootstrap"
 import { constants } from "../../../constant"
 import PaginationComponent from "../../Common/PaginationComponent"
@@ -16,20 +15,27 @@ import {
 } from "../../../services/collection"
 import styles from "../Collections.module.scss"
 import Link from "next/link"
-import { useSearchContext } from "@sajari/react-hooks"
+import {
+  useSearchContext,
+  useVariables,
+  useResultsPerPage,
+} from "@sajari/react-hooks"
 import Header from "../../Header"
 import SortFilterComponent from "./SortFilterComponent"
+
+const productTypeFilter = new FilterBuilder({
+  name: "type",
+  field: "categories",
+})
 
 const ResultComponent = (props) => {
   const { pipeline, initialResponse } = props
   const [windowWidth, setWindowWidths] = useState()
   const [countUnsetBorder, setCountUnsetBorder] = useState(2)
   const [show, setShow] = useState(false)
-  const [params, setParams] = useState({
-    sort: "",
-  })
   const [sortFitlerChanged, setChanged] = useState(false)
   const [countBol, setcountBol] = useState(0)
+  const [isSetResultPerPage, setIsResultPerPage] = useState(false)
   // TOTO: wating for data from Prismic or Sajari
   const [listSorting, setListSorting] = useState([
     {
@@ -140,17 +146,16 @@ const ResultComponent = (props) => {
       </div>
     </Container>
   )
+  const { resultsPerPage, setResultsPerPage } = useResultsPerPage()
+  if (!isSetResultPerPage) {
+    setIsResultPerPage(true)
+    setResultsPerPage(20)
+  }
 
-  const productTypeFilter = new FilterBuilder({
-    name: "type",
-    field: "price",
-  })
-
-  const variables = new Variables({
-    resultsPerPage: constants.RESULT_PER_PAGE,
-    ...params,
-  })
+  // !isSetResultPerPage && setResultsPerPage(20) && setIsResultPerPage(true)
+  const { variables } = useVariables()
   const { results } = useSearchContext()
+
   return (
     <>
       <SortFilterButton />
@@ -185,8 +190,6 @@ const ResultComponent = (props) => {
             list={listSorting}
             setOpen={setOpenSortingCollapse}
             type={"sort"}
-            setParams={setParams}
-            params={params}
             setChanged={setChanged}
           />
           {/* Filter feature */}

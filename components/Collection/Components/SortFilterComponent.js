@@ -1,19 +1,63 @@
 import React, { useState } from "react"
 import styles from "../Collections.module.scss"
 import { Collapse } from "react-bootstrap"
-import { Filter } from "@sajari/react-search-ui"
 import Image from "next/image"
-import { useSorting } from "@sajari/react-hooks"
-import { Radio, RadioGroup } from "@sajari/react-components"
+import { useSorting, useFilter } from "@sajari/react-hooks"
+import {
+  Radio,
+  RadioGroup,
+  CheckboxGroup,
+  Checkbox,
+} from "@sajari/react-components"
 
-const HeaderCollectionComponent = ({
-  list,
-  type,
-  setOpen,
-  setParams,
-  params,
-  setChanged,
-}) => {
+const SortFilterComponent = ({ list, type, setOpen, setChanged }) => {
+  const [listFilter, setListFilter] = useState([])
+  const [isSaveListFilter, setSaveListFilter] = useState(false)
+  const FilterRender = React.memo(({ name, title }) => {
+    const { multi, options, selected, setSelected } = useFilter(name)
+    // console.log(isSaveListFilter, listFilter)
+    if (options.length === 0) {
+      return null
+    } else if (!isSaveListFilter) {
+      setSaveListFilter(true)
+      setListFilter(options)
+    }
+
+    const Group = multi ? CheckboxGroup : RadioGroup
+    const Control = multi ? Checkbox : Radio
+    return (
+      <div className="mb-4">
+        <div className="flex items-center justify-between mb-2"></div>
+        <Group
+          name={name}
+          value={selected}
+          onChange={(values) => {
+            setSelected(Array.isArray(values) ? values : [values])
+          }}
+        >
+          {listFilter.map(({ value, label, count }) => (
+            <div
+              className="flex justify-between items-center"
+              key={label + count}
+            >
+              <Control
+                value={label}
+                checked={selected.includes(label)}
+                onChange={() => {}}
+                fontSize="sm"
+              >
+                {label}
+              </Control>
+              <span className="ml-2 text-xs text-gray-400">{count}</span>
+            </div>
+          ))}
+        </Group>
+      </div>
+    )
+  })
+
+  const BrandFilter = () => <FilterRender name="type" title="Brand" />
+
   const SortingComponent = React.memo(() => {
     const { sorting, setSorting } = useSorting()
 
@@ -25,7 +69,6 @@ const HeaderCollectionComponent = ({
             value={sorting}
             onChange={(e) => {
               setSorting(e.target.value)
-              setParams({ ...params, sort: e.target.value })
               setChanged(true)
             }}
           >
@@ -69,17 +112,7 @@ const HeaderCollectionComponent = ({
             <div className={styles.sort_filter_collapse}>
               <Collapse in={item.open}>
                 <div id="example2-collapse-text">
-                  {type == "sort" ? (
-                    <SortingComponent />
-                  ) : (
-                    <Filter
-                      name="type"
-                      pinSelected={false}
-                      searchable
-                      sort="count"
-                      sortAscending={true}
-                    />
-                  )}
+                  {type == "sort" ? <SortingComponent /> : <BrandFilter />}
                 </div>
               </Collapse>
             </div>
@@ -90,4 +123,4 @@ const HeaderCollectionComponent = ({
   )
 }
 
-export default HeaderCollectionComponent
+export default SortFilterComponent
