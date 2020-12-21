@@ -8,55 +8,77 @@ import {
   RadioGroup,
   CheckboxGroup,
   Checkbox,
+  Combobox,
 } from "@sajari/react-components"
 
-const SortFilterComponent = ({ list, type, setOpen, setChanged }) => {
-  const [listFilter, setListFilter] = useState([])
-  const [isSaveListFilter, setSaveListFilter] = useState(false)
-  const FilterRender = React.memo(({ name, title }) => {
-    const { multi, options, selected, setSelected } = useFilter(name)
-    // console.log(isSaveListFilter, listFilter)
-    if (options.length === 0) {
-      return null
-    } else if (!isSaveListFilter) {
-      setSaveListFilter(true)
-      setListFilter(options)
+let arrayToFilter = []
+let isSetArrayToFilter = false
+
+const FilterRender = React.memo(({ name, setChanged }) => {
+  const [searchInputFilter, setSearch] = useState("")
+
+  const { multi, options, selected, setSelected } = useFilter(name)
+  if (options.length === 0) {
+    return null
+  } else {
+    if (!isSetArrayToFilter) {
+      arrayToFilter = options
+      isSetArrayToFilter = !isSetArrayToFilter
     }
-
-    const Group = multi ? CheckboxGroup : RadioGroup
-    const Control = multi ? Checkbox : Radio
-    return (
-      <div className="mb-4">
-        <div className="flex items-center justify-between mb-2"></div>
-        <Group
-          name={name}
-          value={selected}
-          onChange={(values) => {
-            setSelected(Array.isArray(values) ? values : [values])
-          }}
-        >
-          {listFilter.map(({ value, label, count }) => (
-            <div
-              className="flex justify-between items-center"
-              key={label + count}
-            >
-              <Control
-                value={label}
-                checked={selected.includes(label)}
-                onChange={() => {}}
-                fontSize="sm"
-              >
-                {label}
-              </Control>
-              <span className="ml-2 text-xs text-gray-400">{count}</span>
-            </div>
-          ))}
-        </Group>
-      </div>
+  }
+  const [filterArray, setFilterArray] = useState([...arrayToFilter])
+  const handleFilter = (e) => {
+    let updateArray = arrayToFilter.filter((x) =>
+      x.label.toLowerCase().includes(e.toLowerCase())
     )
-  })
+    setFilterArray(updateArray)
+    setSearch(e)
+  }
+  const Group = multi ? CheckboxGroup : RadioGroup
+  const Control = multi ? Checkbox : Radio
+  return (
+    <div className="mb-4">
+      <Combobox
+        className={styles.sajari_combobox}
+        placeholder="Search"
+        value={searchInputFilter}
+        onChange={handleFilter}
+      />
 
-  const BrandFilter = () => <FilterRender name="type" title="Brand" />
+      <div className="flex items-center justify-between mb-2"></div>
+      <Group
+        name={name}
+        value={selected}
+        onChange={(values) => {
+          setSelected(Array.isArray(values) ? values : [values])
+          setChanged(true)
+        }}
+      >
+        {filterArray.map(({ value, label, count }) => (
+          <div
+            className="flex justify-between items-center"
+            key={label + count}
+          >
+            <Control
+              className={styles.sajari_checkbox}
+              value={label}
+              checked={selected.includes(label)}
+              onChange={() => {}}
+              fontSize="sm"
+            >
+              {label}
+            </Control>
+          </div>
+        ))}
+      </Group>
+    </div>
+  )
+})
+
+const SortFilterComponent = ({ list, type, setOpen, setChanged }) => {
+  const BrandFilter = () => (
+    <FilterRender name="type" title="Brand" setChanged={setChanged} />
+  )
 
   const SortingComponent = React.memo(() => {
     const { sorting, setSorting } = useSorting()
@@ -112,7 +134,14 @@ const SortFilterComponent = ({ list, type, setOpen, setChanged }) => {
             <div className={styles.sort_filter_collapse}>
               <Collapse in={item.open}>
                 <div id="example2-collapse-text">
-                  {type == "sort" ? <SortingComponent /> : <BrandFilter />}
+                  {type == "sort" ? (
+                    <SortingComponent />
+                  ) : id == 0 ? (
+                    <BrandFilter />
+                  ) : (
+                    <div>Filter Feature</div>
+                  )}
+                  {/*Id == 0 => TOTO: Pending for real data, just display one filed of filter(first element of listFilter)*/}
                 </div>
               </Collapse>
             </div>

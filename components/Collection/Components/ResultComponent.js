@@ -169,8 +169,7 @@ const ResultComponent = (props) => {
           filters: [productTypeFilter],
         }}
         initialResponse={initialResponse}
-        // searchOnLoad={!initialResponse}
-        searchOnLoad
+        searchOnLoad={!initialResponse}
         customClassNames={{
           filter: {
             resetButton: "resetButtonFilter",
@@ -197,12 +196,9 @@ const ResultComponent = (props) => {
             list={listFilter}
             setOpen={setOpenFilterCollapse}
             type={"filter"}
+            setChanged={setChanged}
           />
-          <div
-            onClick={handleClose}
-            className={styles.button_sajari}
-            fixed="bottom"
-          >
+          <div onClick={handleClose} className={styles.button_sajari}>
             <div className={styles.modal_button}>
               <Button
                 fixed="bottom"
