@@ -76,7 +76,7 @@ const ProductComponent = ({ products, item, index }) => {
                 <Image
                   alt={item.values.name}
                   src="https://images.prismic.io/slicemachine-blank/6b2bf485-aa12-44ef-8f06-dce6b91b9309_dancing.png?auto=compress,format"
-                  height={172}
+                  height={128}
                   width={172}
                 ></Image>
               </div>
