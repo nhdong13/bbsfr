@@ -34,9 +34,8 @@ export default function Department(props) {
             </div>
             <div className={styles.department_image}>
               <Image
-                width={215}
-                height={237}
-                className={styles.max_width_image}
+                width={236}
+                height={177}
                 src={props.image.url || ""}
                 alt={props.alt}
               />

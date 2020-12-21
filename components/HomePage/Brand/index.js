@@ -70,7 +70,7 @@ export default function Brand(props) {
                           src={b.brand_logo.url}
                           alt={b.brand_logo.alt || ""}
                           height={image_width}
-                          width={image_width}
+                          width={image_width * 1.33}
                           loading="eager"
                         ></Image>
                       </a>
@@ -92,7 +92,7 @@ export default function Brand(props) {
                             src={b.brand_logo.url}
                             alt={b.brand_logo.alt || ""}
                             height={image_width}
-                            width={image_width}
+                            width={image_width * 1.33}
                             loading="eager"
                           ></Image>
                         </a>
