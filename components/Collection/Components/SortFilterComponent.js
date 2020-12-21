@@ -11,10 +11,13 @@ import {
   Combobox,
 } from "@sajari/react-components"
 
+import Sorting from "../../Common/Sorting"
+import Filter from "../../Common/Filter"
+
 let arrayToFilter = []
 let isSetArrayToFilter = false
 
-const FilterRender = React.memo(({ name, setChanged }) => {
+const FilterRender = React.memo(({ name, setChanged, variables }) => {
   const [searchInputFilter, setSearch] = useState("")
 
   const { multi, options, selected, setSelected } = useFilter(name)
@@ -26,6 +29,7 @@ const FilterRender = React.memo(({ name, setChanged }) => {
       isSetArrayToFilter = !isSetArrayToFilter
     }
   }
+  console.log(selected)
   const [filterArray, setFilterArray] = useState([...arrayToFilter])
   const handleFilter = (e) => {
     let updateArray = arrayToFilter.filter((x) =>
@@ -51,6 +55,7 @@ const FilterRender = React.memo(({ name, setChanged }) => {
         value={selected}
         onChange={(values) => {
           setSelected(Array.isArray(values) ? values : [values])
+
           setChanged(true)
         }}
       >
@@ -75,35 +80,22 @@ const FilterRender = React.memo(({ name, setChanged }) => {
   )
 })
 
-const SortFilterComponent = ({ list, type, setOpen, setChanged }) => {
+const SortFilterComponent = ({
+  list,
+  type,
+  setOpen,
+  setChanged,
+  variables,
+}) => {
   const BrandFilter = () => (
-    <FilterRender name="type" title="Brand" setChanged={setChanged} />
+    <FilterRender
+      name="type"
+      title="Brand"
+      setChanged={setChanged}
+      variables={variables}
+    />
   )
 
-  const SortingComponent = React.memo(() => {
-    const { sorting, setSorting } = useSorting()
-
-    return (
-      <div className="">
-        <div>
-          <RadioGroup
-            className={styles.radio_sajari}
-            value={sorting}
-            onChange={(e) => {
-              setSorting(e.target.value)
-              setChanged(true)
-            }}
-          >
-            <Radio value="">Most relevant</Radio>
-            <Radio value="name">Name: A to Z</Radio>
-            <Radio value="-name">Name: Z to A</Radio>
-            <Radio value="price">Price: Low to High</Radio>
-            <Radio value="-price">Price: High to Low</Radio>
-          </RadioGroup>
-        </div>
-      </div>
-    )
-  })
   return (
     <>
       <div className={styles.sort_filter_by}>
@@ -135,9 +127,9 @@ const SortFilterComponent = ({ list, type, setOpen, setChanged }) => {
               <Collapse in={item.open}>
                 <div id="example2-collapse-text">
                   {type == "sort" ? (
-                    <SortingComponent />
+                    <Sorting setChanged={setChanged} />
                   ) : id == 0 ? (
-                    <BrandFilter />
+                    <Filter setChanged={setChanged} />
                   ) : (
                     <div>Filter Feature</div>
                   )}

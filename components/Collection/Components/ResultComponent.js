@@ -25,7 +25,9 @@ import SortFilterComponent from "./SortFilterComponent"
 
 const productTypeFilter = new FilterBuilder({
   name: "type",
-  field: "categories",
+  field: "price",
+  count: true,
+  multi: true,
 })
 
 const ResultComponent = (props) => {
@@ -61,6 +63,10 @@ const ResultComponent = (props) => {
 
   useEffect(() => {
     return handleResponsive()
+  })
+
+  useEffect(() => {
+    console.log("=============ResultComponent")
   })
 
   //Handle check to responsive product
@@ -190,9 +196,11 @@ const ResultComponent = (props) => {
             setOpen={setOpenSortingCollapse}
             type={"sort"}
             setChanged={setChanged}
+            variables={variables}
           />
           {/* Filter feature */}
           <SortFilterComponent
+            variables={variables}
             list={listFilter}
             setOpen={setOpenFilterCollapse}
             type={"filter"}
