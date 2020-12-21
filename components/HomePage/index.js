@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import styles from "./HomePage.module.scss"
 import Head from "next/head"
 import { convertSchemaFAQ } from "../../services/convertSchemaFAQ"
@@ -19,6 +19,35 @@ function Home(props) {
   let meta_title = SEO && SEO.meta_title
   let meta_description = SEO && SEO.meta_description
   const jsonFAQ = convertSchemaFAQ(FAQ)
+
+  const abc = () => {
+    let username = "pubkey-26Rl66lN8Ai42qX898rf9eYj8RmGrW"
+    let password = "key-T5kLPnS8N01oLJznW936Q3g7244l5B"
+
+    var myHeaders = new Headers({
+      Authorization:
+        "Basic " + Buffer.from(`${username}:${password}`).toString("base64"),
+      "Content-Type": "application/json",
+    })
+    var raw = ""
+
+    var requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    }
+
+    fetch(
+      "https://stamped.io/api/v2/159540/dashboard/nps/?search=&state=&rating&dateTo&dateFrom",
+      requestOptions
+    )
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error))
+  }
+
+  console.log(abc())
+
   return (
     <>
       <Head>
