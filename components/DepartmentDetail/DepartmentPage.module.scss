@@ -18,6 +18,11 @@
     .categoryLeftImg {
       position: absolute;
       right: 0px;
+      .img {
+        position: relative;
+        width: 82px;
+        height: 62px;
+      }
     }
     .categoryLeftIcon {
       position: absolute;
@@ -50,8 +55,14 @@
   .contentRight {
     position: absolute;
     right: 0px;
-    top: 0px;
+    top: 20px;
     transform: matrix(-1, 0, 0, 1, 0, 0);
+
+    .contentRightImage {
+      position: relative;
+      width: 215px;
+      height: 162px;
+    }
   }
 
   .contentMiddle {
@@ -101,7 +112,7 @@
 //   .departmentContainer{
 //    .contentRight{
 //      top: 25px;
-//    } 
+//    }
 //   }
 // }
 
