@@ -1,6 +1,5 @@
 import { Col, Container, Row } from "react-bootstrap"
 import styles from "../HomePage.module.scss"
-import Image from "next/image"
 import { useState } from "react"
 import Slider from "react-slick"
 import { renderStart } from "../../../services/renderStart"

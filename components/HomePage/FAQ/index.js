@@ -1,52 +1,52 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from "react"
 import { Col, Collapse, Container } from "react-bootstrap"
-import styles from "../HomePage.module.scss";
-import Image from "next/image";
+import styles from "../HomePage.module.scss"
+import Image from "next/image"
 
 const FAQComponent = (props) => {
-  const { FAQ } = props;
-  const [faqItemLess, setFaqItemsLess] = useState([]);
-  const [faqItemAll, setFaqItemsAll] = useState([]);
+  const { FAQ } = props
+  const [faqItemLess, setFaqItemsLess] = useState([])
+  const [faqItemAll, setFaqItemsAll] = useState([])
 
   const setOpen = (item, bol) => {
-    const itemChange = { ...item, open: bol };
-    const updateFaq = [];
+    const itemChange = { ...item, open: bol }
+    const updateFaq = []
     for (const item of faqItemLess) {
       if (itemChange.id === item.id) {
-        updateFaq.push(itemChange);
+        updateFaq.push(itemChange)
       } else {
-        updateFaq.push(item);
+        updateFaq.push(item)
       }
     }
-    setFaqItemsLess(updateFaq);
-  };
+    setFaqItemsLess(updateFaq)
+  }
 
   useEffect(() => {
-    refactorFAQ();
-  }, []);
+    refactorFAQ()
+  }, [])
 
   const refactorFAQ = () => {
     const faqMap =
       FAQ &&
       FAQ.faq &&
-      FAQ.faq.map((item, index) => ({ ...item, id: index + 1, open: false }));
+      FAQ.faq.map((item, index) => ({ ...item, id: index + 1, open: false }))
     if (faqMap) {
-      setFaqItemsAll(faqMap);
-      const faqLess = faqMap.slice(0, 5);
-      setFaqItemsLess(faqLess);
+      setFaqItemsAll(faqMap)
+      const faqLess = faqMap.slice(0, 5)
+      setFaqItemsLess(faqLess)
     }
-  };
+  }
 
   const showMore = () => {
     const faqLessToAll = [
       ...faqItemLess,
       ...faqItemAll.slice(5, faqItemAll.length),
-    ];
-    setFaqItemsLess(faqLessToAll);
-  };
+    ]
+    setFaqItemsLess(faqLessToAll)
+  }
 
   const title =
-    FAQ?.faq_title && FAQ.faq_title.length > 0 ? FAQ.faq_title[0].text : "";
+    FAQ?.faq_title && FAQ.faq_title.length > 0 ? FAQ.faq_title[0].text : ""
 
   return (
     <Container className={styles.FAQ}>
@@ -71,35 +71,27 @@ const FAQComponent = (props) => {
                     </Col>
                     <Col xs={2} sm={2} md={2} lg={1} xl={1}>
                       <div className={styles.questionIcon}>
-                        {item.open ? (
-                          <div className={styles.questionIconElement}>
+                        <div className={styles.questionIconElement}>
+                          <div className={styles.questionIconImage}>
                             <Image
-                              src="/icons/subtract.svg"
-                              alt="Icon subtract"
-                              height={12}
-                              width={12}
-                              loading="eager"
+                              src={
+                                item.open
+                                  ? "/icons/subtract.svg"
+                                  : "/icons/plus.svg"
+                              }
+                              alt={item.open ? "Icon subtract" : "Icon plus"}
+                              loading="lazy"
+                              layout="fill"
                             ></Image>
                           </div>
-                        ) : (
-                          <div className={styles.questionIconElement}>
-                            <Image
-                              src="/icons/plus.svg"
-                              alt="Icon plus"
-                              height={12}
-                              width={12}
-                            ></Image>
-                          </div>
-                        )}
+                        </div>
                       </div>
                     </Col>
                   </div>
                 </div>
                 <Collapse in={item.open}>
                   <Col className={styles.faqText}>
-                    <div
-                      className={styles.questionAnswer}
-                    >
+                    <div className={styles.questionAnswer}>
                       {item.answer || "---"}
                     </div>
                   </Col>
@@ -128,9 +120,7 @@ const FAQComponent = (props) => {
         </Col>
       </div>
     </Container>
-  );
-  
-};
+  )
+}
 
-
-export default FAQComponent;
+export default FAQComponent
