@@ -65,10 +65,6 @@ const ResultComponent = (props) => {
     return handleResponsive()
   })
 
-  useEffect(() => {
-    console.log("=============ResultComponent")
-  })
-
   //Handle check to responsive product
   const handleResponsive = () => {
     if (windowWidth <= 425) {

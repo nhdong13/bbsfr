@@ -24,7 +24,7 @@ const FilterRender = ({ name, setChanged }) => {
       isSetArrayToFilter = !isSetArrayToFilter
     }
   }
-  console.log(selected)
+
   const [filterArray, setFilterArray] = useState([...arrayToFilter])
   const handleFilter = (e) => {
     let updateArray = arrayToFilter.filter((x) =>
@@ -50,8 +50,7 @@ const FilterRender = ({ name, setChanged }) => {
         value={selected}
         onChange={(values) => {
           setSelected(Array.isArray(values) ? values : [values])
-
-          // setChanged(true)
+          setChanged(true)
         }}
       >
         {filterArray.map(({ value, label, count }) => (

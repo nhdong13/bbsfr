@@ -1,101 +1,11 @@
-import React, { useState } from "react"
+import React from "react"
 import styles from "../Collections.module.scss"
 import { Collapse } from "react-bootstrap"
 import Image from "next/image"
-import { useSorting, useFilter } from "@sajari/react-hooks"
-import {
-  Radio,
-  RadioGroup,
-  CheckboxGroup,
-  Checkbox,
-  Combobox,
-} from "@sajari/react-components"
-
 import Sorting from "../../Common/Sorting"
 import Filter from "../../Common/Filter"
 
-let arrayToFilter = []
-let isSetArrayToFilter = false
-
-const FilterRender = React.memo(({ name, setChanged, variables }) => {
-  const [searchInputFilter, setSearch] = useState("")
-
-  const { multi, options, selected, setSelected } = useFilter(name)
-  if (options.length === 0) {
-    return null
-  } else {
-    if (!isSetArrayToFilter) {
-      arrayToFilter = options
-      isSetArrayToFilter = !isSetArrayToFilter
-    }
-  }
-  console.log(selected)
-  const [filterArray, setFilterArray] = useState([...arrayToFilter])
-  const handleFilter = (e) => {
-    let updateArray = arrayToFilter.filter((x) =>
-      x.label.toLowerCase().includes(e.toLowerCase())
-    )
-    setFilterArray(updateArray)
-    setSearch(e)
-  }
-  const Group = multi ? CheckboxGroup : RadioGroup
-  const Control = multi ? Checkbox : Radio
-  return (
-    <div className="mb-4">
-      <Combobox
-        className={styles.sajari_combobox}
-        placeholder="Search"
-        value={searchInputFilter}
-        onChange={handleFilter}
-      />
-
-      <div className="flex items-center justify-between mb-2"></div>
-      <Group
-        name={name}
-        value={selected}
-        onChange={(values) => {
-          setSelected(Array.isArray(values) ? values : [values])
-
-          setChanged(true)
-        }}
-      >
-        {filterArray.map(({ value, label, count }) => (
-          <div
-            className="flex justify-between items-center"
-            key={label + count}
-          >
-            <Control
-              className={styles.sajari_checkbox}
-              value={label}
-              checked={selected.includes(label)}
-              onChange={() => {}}
-              fontSize="sm"
-            >
-              {label}
-            </Control>
-          </div>
-        ))}
-      </Group>
-    </div>
-  )
-})
-
-const SortFilterComponent = ({
-  list,
-  type,
-  setOpen,
-  setChanged,
-  variables,
-}) => {
-  const BrandFilter = () => (
-    <FilterRender
-      name="type"
-      title="Brand"
-      setChanged={setChanged}
-      variables={variables}
-    />
-  )
-
+const SortFilterComponent = ({ list, type, setOpen, setChanged }) => {
   return (
     <>
       <div className={styles.sort_filter_by}>
