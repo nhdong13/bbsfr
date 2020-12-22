@@ -73,7 +73,6 @@ export default function Brand(props) {
                           }}
                         >
                           <Image
-                            // className={styles.image_logo}
                             src={b.brand_logo.url}
                             alt={b.brand_logo.alt || ""}
                             loading="lazy"
@@ -92,24 +91,23 @@ export default function Brand(props) {
                         styles.point_line_brand
                       } ${checkID(id, styles)}`}
                     >
-                      <Link href={b.brand_link} key={id}>
-                        {/* <a> */}
-                        <div
-                          style={{
-                            position: "relative",
-                            width: `${image_width * 1.33}px`,
-                            height: `${image_width}px`,
-                          }}
-                        >
-                          <Image
-                            // className={styles.image_logo}
-                            src={b.brand_logo.url}
-                            alt={b.brand_logo.alt || ""}
-                            loading="lazy"
-                            layout="fill"
-                          ></Image>
-                        </div>
-                        {/* </a> */}
+                      <Link href={`brands${b.brand_link}`} key={id}>
+                        <a>
+                          <div
+                            style={{
+                              position: "relative",
+                              width: `${image_width * 1.33}px`,
+                              height: `${image_width}px`,
+                            }}
+                          >
+                            <Image
+                              src={b.brand_logo.url}
+                              alt={b.brand_logo.alt || ""}
+                              loading="lazy"
+                              layout="fill"
+                            ></Image>
+                          </div>
+                        </a>
                       </Link>
                     </Col>,
                   ]
