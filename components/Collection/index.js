@@ -1,6 +1,7 @@
 import Head from "next/head"
 import { SearchProvider } from "@sajari/react-hooks"
 import dynamic from "next/dynamic"
+
 const SEODynamic = dynamic(() => import("../HomePage/SEO"))
 const HeaderCollectionDynamic = dynamic(() =>
   import("./Components/HeaderCollectionComponent")

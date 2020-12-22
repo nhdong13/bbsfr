@@ -17,7 +17,7 @@ export default function Layout({ children }) {
           rel="preload"
           href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap"
           as="style"
-          onload="this.onload=null;this.rel='stylesheet'"
+          onLoad="this.onload=null;this.rel='stylesheet'"
         />
         <noscript>
           <link

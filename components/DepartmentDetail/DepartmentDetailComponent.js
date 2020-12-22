@@ -1,19 +1,19 @@
-import Brand from "../HomePage/Brand";
-import SessionHeaderDepartmentComponent from "./Sesstion/SessionHeaderDepartmentComponent";
-import SessionBrowseByCategoryComponent from "./Sesstion/SessionBrowseByCategoryComponent";
-import SEO from "../HomePage/SEO";
-import FAQComponent from "../HomePage/FAQ";
-import { useRouter } from "next/router";
-import SearchForAccessoriesComponent from "./Sesstion/SearchForAccessoriesComponent";
-import Head from "next/head";
-import { convertSchemaFAQ } from "../../services/convertSchemaFAQ";
-import TestimonialsComponent from "../HomePage/Testimonials/index";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import Brand from "../HomePage/Brand"
+import SessionHeaderDepartmentComponent from "./Sesstion/SessionHeaderDepartmentComponent"
+import SessionBrowseByCategoryComponent from "./Sesstion/SessionBrowseByCategoryComponent"
+import SEO from "../HomePage/SEO"
+import FAQComponent from "../HomePage/FAQ"
+import { useRouter } from "next/router"
+import SearchForAccessoriesComponent from "./Sesstion/SearchForAccessoriesComponent"
+import Head from "next/head"
+import { convertSchemaFAQ } from "../../services/convertSchemaFAQ"
+import TestimonialsComponent from "../HomePage/Testimonials/index"
+import "slick-carousel/slick/slick.css"
+import "slick-carousel/slick/slick-theme.css"
 
 const DepartmentDetailComponent = (props) => {
-  const { department } = props;
-  const router = useRouter();
+  const { department, testimonials } = props
+  const router = useRouter()
   const {
     collections,
     shop_by_brand_slider_content,
@@ -23,18 +23,16 @@ const DepartmentDetailComponent = (props) => {
     meta_description,
     faq,
     faq_title,
-  } = department;
+  } = department
 
   const brands =
     shop_by_brand_slider_content && shop_by_brand_slider_content.length > 0
       ? shop_by_brand_slider_content
-      : [];
+      : []
 
   const heading1 =
-    page_heading_2 && page_heading_2.length > 0
-      ? page_heading_2[0].text
-      : "---";
-  const jsonFAQ = convertSchemaFAQ({ faq, faq_title });
+    page_heading_2 && page_heading_2.length > 0 ? page_heading_2[0].text : "---"
+  const jsonFAQ = convertSchemaFAQ({ faq, faq_title })
 
   return (
     <>
@@ -63,11 +61,11 @@ const DepartmentDetailComponent = (props) => {
         )}
         <SessionBrowseByCategoryComponent collections={collections} />
         <Brand brands={brands} />
-        <TestimonialsComponent />
+        <TestimonialsComponent testimonials={testimonials} type="department" />
         <FAQComponent FAQ={{ faq, faq_title }} />
         <SEO heading1={heading1} pageParagraph={page_paragraph || []} />
       </div>
     </>
-  );
-};
-export default DepartmentDetailComponent;
+  )
+}
+export default DepartmentDetailComponent

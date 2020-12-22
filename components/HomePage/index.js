@@ -15,39 +15,11 @@ const DepartmentHomeDynamic = dynamic(() => import("./Department"))
 
 function Home(props) {
   const { department: departments, brands, SEO, FAQ } = props
+  const { testimonials } = props
   let count_department = departments.length % 2 == 0 ? -1 : 0
   let meta_title = SEO && SEO.meta_title
   let meta_description = SEO && SEO.meta_description
   const jsonFAQ = convertSchemaFAQ(FAQ)
-
-  const abc = () => {
-    let username = "pubkey-26Rl66lN8Ai42qX898rf9eYj8RmGrW"
-    let password = "key-T5kLPnS8N01oLJznW936Q3g7244l5B"
-
-    var myHeaders = new Headers({
-      Authorization:
-        "Basic " + Buffer.from(`${username}:${password}`).toString("base64"),
-      "Content-Type": "application/json",
-    })
-    var raw = ""
-
-    var requestOptions = {
-      method: "GET",
-      headers: myHeaders,
-      redirect: "follow",
-    }
-
-    fetch(
-      "https://stamped.io/api/v2/159540/dashboard/nps/?search=&state=&rating&dateTo&dateFrom",
-      requestOptions
-    )
-      .then((response) => response.text())
-      .then((result) => console.log(result))
-      .catch((error) => console.log("error", error))
-  }
-
-  console.log(abc())
-
   return (
     <>
       <Head>
@@ -85,7 +57,7 @@ function Home(props) {
         ))}
         <BrandDynamic brands={brands} />
         <BlogDynamic />
-        <TestimonialsDynamic />
+        <TestimonialsDynamic testimonials={testimonials} type="home" />
         <FAQDynamic FAQ={FAQ} />
         <SEODynamic
           heading1={SEO.page_heading_1[0].text}
