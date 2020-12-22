@@ -1,5 +1,6 @@
 module.exports = {
   images: {
+    deviceSizes: [360],
     domains: [
       "images.prismic.io",
       "demo.saleor.io",
