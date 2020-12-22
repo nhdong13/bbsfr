@@ -1,16 +1,17 @@
 import Head from "next/head"
-import CategoriesComponent from "./Components/CategoriesComponent"
-import HeaderCollectionComponent from "./Components/HeaderCollectionComponent"
-import ResultComponent from "./Components/ResultComponent"
-import SEOComponent from "../HomePage/SEO/index"
 import { SearchProvider } from "@sajari/react-hooks"
+import dynamic from "next/dynamic"
+const SEODynamic = dynamic(() => import("../HomePage/SEO"))
+const HeaderCollectionDynamic = dynamic(() =>
+  import("./Components/HeaderCollectionComponent")
+)
+const CategoriesDynamic = dynamic(() =>
+  import("./Components/CategoriesComponent")
+)
+const ResultDynamic = dynamic(() => import("./Components/ResultComponent"))
 
 const CollectionComponent = ({ collections, initialResponse, pipeline }) => {
-  const {
-    meta_description,
-    meta_title,
-    categories,
-  } = collections
+  const { meta_description, meta_title, categories } = collections
   return (
     <>
       <Head>
@@ -36,7 +37,7 @@ const CollectionComponent = ({ collections, initialResponse, pipeline }) => {
         initialResponse={initialResponse}
         searchOnLoad={!initialResponse}
       >
-        <HeaderCollectionComponent
+        <HeaderCollectionDynamic
           pipeline={pipeline}
           pageHeading={
             collections &&
@@ -46,7 +47,7 @@ const CollectionComponent = ({ collections, initialResponse, pipeline }) => {
               : "Collections"
           }
         />
-        <CategoriesComponent
+        <CategoriesDynamic
           categories={categories}
           shopByCategoryText={
             collections.shop_by_category_text != undefined &&
@@ -56,13 +57,10 @@ const CollectionComponent = ({ collections, initialResponse, pipeline }) => {
           }
         />
 
-        <ResultComponent
-          pipeline={pipeline}
-          initialResponse={initialResponse}
-        />
+        <ResultDynamic pipeline={pipeline} initialResponse={initialResponse} />
       </SearchProvider>
 
-      <SEOComponent
+      <SEODynamic
         heading1={
           collections &&
           collections.page_heading_1 &&

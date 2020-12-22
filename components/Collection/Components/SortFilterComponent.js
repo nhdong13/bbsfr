@@ -24,13 +24,14 @@ const SortFilterComponent = ({ list, type, setOpen, setChanged }) => {
             >
               <div className={styles.text_heading}>
                 <div>{item.name}</div>
-                <Image
-                  src={item.open ? "/icons/subtract.svg" : "/icons/plus.svg"}
-                  alt={item.open ? "Icon subtract" : "Icon plus"}
-                  height={12}
-                  width={12}
-                  loading="eager"
-                ></Image>
+                <div className={styles.icon}>
+                  <Image
+                    src={item.open ? "/icons/subtract.svg" : "/icons/plus.svg"}
+                    alt={item.open ? "Icon subtract" : "Icon plus"}
+                    loading="lazy"
+                    layout="fill"
+                  ></Image>
+                </div>
               </div>
             </div>
             <div className={styles.sort_filter_collapse}>
