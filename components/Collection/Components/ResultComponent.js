@@ -14,9 +14,9 @@ import {
 } from "../../../services/collection"
 import styles from "../Collections.module.scss"
 import { useSearchContext } from "@sajari/react-hooks"
-import Header from "../../Header"
 import dynamic from "next/dynamic"
 
+const HeaderDynamic = dynamic(() => import("../../Header"))
 const PaginationDynamic = dynamic(() =>
   import("../../Common/PaginationComponent")
 ) 
@@ -74,11 +74,37 @@ const ResultComponent = (props) => {
     <Container fluid className={styles.filter_sort_sajari}>
       <div className={styles.short_filter}>
         <div className={styles.title} onClick={sortFilter}>
-          <Image src="/sortby.svg" alt="sort icon" width={7} height={11} />
+          <div
+            style={{
+              position: "relative",
+              width: "15px",
+              height: "11px",
+            }}
+          >
+            <Image
+              loading="lazy"
+              layout="fill"
+              src="/sortby.svg"
+              alt="sort icon"
+            />
+          </div>
           <div>Sort by</div>
         </div>
         <div className={styles.title} onClick={sortFilter}>
-          <Image src="/filter.svg" alt="filter icon" width={11} height={11} />
+          <div
+            style={{
+              position: "relative",
+              width: "18px",
+              height: "11px",
+            }}
+          >
+            <Image
+              loading="lazy"
+              layout="fill"
+              src="/filter.svg"
+              alt="filter icon"
+            />
+          </div>
           <div>Filter</div>
         </div>
         <div className={styles.horizontal_line}></div>
@@ -124,7 +150,7 @@ const ResultComponent = (props) => {
         }}
       >
         <Modal show={show} onHide={handleClose} className="short_filter_modal">
-          <Header />
+          <HeaderDynamic />
           {/*Sorting Feature*/}
           <SortFilterDynamic
             list={listSorting}

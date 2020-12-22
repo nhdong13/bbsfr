@@ -176,6 +176,12 @@ $bg-sort-filter: #f6f6f6;
 
       padding: 18px 1rem;
       cursor: pointer;
+
+      .icon {
+        position: relative;
+        width: 12px;
+        height: 12px;
+      }
     }
     .sort_filter_collapse {
       padding-left: 1rem;
@@ -241,6 +247,12 @@ $bg-sort-filter: #f6f6f6;
     .elementProduct {
       padding-top: 15px;
       padding-bottom: 15px;
+
+      .elementImageProduct {
+        position: relative;
+        width: 172px;
+        height: 128px;
+      }
 
       .sessionInfo {
         padding-left: 15px;
@@ -374,6 +386,12 @@ $bg-sort-filter: #f6f6f6;
     width: 94%;
     .containerProduct {
       width: 150px;
+      .elementProduct {
+        .elementImageProduct {
+          width: 160px;
+          height: 116px;
+        }
+      }
     }
   }
 }

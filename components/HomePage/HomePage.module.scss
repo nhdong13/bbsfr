@@ -166,6 +166,11 @@ $padding-top-component: 55px;
           position: unset !important;
         }
       }
+      .departmentImage {
+        position: relative;
+        width: 236px;
+        height: 177px;
+      }
     }
 
     .style_second {
@@ -336,8 +341,13 @@ $padding-top-component: 55px;
           position: relative;
           .questionIconElement {
             position: absolute;
-            top: 2px;
+            top: 5px;
             right: 0;
+            .questionIconImage{ 
+              position: relative;
+              width: 12px;
+              height: 12px;
+            }
           }
         }
       }
@@ -388,7 +398,14 @@ $padding-top-component: 55px;
   .slider_custom {
     padding-top: 35px;
     padding-bottom: 30px;
+
+    .blogImage {
+      position: relative;
+      width: 200px;
+      height: 124px;
+    }
   }
+
   .heading2 {
     font-family: Rajdhani;
     font-style: normal;
