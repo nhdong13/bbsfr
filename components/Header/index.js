@@ -26,7 +26,19 @@ export default function Header() {
           <Link href="/checkout">
             <a>
               <span>
-                <Image src="/cart.svg" alt="cart" width={32} height={32} />
+                <div
+                  style={{
+                    position: "relative",
+                    width: "32px",
+                    height: "32px",
+                  }}
+                >
+                  <Image
+                    layout="fill"
+                    src="/cart.svg"
+                    alt="cart"
+                  />
+                </div>
               </span>
             </a>
           </Link>
@@ -37,12 +49,8 @@ export default function Header() {
 
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          <Nav.Link href="#home">
-            Home
-          </Nav.Link>
-          <Nav.Link href="#link">
-            Link
-          </Nav.Link>
+          <Nav.Link href="#home">Home</Nav.Link>
+          <Nav.Link href="#link">Link</Nav.Link>
           <NavDropdown title="Dropdown" id="basic-nav-dropdown">
             <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
             <NavDropdown.Item href="#action/3.2">

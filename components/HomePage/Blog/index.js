@@ -65,14 +65,17 @@ const BlogComponent = (props) => {
         {a.map((x, id) => (
           <div key={id} className="pr-4">
             <div className="position-relative">
-              <Image
-                width={242}
-                height="auto"
-                alt={`img-${id}`}
-                className={styles.border_none_image}
-                // TODO: Clone Image to Testing UI, Temporary Data, Will be remove
-                src="https://s3.amazonaws.com/s3-wp-product/wp-content/uploads/2019/03/25094806/Bikebiz2.jpg"
-              ></Image>
+              <div className={styles.blogImage}>
+                <Image
+                  layout="fill"
+                  loading="lazy"
+                  //alt need to change if have real data
+                  alt={`img-${id}`}
+                  className={styles.border_none_image}
+                  // TODO: Clone Image to Testing UI, Temporary Data, Will be remove
+                  src="https://s3.amazonaws.com/s3-wp-product/wp-content/uploads/2019/03/25094806/Bikebiz2.jpg"
+                ></Image>
+              </div>
               <div
                 className={`${styles.line_bottom_image} ${
                   activeSlide == id + 1 ? styles.line_image_active : ""
