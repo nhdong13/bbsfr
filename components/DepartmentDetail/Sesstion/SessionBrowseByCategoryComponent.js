@@ -76,6 +76,7 @@ const SessionBrowseByCategoryComponent = (props) => {
                                   alt={collection.collection_image.alt || ""}
                                   layout="fill"
                                   loading="lazy"
+                                  sizes="320px"
                                 />
                               </div>
                             </div>
