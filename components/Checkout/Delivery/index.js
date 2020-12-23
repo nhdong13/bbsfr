@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import { Container, Form, Row, Col, Button } from "react-bootstrap"
 import { Formik } from "formik"
 // import { useCheckout } from "@saleor/sdk"
-import { useCheckout, useUserDetails } from "@sdk/react"
+import { useCheckout, useUserDetails, useCart } from "@sdk/react"
 import clsx from "clsx"
 import { useMutation } from "@apollo/client"
 import { useRouter } from "next/router"
@@ -18,6 +18,7 @@ import ShippingAddress from "./ShippingAddress"
 import BillingAddress from "./BillingAddress"
 import PaymentComponent from "./Payment"
 import PromotionComponent from "../Promotion"
+import OrderTotalCost from "../OrderTotalCost"
 import { AddressSchema } from "./validate"
 import { paymentCheckoutTokenCreate } from "lib/mutations"
 import { authorizeKlarna } from "./klarna"
@@ -43,7 +44,11 @@ export default function DeliveryComponent() {
     createPayment,
     completeCheckout,
     loaded,
+    addPromoCode,
   } = useCheckout()
+
+  const { totalPrice, subtotalPrice, shippingPrice, discount } = useCart()
+
   const { data: currentUser, loading } = useUserDetails()
   const { addToast } = useToasts()
   const [createPaymentCheckoutToken] = useMutation(paymentCheckoutTokenCreate)
@@ -59,6 +64,8 @@ export default function DeliveryComponent() {
     promotion: {
       code: "",
       valid: false,
+      discountAmount: null,
+      discountedPrice: null,
     },
     giftCard: {
       code: "",
@@ -107,6 +114,10 @@ export default function DeliveryComponent() {
       availablePaymentGateways.find(
         (method) => method.id === "mirumee.payments.braintree"
       )
+
+    if (!braintreeMethod) {
+      return
+    }
     setInitDeliveryData({
       ...initDeliveryData,
       paymentMethod: braintreeMethod
@@ -172,6 +183,7 @@ export default function DeliveryComponent() {
       billingAddress,
       billingDifferentAddress,
       paymentMethod,
+      promotion,
     } = values
 
     if (paymentMethod.subId === "bikebiz.payments.creditCard") {
@@ -203,18 +215,36 @@ export default function DeliveryComponent() {
     )
     if (!billingData) return
 
+    let data
     // Set Shipping method
-    const { data, dataError: setShippingMethodError } = await setShippingMethod(
-      checkoutData.availableShippingMethods[0].id
-    )
+    const {
+      data: setShippingData,
+      dataError: setShippingMethodError,
+    } = await setShippingMethod(checkoutData.availableShippingMethods[0].id)
     if (setShippingMethodError) {
       handleSubmitError(bag)
       return
     }
 
-    localStorage.setItem("paymentGateway", paymentMethod.id)
+    data = setShippingData
 
+    if (promotion.valid) {
+      const {
+        data: promoCodeData,
+        dataError: promoCodeError,
+      } = await addPromoCode(promotion.code)
+
+      if (promoCodeError) {
+        handleSubmitError(bag)
+        return
+      }
+
+      data = promoCodeData
+    }
+
+    localStorage.setItem("paymentGateway", paymentMethod.id)
     const totalPrice = data.totalPrice?.gross?.amount
+    console.log("totalPrice", totalPrice)
     await processPayment(
       checkoutData,
       totalPrice,
@@ -322,6 +352,16 @@ export default function DeliveryComponent() {
                       />
                     )}
 
+                    <PaymentComponent
+                      availablePaymentGateways={availablePaymentGateways || []}
+                      paymentMethod={values.paymentMethod}
+                      setFieldValue={setFieldValue}
+                      errors={errors}
+                      touched={touched}
+                      googlePayInstance={googlePayInstance}
+                    />
+                    <div id="klarna-payments-container"></div>
+
                     <PromotionComponent
                       handleChange={handleChange}
                       values={values}
@@ -332,15 +372,14 @@ export default function DeliveryComponent() {
                       setFieldError={setFieldError}
                     />
 
-                    <PaymentComponent
-                      availablePaymentGateways={availablePaymentGateways || []}
-                      paymentMethod={values.paymentMethod}
-                      setFieldValue={setFieldValue}
-                      errors={errors}
-                      touched={touched}
-                      googlePayInstance={googlePayInstance}
-                    />
-                    <div id="klarna-payments-container"></div>
+                    <OrderTotalCost
+                      totalPrice={totalPrice}
+                      subtotalPrice={subtotalPrice}
+                      shippingPrice={shippingPrice}
+                      discount={discount}
+                      promotion={values.promotion}
+                    ></OrderTotalCost>
+
                     {showContinue && (
                       <Row>
                         <Form.Group controlId="btnPlaceOrder" as={Col} xs="12">

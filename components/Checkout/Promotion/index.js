@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Container, InputGroup, Row, Col, Form, Button } from "react-bootstrap"
 import clsx from "clsx"
 import { useMutation } from "@apollo/client"
@@ -19,15 +19,33 @@ export default function PromotionComponent({
   setFieldError,
 }) {
   const [loading, setLoading] = useState(false)
-  const { items, totalPrice } = useCart()
+  const {
+    items,
+    subtotalPrice,
+    discount,
+    promoCodeDiscount,
+    voucherCode,
+    loaded,
+  } = useCart()
   const [validateVoucherify] = useMutation(voucherifyValidate)
+
+  useEffect(() => {
+    if (!loaded) {
+      return
+    }
+    console.log("discount", discount)
+    console.log("promoCodeDiscount", promoCodeDiscount)
+    if (voucherCode) {
+      console.log("1")
+    }
+  }, [loaded])
 
   const handleClickApply = async () => {
     setLoading(true)
     const { data } = await validateVoucherify({
       variables: {
         input: {
-          amount: totalPrice.gross.amount,
+          amount: subtotalPrice.gross.amount,
           code: values.promotion.code,
           lines: items.map((item) => {
             return {
@@ -39,9 +57,18 @@ export default function PromotionComponent({
       },
     })
 
-    const { voucherifyValidate } = data
-    if (voucherifyValidate.voucherify.valid === "true") {
+    const { voucherify } = data.voucherifyValidate
+
+    if (voucherify.valid === "true") {
       setFieldValue("promotion.valid", true)
+      setFieldValue("promotion.discountAmount", {
+        amount: voucherify.discountAmount,
+        currency: "AUD",
+      })
+      setFieldValue("promotion.discountedPrice", {
+        amount: voucherify.discountedPrice,
+        currency: "AUD",
+      })
     } else {
       setFieldTouched("promotion.code", true, false)
       setFieldError("promotion.code", "Invalid promotion code")
