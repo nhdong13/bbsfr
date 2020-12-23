@@ -33,6 +33,7 @@ export async function getStaticPaths() {
     )
     if (collections && collections.length > 0) {
       for (let collection of collections) {
+        //loop path /[id]/[collection]
         if (collection && collection.collection_slug) {
           paths.push(`${i.department_slug}${collection.collection_slug}`)
         }
