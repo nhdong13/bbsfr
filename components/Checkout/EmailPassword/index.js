@@ -74,6 +74,12 @@ export default function CheckoutEmailPasswordComponent() {
     }
   }
 
+  const handleCheckoutAsGuest = async (email) => {
+    localStorage.removeItem("token")
+    localStorage.setItem("guestEmail", email)
+    router.push("/checkout/delivery")
+  }
+
   const ActiveStep = activeStep === 1 ? CheckOutEmail : CheckoutPassword
 
   return (
@@ -99,6 +105,7 @@ export default function CheckoutEmailPasswordComponent() {
                 existedEmailChecking={data?.existedEmailChecking}
                 errors={errors}
                 touched={touched}
+                handleCheckoutAsGuest={handleCheckoutAsGuest}
               />
             )}
           </Form>

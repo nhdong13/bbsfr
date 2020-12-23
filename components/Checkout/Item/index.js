@@ -5,7 +5,6 @@ import clsx from "clsx"
 import styles from "./CheckoutItem.module.scss"
 
 export default function ItemComponent({
-  id,
   name,
   quantity,
   thumbnail,
