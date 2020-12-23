@@ -4,33 +4,36 @@ import {
   FieldDictionary,
   FilterBuilder,
 } from "@sajari/react-search-ui"
-import React, { useEffect, useState } from "react"
-import { Container, Modal, Collapse, Button } from "react-bootstrap"
+import React, { useState } from "react"
+import { Container, Modal, Button } from "react-bootstrap"
 import { constants } from "../../../constant"
-import PaginationComponent from "../../Common/PaginationComponent"
 import Image from "next/image"
-import { renderStart } from "../../../services/renderStart"
 import {
   countBooleanSortFilter,
   listUpdate,
 } from "../../../services/collection"
 import styles from "../Collections.module.scss"
-import Link from "next/link"
 import { useSearchContext } from "@sajari/react-hooks"
-import Header from "../../Header"
-import SortFilterComponent from "./SortFilterComponent"
+import dynamic from "next/dynamic"
+
+const HeaderDynamic = dynamic(() => import("../../Header"))
+const PaginationDynamic = dynamic(() =>
+  import("../../Common/PaginationComponent")
+) 
+const ListProductsDynamic = dynamic(() => import("./ListProductsComponent"))
+const SortFilterDynamic = dynamic(() => import('./SortFilterComponent'))
 
 const ResultComponent = (props) => {
   const { pipeline, initialResponse } = props
-  const [windowWidth, setWindowWidths] = useState()
-  const [countUnsetBorder, setCountUnsetBorder] = useState(2)
+  
   const [show, setShow] = useState(false)
   const [params, setParams] = useState({
     sort: "",
   })
   const [sortFitlerChanged, setChanged] = useState(false)
-  const [countBol, setcountBol] = useState(0)
-  // TOTO: wating for data from Prismic or Sajari
+  const [countBol, setCountBol] = useState(0)
+  
+  // TOTO: wating for data from PrisCmic or Sajari
   const [listSorting, setListSorting] = useState([
     {
       name: "Featured",
@@ -46,64 +49,6 @@ const ResultComponent = (props) => {
     { name: "Price", open: false },
   ])
 
-  useEffect(() => {
-    const { innerWidth: width, innerHeight: height } = window
-    setWindowWidths(width)
-    window.addEventListener("resize", { width, height })
-    return () => window.removeEventListener("resize", { width, height })
-  }, [])
-
-  useEffect(() => {
-    return handleResponsive()
-  })
-
-  //Handle check to responsive product
-  const handleResponsive = () => {
-    if (windowWidth <= 425) {
-      setCountUnsetBorder(2)
-    } else if (windowWidth <= 768 && windowWidth > 425) {
-      setCountUnsetBorder(4)
-    } else if (windowWidth === 1024 && windowWidth > 768) {
-      setCountUnsetBorder(4)
-    } else if (windowWidth === 1440 && windowWidth > 1024) {
-      setCountUnsetBorder(4)
-    } else {
-      setCountUnsetBorder(4)
-    }
-  }
-
-  //Map styles to render border
-  const handleStyle = (index, results) => {
-    let concatStyles
-    if ((index + 1) % countUnsetBorder === 0) {
-      concatStyles = styles.containerProductMode
-    } else {
-      concatStyles = styles.containerProduct
-    }
-    //Un set border bottom
-    if (windowWidth <= 425) {
-      //Check result per page have even number or odd number
-      if (results.length % 2 === 0 && index + 1 === results.length - 1) {
-        concatStyles += ` ${styles.unsetBorder}`
-      }
-      if (index + 1 === results.length) {
-        concatStyles += ` ${styles.unsetBorder}`
-      }
-    } else if (windowWidth >= 768) {
-      //Check result per page have even number or odd number
-      if (results.length % 2 === 0 && index + 1 === results.length - 3) {
-        concatStyles += ` ${styles.unsetBorder}`
-      }
-      if (
-        index + 1 === results.length ||
-        index + 1 === results.length - 1 ||
-        index + 1 === results.length - 2
-      ) {
-        concatStyles += ` ${styles.unsetBorder}`
-      }
-    }
-    return concatStyles
-  }
 
   const sortFilter = () => {
     setShow(!show)
@@ -117,23 +62,49 @@ const ResultComponent = (props) => {
     setListSorting(listUpdate(listSorting, id, bol))
   }
 
-  //Handcle Close Modal
+  //Handle Close Modal
   const handleClose = () => {
     let count = countBooleanSortFilter(listFilter)
     setShow(false)
     setChanged(false)
-    setcountBol(count)
+    setCountBol(count)
   }
 
   const SortFilterButton = () => (
     <Container fluid className={styles.filter_sort_sajari}>
       <div className={styles.short_filter}>
         <div className={styles.title} onClick={sortFilter}>
-          <Image src="/sortby.svg" alt="sort icon" width={7} height={11} />
+          <div
+            style={{
+              position: "relative",
+              width: "15px",
+              height: "11px",
+            }}
+          >
+            <Image
+              loading="lazy"
+              layout="fill"
+              src="/sortby.svg"
+              alt="sort icon"
+            />
+          </div>
           <div>Sort by</div>
         </div>
         <div className={styles.title} onClick={sortFilter}>
-          <Image src="/filter.svg" alt="filter icon" width={11} height={11} />
+          <div
+            style={{
+              position: "relative",
+              width: "18px",
+              height: "11px",
+            }}
+          >
+            <Image
+              loading="lazy"
+              layout="fill"
+              src="/filter.svg"
+              alt="filter icon"
+            />
+          </div>
           <div>Filter</div>
         </div>
         <div className={styles.horizontal_line}></div>
@@ -179,9 +150,9 @@ const ResultComponent = (props) => {
         }}
       >
         <Modal show={show} onHide={handleClose} className="short_filter_modal">
-          <Header />
+          <HeaderDynamic />
           {/*Sorting Feature*/}
-          <SortFilterComponent
+          <SortFilterDynamic
             list={listSorting}
             setOpen={setOpenSortingCollapse}
             type={"sort"}
@@ -190,7 +161,7 @@ const ResultComponent = (props) => {
             setChanged={setChanged}
           />
           {/* Filter feature */}
-          <SortFilterComponent
+          <SortFilterDynamic
             list={listFilter}
             setOpen={setOpenFilterCollapse}
             type={"filter"}
@@ -218,43 +189,8 @@ const ResultComponent = (props) => {
             </div>
           </div>
         </Modal>
-        <div className={styles.listProduct}>
-          {results &&
-            results.map((item, index) => {
-              return (
-                <div key={index}>
-                  <div className={handleStyle(index, results)}>
-                    <div className={styles.elementProduct}>
-                      <Link href="/">
-                        <a>
-                          <div>
-                            <Image
-                              alt={item.values.name}
-                              src="https://images.prismic.io/slicemachine-blank/6b2bf485-aa12-44ef-8f06-dce6b91b9309_dancing.png?auto=compress,format"
-                              height={172}
-                              width={172}
-                            ></Image>
-                          </div>
-                        </a>
-                      </Link>
-                      <div className={styles.sessionInfo}>
-                        <div className={styles.nameProduct}>
-                          <p>{item.values.name}</p>
-                        </div>
-                        <div className={styles.priceProduct}>
-                          <p>
-                            {item.values.price ? `$${item.values.price}` : ""}
-                          </p>
-                        </div>
-                        {renderStart(4.5, "16px", "16px", 5)}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )
-            })}
-        </div>
-        <PaginationComponent
+        <ListProductsDynamic products={results} />
+        <PaginationDynamic
           initialResponse={initialResponse}
           pipeline={pipeline}
           variables={variables}
