@@ -49,10 +49,7 @@ const TestimonialsComponent = (props) => {
   }
 
   return (
-    <Container
-      style={{ maxWidth: "unset" }}
-      className={styles.padding_testimonials}
-    >
+    <Container fluid className={styles.padding_testimonials}>
       <Col className={styles.testimonials}>
         <div className={styles.testimonialsTitle}>
           <div className={styles.testimonialsText}>
