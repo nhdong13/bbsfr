@@ -3,8 +3,8 @@ import { Container, Row, Col } from "react-bootstrap"
 import styles from "./../Collections.module.scss"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import { capitalizeString } from "../../../services/collection"
 import { constants } from "../../../constant"
+import BackToPageBeforeComponent from "../../Common/BackPageComponent"
 
 const CategoriesComponent = ({ categories = [], shopByCategoryText }) => {
   const [showItem, setItemToShow] = useState({
@@ -56,11 +56,7 @@ const CategoriesComponent = ({ categories = [], shopByCategoryText }) => {
           </div>
         )}
       </Container>
-      <Container fluid className={styles.pre_page_button}>
-        <div onClick={() => router.back()}>
-          &#8249; {capitalizeString(router.query.id)}
-        </div>
-      </Container>
+      <BackToPageBeforeComponent page={router.query.id} />
     </>
   )
 }

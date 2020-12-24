@@ -1,0 +1,14 @@
+
+$border-color: #e5e5e4;
+
+.containerPagination {
+  margin-top: 20px;
+}
+
+.pre_page_button {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  border-top: 0.5px solid $border-color;
+  display: flex;
+  font-size: 12px;
+}
