@@ -32,10 +32,19 @@ function detectSlug(router, type) {
   }
 }
 
+function checkItemIncludeSlug(listItems, slug) {
+  for (let item of listItems) {
+    if (item.name != undefined && item.name == slug) return true
+  }
+  return false
+}
+
 export function dataToRender(results, router, type) {
   let testimonial = results != undefined ? results : []
   let slug = detectSlug(router, type)
-  let dataFilter = testimonial.filter((items) => items.tags[0].name == slug)
+  let dataFilter = testimonial.filter((items) =>
+    checkItemIncludeSlug(items.tags, slug)
+  )
   let data = dataFilter.map((items) => ({
     rate: items.nps.rating / 2,
     content: items.nps.body,
