@@ -1,4 +1,3 @@
-import CategoryComponent from "../../../../components/Category"
 import {
   getAllDepartments,
   listAllocationsByDepartmentUID,
@@ -8,18 +7,24 @@ import {
 import { search } from "@sajari/server"
 import { Pipeline, Variables } from "@sajari/react-search-ui"
 import { getConfigPipeline } from "../../../../services/getPipelineSajari"
+import { authenticationFromStamped } from "../../../../services/testimonial"
+import dynamic from "next/dynamic"
 
+const CategoryDynamic = dynamic(() => import("../../../../components/Category"))
 const pipeline = new Pipeline({ ...getConfigPipeline("jackets-app") }, "app")
 const variables = new Variables({ resultsPerPage: 20, q: "" })
 
 export async function getStaticProps({ params }) {
+  const requestOptions = authenticationFromStamped()
+  const resStamped = await fetch(process.env.STAMPED_API_URL, requestOptions)
+  const testimonials = await resStamped.json()
   const categoryData = await getCategoryByUid(params.category)
   const initialResponse = await search({
     pipeline,
     variables,
   })
   return {
-    props: { categoryData, initialResponse },
+    props: { categoryData, initialResponse, testimonials },
     revalidate: +process.env.NEXT_PUBLIC_REVALIDATE_PAGE_TIME,
   }
 }
@@ -52,14 +57,15 @@ export async function getStaticPaths() {
   }
   return { paths, fallback: false }
 }
-const Category = ({ categoryData, initialResponse }) => {
+const Category = ({ categoryData, initialResponse, testimonials }) => {
   return (
-    <CategoryComponent
+    <CategoryDynamic
       categoryData={categoryData}
       initialResponse={initialResponse}
       pipeline={pipeline}
       variables={variables}
+      testimonials={testimonials}
     />
   )
 }
-export default Category;
+export default Category
