@@ -1,6 +1,6 @@
 import { Pagination, SearchProvider } from "@sajari/react-search-ui"
 import { Container } from "react-bootstrap";
-import styles from "./pagination.module.scss"
+import styles from "../Common.module.scss"
 
 const PaginationComponent = ({ variables, pipeline, initialResponse }) => {
   return (
