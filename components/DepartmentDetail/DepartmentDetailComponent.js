@@ -1,8 +1,6 @@
 import { useRouter } from "next/router"
-import Head from "next/head";
+import Head from "next/head"
 import { convertSchemaFAQ } from "../../services/convertSchemaFAQ"
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import dynamic from "next/dynamic"
 
 const SessionHeaderDepartmentDynamic = dynamic(() =>
@@ -22,8 +20,8 @@ const FAQDynamic = dynamic(() => import("../HomePage/FAQ"))
 const SEODynamic = dynamic(() => import("../HomePage/SEO"))
 
 const DepartmentDetailComponent = (props) => {
-  const { department } = props;
-  const router = useRouter();
+  const { department, testimonials } = props
+  const router = useRouter()
   const {
     collections,
     shop_by_brand_slider_content,
@@ -33,18 +31,16 @@ const DepartmentDetailComponent = (props) => {
     meta_description,
     faq,
     faq_title,
-  } = department;
+  } = department
 
   const brands =
     shop_by_brand_slider_content && shop_by_brand_slider_content.length > 0
       ? shop_by_brand_slider_content
-      : [];
+      : []
 
   const heading1 =
-    page_heading_2 && page_heading_2.length > 0
-      ? page_heading_2[0].text
-      : "---";
-  const jsonFAQ = convertSchemaFAQ({ faq, faq_title });
+    page_heading_2 && page_heading_2.length > 0 ? page_heading_2[0].text : "---"
+  const jsonFAQ = convertSchemaFAQ({ faq, faq_title })
 
   return (
     <>
@@ -73,11 +69,11 @@ const DepartmentDetailComponent = (props) => {
         )}
         <SessionBrowseByCategoryDynamic collections={collections} />
         <BrandDynamic brands={brands} />
-        <TestimonialsDynamic />
+        <TestimonialsDynamic testimonials={testimonials} type="department" />
         <FAQDynamic FAQ={{ faq, faq_title }} />
         <SEODynamic heading1={heading1} pageParagraph={page_paragraph || []} />
       </div>
     </>
   )
-};
-export default DepartmentDetailComponent;
+}
+export default DepartmentDetailComponent
