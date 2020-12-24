@@ -48,6 +48,7 @@ const ResultComponent = (props) => {
       open: false,
     },
   ])
+
   const [listFilter, setListFilter] = useState([
     { name: "Brand", open: false },
     { name: "Jacket Features", open: false },
@@ -118,13 +119,13 @@ const ResultComponent = (props) => {
       </div>
     </Container>
   )
+
   const { resultsPerPage, setResultsPerPage } = useResultsPerPage()
   if (!isSetResultPerPage) {
     setIsResultPerPage(true)
     setResultsPerPage(constant.RESULT_PER_PAGE)
   }
 
-  // !isSetResultPerPage && setResultsPerPage(20) && setIsResultPerPage(true)
   const { variables } = useVariables()
   const { results } = useSearchContext()
 

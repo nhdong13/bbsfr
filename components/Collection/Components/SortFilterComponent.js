@@ -44,7 +44,8 @@ const SortFilterComponent = ({ list, type, setOpen, setChanged }) => {
                   ) : (
                     <div>Filter Feature</div>
                   )}
-                  {/*Id == 0 => TOTO: Pending for real data, just display one filed of filter(first element of listFilter)*/}
+                  {/*Id == 0 => TOTO: Pending for real data, just show option of one filter from filed on 
+                    sajara of filter(first element of listFilter)*/}
                 </div>
               </Collapse>
             </div>
