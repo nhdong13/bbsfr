@@ -4,7 +4,7 @@ import clsx from "clsx"
 import styles from "./OrderSumary.module.scss"
 import { useCart } from "@sdk/react"
 
-import { generateCart } from "../"
+import { generateCart } from "../helpers"
 
 export default function OrderSumaryComponent() {
   const [open, setOpen] = useState(false)
