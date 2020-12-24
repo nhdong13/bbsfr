@@ -14,8 +14,7 @@ const SEODynamic = dynamic(() => import("./SEO"))
 const DepartmentHomeDynamic = dynamic(() => import("./Department"))
 
 function Home(props) {
-  const { department: departments, brands, SEO, FAQ } = props
-  const { testimonials } = props
+  const { testimonials, department: departments, brands, SEO, FAQ } = props
   let count_department = departments.length % 2 == 0 ? -1 : 0
   let meta_title = SEO && SEO.meta_title
   let meta_description = SEO && SEO.meta_description
