@@ -4,7 +4,11 @@ import styles from "./../Collections.module.scss"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { constants } from "../../../constant"
-import BackToPageBeforeComponent from "../../Common/BackPageComponent"
+import dynamic from "next/dynamic"
+
+const BackToPageBeforeDynamic = dynamic(() =>
+  import("../../Common/BackPageComponent")
+)
 
 const CategoriesComponent = ({ categories = [], shopByCategoryText }) => {
   const [showItem, setItemToShow] = useState({
@@ -56,7 +60,7 @@ const CategoriesComponent = ({ categories = [], shopByCategoryText }) => {
           </div>
         )}
       </Container>
-      <BackToPageBeforeComponent page={router.query.id} />
+      <BackToPageBeforeDynamic page={router.query.id} />
     </>
   )
 }

@@ -5,7 +5,6 @@ import {
 } from "@sajari/react-search-ui"
 import React, { useState } from "react"
 import { Container, Modal, Button } from "react-bootstrap"
-import { constants } from "../../../constant"
 import Image from "next/image"
 import {
   countBooleanSortFilter,
@@ -18,7 +17,7 @@ import {
   useResultsPerPage,
 } from "@sajari/react-hooks"
 import dynamic from "next/dynamic"
-import { constant } from "lodash"
+import { constants } from "../../../constant"
 
 const HeaderDynamic = dynamic(() => import("../../Header"))
 const PaginationDynamic = dynamic(() =>
@@ -38,7 +37,7 @@ const ResultComponent = (props) => {
   const { pipeline, initialResponse } = props
 
   const [show, setShow] = useState(false)
-  const [sortFitlerChanged, setChanged] = useState(false)
+  const [sortFilterChanged, setChanged] = useState(false)
   const [countBol, setCountBol] = useState(0)
   const [isSetResultPerPage, setIsResultPerPage] = useState(false)
   // TOTO: wating for data from Prismic or Sajari
@@ -120,10 +119,10 @@ const ResultComponent = (props) => {
     </Container>
   )
 
-  const { resultsPerPage, setResultsPerPage } = useResultsPerPage()
+  const { setResultsPerPage } = useResultsPerPage()
   if (!isSetResultPerPage) {
     setIsResultPerPage(true)
-    setResultsPerPage(constant.RESULT_PER_PAGE)
+    setResultsPerPage(constants.RESULT_PER_PAGE)
   }
 
   const { variables } = useVariables()
@@ -177,13 +176,13 @@ const ResultComponent = (props) => {
               <Button
                 fixed="bottom"
                 variant={
-                  sortFitlerChanged ||
+                  sortFilterChanged ||
                   countBol != countBooleanSortFilter(listFilter)
                     ? "secondary"
                     : "primary"
                 }
               >
-                {sortFitlerChanged ||
+                {sortFilterChanged ||
                 countBol != countBooleanSortFilter(listFilter)
                   ? "Apply"
                   : "Cancel"}

@@ -4,7 +4,6 @@ import { capitalizeString } from "../../../services/collection"
 import styles from "../Common.module.scss"
 
 const BackToPageBeforeComponent = ({ page }) => {
-  console.log("Debug code page:", page)
   const router = useRouter()
   return (
     <Container fluid className={styles.pre_page_button}>
