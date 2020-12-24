@@ -11,6 +11,7 @@ export default function CheckoutPassword({
   existedEmailChecking,
   errors,
   touched,
+  handleCheckoutAsGuest,
 }) {
   return (
     <Row className={styles.emailBody}>
@@ -57,6 +58,19 @@ export default function CheckoutPassword({
             </Button>
           </Form.Group>
         </Form.Row>
+
+        <Row>
+          <Col sm="12" className="text-right">
+            <Button
+              variant="link"
+              className={clsx(styles.btnLink, "px-0")}
+              type="button"
+              onClick={() => handleCheckoutAsGuest(values.email)}
+            >
+              Checkout as guest
+            </Button>
+          </Col>
+        </Row>
       </Container>
     </Row>
   )

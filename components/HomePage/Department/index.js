@@ -33,11 +33,8 @@ export default function Department(props) {
               {props.title}
             </div>
             <div className={styles.department_image}>
-              <div
-                className={styles.departmentImage}
-              >
+              <div className={styles.departmentImage}>
                 <Image
-                  quality={30}
                   loading="lazy"
                   layout="fill"
                   src={props.image.url || ""}

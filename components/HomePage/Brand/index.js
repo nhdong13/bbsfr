@@ -63,7 +63,7 @@ export default function Brand(props) {
                       styles.point_line_brand
                     } ${checkID(id, styles, brand.length)}`}
                   >
-                    <Link href={b.brand_link} key={id}>
+                    <Link href={`brands${b.brand_link}`} key={id}>
                       <a>
                         <div
                           style={{
@@ -73,7 +73,6 @@ export default function Brand(props) {
                           }}
                         >
                           <Image
-                            // className={styles.image_logo}
                             src={b.brand_logo.url}
                             alt={b.brand_logo.alt || ""}
                             loading="lazy"
@@ -92,8 +91,8 @@ export default function Brand(props) {
                         styles.point_line_brand
                       } ${checkID(id, styles)}`}
                     >
-                      <Link href={b.brand_link} key={id}>
-                        {/* <a> */}
+                      <Link href={`brands${b.brand_link}`} key={id}>
+                        <a>
                           <div
                             style={{
                               position: "relative",
@@ -102,14 +101,13 @@ export default function Brand(props) {
                             }}
                           >
                             <Image
-                              // className={styles.image_logo}
                               src={b.brand_logo.url}
                               alt={b.brand_logo.alt || ""}
                               loading="lazy"
                               layout="fill"
                             ></Image>
                           </div>
-                        {/* </a> */}
+                        </a>
                       </Link>
                     </Col>,
                   ]

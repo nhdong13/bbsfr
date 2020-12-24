@@ -1,7 +1,6 @@
 import CollectionComponent from "../../../components/Collection"
 import {
   getAllDepartments,
-  getAllSEO,
   getCollectionByUid,
   listAllocationsByDepartmentUID,
 } from "../../../lib/prismic/api"
@@ -11,7 +10,6 @@ import { getConfigPipeline } from "../../../services/getPipelineSajari"
 
 const pipeline = new Pipeline({ ...getConfigPipeline("jackets-app") }, "app")
 const variables = new Variables({ resultsPerPage: 20, q: "" })
-  
 
 export async function getStaticProps({ params }) {
   const collections = await getCollectionByUid(params.collection)
@@ -30,16 +28,15 @@ export async function getStaticPaths() {
   let list_department = department[0].node.department_link
   const paths = []
   for (let i of list_department) {
-    const collections = await listAllocationsByDepartmentUID(
+    const { collections } = await listAllocationsByDepartmentUID(
       i.department_slug.substr(1)
     )
-    if (
-      collections &&
-      collections.collections &&
-      collections.collections.length > 0
-    ) {
-      for (let collection of collections.collections) {
-        paths.push(`${i.department_slug}${collection.collection_slug}`)
+    if (collections && collections.length > 0) {
+      for (let collection of collections) {
+        //loop path /[id]/[collection]
+        if (collection && collection.collection_slug) {
+          paths.push(`${i.department_slug}${collection.collection_slug}`)
+        }
       }
     }
   }
@@ -57,5 +54,3 @@ const Collection = ({ collections, initialResponse }) => {
   )
 }
 export default Collection
-
-
