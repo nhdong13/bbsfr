@@ -1,8 +1,6 @@
 import { useRouter } from "next/router"
 import Head from "next/head"
 import { convertSchemaFAQ } from "../../services/convertSchemaFAQ"
-import "slick-carousel/slick/slick.css"
-import "slick-carousel/slick/slick-theme.css"
 import dynamic from "next/dynamic"
 
 const SessionHeaderDepartmentDynamic = dynamic(() =>
