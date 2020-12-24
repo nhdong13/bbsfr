@@ -1,4 +1,3 @@
-import CollectionComponent from "../../../components/Collection"
 import {
   getAllDepartments,
   getCollectionByUid,
@@ -7,18 +6,28 @@ import {
 import { search } from "@sajari/server"
 import { Pipeline, Variables } from "@sajari/react-search-ui"
 import { getConfigPipeline } from "../../../services/getPipelineSajari"
+import { authenticationFromStamped } from "../../../services/testimonial"
+import dynamic from "next/dynamic"
+
+const CollectionDynamic = dynamic(() =>
+  import("../../../components/Collection")
+)
 
 const pipeline = new Pipeline({ ...getConfigPipeline("jackets-app") }, "app")
 const variables = new Variables({ resultsPerPage: 20, q: "" })
 
 export async function getStaticProps({ params }) {
+  const requestOptions = authenticationFromStamped()
+  const resStamped = await fetch(process.env.STAMPED_API_URL, requestOptions)
+  const testimonials = await resStamped.json()
+
   const collections = await getCollectionByUid(params.collection)
   const initialResponse = await search({
     pipeline,
     variables,
   })
   return {
-    props: { initialResponse, collections },
+    props: { initialResponse, collections, testimonials },
     revalidate: +process.env.NEXT_PUBLIC_REVALIDATE_PAGE_TIME,
   }
 }
@@ -43,13 +52,14 @@ export async function getStaticPaths() {
   return { paths, fallback: false }
 }
 
-const Collection = ({ collections, initialResponse }) => {
+const Collection = ({ collections, initialResponse, testimonials }) => {
   return (
-    <CollectionComponent
+    <CollectionDynamic
       initialResponse={initialResponse}
       pipeline={pipeline}
       variables={variables}
       collections={collections}
+      testimonials={testimonials}
     />
   )
 }

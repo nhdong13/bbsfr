@@ -14,8 +14,16 @@ const BackToPageBeforeDynamic = dynamic(() =>
   import("../Common/BackPageComponent/index.js")
 ) 
 const FAQDynamic = dynamic(() => import("../HomePage/FAQ"))
+const TestimonialsDynamic = dynamic(() =>
+  import("../HomePage/Testimonials/index")
+)
 
-const CategoryComponent = ({ categoryData, initialResponse, pipeline }) => {
+const CategoryComponent = ({
+  categoryData,
+  initialResponse,
+  pipeline,
+  testimonials,
+}) => {
   const router = useRouter()
   const { meta_description, meta_title, faq, faq_title } = categoryData
   const jsonFAQ = convertSchemaFAQ({ faq, faq_title })
@@ -57,6 +65,7 @@ const CategoryComponent = ({ categoryData, initialResponse, pipeline }) => {
         <BackToPageBeforeDynamic page={router.query.collection} />
         <ResultDynamic pipeline={pipeline} initialResponse={initialResponse} />
       </SearchProvider>
+      <TestimonialsDynamic testimonials={testimonials} type="category" />
       <FAQDynamic FAQ={{ faq, faq_title }} />
     </>
   )

@@ -11,8 +11,16 @@ const CategoriesDynamic = dynamic(() =>
 )
 const FAQDynamic = dynamic(() => import("../HomePage/FAQ"))
 const ResultDynamic = dynamic(() => import("./Components/ResultComponent"))
+const TestimonialsDynamic = dynamic(() =>
+  import("../HomePage/Testimonials/index")
+)
 
-const CollectionComponent = ({ collections, initialResponse, pipeline }) => {
+const CollectionComponent = ({
+  collections,
+  initialResponse,
+  pipeline,
+  testimonials,
+}) => {
   const {
     meta_description,
     meta_title,
@@ -68,6 +76,7 @@ const CollectionComponent = ({ collections, initialResponse, pipeline }) => {
 
         <ResultDynamic pipeline={pipeline} initialResponse={initialResponse} />
       </SearchProvider>
+      <TestimonialsDynamic testimonials={testimonials} type="collection" />
       <FAQDynamic FAQ={{ faq, faq_title }} />
       <SEODynamic
         heading1={
