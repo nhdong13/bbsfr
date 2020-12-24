@@ -1,7 +1,7 @@
 import Head from "next/head"
 import { SearchProvider } from "@sajari/react-hooks"
 import dynamic from "next/dynamic"
-
+import { convertSchemaFAQ } from "../../services/convertSchemaFAQ"
 const SEODynamic = dynamic(() => import("../HomePage/SEO"))
 const HeaderCollectionDynamic = dynamic(() =>
   import("./Components/HeaderCollectionComponent")
@@ -9,10 +9,18 @@ const HeaderCollectionDynamic = dynamic(() =>
 const CategoriesDynamic = dynamic(() =>
   import("./Components/CategoriesComponent")
 )
+const FAQDynamic = dynamic(() => import("../HomePage/FAQ"))
 const ResultDynamic = dynamic(() => import("./Components/ResultComponent"))
 
 const CollectionComponent = ({ collections, initialResponse, pipeline }) => {
-  const { meta_description, meta_title, categories } = collections
+  const {
+    meta_description,
+    meta_title,
+    categories,
+    faq,
+    faq_title,
+  } = collections
+  const jsonFAQ = convertSchemaFAQ({ faq, faq_title })
   return (
     <>
       <Head>
@@ -26,10 +34,10 @@ const CollectionComponent = ({ collections, initialResponse, pipeline }) => {
         <meta name="og:title" property="og:title" content={meta_title} />
         <meta name="twitter:title" content={meta_title} />
         <meta name="twitter:description" content={meta_description} />
-        {/* <script
+        <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: jsonFAQ }}
-        /> */}
+        />
       </Head>
       <SearchProvider
         search={{
@@ -60,7 +68,7 @@ const CollectionComponent = ({ collections, initialResponse, pipeline }) => {
 
         <ResultDynamic pipeline={pipeline} initialResponse={initialResponse} />
       </SearchProvider>
-
+      <FAQDynamic FAQ={{ faq, faq_title }} />
       <SEODynamic
         heading1={
           collections &&

@@ -25,7 +25,6 @@ export default function Layout({ children }) {
             href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap"
           />
         </noscript>
-
         {NewRelicSnippet}
       </Head>
       <Header />

@@ -10,6 +10,10 @@ export default function Delivery() {
   return (
     <>
       <Head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1"
+        />
         <script
           type="text/javascript"
           src="https://portal.sandbox.afterpay.com/afterpay-async.js"

@@ -1,15 +1,25 @@
-import Brand from "../HomePage/Brand"
-import SessionHeaderDepartmentComponent from "./Sesstion/SessionHeaderDepartmentComponent"
-import SessionBrowseByCategoryComponent from "./Sesstion/SessionBrowseByCategoryComponent"
-import SEO from "../HomePage/SEO"
-import FAQComponent from "../HomePage/FAQ"
 import { useRouter } from "next/router"
-import SearchForAccessoriesComponent from "./Sesstion/SearchForAccessoriesComponent"
 import Head from "next/head"
 import { convertSchemaFAQ } from "../../services/convertSchemaFAQ"
-import TestimonialsComponent from "../HomePage/Testimonials/index"
 import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
+import dynamic from "next/dynamic"
+
+const SessionHeaderDepartmentDynamic = dynamic(() =>
+  import("./Sesstion/SessionHeaderDepartmentComponent")
+)
+const SessionBrowseByCategoryDynamic = dynamic(() =>
+  import("./Sesstion/SessionBrowseByCategoryComponent")
+)
+const SearchForAccessoriesDynamic = dynamic(() =>
+  import("./Sesstion/SearchForAccessoriesComponent")
+)
+const BrandDynamic = dynamic(() => import("../HomePage/Brand"))
+const TestimonialsDynamic = dynamic(() =>
+  import("../HomePage/Testimonials/index")
+)
+const FAQDynamic = dynamic(() => import("../HomePage/FAQ"))
+const SEODynamic = dynamic(() => import("../HomePage/SEO"))
 
 const DepartmentDetailComponent = (props) => {
   const { department, testimonials } = props
@@ -53,17 +63,17 @@ const DepartmentDetailComponent = (props) => {
         />
       </Head>
       <div>
-        <SessionHeaderDepartmentComponent department={department} />
+        <SessionHeaderDepartmentDynamic department={department} />
         {router?.query?.id === "accessories" ? (
-          <SearchForAccessoriesComponent />
+          <SearchForAccessoriesDynamic />
         ) : (
           <></>
         )}
-        <SessionBrowseByCategoryComponent collections={collections} />
-        <Brand brands={brands} />
-        <TestimonialsComponent testimonials={testimonials} type="department" />
-        <FAQComponent FAQ={{ faq, faq_title }} />
-        <SEO heading1={heading1} pageParagraph={page_paragraph || []} />
+        <SessionBrowseByCategoryDynamic collections={collections} />
+        <BrandDynamic brands={brands} />
+        <TestimonialsDynamic testimonials={testimonials} type="department" />
+        <FAQDynamic FAQ={{ faq, faq_title }} />
+        <SEODynamic heading1={heading1} pageParagraph={page_paragraph || []} />
       </div>
     </>
   )
