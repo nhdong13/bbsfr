@@ -1,4 +1,3 @@
-import CollectionComponent from "../../../components/Collection"
 import {
   getAllDepartments,
   getCollectionByUid,

@@ -7,8 +7,16 @@ import BackToPageBeforeComponent from "../Common/BackPageComponent/index.js"
 const HeaderCategoryDynamic = dynamic(() =>
   import("../Collection/Components/HeaderCollectionComponent.js")
 )
+const TestimonialsDynamic = dynamic(() =>
+  import("../HomePage/Testimonials/index")
+)
 
-const CategoryComponent = ({ categoryData, initialResponse, pipeline }) => {
+const CategoryComponent = ({
+  categoryData,
+  initialResponse,
+  pipeline,
+  testimonials,
+}) => {
   const router = useRouter()
   const { meta_description, meta_title } = categoryData
   return (
@@ -44,6 +52,7 @@ const CategoryComponent = ({ categoryData, initialResponse, pipeline }) => {
         />
       </SearchProvider>
       <BackToPageBeforeComponent page={router.query.collection} />
+      <TestimonialsDynamic testimonials={testimonials} type="category" />
     </>
   )
 }

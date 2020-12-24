@@ -27,6 +27,8 @@ function detectSlug(router, type) {
       return router.id
     case "collection":
       return router.collection
+    case "category":
+      return router.category
     default:
       return ""
   }
