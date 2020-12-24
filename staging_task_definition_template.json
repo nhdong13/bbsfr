@@ -43,6 +43,7 @@
         }
       ],
       "cpu": 0,
+      "memory": 500,
       "environment": [],
       "mountPoints": [],
       "image": "569460749621.dkr.ecr.ap-southeast-2.amazonaws.com/staging-storefront-nginx:latest",
@@ -53,11 +54,11 @@
       "name": "bbsfr-staging-nginx-container"
     }
   ],
-  "memory": "1400",
+  "memory": "950",
   "family": "bbsfr-staging-storefront",
   "requiresCompatibilities": [
     "EC2"
   ],
   "networkMode": "bridge",
-  "cpu": "1400"
+  "cpu": "1024"
 }

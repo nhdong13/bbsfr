@@ -33,13 +33,14 @@ export default function Department(props) {
               {props.title}
             </div>
             <div className={styles.department_image}>
-              <Image
-                width={215}
-                height={237}
-                className={styles.max_width_image}
-                src={props.image.url || ""}
-                alt={props.alt}
-              />
+              <div className={styles.departmentImage}>
+                <Image
+                  loading="lazy"
+                  layout="fill"
+                  src={props.image.url || ""}
+                  alt={props.alt}
+                />
+              </div>
             </div>
           </Row>
         </Container>

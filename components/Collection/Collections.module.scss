@@ -58,6 +58,7 @@ $bg-sort-filter: #f6f6f6;
   }
   .category {
     padding-top: 5px;
+    height: 48px;
     display: flex;
     align-items: center;
 
@@ -175,6 +176,12 @@ $bg-sort-filter: #f6f6f6;
 
       padding: 18px 1rem;
       cursor: pointer;
+
+      .icon {
+        position: relative;
+        width: 12px;
+        height: 12px;
+      }
     }
     .sort_filter_collapse {
       padding-left: 1rem;
@@ -218,6 +225,39 @@ $bg-sort-filter: #f6f6f6;
     text-align: center;
   }
 }
+.sajari_checkbox {
+  padding-bottom: 0.75rem;
+  input {
+    transform: scale(1.25);
+  }
+  label {
+    font-size: 12px;
+    line-height: 20px;
+  }
+}
+
+.sajari_combobox > div {
+  height: 48px;
+  border-radius: 24px;
+  input {
+    font-size: 14px;
+    font-weight: 400;
+  }
+}
+
+.sajari_combobox > div > div {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  svg {
+    width: 24px;
+    height: 24px;
+    background-image: url("../../public/searchicon.svg");
+    path {
+      display: none;
+    }
+  }
+}
 //End Sort/Filter Sajari
 
 //------------->
@@ -233,13 +273,19 @@ $bg-sort-filter: #f6f6f6;
   .containerProduct {
     border-right: 1px solid #e5e5e5;
     border-bottom: 1px solid #e5e5e5;
-    height: 312px;
+    height: 270px;
     width: 172px;
     position: relative;
 
     .elementProduct {
       padding-top: 15px;
       padding-bottom: 15px;
+
+      .elementImageProduct {
+        position: relative;
+        width: 172px;
+        height: 128px;
+      }
 
       .sessionInfo {
         padding-left: 15px;
@@ -373,6 +419,12 @@ $bg-sort-filter: #f6f6f6;
     width: 94%;
     .containerProduct {
       width: 150px;
+      .elementProduct {
+        .elementImageProduct {
+          width: 160px;
+          height: 116px;
+        }
+      }
     }
   }
 }

@@ -1,44 +1,11 @@
-import React, { useState } from "react"
+import React from "react"
 import styles from "../Collections.module.scss"
 import { Collapse } from "react-bootstrap"
-import { Filter } from "@sajari/react-search-ui"
 import Image from "next/image"
-import { useSorting } from "@sajari/react-hooks"
-import { Radio, RadioGroup } from "@sajari/react-components"
+import Sorting from "../../Common/Sorting"
+import Filter from "../../Common/Filter"
 
-const HeaderCollectionComponent = ({
-  list,
-  type,
-  setOpen,
-  setParams,
-  params,
-  setChanged,
-}) => {
-  const SortingComponent = React.memo(() => {
-    const { sorting, setSorting } = useSorting()
-
-    return (
-      <div className="">
-        <div>
-          <RadioGroup
-            className={styles.radio_sajari}
-            value={sorting}
-            onChange={(e) => {
-              setSorting(e.target.value)
-              setParams({ ...params, sort: e.target.value })
-              setChanged(true)
-            }}
-          >
-            <Radio value="">Most relevant</Radio>
-            <Radio value="name">Name: A to Z</Radio>
-            <Radio value="-name">Name: Z to A</Radio>
-            <Radio value="price">Price: Low to High</Radio>
-            <Radio value="-price">Price: High to Low</Radio>
-          </RadioGroup>
-        </div>
-      </div>
-    )
-  })
+const SortFilterComponent = ({ list, type, setOpen, setChanged }) => {
   return (
     <>
       <div className={styles.sort_filter_by}>
@@ -57,29 +24,28 @@ const HeaderCollectionComponent = ({
             >
               <div className={styles.text_heading}>
                 <div>{item.name}</div>
-                <Image
-                  src={item.open ? "/icons/subtract.svg" : "/icons/plus.svg"}
-                  alt={item.open ? "Icon subtract" : "Icon plus"}
-                  height={12}
-                  width={12}
-                  loading="eager"
-                ></Image>
+                <div className={styles.icon}>
+                  <Image
+                    src={item.open ? "/icons/subtract.svg" : "/icons/plus.svg"}
+                    alt={item.open ? "Icon subtract" : "Icon plus"}
+                    loading="lazy"
+                    layout="fill"
+                  ></Image>
+                </div>
               </div>
             </div>
             <div className={styles.sort_filter_collapse}>
               <Collapse in={item.open}>
                 <div id="example2-collapse-text">
                   {type == "sort" ? (
-                    <SortingComponent />
+                    <Sorting setChanged={setChanged} />
+                  ) : id == 0 ? (
+                    <Filter setChanged={setChanged} />
                   ) : (
-                    <Filter
-                      name="type"
-                      pinSelected={false}
-                      searchable
-                      sort="count"
-                      sortAscending={true}
-                    />
+                    <div>Filter Feature</div>
                   )}
+                  {/*Id == 0 => TOTO: Pending for real data, just show option of one filter from filed on 
+                    sajara of filter(first element of listFilter)*/}
                 </div>
               </Collapse>
             </div>
@@ -90,4 +56,4 @@ const HeaderCollectionComponent = ({
   )
 }
 
-export default HeaderCollectionComponent
+export default SortFilterComponent

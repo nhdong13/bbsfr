@@ -1,16 +1,34 @@
 import Head from "next/head"
-import CategoriesComponent from "./Components/CategoriesComponent"
-import HeaderCollectionComponent from "./Components/HeaderCollectionComponent"
-import ResultComponent from "./Components/ResultComponent"
-import SEOComponent from "../HomePage/SEO/index"
 import { SearchProvider } from "@sajari/react-hooks"
+import dynamic from "next/dynamic"
+import { convertSchemaFAQ } from "../../services/convertSchemaFAQ"
+const SEODynamic = dynamic(() => import("../HomePage/SEO"))
+const HeaderCollectionDynamic = dynamic(() =>
+  import("./Components/HeaderCollectionComponent")
+)
+const CategoriesDynamic = dynamic(() =>
+  import("./Components/CategoriesComponent")
+)
+const FAQDynamic = dynamic(() => import("../HomePage/FAQ"))
+const ResultDynamic = dynamic(() => import("./Components/ResultComponent"))
+const TestimonialsDynamic = dynamic(() =>
+  import("../HomePage/Testimonials/index")
+)
 
-const CollectionComponent = ({ collections, initialResponse, pipeline }) => {
+const CollectionComponent = ({
+  collections,
+  initialResponse,
+  pipeline,
+  testimonials,
+}) => {
   const {
     meta_description,
     meta_title,
     categories,
+    faq,
+    faq_title,
   } = collections
+  const jsonFAQ = convertSchemaFAQ({ faq, faq_title })
   return (
     <>
       <Head>
@@ -24,10 +42,10 @@ const CollectionComponent = ({ collections, initialResponse, pipeline }) => {
         <meta name="og:title" property="og:title" content={meta_title} />
         <meta name="twitter:title" content={meta_title} />
         <meta name="twitter:description" content={meta_description} />
-        {/* <script
+        <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: jsonFAQ }}
-        /> */}
+        />
       </Head>
       <SearchProvider
         search={{
@@ -36,7 +54,7 @@ const CollectionComponent = ({ collections, initialResponse, pipeline }) => {
         initialResponse={initialResponse}
         searchOnLoad={!initialResponse}
       >
-        <HeaderCollectionComponent
+        <HeaderCollectionDynamic
           pipeline={pipeline}
           pageHeading={
             collections &&
@@ -46,7 +64,7 @@ const CollectionComponent = ({ collections, initialResponse, pipeline }) => {
               : "Collections"
           }
         />
-        <CategoriesComponent
+        <CategoriesDynamic
           categories={categories}
           shopByCategoryText={
             collections.shop_by_category_text != undefined &&
@@ -56,13 +74,11 @@ const CollectionComponent = ({ collections, initialResponse, pipeline }) => {
           }
         />
 
-        <ResultComponent
-          pipeline={pipeline}
-          initialResponse={initialResponse}
-        />
+        <ResultDynamic pipeline={pipeline} initialResponse={initialResponse} />
       </SearchProvider>
-
-      <SEOComponent
+      <TestimonialsDynamic testimonials={testimonials} type="collection" />
+      <FAQDynamic FAQ={{ faq, faq_title }} />
+      <SEODynamic
         heading1={
           collections &&
           collections.page_heading_1 &&

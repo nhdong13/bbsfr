@@ -46,10 +46,8 @@ export default function DeliveryComponent() {
     loaded,
     addPromoCode,
   } = useCheckout()
-
   const { totalPrice, subtotalPrice, shippingPrice, discount } = useCart()
-
-  const { data: currentUser, loading } = useUserDetails()
+  const { data: userData, loading } = useUserDetails()
   const { addToast } = useToasts()
   const [createPaymentCheckoutToken] = useMutation(paymentCheckoutTokenCreate)
 
@@ -83,6 +81,9 @@ export default function DeliveryComponent() {
   const [modalShow, setModalShow] = useState(false)
   const [hostedFieldsInstance, setHostedFieldsInstance] = useState(null)
   const [googlePayInstance, setGooglePayInstance] = useState(null)
+  const [currentUser, setCurrentUser] = useState({
+    email: localStorage.getItem("guestEmail"),
+  })
 
   // TODO in the future
   const [shippingMethods, setShippingMethods] = useState(DUMP_SHIPPING_DATA)
@@ -91,18 +92,26 @@ export default function DeliveryComponent() {
     if (loading) {
       return
     }
-    if (!currentUser) {
+
+    if (!userData && !currentUser.email) {
       localStorage.removeItem("token")
       router.push(`/checkout/signup`)
       return
     }
-    const { defaultShippingAddress, defaultBillingAddress } = currentUser || {}
+
+    if (!userData) {
+      return
+    }
+
+    localStorage.removeItem("guestEmail")
+    const { defaultShippingAddress, defaultBillingAddress } = userData || {}
 
     setInitDeliveryData({
       ...initDeliveryData,
       shippingAddress: mappingDataAddress(defaultShippingAddress),
       billingAddress: mappingDataAddress(defaultBillingAddress),
     })
+    setCurrentUser(userData)
   }, [loading])
 
   useEffect(() => {
@@ -162,7 +171,7 @@ export default function DeliveryComponent() {
       handleSubmitError()
       return
     }
-
+    localStorage.removeItem("guestEmail")
     router.push(`/checkout/complete?orderNumber=${data?.number}`)
   }
 

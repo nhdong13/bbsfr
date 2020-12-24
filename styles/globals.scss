@@ -1,7 +1,7 @@
 /* ensure all pages have Bootstrap CSS */
 @import "~bootstrap/dist/css/bootstrap.min.css";
 @import "./variables.scss";
-@import "./safari_component.scss";
+@import "./sajari_component.scss";
 
 html,
 body {
@@ -145,6 +145,16 @@ input,
 //Slick slider
 .slick-arrow {
   display: none !important;
+}
+.slick-list {
+  .slick-slide.slick-cloned {
+    visibility: hidden;
+  }
+  .slick-slide[aria-hidden] {
+    a {
+      visibility: hidden;
+    }
+  }
 }
 // End slick slider
 
