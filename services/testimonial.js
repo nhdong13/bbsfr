@@ -1,4 +1,4 @@
-export function fetchDataFromStamped() {
+export function authenticationFromStamped() {
   let username = process.env.STAMPED_PUBLIC_API_KEY
   let password = process.env.STAMPED_PRIVATE_API_KEY
   var myHeaders = new Headers({

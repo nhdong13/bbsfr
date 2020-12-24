@@ -8,7 +8,7 @@ import {
 } from "../lib/prismic/api"
 import { setDepartments } from "../redux/reducers/departments"
 import dynamic from "next/dynamic"
-import { fetchDataFromStamped } from "../services/testimonial"
+import { authenticationFromStamped } from "../services/testimonial"
 
 const HomePageDynamic = dynamic(() => import("components/HomePage"))
 
@@ -27,7 +27,7 @@ function Home({ department, brands, SEO, resPriFAQ, testimonials }) {
 }
 
 export async function getStaticProps({ req, res }) {
-  const requestOptions = fetchDataFromStamped()
+  const requestOptions = authenticationFromStamped()
   const resStamped = await fetch(process.env.STAMPED_API_URL, requestOptions)
   const testimonials = await resStamped.json()
   const department = await getAllDepartments()

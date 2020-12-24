@@ -1,6 +1,6 @@
 import DepartmentDetailComponent from "../../components/DepartmentDetail/DepartmentDetailComponent"
 import { getDepartmentByUID, getAllDepartments } from "../../lib/prismic/api"
-import { fetchDataFromStamped } from "../../services/testimonial"
+import { authenticationFromStamped } from "../../services/testimonial"
 
 function DepartmentPage({ department, testimonials }) {
   return (
@@ -18,7 +18,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const requestOptions = fetchDataFromStamped()
+  const requestOptions = authenticationFromStamped()
   const res = await fetch(process.env.STAMPED_API_URL, requestOptions)
 
   const testimonials = await res.json()
