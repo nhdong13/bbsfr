@@ -8,9 +8,8 @@ import { search } from "@sajari/server"
 import { Pipeline, Variables } from "@sajari/react-search-ui"
 import { getConfigPipeline } from "../../../../services/getPipelineSajari"
 import { authenticationFromStamped } from "../../../../services/testimonial"
-import dynamic from "next/dynamic"
+import CategoryComponent from "../../../../components/Category"
 
-const CategoryDynamic = dynamic(() => import("../../../../components/Category"))
 const pipeline = new Pipeline({ ...getConfigPipeline("jackets-app") }, "app")
 const variables = new Variables({ resultsPerPage: 20, q: "" })
 
@@ -59,7 +58,7 @@ export async function getStaticPaths() {
 }
 const Category = ({ categoryData, initialResponse, testimonials }) => {
   return (
-    <CategoryDynamic
+    <CategoryComponent
       categoryData={categoryData}
       initialResponse={initialResponse}
       pipeline={pipeline}
