@@ -1,7 +1,6 @@
 import Image from "next/image"
 
 export const renderStart = (rate, width, height, max = 5) => {
-
   const container = (i, s) => {
     return (
       <div
@@ -19,7 +18,7 @@ export const renderStart = (rate, width, height, max = 5) => {
   let el = []
   const loop = () => {
     for (let i = 1; i <= max; i++) {
-      if (i + 1 <= rate) {
+      if (i <= rate) {
         el.push(container(i, "/icons/start-full.svg"))
       } else if (
         `${rate}`.includes(".") &&
