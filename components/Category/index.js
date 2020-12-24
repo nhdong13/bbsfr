@@ -2,11 +2,16 @@ import Head from "next/head"
 import { SearchProvider } from "@sajari/react-hooks"
 import dynamic from "next/dynamic"
 import { useRouter } from "next/router"
-import BackToPageBeforeComponent from "../Common/BackPageComponent/index.js"
 
 const HeaderCategoryDynamic = dynamic(() =>
   import("../Collection/Components/HeaderCollectionComponent.js")
 )
+const ResultDynamic = dynamic(() =>
+  import("../Collection/Components/ResultComponent.js")
+)
+const BackToPageBeforeDynamic = dynamic(() =>
+  import("../Common/BackPageComponent/index.js")
+) 
 
 const CategoryComponent = ({ categoryData, initialResponse, pipeline }) => {
   const router = useRouter()
@@ -42,8 +47,9 @@ const CategoryComponent = ({ categoryData, initialResponse, pipeline }) => {
               : "Category"
           }
         />
+        <BackToPageBeforeDynamic page={router.query.collection} />
+        <ResultDynamic pipeline={pipeline} initialResponse={initialResponse} />
       </SearchProvider>
-      <BackToPageBeforeComponent page={router.query.collection} />
     </>
   )
 }
