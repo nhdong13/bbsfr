@@ -29,7 +29,10 @@ const FAQComponent = (props) => {
     const faqMap =
       FAQ &&
       FAQ.faq &&
-      FAQ.faq.map((item, index) => ({ ...item, id: index + 1, open: false }))
+      FAQ.faq.length > 0 &&
+      FAQ.faq
+        .map((item, index) => ({ ...item, id: index + 1, open: false }))
+        .filter((i) => i.answer !== null)
     if (faqMap) {
       setFaqItemsAll(faqMap)
       const faqLess = faqMap.slice(0, 5)
