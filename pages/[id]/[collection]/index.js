@@ -9,9 +9,7 @@ import { getConfigPipeline } from "../../../services/getPipelineSajari"
 import { authenticationFromStamped } from "../../../services/testimonial"
 import CollectionComponent from "../../../components/Collection"
 
-
-
-const pipeline = new Pipeline({ ...getConfigPipeline("jackets-app") }, "app")
+const pipeline = new Pipeline({ ...getConfigPipeline("best-buy") }, "query")
 const variables = new Variables({ resultsPerPage: 20, q: "" })
 
 export async function getStaticProps({ params }) {
