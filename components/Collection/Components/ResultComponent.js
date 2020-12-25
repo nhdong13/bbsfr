@@ -28,7 +28,7 @@ const SortFilterDynamic = dynamic(() => import("./SortFilterComponent"))
 
 const productTypeFilter = new FilterBuilder({
   name: "type",
-  field: "price",
+  field: "brand",
   count: true,
   multi: true,
 })
