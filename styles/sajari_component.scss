@@ -13,9 +13,27 @@ $product-count-color: #939393;
   padding-left: 0px !important;
   padding-right: 0px !important;
   box-shadow: unset !important;
+  svg {
+    width: 12px;
+    height: 12px;
+    background-image: url("../public/icons/icon-previous.svg");
+    background-repeat: no-repeat;
+    path {
+      display: none
+    }
+  }
 }
 .nextPagination {
   @extend .prevPagination;
+  svg {
+    width: 12px;
+    height: 12px;
+    background-repeat: no-repeat;
+    background-image: url("../public/icons/icon-next.svg");
+    path {
+      display: none;
+    }
+  }
 }
 
 .activePagination {
