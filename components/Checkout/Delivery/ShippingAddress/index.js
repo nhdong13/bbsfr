@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { Row, Col, Button, Form, Container } from "react-bootstrap"
 import clsx from "clsx"
 
-import { COUNTRIES_RESTRICTION } from "../constants"
+import { COUNTRIES_RESTRICTION } from "../../constants"
 import ErrorMessageWrapper from "../../ErrorMessageWrapper"
 import styles from "../Delivery.module.scss"
 

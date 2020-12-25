@@ -24,7 +24,7 @@ import { paymentCheckoutTokenCreate } from "lib/mutations"
 import { authorizeKlarna } from "./klarna"
 import { validateCreditCard, authorizeCreditCard } from "./credit_card"
 import { initGooglePay } from "./google_pay"
-import { INITIAL_ADDRESS, DUMP_SHIPPING_DATA } from "./constants"
+import { INITIAL_ADDRESS, DUMP_SHIPPING_DATA } from "../constants"
 import {
   mappingDataAddress,
   selectAccountAddress,
@@ -92,20 +92,16 @@ export default function DeliveryComponent() {
     if (loading) {
       return
     }
-
     if (!userData && !currentUser.email) {
       localStorage.removeItem("token")
       router.push(`/checkout/signup`)
       return
     }
-
     if (!userData) {
       return
     }
-
     localStorage.removeItem("guestEmail")
     const { defaultShippingAddress, defaultBillingAddress } = userData || {}
-
     setInitDeliveryData({
       ...initDeliveryData,
       shippingAddress: mappingDataAddress(defaultShippingAddress),
@@ -253,7 +249,6 @@ export default function DeliveryComponent() {
 
     localStorage.setItem("paymentGateway", paymentMethod.id)
     const totalPrice = data.totalPrice?.gross?.amount
-    console.log("totalPrice", totalPrice)
     await processPayment(
       checkoutData,
       totalPrice,

@@ -95,3 +95,5 @@ export const DUMP_SHIPPING_DATA = [
     __typename: "ShippingMethod",
   },
 ]
+
+export const MAX_QUANTITY = 10

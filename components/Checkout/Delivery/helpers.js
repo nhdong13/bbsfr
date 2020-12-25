@@ -1,5 +1,5 @@
 import _ from "lodash"
-import { COUNTRIES_RESTRICTION } from "./constants"
+import { COUNTRIES_RESTRICTION } from "../constants"
 import { initKlarna } from "./klarna"
 import { authorizeAfterpay } from "./afterpay"
 import { authorizePaypal } from "./paypal"

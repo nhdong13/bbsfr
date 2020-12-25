@@ -8,7 +8,6 @@ export default function OrderTotalCost({
   promotion,
   discount,
 }) {
-  console.log("discount", discount)
   return (
     <Row className="mt-4">
       <Col xs="6">
