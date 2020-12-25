@@ -162,7 +162,6 @@ const ResultComponent = (props) => {
             setOpen={setOpenSortingCollapse}
             type={"sort"}
             setChanged={setChanged}
-            variables={variables}
           />
           {/* Filter feature */}
           <SortFilterDynamic
