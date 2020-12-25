@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { Container, InputGroup, Row, Col, Form, Button } from "react-bootstrap"
 import clsx from "clsx"
 import { useMutation } from "@apollo/client"
@@ -19,26 +19,8 @@ export default function PromotionComponent({
   setFieldError,
 }) {
   const [loading, setLoading] = useState(false)
-  const {
-    items,
-    subtotalPrice,
-    discount,
-    promoCodeDiscount,
-    voucherCode,
-    loaded,
-  } = useCart()
+  const { items, subtotalPrice } = useCart()
   const [validateVoucherify] = useMutation(voucherifyValidate)
-
-  useEffect(() => {
-    if (!loaded) {
-      return
-    }
-    console.log("discount", discount)
-    console.log("promoCodeDiscount", promoCodeDiscount)
-    if (voucherCode) {
-      console.log("1")
-    }
-  }, [loaded])
 
   const handleClickApply = async () => {
     setLoading(true)
