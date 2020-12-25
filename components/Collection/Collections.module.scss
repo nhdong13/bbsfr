@@ -273,7 +273,7 @@ $bg-sort-filter: #f6f6f6;
   .containerProduct {
     border-right: 1px solid #e5e5e5;
     border-bottom: 1px solid #e5e5e5;
-    height: 270px;
+    height: 280px;
     width: 172px;
     position: relative;
 
@@ -285,12 +285,21 @@ $bg-sort-filter: #f6f6f6;
         position: relative;
         width: 172px;
         height: 128px;
+        img {
+          padding: 10px !important;
+        }
       }
 
       .sessionInfo {
         padding-left: 15px;
         padding-right: 15px;
         .nameProduct {
+          max-height: 80px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
           @include font-family(Rajdhani, 14px, 500, $primary-text-color);
           p {
             margin-bottom: 0px;
