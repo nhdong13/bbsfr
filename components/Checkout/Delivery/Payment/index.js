@@ -9,7 +9,7 @@ import {
   PAYMENT_METHODS_ICON,
   BRAINTREE_SUPPORTED_METHODS,
   NUMBER_DUMP_CONTENT_FLEXBOX,
-} from "../constants"
+} from "../../constants"
 
 export default function PaymentComponent({
   availablePaymentGateways,

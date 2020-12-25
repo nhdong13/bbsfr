@@ -1,7 +1,7 @@
 import { Row, Col, Form, Container } from "react-bootstrap"
 
 import ErrorMessageWrapper from "../../ErrorMessageWrapper"
-import { COUNTRIES_RESTRICTION } from "../constants"
+import { COUNTRIES_RESTRICTION } from "../../constants"
 import styles from "../Delivery.module.scss"
 
 export default function BillingAddress({

@@ -4,7 +4,7 @@ import Image from "next/image"
 import clsx from "clsx"
 
 import Money from "../../../Money"
-import { SHIPPING_METHODS_ICON } from "../constants"
+import { SHIPPING_METHODS_ICON } from "../../constants"
 import styles from "../Delivery.module.scss"
 
 export default function ShippingMethods({
@@ -49,5 +49,5 @@ export default function ShippingMethods({
         ))}
       </Col>
     </Row>
-  );
+  )
 }

@@ -1,5 +1,5 @@
 import _ from "lodash"
-import { COUNTRIES_RESTRICTION } from "./constants"
+import { COUNTRIES_RESTRICTION } from "../constants"
 import { initKlarna } from "./klarna"
 import { authorizeAfterpay } from "./afterpay"
 import { authorizePaypal } from "./paypal"
@@ -27,35 +27,6 @@ export const mappingDataAddress = (data) => {
       : "",
     useFullForm: false,
   }
-}
-
-export const sendCreatePayment = async (
-  orderToken,
-  createPayment,
-  completeCheckout,
-  setShowLoading,
-  router
-) => {
-  if (!orderToken) return
-
-  setShowLoading(true)
-  const paymentGateway = localStorage.getItem("paymentGateway")
-  const { dataError } = await createPayment(paymentGateway, orderToken)
-  if (dataError) {
-    setShowLoading(false)
-    handleSubmitError()
-    return
-  }
-
-  const { data, dataError: completeCheckoutError } = await completeCheckout()
-
-  if (completeCheckoutError) {
-    setShowLoading(false)
-    handleSubmitError()
-    return
-  }
-
-  router.push(`/checkout/complete?orderNumber=${data?.number}`)
 }
 
 export const selectAccountAddress = (
