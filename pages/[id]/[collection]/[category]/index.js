@@ -10,7 +10,7 @@ import { getConfigPipeline } from "../../../../services/getPipelineSajari"
 import { authenticationFromStamped } from "../../../../services/testimonial"
 import CategoryComponent from "../../../../components/Category"
 
-const pipeline = new Pipeline({ ...getConfigPipeline("jackets-app") }, "app")
+const pipeline = new Pipeline({ ...getConfigPipeline("best-buy") }, "query")
 const variables = new Variables({ resultsPerPage: 20, q: "" })
 
 export async function getStaticProps({ params }) {

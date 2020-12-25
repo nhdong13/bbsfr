@@ -8,6 +8,7 @@ import {
   Checkbox,
   Combobox,
 } from "@sajari/react-components"
+import { useRouter } from "next/router"
 
 let arrayToFilter = []
 let isSetArrayToFilter = false
@@ -15,7 +16,11 @@ let isSetArrayToFilter = false
 const FilterRender = ({ name, setChanged }) => {
   const [searchInputFilter, setSearch] = useState("")
 
-  const { multi, options, selected, setSelected } = useFilter(name)
+  const { multi, options, selected, setSelected, reset } = useFilter(name)
+
+  const router = useRouter()
+  router.events.on("routeChangeComplete", () => reset())
+
   if (options.length === 0) {
     return null
   } else {

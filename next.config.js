@@ -7,6 +7,7 @@ module.exports = {
       "localhost",
       "bbsfrapi.bikebiz.com.au",
       "s3.amazonaws.com",
+      "cdn.sajari.net",
     ],
   },
 }

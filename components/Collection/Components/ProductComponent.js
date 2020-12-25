@@ -77,8 +77,9 @@ const ProductComponent = ({ products, item, index }) => {
                   quality={30}
                   loading="lazy"
                   layout="fill"
+                  objectFit="contain"
                   alt={item.values.name}
-                  src="https://images.prismic.io/slicemachine-blank/6b2bf485-aa12-44ef-8f06-dce6b91b9309_dancing.png?auto=compress,format"
+                  src={item.values.image}
                 ></Image>
               </div>
             </a>
@@ -90,7 +91,7 @@ const ProductComponent = ({ products, item, index }) => {
             <div className={styles.priceProduct}>
               <p>{item.values.price ? `$${item.values.price}` : ""}</p>
             </div>
-            {renderStart(4.5, "16px", "16px", 5)}
+            {renderStart(item.values.rating, "16px", "16px", 5)}
           </div>
         </div>
       </div>
