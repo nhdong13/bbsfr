@@ -171,6 +171,12 @@ $padding-top-component: 55px;
         width: 236px;
         height: 177px;
       }
+      @media only screen and (max-width: 320px) {
+        .departmentImage {
+          width: 200px;
+          height: 150px;
+        }
+      }
     }
 
     .style_second {
