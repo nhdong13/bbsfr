@@ -1,14 +1,60 @@
-import { Button, Container, Modal } from "react-bootstrap"
+import { Button, Col, Container, Modal, Row } from "react-bootstrap"
+import { useState } from "react"
 import styles from "./nav.module.scss"
 import Image from "next/image"
+import dynamic from "next/dynamic"
+
+const LeftElementDynamic = dynamic(() => import("../Components/LeftElementNav"))
+const RightElementNavDynamic = dynamic(() =>
+  import("../Components/RightElementNav")
+)
 const NavModalComponent = ({ show, onHide }) => {
+  const [element, setElement] = useState({
+    name: "Road Gear",
+    active: true,
+    department_slug: "road-gear",
+  })
+  const [elementLeft, setElementLeft] = useState([
+    { name: "New Motorcycles", active: false, department_slug: "new-bikes" },
+    { name: "Used Motorcycles", active: false, department_slug: "used-bikes" },
+    { name: "Road Gear", active: true, department_slug: "road-gear" },
+    { name: "MX Gear", active: false, department_slug: "mx-gear" },
+    {
+      name: "Adventure Gear",
+      active: false,
+      department_slug: "adventure-gear",
+    },
+    {
+      name: "Parts & Accessories",
+      active: false,
+      department_slug: "accessories",
+    },
+    { name: "Servicing", active: false, department_slug: "service" },
+    { name: "Finance & Insurance", active: false, department_slug: "" },
+  ])
+
+  const handleActive = (i) => {
+    setElement({ ...element, ...i })
+    setElementLeft(
+      elementLeft.map((item) => {
+        if (item.name === i.name) {
+          item.active = true
+        } else {
+          item.active = false
+        }
+        return item
+      })
+    )
+  }
+
   return (
     <Modal
       dialogClassName={styles.dialogClassName}
       contentClassName={styles.contentClassName}
-      animation
+      animation={true}
       show={show}
       onHide={onHide}
+      scrollable
     >
       <Modal.Header bsPrefix={styles.modalHeader}>
         <Modal.Title>
@@ -32,7 +78,22 @@ const NavModalComponent = ({ show, onHide }) => {
           </div>
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+      <Modal.Body bsPrefix={styles.modalBody}>
+        <div className={styles.modalBodyLeft}>
+          {elementLeft &&
+            elementLeft.length > 0 &&
+            elementLeft.map((i, index) => {
+              return (
+                <div key={index} onClick={() => handleActive(i)}>
+                  <LeftElementDynamic name={i.name} active={i.active} />
+                </div>
+              )
+            })}
+        </div>
+        <div className={styles.modalBodyRight}>
+          <RightElementNavDynamic element={element} />
+        </div>
+      </Modal.Body>
     </Modal>
   )
 }
