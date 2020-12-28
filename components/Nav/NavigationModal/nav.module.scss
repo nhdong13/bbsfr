@@ -1,0 +1,28 @@
+.elementDisplay {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .logo {
+    position: relative;
+    width: 134px;
+    height: 20px;
+  }
+  .iconArticle {
+    position: relative;
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.dialogClassName {
+  margin: unset !important;
+}
+.contentClassName {
+}
+
+.modalHeader {
+  height: 64px !important;
+  line-height: 64px !important;
+  padding: 20px 5px 20px 5px;
+  border-bottom: 1px solid #e5e5e4;
+}

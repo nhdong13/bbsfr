@@ -1,5 +1,30 @@
-.cartIcon {
-  display: inline-block;
-  vertical-align: middle;
-  margin-right: 10px;
+.containerNavBar {
+  height: 64px;
+  line-height: 64px;
+  
+  .logoApp {
+    position: relative;
+    width: 134px;
+    height: 20px;
+  }
+  .containerIcon {
+    display: flex;
+    align-items: center;
+
+    .iconCheckout {
+      position: relative;
+      width: 24px;
+      height: 24px;
+      margin-right: 10px;
+    }
+
+    .iconHamburger {
+      position: relative;
+      width: 24px;
+      height: 24px;
+      vertical-align: middle;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+  }
 }
