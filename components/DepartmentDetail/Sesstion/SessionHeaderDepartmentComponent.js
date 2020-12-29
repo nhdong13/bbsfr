@@ -29,8 +29,9 @@ const SessionHeaderDepartmentComponent = (props) => {
         departmentFiller?.department_preHeader.length > 0
       ? departmentFiller.department_preHeader[0].text
       : "---"
+
   return (
-    <Container className={styles.departmentContainer}>
+    <Container fluid className={styles.departmentContainer}>
       <Row>
         <Col xs={6} sm={6} md={6} lg={6}>
           <div className={styles.contentLeft}>
