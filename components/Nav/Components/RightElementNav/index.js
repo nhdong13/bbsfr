@@ -18,6 +18,7 @@ const RightElementNavComponent = ({ element }) => {
       <div>
         <HeaderRightDynamic title={element.name} />
         <SessionBrowseByCategoryDynamic
+          departmentSlug={element.department_slug}
           collections={collections}
           disableTitleContainer={true} //flag to switch component title - flag required when using form Nav
         />

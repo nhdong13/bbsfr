@@ -1,14 +1,21 @@
-import { Button, Col, Container, Modal, Row } from "react-bootstrap"
+import { Modal } from "react-bootstrap"
 import { useState } from "react"
 import styles from "./nav.module.scss"
 import Image from "next/image"
 import dynamic from "next/dynamic"
+import { useRouter } from "next/router"
 
 const LeftElementDynamic = dynamic(() => import("../Components/LeftElementNav"))
 const RightElementNavDynamic = dynamic(() =>
   import("../Components/RightElementNav")
 )
 const NavModalComponent = ({ show, onHide }) => {
+  const router = useRouter()
+
+  if (router?.events) {
+    router.events.on("routeChangeComplete", () => onHide())
+  }
+
   const [element, setElement] = useState({
     name: "Road Gear",
     active: true,

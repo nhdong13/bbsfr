@@ -2,20 +2,20 @@ import styles from "../DepartmentPage.module.scss"
 import { Container, Row, Col } from "react-bootstrap"
 import Image from "next/image"
 import Link from "next/link"
-import Skeleton from "react-loading-skeleton"
 import { useRouter } from "next/router"
 
 const SessionBrowseByCategoryComponent = (props) => {
   const router = useRouter()
   const { collections } = props
 
-  const showLoadingSkeleton = () => {
-    return (
-      <div style={{ padding: "5px" }}>
-        <Skeleton height={50} count={10} />
-      </div>
-    )
+
+  const handleChangeRoute = (collection) => {
+    if (props?.departmentSlug) {
+      return `${props.departmentSlug}${collection.collection_slug}`
+    }
+    return `${router?.query?.id}${collection.collection_slug}`
   }
+
   return (
     <>
       {/* Switch other title if component called form Nav */}
@@ -45,15 +45,11 @@ const SessionBrowseByCategoryComponent = (props) => {
           </Row>
         </Container>
       )}
-      {collections && collections.length > 0 ? (
         <div className={styles.sessionListCategory}>
           {collections &&
             collections.map((collection, index) => {
               return (
-                <Link
-                  key={index}
-                  href={`${router?.query?.id}${collection.collection_slug}`}
-                >
+                <Link key={index} href={handleChangeRoute(collection)}>
                   <a>
                     <Container style={{ maxWidth: "unset" }}>
                       <div
@@ -116,9 +112,7 @@ const SessionBrowseByCategoryComponent = (props) => {
               )
             })}
         </div>
-      ) : (
-        showLoadingSkeleton()
-      )}
+   
     </>
   )
 }
