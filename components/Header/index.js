@@ -3,9 +3,8 @@ import Image from "next/image"
 import Link from "next/link"
 import styles from "./Header.module.scss"
 import { useState } from "react"
-import dynamic from "next/dynamic"
+import NavModalComponent from "../Nav/NavigationModal"
 
-const NavModalDynamic = dynamic(() => import("../Nav/NavigationModal"))
 
 export default function Header() {
   const [show, setShow] = useState(false)
@@ -48,7 +47,7 @@ export default function Header() {
           </div>
         </div>
       </Navbar>
-      <NavModalDynamic show={show} onHide={handleClose} />
+      <NavModalComponent show={show} onHide={handleClose} />
     </>
   )
 }

@@ -2,13 +2,10 @@ import { Modal } from "react-bootstrap"
 import { useState } from "react"
 import styles from "./nav.module.scss"
 import Image from "next/image"
-import dynamic from "next/dynamic"
 import { useRouter } from "next/router"
+import LeftElementNavComponent from "../Components/LeftElementNav"
+import RightElementNavComponent from "../Components/RightElementNav"
 
-const LeftElementDynamic = dynamic(() => import("../Components/LeftElementNav"))
-const RightElementNavDynamic = dynamic(() =>
-  import("../Components/RightElementNav")
-)
 const NavModalComponent = ({ show, onHide }) => {
   const router = useRouter()
 
@@ -92,13 +89,13 @@ const NavModalComponent = ({ show, onHide }) => {
             elementLeft.map((i, index) => {
               return (
                 <div key={index} onClick={() => handleActive(i)}>
-                  <LeftElementDynamic name={i.name} active={i.active} />
+                  <LeftElementNavComponent name={i.name} active={i.active} />
                 </div>
               )
             })}
         </div>
         <div className={styles.modalBodyRight}>
-          <RightElementNavDynamic element={element} />
+          <RightElementNavComponent element={element} />
         </div>
       </Modal.Body>
     </Modal>
