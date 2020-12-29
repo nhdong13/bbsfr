@@ -12,7 +12,7 @@ const ResultDynamic = dynamic(() =>
 )
 const BackToPageBeforeDynamic = dynamic(() =>
   import("../Common/BackPageComponent/index.js")
-) 
+)
 const FAQDynamic = dynamic(() => import("../HomePage/FAQ"))
 const TestimonialsDynamic = dynamic(() =>
   import("../HomePage/Testimonials/index")
@@ -30,8 +30,11 @@ const CategoryComponent = ({
   return (
     <>
       <Head>
-        <title>{meta_title}</title>
-        <meta name="description" content={meta_description} />
+        <title>{meta_title || "Category"}</title>
+        <meta
+          name="description"
+          content={meta_description || "No description"}
+        />
         <meta
           name="og:description"
           property="og:description"
