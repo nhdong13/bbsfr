@@ -27,7 +27,7 @@ export default function Layout({ children }) {
         </noscript>
         {NewRelicSnippet}
       </Head>
-      <NavModalComponent />
+      <Header />
       <main>{children}</main>
     </>
   )
