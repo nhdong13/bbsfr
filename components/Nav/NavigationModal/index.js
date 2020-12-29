@@ -58,7 +58,6 @@ const NavModalComponent = ({ show, onHide }) => {
       animation={true}
       show={show}
       onHide={onHide}
-      scrollable
     >
       <Modal.Header bsPrefix={styles.modalHeader}>
         <Modal.Title>
