@@ -32,7 +32,7 @@ const CollectionComponent = ({
   return (
     <>
       <Head>
-        <title>{meta_title}</title>
+        <title>{meta_title || "Collection"}</title>
         <meta name="description" content={meta_description} />
         <meta
           name="og:description"
