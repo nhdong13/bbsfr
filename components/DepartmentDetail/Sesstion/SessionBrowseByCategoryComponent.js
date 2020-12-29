@@ -17,13 +17,6 @@ const SessionBrowseByCategoryComponent = (props) => {
     )
   }
 
-  const handleChangeRoute = (collection) => {
-    if (props?.departmentSlug) {
-      return `${props.departmentSlug}${collection.collection_slug}`
-    }
-    return `${router?.query?.id}${collection.collection_slug}`
-  }
-
   return (
     <>
       {/* Switch other title if component called form Nav */}
@@ -58,7 +51,14 @@ const SessionBrowseByCategoryComponent = (props) => {
           {collections &&
             collections.map((collection, index) => {
               return (
-                <Link key={index} href={handleChangeRoute(collection)}>
+                <Link
+                  key={index}
+                  href={
+                    props?.departmentSlug
+                      ? `/${props.departmentSlug}${collection.collection_slug}`
+                      : `/${router?.query?.id}${collection.collection_slug}`
+                  }
+                >
                   <a>
                     <Container style={{ maxWidth: "unset" }}>
                       <div
