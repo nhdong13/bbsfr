@@ -9,6 +9,9 @@
   }
 
   .categoryTitle {
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
     @include font-family(Rajdhani, 16px, 600, $primary-text-color);
     text-align: left;
   }
@@ -181,11 +184,19 @@
     font-weight: 700;
     color: #ffb00f;
     &:hover {
-      // color: $color-hover;
       cursor: pointer;
     }
   }
 }
+
+.sessionTitleCategoryFromNav {
+  height: 56px;
+  line-height: 56px;
+  .sessionTitleCategoryTextRightFromNav {
+    @include font-family(Rajdhani, 14px, 700, $primary-text-color);
+  }
+}
+
 //List category
 .sessionListCategory {
   background-color: #f6f6f4;

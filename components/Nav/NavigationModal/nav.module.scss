@@ -1,0 +1,87 @@
+@import "/styles/variables.scss";
+@import "/styles/mixin";
+
+.elementDisplay {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .logo {
+    position: relative;
+    width: 134px;
+    height: 20px;
+  }
+  .iconArticle {
+    position: relative;
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.dialogClassName {
+  margin: unset !important;
+  height: 100%;
+  max-width: unset;
+  width: 100%;
+}
+.contentClassName {
+  height: 100%;
+}
+
+.modalHeader {
+  height: 64px !important;
+  line-height: 64px !important;
+  padding: 20px 5px 20px 5px;
+  border-bottom: 1px solid #e5e5e4;
+}
+.modalBody {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  
+  .modalBodyLeft {
+    width: 35%;
+    overflow: scroll;
+    border-right: 1px solid #e5e5e4;
+  }
+  .modalBodyRight {
+    width: 65%;
+    overflow: scroll;
+    height: 100%;
+  }
+}
+
+.elementLeft {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #e5e5e4;
+  @include font-family(Rajdhani, 14px, 700, $primary-text-color);
+
+  .containerLeft {
+    width: 96%;
+    padding: 20px 5px 20px 5px;
+    text-transform: uppercase;
+    .elementLeftText {
+      color: #ffb00f;
+    }
+  }
+
+  .elementLeftActive {
+    width: 4%;
+    background-color: #ffb00f;
+    height: 10px;
+    top: 0px;
+    height: auto;
+  }
+}
+
+//--------------HEADER RIGHT--------->
+.headerRight {
+  background-color: $primary-text-color;
+  padding: 16px;
+  .headerRightText {
+    text-transform: uppercase;
+    @include font-family(Rajdhani, 21px, 700, #FFFFFF);
+  }
+}
