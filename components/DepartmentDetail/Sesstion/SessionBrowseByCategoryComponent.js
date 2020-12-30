@@ -95,7 +95,7 @@ const SessionBrowseByCategoryComponent = (props) => {
                           </Col>
                           <Col xs={3} sm={3} md={2} lg={2} xl={2}>
                             <div className={styles.categoryLeft}>
-                              <div className={styles.categoryLeftImg}>
+                              {/* <div className={styles.categoryLeftImg}>
                                 <div className={styles.img}>
                                   <Image
                                     src={collection?.collection_image?.url}
@@ -107,7 +107,7 @@ const SessionBrowseByCategoryComponent = (props) => {
                                     sizes="320px"
                                   />
                                 </div>
-                              </div>
+                              </div> */}
                               <div className={styles.categoryLeftIcon}>
                                 {">"}
                               </div>
