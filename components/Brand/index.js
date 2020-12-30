@@ -1,4 +1,10 @@
+import HeaderBrandIndexComponent from "./Components/HeaderBrandIndexComponent"
+
 const BrandComponent = () => {
-  return <>Brand Index</>
+return (
+  <>
+    <HeaderBrandIndexComponent />
+  </>
+)
 }
 export default BrandComponent
