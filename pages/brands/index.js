@@ -1,4 +1,6 @@
-const Brand = () => {
-  return <div>Brands</div>
+import BrandComponent from "../../components/Brand"
+
+const BrandPage = () => {
+  return <BrandComponent></BrandComponent>
 }
-export default Brand
+export default BrandPage
