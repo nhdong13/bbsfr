@@ -20,10 +20,9 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const requestOptions = authenticationFromStamped()
   const res = await fetch(process.env.STAMPED_API_URL, requestOptions)
-
   const testimonials = await res.json()
-
   const department = await getDepartmentByUID(params.id)
+
   return {
     props: { department, testimonials },
     revalidate: +process.env.NEXT_PUBLIC_REVALIDATE_PAGE_TIME,
