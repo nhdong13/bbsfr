@@ -1,0 +1,15 @@
+@import "/styles/variables.scss";
+@import "/styles/mixin";
+
+.headerBrandIndex{ 
+  height: 192px;
+  background-color: #181818;
+
+  p {
+    padding-top: 42px;
+    @include font-family(Rajdhani, 31px, 700, $text-white);
+    text-align: left;
+    text-transform: uppercase;
+  }
+
+}
