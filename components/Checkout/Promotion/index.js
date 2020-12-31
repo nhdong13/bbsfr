@@ -60,6 +60,19 @@ export default function PromotionComponent({
     setLoading(false)
   }
 
+  const handleDeletePromoCode = async () => {
+    setLoading(true)
+    const promotion = {
+      valid: false,
+      code: "",
+      discountAmount: null,
+      discountedPrice: null,
+    }
+    setFieldValue("promotion", promotion)
+    await addPromoCode("")
+    setLoading(false)
+  }
+
   return (
     <Row className={clsx(styles.promotionSection, "secondary-bg")}>
       <Container>
@@ -74,19 +87,24 @@ export default function PromotionComponent({
                 <InputGroup>
                   <Form.Control
                     type="text"
-                    placeholder="Enter promo code number"
+                    placeholder="Enter promo code"
                     name="promotion.code"
                     value={values.promotion.code}
                     onChange={handleChange}
+                    disabled={values.promotion.valid}
                   />
                   <InputGroup.Append>
                     <Button
                       variant="primary"
                       className={styles.btn}
                       type="button"
-                      onClick={handleClickApply}
+                      onClick={
+                        values.promotion.valid
+                          ? handleDeletePromoCode
+                          : handleClickApply
+                      }
                     >
-                      Apply
+                      {values.promotion.valid ? "Delete" : "Apply"}
                     </Button>
                   </InputGroup.Append>
                 </InputGroup>

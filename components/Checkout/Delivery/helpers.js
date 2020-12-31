@@ -182,7 +182,11 @@ export const processPayment = async (
         )
         break
       case "bikebiz.payments.googlepay":
+        const paymentsClient = new google.payments.api.PaymentsClient({
+          environment: process.env.NEXT_PUBLIC_GPAY_ENV,
+        })
         authorizeGooglePay(
+          paymentsClient,
           googlePayInstance,
           totalPrice,
           sendCreatePayment,

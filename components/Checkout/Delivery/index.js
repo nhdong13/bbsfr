@@ -120,7 +120,11 @@ export default function DeliveryComponent() {
         (config) => config.field === "client_token"
       ).value
       authorizeCreditCard(clientToken, setHostedFieldsInstance)
-      initGooglePay(clientToken, setGooglePayInstance)
+
+      const paymentsClient = new google.payments.api.PaymentsClient({
+        environment: process.env.NEXT_PUBLIC_GPAY_ENV,
+      })
+      initGooglePay(paymentsClient, clientToken, setGooglePayInstance)
     }
 
     let shippingMethod = checkout.shippingMethod?.id
