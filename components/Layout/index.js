@@ -13,22 +13,17 @@ export default function Layout({ children }) {
           content="width=device-width, initial-scale=1, maximum-scale=5"
         />
         <link rel="icon" href="/favicon.ico" />
-        <link
-          rel="preload"
-          href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap"
-          as="style"
-          onLoad="this.onload=null;this.rel='stylesheet'"
-        />
-        <noscript>
-          <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap"
-          />
-        </noscript>
         {NewRelicSnippet}
       </Head>
       <Header />
-      <main>{children}</main>
+      <main>
+        {children}
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap"
+          as="style"
+        />
+      </main>
     </>
   )
 }
