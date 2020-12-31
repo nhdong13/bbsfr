@@ -14,6 +14,7 @@ $bg-sort-filter: #f6f6f6;
   .contentHeader {
     padding-top: 40px;
     padding-bottom: 40px;
+    height: 136px;
     .page_heading_1_collection_page {
       font-family: Rajdhani;
       font-style: normal;
@@ -57,14 +58,14 @@ $bg-sort-filter: #f6f6f6;
     }
   }
   .category {
-    height: 32px;
+    min-height: 32px;
     display: flex;
     align-items: center;
 
     font-family: Rajdhani;
     font-style: normal;
     font-weight: 600;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 20px;
 
     .count_category {
@@ -272,7 +273,7 @@ $bg-sort-filter: #f6f6f6;
   .containerProduct {
     border-right: 1px solid #e5e5e5;
     border-bottom: 1px solid #e5e5e5;
-    height: 280px;
+    height: 312px;
     width: 172px;
     position: relative;
 
@@ -283,7 +284,7 @@ $bg-sort-filter: #f6f6f6;
       .elementImageProduct {
         position: relative;
         width: 172px;
-        height: 128px;
+        height: 172px;
         img {
           padding: 10px !important;
         }
@@ -305,10 +306,24 @@ $bg-sort-filter: #f6f6f6;
           }
         }
 
-        .priceProduct {
-          @include font-family(Rajdhani, 16px, 600, $primary-text-color);
-          p {
-            margin-bottom: 0px;
+        .productInfoBottom {
+          position: absolute;
+          bottom: 15px;
+          .priceProduct {
+            @include font-family(Rajdhani, 16px, 600, $primary-text-color);
+            p {
+              margin-bottom: 0px;
+            }
+            .supPriceProduct {
+              top: -3px;
+              font-size: 11px;
+            }
+          }
+          .ratingProduct {
+            display: flex;
+            span {
+              font-size: 12px;
+            }
           }
         }
       }

@@ -49,7 +49,7 @@ const TestimonialsComponent = (props) => {
                 return (
                   <Col className={styles.testimonialsSlider} key={index}>
                     <div className={styles.testimonialsSliderStart}>
-                      {renderStart(item.rate, "24px", "24px", 5)}
+                      {renderStart(item.rate, "24px", "24px", 5, "reviewStar")}
                     </div>
                     <div className={styles.testimonialsSliderContext}>
                       {item.content}
