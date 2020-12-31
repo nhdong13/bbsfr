@@ -1,5 +1,6 @@
-import React from "react"
-import { Row, Col, Button, Form, Container } from "react-bootstrap"
+import { useState } from "react"
+import { Row, Col, Button, Form, Container, InputGroup } from "react-bootstrap"
+import Image from "next/image"
 import clsx from "clsx"
 
 import ErrorMessageWrapper from "../../ErrorMessageWrapper"
@@ -13,6 +14,8 @@ export default function CheckoutPassword({
   touched,
   handleCheckoutAsGuest,
 }) {
+  const [showPassword, setShowPassword] = useState(false)
+
   return (
     <Row className={styles.emailBody}>
       <Container>
@@ -34,13 +37,33 @@ export default function CheckoutPassword({
         <Form.Row>
           <Form.Group controlId="password" as={Col} xs="12">
             <Form.Label className={styles.formLabel}>Password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Your Password"
-              name="password"
-              value={values.password}
-              onChange={handleChange}
-            />
+            <InputGroup className="mb-3">
+              <Form.Control
+                type={showPassword ? "text" : "password"}
+                placeholder="Your Password"
+                name="password"
+                value={values.password}
+                onChange={handleChange}
+                className={styles.passwordField}
+              />
+              <InputGroup.Append>
+                <InputGroup.Text className={styles.iconShowPassword}>
+                  <Button
+                    variant="link"
+                    type="button"
+                    className="p-0"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    <Image
+                      src={showPassword ? "/open-eye.svg" : "/b-eye.svg"}
+                      alt="cart"
+                      width={16}
+                      height={16}
+                    />
+                  </Button>
+                </InputGroup.Text>
+              </InputGroup.Append>
+            </InputGroup>
             <ErrorMessageWrapper
               errors={errors}
               touched={touched}

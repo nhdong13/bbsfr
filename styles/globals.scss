@@ -45,9 +45,19 @@ input,
 input.form-control,
 select.form-control {
   height: 48px;
+  color: $primary-text-color;
+  border-color: $primary-border-color;
 }
 
-input::placeholder {
+.form-control:focus,
+.custom-select:focus {
+  color: $primary-text-color;
+  border-color: $primary-border-color;
+  box-shadow: none;
+}
+
+input::placeholder,
+.form-control::placeholder {
   color: $secondary-text-color;
 }
 
@@ -118,12 +128,6 @@ input::placeholder {
 }
 
 //Custom for input form global
-.custom-select,
-input,
-.form-control,
-.btn {
-  font-weight: 600;
-}
 .custom-select-lg {
   height: calc(1.5em + 1rem + 10px);
 }
