@@ -1,5 +1,14 @@
 import { useRouter } from "next/router"
 import { Container } from "react-bootstrap"
+import { getDataForMainNav } from "../../services/mainNav"
+
+export async function getStaticProps() {
+  const dataNav = await getDataForMainNav()
+  return {
+    props: { dataNav },
+    revalidate: +process.env.NEXT_PUBLIC_REVALIDATE_PAGE_TIME,
+  }
+}
 
 export default function Complete() {
   const router = useRouter()
