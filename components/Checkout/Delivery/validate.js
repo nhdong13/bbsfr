@@ -1,7 +1,7 @@
 import * as Yup from "yup"
 import _ from "lodash"
 
-export const AddressSchema = Yup.object().shape({
+export const ShippingSchema = Yup.object().shape({
   shippingAddress: Yup.object().shape({
     firstName: Yup.string().required("This field is required"),
     lastName: Yup.string().required("This field is required"),
@@ -21,6 +21,10 @@ export const AddressSchema = Yup.object().shape({
     bussinessName: Yup.string(),
     useFullForm: Yup.boolean(),
   }),
+})
+
+export const DeliverySchema = Yup.object().shape({
+  shippingMethod: Yup.string().required("Please select a shipping method"),
   billingDifferentAddress: Yup.boolean(),
   billingAddress: Yup.object().shape({
     firstName: Yup.string().test(

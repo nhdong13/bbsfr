@@ -2,7 +2,7 @@ import { useState } from "react"
 import { Container, InputGroup, Row, Col, Form, Button } from "react-bootstrap"
 import clsx from "clsx"
 import { useMutation } from "@apollo/client"
-import { useCart } from "@sdk/react"
+import { useCart, useCheckout } from "@sdk/react"
 
 import LoadingSpinner from "components/LoadingSpinner"
 import { voucherifyValidate } from "lib/mutations"
@@ -20,6 +20,7 @@ export default function PromotionComponent({
 }) {
   const [loading, setLoading] = useState(false)
   const { items, subtotalPrice } = useCart()
+  const { addPromoCode } = useCheckout()
   const [validateVoucherify] = useMutation(voucherifyValidate)
 
   const handleClickApply = async () => {
@@ -51,6 +52,7 @@ export default function PromotionComponent({
         amount: voucherify.discountedPrice,
         currency: "AUD",
       })
+      await addPromoCode(values.promotion.code)
     } else {
       setFieldTouched("promotion.code", true, false)
       setFieldError("promotion.code", "Invalid promotion code")

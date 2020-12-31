@@ -8,11 +8,13 @@ export default function OrderTotalCost({
   promotion,
   discount,
 }) {
+  const discountAmount =
+    discount?.amount > 0 ? discount : promotion?.discountAmount
   return (
     <Row className="mt-4">
       <Col xs="6">
         <p>Sub Total</p>
-        {promotion?.valid && <p>Discount amount</p>}
+        {discountAmount?.amount > 0 && <p>Discount amount</p>}
         <p>Delivery</p>
         <p className="font-weight-bold">TOTAL</p>
       </Col>
@@ -21,9 +23,9 @@ export default function OrderTotalCost({
         <p>
           <Money money={subtotalPrice?.gross} />
         </p>
-        {promotion?.valid && (
+        {discountAmount?.amount > 0 && (
           <p>
-            <Money money={promotion?.discountAmount} />
+            <Money money={discountAmount} />
           </p>
         )}
         <p>
@@ -35,7 +37,9 @@ export default function OrderTotalCost({
         <p className="font-weight-bold">
           <Money
             money={
-              promotion?.valid ? promotion?.discountedPrice : totalPrice?.gross
+              promotion?.discountedPrice?.amount > 0 && !discount?.amount
+                ? promotion?.discountedPrice
+                : totalPrice?.gross
             }
           />
         </p>

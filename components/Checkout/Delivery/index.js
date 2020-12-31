@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Container, Form, Row, Col, Button } from "react-bootstrap"
 import { Formik } from "formik"
 // import { useCheckout } from "@saleor/sdk"
@@ -14,17 +14,17 @@ import OrderSumaryComponent from "../OrderSumary"
 import DeliveryHeader from "./Header"
 import ShippingMethods from "./ShippingMethods"
 import SelectAddressModal from "./SelectAddressModal"
-import ShippingAddress from "./ShippingAddress"
+import ShippingAddressForm from "./ShippingAddress"
 import BillingAddress from "./BillingAddress"
 import PaymentComponent from "./Payment"
 import PromotionComponent from "../Promotion"
 import OrderTotalCost from "../OrderTotalCost"
-import { AddressSchema } from "./validate"
+import { ShippingSchema, DeliverySchema } from "./validate"
 import { paymentCheckoutTokenCreate } from "lib/mutations"
 import { authorizeKlarna } from "./klarna"
 import { validateCreditCard, authorizeCreditCard } from "./credit_card"
 import { initGooglePay } from "./google_pay"
-import { INITIAL_ADDRESS, DUMP_SHIPPING_DATA } from "../constants"
+import { INITIAL_ADDRESS } from "../constants"
 import {
   mappingDataAddress,
   selectAccountAddress,
@@ -36,16 +36,20 @@ import styles from "./Delivery.module.scss"
 
 export default function DeliveryComponent() {
   const {
+    checkout,
+    availableShippingMethods,
+    setShippingMethod,
     setShippingAddress,
     setBillingAddress,
     setBillingAsShippingAddress,
-    setShippingMethod,
     availablePaymentGateways,
     createPayment,
     completeCheckout,
-    loaded,
     addPromoCode,
+    promoCodeDiscount,
+    loaded,
   } = useCheckout()
+  const deliveryFormRef = useRef()
   const { totalPrice, subtotalPrice, shippingPrice, discount } = useCart()
   const { data: userData, loading } = useUserDetails()
   const { addToast } = useToasts()
@@ -53,9 +57,11 @@ export default function DeliveryComponent() {
 
   const router = useRouter()
   const { status, orderToken, result, checkoutId } = router.query
-
-  const [initDeliveryData, setInitDeliveryData] = useState({
+  const [initShippingData, setInitShippingData] = useState({
     shippingAddress: INITIAL_ADDRESS,
+  })
+  const [initDeliveryData, setInitDeliveryData] = useState({
+    shippingMethod: "",
     billingAddress: INITIAL_ADDRESS,
     billingDifferentAddress: false,
     paymentMethod: null,
@@ -82,11 +88,8 @@ export default function DeliveryComponent() {
   const [hostedFieldsInstance, setHostedFieldsInstance] = useState(null)
   const [googlePayInstance, setGooglePayInstance] = useState(null)
   const [currentUser, setCurrentUser] = useState({
-    email: localStorage.getItem("guestEmail"),
+    email: localStorage.getItem("guestEmail") || "",
   })
-
-  // TODO in the future
-  const [shippingMethods, setShippingMethods] = useState(DUMP_SHIPPING_DATA)
 
   useEffect(() => {
     if (loading) {
@@ -102,9 +105,11 @@ export default function DeliveryComponent() {
     }
     localStorage.removeItem("guestEmail")
     const { defaultShippingAddress, defaultBillingAddress } = userData || {}
+    setInitShippingData({
+      shippingAddress: mappingDataAddress(defaultShippingAddress),
+    })
     setInitDeliveryData({
       ...initDeliveryData,
-      shippingAddress: mappingDataAddress(defaultShippingAddress),
       billingAddress: mappingDataAddress(defaultBillingAddress),
     })
     setCurrentUser(userData)
@@ -114,26 +119,49 @@ export default function DeliveryComponent() {
     if (!loaded) {
       return
     }
+
+    if (checkout.shippingAddress) {
+      setInitShippingData({
+        shippingAddress: mappingDataAddress(checkout.shippingAddress),
+      })
+    }
+
     const braintreeMethod =
       availablePaymentGateways &&
       availablePaymentGateways.find(
         (method) => method.id === "mirumee.payments.braintree"
       )
 
-    if (!braintreeMethod) {
-      return
+    let paymentMethod
+    if (braintreeMethod) {
+      paymentMethod = {
+        ...braintreeMethod,
+        subId: "bikebiz.payments.creditCard",
+      }
+      const clientToken = braintreeMethod.config.find(
+        (config) => config.field === "client_token"
+      ).value
+      authorizeCreditCard(clientToken, setHostedFieldsInstance)
+      initGooglePay(clientToken, setGooglePayInstance)
     }
+
+    let shippingMethod = checkout.shippingMethod?.id
+    let promotion = initDeliveryData.promotion
+    if (promoCodeDiscount.voucherCode) {
+      promotion = {
+        code: promoCodeDiscount.voucherCode,
+        valid: true,
+        discountAmount: null,
+        discountedPrice: null,
+      }
+    }
+
     setInitDeliveryData({
       ...initDeliveryData,
-      paymentMethod: braintreeMethod
-        ? { ...braintreeMethod, subId: "bikebiz.payments.creditCard" }
-        : null,
+      paymentMethod,
+      shippingMethod,
+      promotion,
     })
-    const clientToken = braintreeMethod.config.find(
-      (config) => config.field === "client_token"
-    ).value
-    authorizeCreditCard(clientToken, setHostedFieldsInstance)
-    initGooglePay(clientToken, setGooglePayInstance)
   }, [loaded])
 
   useEffect(() => {
@@ -182,14 +210,26 @@ export default function DeliveryComponent() {
     }
   }
 
-  const handleSubmitCheckout = async (values, bag) => {
-    const {
+  const handleSubmitShipping = async (values, bag) => {
+    const { shippingAddress } = values
+    const deliveryForm = deliveryFormRef.current
+    // Set Shipping Address and create Checkout
+    const { checkoutData } = await createCheckout(
+      setShippingAddress,
       shippingAddress,
-      billingAddress,
-      billingDifferentAddress,
-      paymentMethod,
-      promotion,
-    } = values
+      currentUser.email,
+      bag,
+      handleSubmitError,
+      addPromoCode,
+      deliveryForm
+    )
+    if (!checkoutData) return
+    await setShippingMethod("")
+    deliveryForm.setFieldValue("shippingMethod", "")
+  }
+
+  const handleSubmitCheckout = async (values, bag) => {
+    const { billingAddress, billingDifferentAddress, paymentMethod } = values
 
     if (paymentMethod.subId === "bikebiz.payments.creditCard") {
       const validCreditCard = validateCreditCard(hostedFieldsInstance, bag)
@@ -197,16 +237,6 @@ export default function DeliveryComponent() {
         return
       }
     }
-
-    // Set Shipping Address and create Checkout
-    const { checkoutData } = await createCheckout(
-      setShippingAddress,
-      shippingAddress,
-      currentUser.email,
-      bag,
-      handleSubmitError
-    )
-    if (!checkoutData) return
 
     // Set Billing Address
     const { billingData } = await setBilling(
@@ -220,38 +250,14 @@ export default function DeliveryComponent() {
     )
     if (!billingData) return
 
-    let data
-    // Set Shipping method
-    const {
-      data: setShippingData,
-      dataError: setShippingMethodError,
-    } = await setShippingMethod(checkoutData.availableShippingMethods[0].id)
-    if (setShippingMethodError) {
-      handleSubmitError(bag)
-      return
-    }
-
-    data = setShippingData
-
-    if (promotion.valid) {
-      const {
-        data: promoCodeData,
-        dataError: promoCodeError,
-      } = await addPromoCode(promotion.code)
-
-      if (promoCodeError) {
-        handleSubmitError(bag)
-        return
-      }
-
-      data = promoCodeData
+    const data = {
+      ...checkout,
+      totalPrice,
     }
 
     localStorage.setItem("paymentGateway", paymentMethod.id)
-    const totalPrice = data.totalPrice?.gross?.amount
     await processPayment(
-      checkoutData,
-      totalPrice,
+      data,
       paymentMethod,
       createPaymentCheckoutToken,
       bag,
@@ -279,12 +285,7 @@ export default function DeliveryComponent() {
             show={modalShow}
             onHide={() => setModalShow(false)}
             onSelectAddress={(id) =>
-              selectAccountAddress(
-                currentUser,
-                id,
-                setInitDeliveryData,
-                initDeliveryData
-              )
+              selectAccountAddress(currentUser, id, setInitShippingData)
             }
             addresses={currentUser?.addresses}
             defaultShippingAddress={currentUser?.defaultShippingAddress}
@@ -292,10 +293,7 @@ export default function DeliveryComponent() {
           <Row>
             <Container>
               <DeliveryHeader currentUser={currentUser} />
-              <ShippingMethods
-                shippingMethods={shippingMethods}
-                setShippingMethods={setShippingMethods}
-              />
+
               <Row>
                 <Form.Group controlId="btnPlaceOrder" as={Col} xs="12">
                   <Button
@@ -310,7 +308,35 @@ export default function DeliveryComponent() {
               </Row>
               <Formik
                 enableReinitialize
-                validationSchema={AddressSchema}
+                validationSchema={ShippingSchema}
+                onSubmit={handleSubmitShipping}
+                initialValues={initShippingData}
+              >
+                {({
+                  handleSubmit,
+                  handleChange,
+                  setFieldValue,
+                  isSubmitting,
+                  values,
+                  touched,
+                  errors,
+                }) => (
+                  <ShippingAddressForm
+                    handleSubmit={handleSubmit}
+                    isSubmitting={isSubmitting}
+                    handleChange={handleChange}
+                    values={values.shippingAddress}
+                    touched={touched}
+                    errors={errors}
+                    setFieldValue={setFieldValue}
+                  />
+                )}
+              </Formik>
+
+              <Formik
+                innerRef={deliveryFormRef}
+                enableReinitialize
+                validationSchema={DeliverySchema}
                 onSubmit={handleSubmitCheckout}
                 initialValues={initDeliveryData}
               >
@@ -330,12 +356,14 @@ export default function DeliveryComponent() {
                       <LoadingSpinner show={isSubmitting} />
                     </Row>
 
-                    <ShippingAddress
-                      handleChange={handleChange}
-                      values={values.shippingAddress}
-                      touched={touched}
-                      errors={errors}
+                    <ShippingMethods
+                      values={values}
+                      availableShippingMethods={availableShippingMethods}
+                      handleSubmitError={handleSubmitError}
+                      setShowLoading={setShowLoading}
                       setFieldValue={setFieldValue}
+                      errors={errors}
+                      touched={touched}
                     />
 
                     <Form.Check
