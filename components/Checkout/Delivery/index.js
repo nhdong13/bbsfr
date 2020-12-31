@@ -13,39 +13,29 @@ import LoadingSpinner from "components/LoadingSpinner"
 import OrderSumaryComponent from "../OrderSumary"
 import DeliveryHeader from "./Header"
 import ShippingMethods from "./ShippingMethods"
-import SelectAddressModal from "./SelectAddressModal"
 import ShippingAddressForm from "./ShippingAddress"
 import BillingAddress from "./BillingAddress"
 import PaymentComponent from "./Payment"
 import PromotionComponent from "../Promotion"
 import OrderTotalCost from "../OrderTotalCost"
-import { ShippingSchema, DeliverySchema } from "./validate"
+import { DeliverySchema } from "./validate"
 import { paymentCheckoutTokenCreate } from "lib/mutations"
 import { authorizeKlarna } from "./klarna"
 import { validateCreditCard, authorizeCreditCard } from "./credit_card"
 import { initGooglePay } from "./google_pay"
 import { INITIAL_ADDRESS } from "../constants"
-import {
-  mappingDataAddress,
-  selectAccountAddress,
-  createCheckout,
-  setBilling,
-  processPayment,
-} from "./helpers"
+import { mappingDataAddress, setBilling, processPayment } from "./helpers"
 import styles from "./Delivery.module.scss"
 
 export default function DeliveryComponent() {
   const {
     checkout,
     availableShippingMethods,
-    setShippingMethod,
-    setShippingAddress,
     setBillingAddress,
     setBillingAsShippingAddress,
     availablePaymentGateways,
     createPayment,
     completeCheckout,
-    addPromoCode,
     promoCodeDiscount,
     loaded,
   } = useCheckout()
@@ -57,9 +47,7 @@ export default function DeliveryComponent() {
 
   const router = useRouter()
   const { status, orderToken, result, checkoutId } = router.query
-  const [initShippingData, setInitShippingData] = useState({
-    shippingAddress: INITIAL_ADDRESS,
-  })
+
   const [initDeliveryData, setInitDeliveryData] = useState({
     shippingMethod: "",
     billingAddress: INITIAL_ADDRESS,
@@ -84,7 +72,6 @@ export default function DeliveryComponent() {
 
   const [showContinue, setShowContinue] = useState(false)
   const [showLoading, setShowLoading] = useState(false)
-  const [modalShow, setModalShow] = useState(false)
   const [hostedFieldsInstance, setHostedFieldsInstance] = useState(null)
   const [googlePayInstance, setGooglePayInstance] = useState(null)
   const [currentUser, setCurrentUser] = useState({
@@ -104,13 +91,10 @@ export default function DeliveryComponent() {
       return
     }
     localStorage.removeItem("guestEmail")
-    const { defaultShippingAddress, defaultBillingAddress } = userData || {}
-    setInitShippingData({
-      shippingAddress: mappingDataAddress(defaultShippingAddress),
-    })
+
     setInitDeliveryData({
       ...initDeliveryData,
-      billingAddress: mappingDataAddress(defaultBillingAddress),
+      billingAddress: mappingDataAddress(userData.defaultBillingAddress),
     })
     setCurrentUser(userData)
   }, [loading])
@@ -118,12 +102,6 @@ export default function DeliveryComponent() {
   useEffect(() => {
     if (!loaded) {
       return
-    }
-
-    if (checkout.shippingAddress) {
-      setInitShippingData({
-        shippingAddress: mappingDataAddress(checkout.shippingAddress),
-      })
     }
 
     const braintreeMethod =
@@ -210,24 +188,6 @@ export default function DeliveryComponent() {
     }
   }
 
-  const handleSubmitShipping = async (values, bag) => {
-    const { shippingAddress } = values
-    const deliveryForm = deliveryFormRef.current
-    // Set Shipping Address and create Checkout
-    const { checkoutData } = await createCheckout(
-      setShippingAddress,
-      shippingAddress,
-      currentUser.email,
-      bag,
-      handleSubmitError,
-      addPromoCode,
-      deliveryForm
-    )
-    if (!checkoutData) return
-    await setShippingMethod("")
-    deliveryForm.setFieldValue("shippingMethod", "")
-  }
-
   const handleSubmitCheckout = async (values, bag) => {
     const { billingAddress, billingDifferentAddress, paymentMethod } = values
 
@@ -281,57 +241,15 @@ export default function DeliveryComponent() {
       {!loading && !showLoading && (
         <>
           <OrderSumaryComponent />
-          <SelectAddressModal
-            show={modalShow}
-            onHide={() => setModalShow(false)}
-            onSelectAddress={(id) =>
-              selectAccountAddress(currentUser, id, setInitShippingData)
-            }
-            addresses={currentUser?.addresses}
-            defaultShippingAddress={currentUser?.defaultShippingAddress}
-          />
           <Row>
             <Container>
               <DeliveryHeader currentUser={currentUser} />
 
-              <Row>
-                <Form.Group controlId="btnPlaceOrder" as={Col} xs="12">
-                  <Button
-                    variant="link"
-                    className="px-0"
-                    type="button"
-                    onClick={() => setModalShow(true)}
-                  >
-                    Select account {">"}
-                  </Button>
-                </Form.Group>
-              </Row>
-              <Formik
-                enableReinitialize
-                validationSchema={ShippingSchema}
-                onSubmit={handleSubmitShipping}
-                initialValues={initShippingData}
-              >
-                {({
-                  handleSubmit,
-                  handleChange,
-                  setFieldValue,
-                  isSubmitting,
-                  values,
-                  touched,
-                  errors,
-                }) => (
-                  <ShippingAddressForm
-                    handleSubmit={handleSubmit}
-                    isSubmitting={isSubmitting}
-                    handleChange={handleChange}
-                    values={values.shippingAddress}
-                    touched={touched}
-                    errors={errors}
-                    setFieldValue={setFieldValue}
-                  />
-                )}
-              </Formik>
+              <ShippingAddressForm
+                deliveryFormRef={deliveryFormRef}
+                handleSubmitError={handleSubmitError}
+                currentUser={currentUser}
+              />
 
               <Formik
                 innerRef={deliveryFormRef}
