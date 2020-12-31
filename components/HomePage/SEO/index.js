@@ -13,7 +13,7 @@ export default function SEO(props) {
   let paragraph = convertParagraph(pageParagraph)
   let count = countParagrapp(paragraph)
   return (
-    <Container fluid id="SEO" className={styles.SEO}>
+    <Container fluid className={styles.SEO}>
       <h2 className={`${styles.text_heading_line_40} d-flex`}>{heading1}</h2>
       {count >= 480 ? (
         <div className={styles.page_paragraph}>

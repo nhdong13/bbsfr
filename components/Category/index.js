@@ -12,11 +12,12 @@ const ResultDynamic = dynamic(() =>
 )
 const BackToPageBeforeDynamic = dynamic(() =>
   import("../Common/BackPageComponent/index.js")
-) 
+)
 const FAQDynamic = dynamic(() => import("../HomePage/FAQ"))
 const TestimonialsDynamic = dynamic(() =>
   import("../HomePage/Testimonials/index")
 )
+const SEODynamic = dynamic(() => import("../HomePage/SEO"))
 
 const CategoryComponent = ({
   categoryData,
@@ -30,8 +31,11 @@ const CategoryComponent = ({
   return (
     <>
       <Head>
-        <title>{meta_title}</title>
-        <meta name="description" content={meta_description} />
+        <title>{meta_title || "Category"}</title>
+        <meta
+          name="description"
+          content={meta_description || "No description"}
+        />
         <meta
           name="og:description"
           property="og:description"
@@ -67,6 +71,22 @@ const CategoryComponent = ({
       </SearchProvider>
       <TestimonialsDynamic testimonials={testimonials} type="category" />
       <FAQDynamic FAQ={{ faq, faq_title }} />
+      <SEODynamic
+        heading1={
+          categoryData &&
+          categoryData.page_heading_1 &&
+          categoryData.page_heading_1.length > 0
+            ? categoryData.page_heading_1[0].text
+            : ""
+        }
+        pageParagraph={
+          categoryData &&
+          categoryData.page_paragraph &&
+          categoryData.page_paragraph.length > 0
+            ? categoryData.page_paragraph
+            : []
+        }
+      />
     </>
   )
 }

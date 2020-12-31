@@ -33,7 +33,7 @@ const CategoriesComponent = ({ categories = [], shopByCategoryText }) => {
             <Row>
               {categories &&
                 categories.slice(0, showItem.itemToShow).map((category, id) => (
-                  <Col className="col-6 pb-1" key={id}>
+                  <Col className="col-6" key={id}>
                     <Link
                       href={`/${router?.query?.id}/${router?.query?.collection}${category.category_slug}`}
                     >

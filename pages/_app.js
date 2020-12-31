@@ -23,7 +23,7 @@ if (typeof window === "undefined") {
 export default function App({ Component, pageProps }) {
   const store = useStore(pageProps.initialReduxState)
   const apolloClient = useApollo(pageProps.initialApolloState)
-
+  
   return (
     <Provider store={store}>
       <ApolloProvider client={apolloClient}>

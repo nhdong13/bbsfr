@@ -1,73 +1,53 @@
-import {
-  Navbar,
-  Nav,
-  NavDropdown,
-  Form,
-  FormControl,
-  Button,
-} from "react-bootstrap"
+import { Navbar } from "react-bootstrap"
 import Image from "next/image"
 import Link from "next/link"
-
 import styles from "./Header.module.scss"
+import { useState } from "react"
+import NavModalComponent from "../Nav/NavigationModal"
+
 
 export default function Header() {
+  const [show, setShow] = useState(false)
+  const handleClose = () => setShow(false)
+  const handleShow = () => setShow(true)
+
   return (
-    <Navbar bg="dark" expand="lg" variant="dark">
-      <Link href="/">
-        <a>
-          <span>
-            <Navbar.Brand>Page Header</Navbar.Brand>
-          </span>
-        </a>
-      </Link>
-      <div>
-        <span className={styles.cartIcon}>
+    <>
+      <Navbar
+        className={styles.containerNavBar}
+        bg="dark"
+        expand="lg"
+        variant="dark"
+      >
+        <Link href="/">
+          <a>
+            <div className={styles.logoApp}>
+              <Image
+                alt="logo-bbsfr-bikebiz"
+                layout="fill"
+                src="/icons/logo-light-mobile.svg"
+              />
+            </div>
+          </a>
+        </Link>
+        <div className={styles.containerIcon}>
           <Link href="/checkout">
             <a>
-              <span>
-                <div
-                  style={{
-                    position: "relative",
-                    width: "32px",
-                    height: "32px",
-                  }}
-                >
-                  <Image
-                    layout="fill"
-                    src="/cart.svg"
-                    alt="cart"
-                  />
-                </div>
-              </span>
+              <div className={styles.iconCheckout}>
+                <Image layout="fill" src="/cart.svg" alt="cart" />
+              </div>
             </a>
           </Link>
-        </span>
-
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      </div>
-
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="mr-auto">
-          <Nav.Link href="#home">Home</Nav.Link>
-          <Nav.Link href="#link">Link</Nav.Link>
-          <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-            <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.2">
-              Another action
-            </NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-            <NavDropdown.Divider />
-            <NavDropdown.Item href="#action/3.4">
-              Separated link
-            </NavDropdown.Item>
-          </NavDropdown>
-        </Nav>
-        <Form inline>
-          <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-          <Button variant="outline-success">Search</Button>
-        </Form>
-      </Navbar.Collapse>
-    </Navbar>
+          <div className={styles.iconHamburger} onClick={handleShow}>
+            <Image
+              alt="icon-hamburger"
+              layout="fill"
+              src="/icons/icon-hamburger.svg"
+            />
+          </div>
+        </div>
+      </Navbar>
+      <NavModalComponent show={show} onHide={handleClose} />
+    </>
   )
 }

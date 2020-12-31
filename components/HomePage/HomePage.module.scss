@@ -61,8 +61,8 @@ $padding-top-component: 55px;
     position: relative;
 
     .main_group {
-      padding-top: $padding-top-department;
-      padding-bottom: 50px;
+      height: 216px;
+      align-items: center;
     }
 
     .group_left {
@@ -261,7 +261,7 @@ $padding-top-component: 55px;
   line-height: 40px;
   /* identical to box height, or 154% */
 
-  text-align: center;
+  // text-align: center;
   text-transform: uppercase;
 
   color: $primary-text-color;
@@ -269,6 +269,9 @@ $padding-top-component: 55px;
 
 //HomePage global
 .view_all_btn {
+  height: 100%;
+  align-items: center !important;
+  padding-bottom: 0.5rem;
   display: flex;
   align-items: flex-end;
   font-style: normal;
@@ -306,7 +309,7 @@ $padding-top-component: 55px;
   }
   .page_paragraph {
     font-weight: 400;
-    font-size: 16px;
+    font-size: 12px;
     line-height: 28px;
   }
 
@@ -416,7 +419,7 @@ $padding-top-component: 55px;
     font-family: Rajdhani;
     font-style: normal;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 21px;
     line-height: 20px;
 
     text-transform: uppercase;
