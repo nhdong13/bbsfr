@@ -9,6 +9,7 @@ import {
 import { setDepartments } from "../redux/reducers/departments"
 import dynamic from "next/dynamic"
 import { authenticationFromStamped } from "../services/testimonial"
+import { getDataForMainNav } from "../services/mainNav"
 
 const HomePageDynamic = dynamic(() => import("components/HomePage"))
 
@@ -38,6 +39,7 @@ export async function getStaticProps({ req, res }) {
   const brands = resp_brands[0].node.shop_by_brand_slider_content
   const reduxStore = initializeStore()
   const apolloClient = initializeApollo()
+  const dataNav = await getDataForMainNav()
   return {
     props: {
       initialReduxState: reduxStore.getState(),
@@ -47,6 +49,7 @@ export async function getStaticProps({ req, res }) {
       SEO,
       resPriFAQ,
       testimonials,
+      dataNav,
     },
     revalidate: +process.env.NEXT_PUBLIC_REVALIDATE_PAGE_TIME,
   }
