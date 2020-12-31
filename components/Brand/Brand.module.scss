@@ -80,5 +80,40 @@
         box-shadow: 0px 6px 30px rgba(0, 0, 0, 0.2);
       }
     }
+    @media only screen and (max-width: 2560px) {
+      .searchBrandIndexContainer {
+        .searchBrandIndexDropdownContent {
+          width: 98%;
+        }
+      }
+    }
+    @media only screen and (max-width: 1024px) {
+      .searchBrandIndexContainer {
+        .searchBrandIndexDropdownContent {
+          width: 97%;
+        }
+      }
+    }
+    @media only screen and (max-width: 768px) {
+      .searchBrandIndexContainer {
+        .searchBrandIndexDropdownContent {
+          width: 96%;
+        }
+      }
+    }
+    @media only screen and (max-width: 425px) {
+      .searchBrandIndexContainer {
+        .searchBrandIndexDropdownContent {
+          width: 92%;
+        }
+      }
+    }
+    @media only screen and (max-width: 360px) {
+      .searchBrandIndexContainer {
+        .searchBrandIndexDropdownContent {
+          width: 90%;
+        }
+      }
+    }
   }
 }
