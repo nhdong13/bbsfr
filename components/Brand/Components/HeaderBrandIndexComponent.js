@@ -1,11 +1,11 @@
 import { Container } from "react-bootstrap"
 import styles from "../Brand.module.scss"
 
-const HeaderBrandIndexComponent = ({}) => {
+const HeaderBrandIndexComponent = ({ title }) => {
   return (
     <>
       <Container fluid className={styles.headerBrandIndex}>
-        <p>Brand Directory</p>
+        <p>{title}</p>
       </Container>
     </>
   )
