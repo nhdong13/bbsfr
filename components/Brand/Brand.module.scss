@@ -1,7 +1,8 @@
 @import "/styles/variables.scss";
 @import "/styles/mixin";
 
-.headerBrandIndex{ 
+// Header of brand component index
+.headerBrandIndex {
   height: 192px;
   background-color: #181818;
 
@@ -11,5 +12,73 @@
     text-align: left;
     text-transform: uppercase;
   }
+}
 
+//Search of brand header component index
+.searchBrandIndexPosition {
+  position: relative;
+  align-items: center;
+
+  .searchBrandIndex {
+    position: absolute;
+    width: 90%;
+    height: 152px;
+    background-color: #ffffff;
+    box-shadow: 0px 12px 40px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    top: -40px;
+    left: 5%;
+
+    .searchBrandIndexContainer {
+      position: relative;
+      display: inline-block;
+
+      .searchBrandIndexTitle {
+        padding-top: 20px;
+        padding-bottom: 15px;
+        @include font-family(Rajdhani, 21px, 700, #181818);
+      }
+
+      .searchBrandIndexDropdownContent {
+        width: 90%;
+        position: absolute;
+        overflow: auto;
+        z-index: 1;
+
+        border-radius: 6px;
+
+        .searchBrandIndexInput {
+          border: 1px solid #afb0b1;
+          box-sizing: border-box;
+          border-radius: 4px;
+          width: 100%;
+          box-sizing: border-box;
+          border-radius: 4px;
+          background-color: white;
+          background-image: url("/iconSearchGrey.svg");
+          background-position: right 15px bottom 13px;
+          background-repeat: no-repeat;
+          padding: 12px;
+          @include font-family(Rajdhani, 16px, 500, #181818);
+        }
+
+        .searchBrandIndexOptions {
+          background-color: #ffffff;
+          height: auto;
+          border-radius: 6px;
+
+          .searchBrandIndexOptionItem {
+            padding: 22px 20px;
+            box-sizing: border-box;
+            border-bottom: 1px solid #e5e5e4;
+          }
+        }
+      }
+
+      .searchBrandIndexDropdownContentOpen {
+        @extend .searchBrandIndexDropdownContent;
+        box-shadow: 0px 6px 30px rgba(0, 0, 0, 0.2);
+      }
+    }
+  }
 }
