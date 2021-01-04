@@ -61,6 +61,7 @@ export default function ItemComponent({
                     <Form.Control
                       as="select"
                       custom
+                      className={styles.selectQty}
                       onChange={(ev) =>
                         onQuantityChange(ev.currentTarget.value)
                       }
@@ -87,7 +88,11 @@ export default function ItemComponent({
                   {!viewOnly && (
                     <Button
                       variant="link"
-                      className={clsx("secondary", styles.formLabel)}
+                      className={clsx(
+                        "secondary",
+                        styles.formLabel,
+                        styles.deleteBtn
+                      )}
                       onClick={() => setModalShow(true)}
                     >
                       Delete

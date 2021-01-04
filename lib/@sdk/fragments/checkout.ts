@@ -83,6 +83,7 @@ export const checkoutShippingMethodFragment = gql`
   fragment ShippingMethod on ShippingMethod {
     id
     name
+    deliveryType
     price {
       currency
       amount

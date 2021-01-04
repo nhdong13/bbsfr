@@ -1,4 +1,5 @@
 import dynamic from "next/dynamic"
+import Head from "next/head"
 import { getDataForMainNav } from "../../services/mainNav"
 
 const CheckoutComponent = dynamic(() => import("../../components/Checkout"), {
@@ -14,5 +15,27 @@ export async function getStaticProps() {
 }
 
 export default function Checkout() {
-  return <CheckoutComponent />
+  return (
+    <>
+      <Head>
+        <script
+          type="text/javascript"
+          src="https://js.braintreegateway.com/web/3.69.0/js/client.min.js"
+        ></script>
+        <script
+          type="text/javascript"
+          src="https://js.braintreegateway.com/web/3.69.0/js/hosted-fields.min.js"
+        ></script>
+        <script
+          type="text/javascript"
+          src="https://pay.google.com/gp/p/js/pay.js"
+        ></script>
+        <script
+          type="text/javascript"
+          src="https://js.braintreegateway.com/web/3.69.0/js/google-payment.min.js"
+        ></script>
+      </Head>
+      <CheckoutComponent />
+    </>
+  )
 }

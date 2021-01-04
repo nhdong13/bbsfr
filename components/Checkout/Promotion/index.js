@@ -2,7 +2,7 @@ import { useState } from "react"
 import { Container, InputGroup, Row, Col, Form, Button } from "react-bootstrap"
 import clsx from "clsx"
 import { useMutation } from "@apollo/client"
-import { useCart } from "@sdk/react"
+import { useCart, useCheckout } from "@sdk/react"
 
 import LoadingSpinner from "components/LoadingSpinner"
 import { voucherifyValidate } from "lib/mutations"
@@ -20,6 +20,7 @@ export default function PromotionComponent({
 }) {
   const [loading, setLoading] = useState(false)
   const { items, subtotalPrice } = useCart()
+  const { addPromoCode } = useCheckout()
   const [validateVoucherify] = useMutation(voucherifyValidate)
 
   const handleClickApply = async () => {
@@ -51,10 +52,24 @@ export default function PromotionComponent({
         amount: voucherify.discountedPrice,
         currency: "AUD",
       })
+      await addPromoCode(values.promotion.code)
     } else {
       setFieldTouched("promotion.code", true, false)
       setFieldError("promotion.code", "Invalid promotion code")
     }
+    setLoading(false)
+  }
+
+  const handleDeletePromoCode = async () => {
+    setLoading(true)
+    const promotion = {
+      valid: false,
+      code: "",
+      discountAmount: null,
+      discountedPrice: null,
+    }
+    setFieldValue("promotion", promotion)
+    await addPromoCode("")
     setLoading(false)
   }
 
@@ -72,19 +87,24 @@ export default function PromotionComponent({
                 <InputGroup>
                   <Form.Control
                     type="text"
-                    placeholder="Enter promo code number"
+                    placeholder="Enter promo code"
                     name="promotion.code"
                     value={values.promotion.code}
                     onChange={handleChange}
+                    disabled={values.promotion.valid}
                   />
                   <InputGroup.Append>
                     <Button
                       variant="primary"
                       className={styles.btn}
                       type="button"
-                      onClick={handleClickApply}
+                      onClick={
+                        values.promotion.valid
+                          ? handleDeletePromoCode
+                          : handleClickApply
+                      }
                     >
-                      Apply
+                      {values.promotion.valid ? "Delete" : "Apply"}
                     </Button>
                   </InputGroup.Append>
                 </InputGroup>
