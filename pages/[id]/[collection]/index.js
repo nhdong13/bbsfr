@@ -8,6 +8,7 @@ import { Pipeline, Variables } from "@sajari/react-search-ui"
 import { getConfigPipeline } from "../../../services/getPipelineSajari"
 import { authenticationFromStamped } from "../../../services/testimonial"
 import CollectionComponent from "../../../components/Collection"
+import { getDataForMainNav } from "../../../services/mainNav"
 
 const pipeline = new Pipeline({ ...getConfigPipeline("best-buy") }, "query")
 const variables = new Variables({ resultsPerPage: 20, q: "" })
@@ -22,8 +23,9 @@ export async function getStaticProps({ params }) {
     pipeline,
     variables,
   })
+  const dataNav = await getDataForMainNav()
   return {
-    props: { initialResponse, collections, testimonials },
+    props: { initialResponse, collections, testimonials, dataNav },
     revalidate: +process.env.NEXT_PUBLIC_REVALIDATE_PAGE_TIME,
   }
 }

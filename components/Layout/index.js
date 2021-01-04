@@ -4,6 +4,8 @@ import Header from "../Header"
 import { NewRelicSnippet } from "./newrelic_snippet"
 
 export default function Layout({ children }) {
+  const { props } = children
+  const { dataNav } = props
   return (
     <>
       <Head>
@@ -15,7 +17,7 @@ export default function Layout({ children }) {
         <link rel="icon" href="/favicon.ico" />
         {NewRelicSnippet}
       </Head>
-      <Header />
+      <Header dataNav={dataNav} />
       <main>
         {children}
         <link

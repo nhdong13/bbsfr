@@ -6,7 +6,7 @@ import { useState } from "react"
 import NavModalComponent from "../Nav/NavigationModal"
 
 
-export default function Header() {
+export default function Header({ dataNav }) {
   const [show, setShow] = useState(false)
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
@@ -47,7 +47,7 @@ export default function Header() {
           </div>
         </div>
       </Navbar>
-      <NavModalComponent show={show} onHide={handleClose} />
+      <NavModalComponent dataNav={dataNav} show={show} onHide={handleClose} />
     </>
   )
 }
