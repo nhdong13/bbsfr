@@ -117,3 +117,55 @@
     }
   }
 }
+
+//Brand List
+.padTopBottom20 {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.containerBrandList {
+  display: flex;
+  justify-content: space-between;
+  max-height: 1130px;
+  border-bottom: 1px solid #e5e5e4;
+
+  .containerLHS {
+    width: 25%;
+    text-align: center;
+    border-right: 1px solid #e5e5e4;
+    @extend .padTopBottom20;
+   
+    .containerLHSItem {
+      display: flex;
+     
+      justify-content: space-between;
+
+      .containerLHSItemText {
+        width: 96%;
+        @include font-family(Rajdhani, 21px, 700, #181818);
+        p {
+          margin-left: -15px;
+        }
+      }
+      .containerLHSItemTextActive {
+        @extend .containerLHSItemText;
+        color: #ffb00f;
+      }
+
+      .containerLHSItemBorder {
+        width: 4%;
+      }
+      .containerLHSItemBorderActive {
+        @extend .containerLHSItemBorder;
+        background-color: #ffb00f;
+      }
+    }
+  }
+  .containerRHS {
+    overflow: scroll;
+    height: 100vh;
+    width: 75%;
+    @extend .padTopBottom20; 
+  }
+}
