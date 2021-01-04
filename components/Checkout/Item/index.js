@@ -87,7 +87,11 @@ export default function ItemComponent({
                   {!viewOnly && (
                     <Button
                       variant="link"
-                      className={clsx("secondary", styles.formLabel)}
+                      className={clsx(
+                        "secondary",
+                        styles.formLabel,
+                        styles.deleteBtn
+                      )}
                       onClick={() => setModalShow(true)}
                     >
                       Delete

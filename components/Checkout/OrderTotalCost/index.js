@@ -1,5 +1,7 @@
 import { Row, Col } from "react-bootstrap"
+import clxs from "clsx"
 import Money from "../../Money"
+import styles from "../Checkout.module.scss"
 
 export default function OrderTotalCost({
   totalPrice,
@@ -11,12 +13,12 @@ export default function OrderTotalCost({
   const discountAmount =
     discount?.amount > 0 ? discount : promotion?.discountAmount
   return (
-    <Row className="mt-4">
+    <Row className={clxs("my-4", styles.orderTotalCost)}>
       <Col xs="6">
         <p>Sub Total</p>
         {discountAmount?.amount > 0 && <p>Discount amount</p>}
         <p>Delivery</p>
-        <p className="font-weight-bold">TOTAL</p>
+        <p className={styles.totalCost}>TOTAL</p>
       </Col>
 
       <Col xs="6" className="text-right">
@@ -34,7 +36,7 @@ export default function OrderTotalCost({
             defaultValue="FREE"
           />
         </p>
-        <p className="font-weight-bold">
+        <p className={styles.totalCost}>
           <Money
             money={
               promotion?.discountedPrice?.amount > 0 && !discount?.amount
