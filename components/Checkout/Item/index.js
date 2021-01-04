@@ -61,6 +61,7 @@ export default function ItemComponent({
                     <Form.Control
                       as="select"
                       custom
+                      className={styles.selectQty}
                       onChange={(ev) =>
                         onQuantityChange(ev.currentTarget.value)
                       }
