@@ -33,6 +33,23 @@ const BrandListComponent = ({ brands }) => {
       })
     )
   }
+  const sortAlphaNum = (a, b) => a.localeCompare(b, "en", { numeric: true })
+  console.log(
+    [
+      "A1",
+      "A10",
+      "A11",
+      "Akrapovic Exhaust",
+      "A2",
+      "A3",
+      "A4",
+      "Alps Mountaineering",
+      "B2",
+      "F1",
+      "F12",
+      "Abus Locks",
+    ].sort(sortAlphaNum)
+  )
 
   return (
     <>
@@ -67,7 +84,11 @@ const BrandListComponent = ({ brands }) => {
               )
             })}
         </div>
-        <div className={styles.containerRHS}>a</div>
+        <div className={styles.containerRHS}>
+          <div className={styles.containerRHSContent}>
+            <p>A</p>
+          </div>
+        </div>
       </Container>
     </>
   )

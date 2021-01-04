@@ -135,10 +135,10 @@
     text-align: center;
     border-right: 1px solid #e5e5e4;
     @extend .padTopBottom20;
-   
+
     .containerLHSItem {
       display: flex;
-     
+
       justify-content: space-between;
 
       .containerLHSItemText {
@@ -166,6 +166,64 @@
     overflow: scroll;
     height: 100vh;
     width: 75%;
-    @extend .padTopBottom20; 
+    @extend .padTopBottom20;
+    .containerRHSContent {
+      width: 80%;
+      margin: 0px auto;
+      p{
+        @include font-family(Rajdhani, 16px, 400, #181818); 
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 2560px) {
+  .containerBrandList {
+    .containerLHS {
+      width: 10%;
+    }
+    .containerRHS {
+      width: 90%;
+    }
+  }
+}
+@media only screen and (max-width: 1024px) {
+  .containerBrandList {
+    .containerLHS {
+      width: 15%;
+    }
+    .containerRHS {
+      width: 85%;
+    }
+  }
+}
+@media only screen and (max-width: 768px) {
+  .containerBrandList {
+    .containerLHS {
+      width: 18%;
+    }
+    .containerRHS {
+      width: 82%;
+    }
+  }
+}
+@media only screen and (max-width: 425px) {
+  .containerBrandList {
+    .containerLHS {
+      width: 25%;
+    }
+    .containerRHS {
+      width: 75%;
+    }
+  }
+}
+@media only screen and (max-width: 360px) {
+  .containerBrandList {
+    .containerLHS {
+      width: 25%;
+    }
+    .containerRHS {
+      width: 75%;
+    }
   }
 }

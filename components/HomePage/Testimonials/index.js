@@ -10,7 +10,7 @@ const TestimonialsComponent = (props) => {
   const { testimonials, type } = props
   const [activeSlide, setSlide] = useState(1)
 
-  let data = dataToRender(testimonials.results, useRouter().query, type)
+  const data = dataToRender(testimonials.results, useRouter().query, type)
 
   const settings = {
     infinite: true,
