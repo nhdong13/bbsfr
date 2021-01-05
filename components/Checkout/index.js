@@ -52,7 +52,7 @@ export default function CheckoutComponent() {
         <Container>
           <Row>
             <Col md="12" className="text-center">
-              <h2 className="font-weight-bold">YOUR CART</h2>
+              <h2 className={styles.headerTitle}>YOUR CART</h2>
               <span className="font-weight-bold">
                 <span className="secondary mr-1">{items?.length} Items</span>{" "}
                 <Money money={totalPrice?.gross} />

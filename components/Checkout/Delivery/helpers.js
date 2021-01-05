@@ -29,18 +29,9 @@ export const mappingDataAddress = (data) => {
   }
 }
 
-export const selectAccountAddress = (
-  currentUser,
-  id,
-  setInitDeliveryData,
-  initDeliveryData
-) => {
+export const selectAccountAddress = (currentUser, id, setInitShippingData) => {
   const address = currentUser.addresses.find((address) => address.id === id)
-  setInitDeliveryData({
-    ...initDeliveryData,
-    shippingAddress: mappingDataAddress(address),
-    billingAddress: mappingDataAddress(address),
-  })
+  setInitShippingData(mappingDataAddress(address))
 }
 
 export const createCheckout = async (
@@ -48,7 +39,9 @@ export const createCheckout = async (
   shippingAddress,
   email,
   bag,
-  handleSubmitError
+  handleSubmitError,
+  addPromoCode,
+  deliveryForm
 ) => {
   const { data, dataError } = await setShippingAddress(shippingAddress, email)
 
@@ -72,6 +65,12 @@ export const createCheckout = async (
     }
 
     return {}
+  }
+
+  const { promotion } = deliveryForm.values
+
+  if (promotion.valid) {
+    await addPromoCode(promotion.code)
   }
 
   return { checkoutData: data }
@@ -119,7 +118,6 @@ export const setBilling = async (
 
 export const processPayment = async (
   checkoutData,
-  totalPrice,
   paymentMethod,
   createPaymentCheckoutToken,
   bag,
@@ -130,6 +128,7 @@ export const processPayment = async (
   hostedFieldsInstance,
   googlePayInstance
 ) => {
+  const totalPrice = checkoutData.totalPrice?.gross?.amount
   if (paymentMethod.id !== "mirumee.payments.braintree") {
     // Create payment checkout token
     const { data: paymentCheckoutTokenRes } = await createPaymentCheckoutToken({
@@ -183,7 +182,11 @@ export const processPayment = async (
         )
         break
       case "bikebiz.payments.googlepay":
+        const paymentsClient = new google.payments.api.PaymentsClient({
+          environment: process.env.NEXT_PUBLIC_GPAY_ENV,
+        })
         authorizeGooglePay(
+          paymentsClient,
           googlePayInstance,
           totalPrice,
           sendCreatePayment,
