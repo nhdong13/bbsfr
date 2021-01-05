@@ -478,8 +478,9 @@ $padding-top-component: 55px;
         background-repeat: no-repeat;
         background-position: center;
         height: 90px;
-        line-height: 20px;
-        padding-top: 25px;
+        line-height: 26px;
+        padding-top: 21px;
+        text-transform: uppercase;
       }
     }
 
@@ -492,7 +493,7 @@ $padding-top-component: 55px;
 
       .testimonialsSliderStart {
         margin: 0px auto;
-        width: 120px;
+        width: 100px;
       }
 
       .testimonialsSliderContext {
