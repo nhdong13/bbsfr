@@ -9,16 +9,13 @@ const sortCharacter = (a, b) =>
   })
 
 const handleSortAlpha = (brands, alpha) => {
-  let arr
+  let arr = []
   if (brands && brands.length > 0) {
-    arr = brands.filter((brand) => {
-      if (
+    arr = brands.filter(
+      (brand) =>
         brand?.node?.brand_name &&
         brand.node.brand_name.substr(0, 1).toUpperCase() === alpha
-      ) {
-        return brand.node.brand_name
-      }
-    })
+    )
   }
   return arr.sort(sortCharacter)
 }
