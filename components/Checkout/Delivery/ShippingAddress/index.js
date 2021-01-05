@@ -18,6 +18,7 @@ import {
 import styles from "../Delivery.module.scss"
 
 export default function ShippingAddress({
+  shippingFormRef,
   deliveryFormRef,
   handleSubmitError,
   currentUser,
@@ -29,7 +30,6 @@ export default function ShippingAddress({
     addPromoCode,
     loaded,
   } = useCheckout()
-  const shippingFormRef = useRef()
   const [initShippingData, setInitShippingData] = useState(INITIAL_ADDRESS)
   const [modalShow, setModalShow] = useState(false)
 
