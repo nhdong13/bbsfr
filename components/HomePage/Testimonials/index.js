@@ -10,7 +10,7 @@ const TestimonialsComponent = (props) => {
   const { testimonials, type } = props
   const [activeSlide, setSlide] = useState(1)
 
-  let data = dataToRender(testimonials.results, useRouter().query, type)
+  const data = dataToRender(testimonials.results, useRouter().query, type)
 
   const settings = {
     infinite: true,
@@ -49,7 +49,7 @@ const TestimonialsComponent = (props) => {
                 return (
                   <Col className={styles.testimonialsSlider} key={index}>
                     <div className={styles.testimonialsSliderStart}>
-                      {renderStart(item.rate, "24px", "24px", 5, "reviewStar")}
+                      {renderStart(item.rate, "20px", "20px", 5, "reviewStar")}
                     </div>
                     <div className={styles.testimonialsSliderContext}>
                       {item.content}

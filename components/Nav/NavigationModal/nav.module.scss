@@ -97,8 +97,9 @@
 
 //--------------HEADER RIGHT--------->
 .headerRight {
+  height: 70px;
   background-color: $primary-text-color;
-  padding: 16px;
+  padding: 20px 16px;
   .headerRightText {
     text-transform: uppercase;
     @include font-family(Rajdhani, 21px, 700, #ffffff);
