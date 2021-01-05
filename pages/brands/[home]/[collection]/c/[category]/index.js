@@ -1,4 +1,4 @@
-import BrandCategoryComponent from "../../../../../../components/Brand/Components/BrandCategoryComponent"
+import BrandCategoryComponent from "../../../../../../components/Brand/BrandCategory"
 
 const BrandCategoryPage = () => {
   return <BrandCategoryComponent />

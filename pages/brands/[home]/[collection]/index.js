@@ -1,4 +1,4 @@
-import BrandCollectionComponent from "../../../../components/Brand/Components/BrandCollectionComponent"
+import BrandCollectionComponent from "../../../../components/Brand/BrandCollection"
 
 const BrandCollectionPage = () => {
   return <BrandCollectionComponent />
