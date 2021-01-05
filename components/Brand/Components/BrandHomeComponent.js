@@ -1,7 +1,7 @@
 import { Container } from "react-bootstrap"
 import { useEffect, useState } from "react"
 import SessionBrowseByCategoryComponent from "../../DepartmentDetail/Sesstion/SessionBrowseByCategoryComponent"
-import { getDepartmentByUID } from "../../../lib/prismic/api"
+import { getBrandByUid, getDepartmentByUID } from "../../../lib/prismic/api"
 import styles from "../Brand.module.scss"
 import dynamic from "next/dynamic"
 import ImagedHeaderComponent from "./ImagedHeaderComponent"
@@ -17,13 +17,16 @@ const BrandHomeComponent = ({ element, heading }) => {
   useEffect(async () => {
     const { collections } = await getDepartmentByUID(element.department_slug)
     setCollections(collections)
+    const { brand } = await getBrandByUid("alpinestars-mx")
+    setBrand
   }, [element])
-  console.log(heading)
+
+  console.log(brand)
 
   return (
     <>
       <ImagedHeaderComponent
-        header="abc"
+        header={heading}
         productsCount="20"
         imgUrl="https://news.itu.int/wp-content/uploads/2018/07/citymobility-min-e1530886118305.jpg"
       />
@@ -32,8 +35,7 @@ const BrandHomeComponent = ({ element, heading }) => {
         collections={collections}
         disableTitleContainer={true}
       />
-      <img src="/1.png" width="100%" />
-      <img src="/2.png" width="100%" />
+
       <SEODynamic heading1={"ALPINESTARS"} pageParagraph={[]} />
     </>
   )
