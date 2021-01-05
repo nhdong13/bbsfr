@@ -3,7 +3,7 @@ import * as Yup from "yup"
 export const EmailPasswordSchema = (activeStep) => {
   return Yup.object().shape({
     email: Yup.string()
-      .email("Invalid email")
+      .email("Invalid email address")
       .required("This field is required"),
     password: Yup.string()
       .min(8, "Password must have at least 6 characters")

@@ -1,8 +1,4 @@
-const paymentsClient = new google.payments.api.PaymentsClient({
-  environment: process.env.NEXT_PUBLIC_GPAY_ENV,
-})
-
-export function initGooglePay(clientToken, setGPayInstance) {
+export function initGooglePay(paymentsClient, clientToken, setGPayInstance) {
   braintree.client.create(
     {
       authorization: clientToken,
@@ -48,6 +44,7 @@ export function initGooglePay(clientToken, setGPayInstance) {
 }
 
 export function authorizeGooglePay(
+  paymentsClient,
   googlePaymentInstance,
   totalPrice,
   sendCreatePayment,
