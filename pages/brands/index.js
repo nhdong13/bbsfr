@@ -1,12 +1,12 @@
 import BrandComponent from "../../components/Brand"
-import { getDataBrandDirectory, getDataBrands } from "../../lib/prismic/api"
+import { getDataBrandDirectory, listAllBrands } from "../../lib/prismic/api"
 import { getDataForMainNav } from "../../services/mainNav"
 import { authenticationFromStamped } from "../../services/testimonial"
 
 export async function getStaticProps() {
   const dataNav = await getDataForMainNav()
   const brandDirectory = await getDataBrandDirectory()
-  const brands = await getDataBrands()
+  const brands = await listAllBrands()
   const requestOptions = authenticationFromStamped()
   const resStamped = await fetch(process.env.STAMPED_API_URL, requestOptions)
   const testimonials = await resStamped.json()

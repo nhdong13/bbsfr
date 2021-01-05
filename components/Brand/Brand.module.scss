@@ -169,9 +169,13 @@
     @extend .padTopBottom20;
     .containerRHSContent {
       width: 80%;
+      line-height: 30px;
       margin: 0px auto;
       p{
         @include font-family(Rajdhani, 16px, 400, #181818); 
+        &:hover {
+          font-weight: 700;
+        }
       }
     }
   }

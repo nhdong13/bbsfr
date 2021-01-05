@@ -1,10 +1,32 @@
 import { useState } from "react"
 import { Container } from "react-bootstrap"
 import styles from "../Brand.module.scss"
+import Link from "next/link"
+
+const sortCharacter = (a, b) =>
+  a?.node?.brand_name.localeCompare(b?.node?.brand_name, "en", {
+    numeric: true,
+  })
+
+const handleSortAlpha = (brands, alpha) => {
+  let arr
+  if (brands && brands.length > 0) {
+    arr = brands.filter((brand) => {
+      if (
+        brand?.node?.brand_name &&
+        brand.node.brand_name.substr(0, 1).toUpperCase() === alpha
+      ) {
+        return brand.node.brand_name
+      }
+    })
+  }
+  return arr.sort(sortCharacter)
+}
 
 const BrandListComponent = ({ brands }) => {
   const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
   const [alpha, setAlpha] = useState("A")
+  const [listBrand, setListBrand] = useState(handleSortAlpha(brands, alpha))
   const [alphanumeric, setAlphanumeric] = useState(
     letters.split("").map((i, index) => {
       if (index === 0) {
@@ -25,6 +47,7 @@ const BrandListComponent = ({ brands }) => {
     setAlphanumeric(
       alphanumeric.map((i, index) => {
         if (indexEl === index) {
+          setListBrand(handleSortAlpha(brands, i.letter))
           setAlpha(i.letter)
           return { ...i, active: true }
         } else {
@@ -33,23 +56,6 @@ const BrandListComponent = ({ brands }) => {
       })
     )
   }
-  const sortAlphaNum = (a, b) => a.localeCompare(b, "en", { numeric: true })
-  console.log(
-    [
-      "A1",
-      "A10",
-      "A11",
-      "Akrapovic Exhaust",
-      "A2",
-      "A3",
-      "A4",
-      "Alps Mountaineering",
-      "B2",
-      "F1",
-      "F12",
-      "Abus Locks",
-    ].sort(sortAlphaNum)
-  )
 
   return (
     <>
@@ -86,7 +92,17 @@ const BrandListComponent = ({ brands }) => {
         </div>
         <div className={styles.containerRHS}>
           <div className={styles.containerRHSContent}>
-            <p>A</p>
+            {listBrand &&
+              listBrand.length > 0 &&
+              listBrand.map((brand, index) => {
+                return (
+                  <Link key={index} href={`/brands/${brand.node._meta.uid}`}>
+                    <a>
+                      <p>{brand.node.brand_name}</p>
+                    </a>
+                  </Link>
+                )
+              })}
           </div>
         </div>
       </Container>
