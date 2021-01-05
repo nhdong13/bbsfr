@@ -20,10 +20,10 @@ export default function PromotionComponent({
 }) {
   const [loading, setLoading] = useState(false)
   const { items, subtotalPrice } = useCart()
-  const { addPromoCode } = useCheckout()
+  const { addPromoCode, removePromoCode } = useCheckout()
   const [validateVoucherify] = useMutation(voucherifyValidate)
 
-  const handleClickApply = async () => {
+  const handleApplyCode = async () => {
     setLoading(true)
     const { data } = await validateVoucherify({
       variables: {
@@ -62,6 +62,7 @@ export default function PromotionComponent({
 
   const handleDeletePromoCode = async () => {
     setLoading(true)
+    await removePromoCode(values.promotion.code)
     const promotion = {
       valid: false,
       code: "",
@@ -69,7 +70,6 @@ export default function PromotionComponent({
       discountedPrice: null,
     }
     setFieldValue("promotion", promotion)
-    await addPromoCode("")
     setLoading(false)
   }
 
@@ -101,7 +101,7 @@ export default function PromotionComponent({
                       onClick={
                         values.promotion.valid
                           ? handleDeletePromoCode
-                          : handleClickApply
+                          : handleApplyCode
                       }
                     >
                       {values.promotion.valid ? "Delete" : "Apply"}
