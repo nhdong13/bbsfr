@@ -40,6 +40,7 @@ export default function DeliveryComponent() {
     loaded,
   } = useCheckout()
   const deliveryFormRef = useRef()
+  const shippingFormRef = useRef()
   const { totalPrice, subtotalPrice, shippingPrice, discount } = useCart()
   const { data: userData, loading } = useUserDetails()
   const { addToast } = useToasts()
@@ -181,6 +182,14 @@ export default function DeliveryComponent() {
     router.push(`/checkout/complete?orderNumber=${data?.number}`)
   }
 
+  const handleClickBtnSubmit = () => {
+    const deliveryForm = deliveryFormRef.current
+    if (!deliveryForm.values.shippingMethod) {
+      shippingFormRef.current.handleSubmit()
+    }
+    deliveryForm.handleSubmit()
+  }
+
   const handleSubmitError = (bag) => {
     addToast("An error has been occurred. Please try again later", {
       appearance: "error",
@@ -250,6 +259,7 @@ export default function DeliveryComponent() {
               <DeliveryHeader currentUser={currentUser} />
 
               <ShippingAddressForm
+                shippingFormRef={shippingFormRef}
                 deliveryFormRef={deliveryFormRef}
                 handleSubmitError={handleSubmitError}
                 currentUser={currentUser}
@@ -355,8 +365,9 @@ export default function DeliveryComponent() {
                           <Button
                             variant="secondary"
                             className={clsx(styles.btnPlaceOrder, "w-100")}
-                            type="submit"
+                            type="button"
                             disabled={isSubmitting}
+                            onClick={handleClickBtnSubmit}
                           >
                             PLACE ORDER
                           </Button>
