@@ -26,6 +26,15 @@
     line-height: 20px;
     margin-bottom: 0;
   }
+
+  .deleteBtn {
+    font-size: 10px;
+    height: 40px;
+  }
+
+  .selectQty {
+    height: 40px;
+  }
 }
 .item:last-child {
   border-bottom: none;

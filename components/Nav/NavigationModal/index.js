@@ -6,7 +6,7 @@ import { useRouter } from "next/router"
 import LeftElementNavComponent from "../Components/LeftElementNav"
 import RightElementNavComponent from "../Components/RightElementNav"
 
-const NavModalComponent = ({ show, onHide }) => {
+const NavModalComponent = ({ show, onHide, dataNav }) => {
   const router = useRouter()
 
   if (router?.events) {
@@ -16,24 +16,24 @@ const NavModalComponent = ({ show, onHide }) => {
   const [element, setElement] = useState({
     name: "Road Gear",
     active: true,
-    department_slug: "road-gear",
+    department_slug: "/road-gear",
   })
   const [elementLeft, setElementLeft] = useState([
-    { name: "New Motorcycles", active: false, department_slug: "new-bikes" },
-    { name: "Used Motorcycles", active: false, department_slug: "used-bikes" },
-    { name: "Road Gear", active: true, department_slug: "road-gear" },
-    { name: "MX Gear", active: false, department_slug: "mx-gear" },
+    { name: "New Motorcycles", active: false, department_slug: "/new-bikes" },
+    { name: "Used Motorcycles", active: false, department_slug: "/used-bikes" },
+    { name: "Road Gear", active: true, department_slug: "/road-gear" },
+    { name: "MX Gear", active: false, department_slug: "/mx-gear" },
     {
       name: "Adventure Gear",
       active: false,
-      department_slug: "adventure-gear",
+      department_slug: "/adventure-gear",
     },
     {
       name: "Parts & Accessories",
       active: false,
-      department_slug: "accessories",
+      department_slug: "/accessories",
     },
-    { name: "Servicing", active: false, department_slug: "service" },
+    { name: "Servicing", active: false, department_slug: "/service" },
     { name: "Finance & Insurance", active: false, department_slug: "" },
   ])
 
@@ -94,7 +94,7 @@ const NavModalComponent = ({ show, onHide }) => {
             })}
         </div>
         <div className={styles.modalBodyRight}>
-          <RightElementNavComponent element={element} />
+          <RightElementNavComponent dataNav={dataNav} element={element} />
         </div>
       </Modal.Body>
     </Modal>

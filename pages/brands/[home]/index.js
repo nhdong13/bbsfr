@@ -1,7 +1,7 @@
 import { route } from "next/dist/next-server/server/router"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
-import BrandHomeComponent from "../../../components/Brand/Components/BrandHomeComponent"
+import BrandHomeComponent from "../../../components/Brand/BrandHome"
 import { getDepartmentByUID } from "../../../lib/prismic/api"
 
 const BrandHomePage = () => {

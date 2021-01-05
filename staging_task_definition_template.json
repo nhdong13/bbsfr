@@ -54,11 +54,11 @@
       "name": "bbsfr-staging-nginx-container"
     }
   ],
-  "memory": "950",
+  "memory": "512",
   "family": "bbsfr-staging-storefront",
   "requiresCompatibilities": [
     "EC2"
   ],
   "networkMode": "bridge",
-  "cpu": "1024"
+  "cpu": "512"
 }

@@ -88,10 +88,26 @@ const ProductComponent = ({ products, item, index }) => {
             <div className={styles.nameProduct}>
               <p>{item.values.name}</p>
             </div>
-            <div className={styles.priceProduct}>
-              <p>{item.values.price ? `$${item.values.price}` : ""}</p>
+            <div className={styles.productInfoBottom}>
+              <div className={styles.priceProduct}>
+                <p>
+                  {item.values.price ? (
+                    <span>
+                      ${item.values.price.split(".")[0]}
+                      <sup className={styles.supPriceProduct}>
+                        {(item.values.price % 1).toFixed(2) * 100}
+                      </sup>
+                    </span>
+                  ) : (
+                    ""
+                  )}
+                </p>
+              </div>
+              <div className={styles.ratingProduct}>
+                {renderStart(item.values.rating, "16px", "16px", 5)}
+                <span>({item.values.customerReviewCount})</span>
+              </div>
             </div>
-            {renderStart(item.values.rating, "16px", "16px", 5)}
           </div>
         </div>
       </div>

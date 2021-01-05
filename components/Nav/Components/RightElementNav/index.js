@@ -1,13 +1,19 @@
 import { useEffect, useState } from "react"
-import { getDepartmentByUID } from "../../../../lib/prismic/api"
 import SessionBrowseByCategoryComponent from "../../../DepartmentDetail/Sesstion/SessionBrowseByCategoryComponent"
 import HeaderRightComponent from "../HeaderRight"
 
-const RightElementNavComponent = ({ element }) => {
+const RightElementNavComponent = ({ element, dataNav }) => {
   const [collections, setCollections] = useState([])
   useEffect(async () => {
-    const { collections } = await getDepartmentByUID(element.department_slug)
-    setCollections(collections)
+    const index =
+      dataNav &&
+      dataNav.length > 0 &&
+      dataNav.findIndex((i) => i.department === element.department_slug)
+    if (index !== undefined && index !== -1) {
+      setCollections(dataNav[index].collections)
+    } else {
+      setCollections([])
+    }
   }, [element])
 
   return (

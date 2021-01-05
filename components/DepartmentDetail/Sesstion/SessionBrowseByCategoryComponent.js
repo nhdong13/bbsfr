@@ -55,7 +55,7 @@ const SessionBrowseByCategoryComponent = (props) => {
                   key={index}
                   href={
                     props?.departmentSlug
-                      ? `/${props.departmentSlug}${collection.collection_slug}`
+                      ? `${props.departmentSlug}${collection.collection_slug}`
                       : `/${router?.query?.id}${collection.collection_slug}`
                   }
                 >

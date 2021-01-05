@@ -1,6 +1,12 @@
 import Image from "next/image"
 
-export const renderStart = (rate, width, height, max = 5) => {
+export const renderStart = (
+  rate,
+  width,
+  height,
+  max = 5,
+  starType = "productStar"
+) => {
   const container = (i, s) => {
     return (
       <div
@@ -19,11 +25,14 @@ export const renderStart = (rate, width, height, max = 5) => {
   const loop = () => {
     for (let i = 1; i <= max; i++) {
       if (i <= `${rate}`.split(".")[0]) {
-        el.push(container(i, "/icons/start-full.svg"))
-      } else if (`${rate}`.includes(".") && +`${rate}`.split(".")[0] + 1 === i) {
-        el.push(container(i, "/icons/start-path.svg"))
+        el.push(container(i, `/icons/${starType}/start-full.svg`))
+      } else if (
+        `${rate}`.includes(".") &&
+        +`${rate}`.split(".")[0] + 1 === i
+      ) {
+        el.push(container(i, `/icons/${starType}/start-path.svg`))
       } else {
-        el.push(container(i, "/icons/start-empty.svg"))
+        el.push(container(i, `/icons/${starType}/start-empty.svg`))
       }
     }
     return el
