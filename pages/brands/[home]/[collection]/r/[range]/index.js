@@ -1,4 +1,4 @@
-import BrandRangeComponent from "../../../../../../components/Brand/Components/BrandRangeComponent"
+import BrandRangeComponent from "../../../../../../components/Brand/BrandRange"
 
 const BrandRangePage = () => {
   return <BrandRangeComponent />
