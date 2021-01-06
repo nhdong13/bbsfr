@@ -9,23 +9,45 @@ import { getConfigPipeline } from "../../../services/getPipelineSajari"
 import { authenticationFromStamped } from "../../../services/testimonial"
 import CollectionComponent from "../../../components/Collection"
 import { getDataForMainNav } from "../../../services/mainNav"
+import { mockupDataFilterCategory } from "../../../services/collection"
 
 const pipeline = new Pipeline({ ...getConfigPipeline("best-buy") }, "query")
-const variables = new Variables({ resultsPerPage: 20, q: "" })
+
+var searchObj = {
+  variables: null,
+}
+
+const initVariable = (params) => {
+  //Filter options will replace base params for per page --> this is code demo
+  const category = mockupDataFilterCategory(params)
+  searchObj.variables = new Variables({
+    resultsPerPage: 20,
+    q: "",
+    filter: `categories ~ ['${category}']`,
+  })
+}
 
 export async function getStaticProps({ params }) {
   const requestOptions = authenticationFromStamped()
   const resStamped = await fetch(process.env.STAMPED_API_URL, requestOptions)
   const testimonials = await resStamped.json()
-
   const collections = await getCollectionByUid(params.collection)
+  const dataNav = await getDataForMainNav()
+  initVariable(params)
+
   const initialResponse = await search({
     pipeline,
-    variables,
+    variables: searchObj.variables,
   })
-  const dataNav = await getDataForMainNav()
+
   return {
-    props: { initialResponse, collections, testimonials, dataNav },
+    props: {
+      initialResponse,
+      collections,
+      testimonials,
+      dataNav,
+      params,
+    },
     revalidate: +process.env.NEXT_PUBLIC_REVALIDATE_PAGE_TIME,
   }
 }
@@ -50,12 +72,15 @@ export async function getStaticPaths() {
   return { paths, fallback: false }
 }
 
-const Collection = ({ collections, initialResponse, testimonials }) => {
+const Collection = ({ collections, testimonials, params, initialResponse }) => {
+  if (!search.variables) {
+    initVariable(params)
+  }
   return (
     <CollectionComponent
       initialResponse={initialResponse}
       pipeline={pipeline}
-      variables={variables}
+      variables={searchObj.variables}
       collections={collections}
       testimonials={testimonials}
     />

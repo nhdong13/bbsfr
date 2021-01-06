@@ -15,9 +15,7 @@ let isSetArrayToFilter = false
 
 const FilterRender = ({ name, setChanged }) => {
   const [searchInputFilter, setSearch] = useState("")
-
   const { multi, options, selected, setSelected, reset } = useFilter(name)
-
   const router = useRouter()
   router.events.on("routeChangeComplete", () => reset())
 
@@ -79,16 +77,10 @@ const FilterRender = ({ name, setChanged }) => {
   )
 }
 
-const CategogryFilter = ({ setChanged }) => (
-  <FilterRender name="type" title="Category" setChanged={setChanged} />
+const FilterComponent = ({ setChanged }) => (
+  <div className="">
+    <FilterRender name="type" title="Category" setChanged={setChanged} />
+  </div>
 )
-
-const FilterComponent = ({ setChanged }) => {
-  return (
-    <div className="">
-      <CategogryFilter setChanged={setChanged} />
-    </div>
-  )
-}
 
 export default FilterComponent

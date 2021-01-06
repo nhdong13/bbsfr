@@ -57,7 +57,6 @@ const CategoryComponent = ({
         searchOnLoad={!initialResponse}
       >
         <HeaderCategoryDynamic
-          pipeline={pipeline}
           pageHeading={
             categoryData &&
             categoryData.page_heading_1 &&

@@ -17,3 +17,33 @@ export const listUpdate = (arr, id, bol) => {
     index == id ? { name: item.name, open: bol } : item
   )
 }
+
+export const mockupDataFilterCategory = (params) => {
+  const arrCategory = [
+    "Office & School Supplies",
+    "Printer Ink & Toner",
+    "Printer Ink",
+    "Cameras & Camcorders",
+    "Memory Cards",
+    "All Memory Cards",
+    "Cameras & Camcorders",
+    "Memory Cards",
+    "Micro SD (SD, SDHC, SDXC)",
+    "Micro SDHC",
+  ]
+  const categoryId = params?.collection
+  switch (categoryId) {
+    case "road-jackets":
+      return "Cameras & Camcorders"
+    case "road-helmets":
+      return "Printer Ink & Toner"
+    case "road-boots":
+      return "Office & School Supplies"
+    case "road-clearance":
+      return "Memory Cards"
+    case "mx-goggles":
+      return "Cameras & Camcorders"
+    default:
+      return arrCategory[Math.floor(Math.random() * arrCategory.length)]
+  }
+}

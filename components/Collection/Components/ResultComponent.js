@@ -11,11 +11,7 @@ import {
   listUpdate,
 } from "../../../services/collection"
 import styles from "../Collections.module.scss"
-import {
-  useSearchContext,
-  useVariables,
-  useResultsPerPage,
-} from "@sajari/react-hooks"
+import { useSearchContext, useResultsPerPage } from "@sajari/react-hooks"
 import dynamic from "next/dynamic"
 import { constants } from "../../../constant"
 
@@ -33,13 +29,12 @@ const productTypeFilter = new FilterBuilder({
   multi: true,
 })
 
-const ResultComponent = (props) => {
-  const { pipeline, initialResponse } = props
-
+const ResultComponent = ({ pipeline, initialResponse, variables }) => {
   const [show, setShow] = useState(false)
   const [sortFilterChanged, setChanged] = useState(false)
   const [countBol, setCountBol] = useState(0)
   const [isSetResultPerPage, setIsResultPerPage] = useState(false)
+
   // TOTO: wating for data from Prismic or Sajari
   const [listSorting, setListSorting] = useState([
     {
@@ -125,7 +120,6 @@ const ResultComponent = (props) => {
     setResultsPerPage(constants.RESULT_PER_PAGE)
   }
 
-  const { variables } = useVariables()
   const { results } = useSearchContext()
 
   return (
@@ -134,7 +128,6 @@ const ResultComponent = (props) => {
       <SearchProvider
         search={{
           pipeline,
-          variables,
           fields: new FieldDictionary({
             title: "name",
           }),
