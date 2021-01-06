@@ -16,6 +16,7 @@ let isSetArrayToFilter = false
 const FilterRender = ({ name, setChanged }) => {
   const [searchInputFilter, setSearch] = useState("")
   const { multi, options, selected, setSelected, reset } = useFilter(name)
+
   const router = useRouter()
   router.events.on("routeChangeComplete", () => reset())
 
@@ -38,6 +39,7 @@ const FilterRender = ({ name, setChanged }) => {
   }
   const Group = multi ? CheckboxGroup : RadioGroup
   const Control = multi ? Checkbox : Radio
+  
   return (
     <div className="mb-4">
       <Combobox
@@ -46,8 +48,8 @@ const FilterRender = ({ name, setChanged }) => {
         value={searchInputFilter}
         onChange={handleFilter}
       />
-
       <div className="flex items-center justify-between mb-2"></div>
+      
       <Group
         name={name}
         value={selected}
@@ -79,7 +81,7 @@ const FilterRender = ({ name, setChanged }) => {
 
 const FilterComponent = ({ setChanged }) => (
   <div className="">
-    <FilterRender name="type" title="Category" setChanged={setChanged} />
+    {/* <FilterRender name="type" title="Category" setChanged={setChanged} /> */}
   </div>
 )
 

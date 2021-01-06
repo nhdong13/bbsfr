@@ -22,12 +22,6 @@ const PaginationDynamic = dynamic(() =>
 const ListProductsDynamic = dynamic(() => import("./ListProductsComponent"))
 const SortFilterDynamic = dynamic(() => import("./SortFilterComponent"))
 
-const productTypeFilter = new FilterBuilder({
-  name: "type",
-  field: "brand",
-  count: true,
-  multi: true,
-})
 
 const ResultComponent = ({ pipeline, initialResponse, variables }) => {
   const [show, setShow] = useState(false)
@@ -45,11 +39,11 @@ const ResultComponent = ({ pipeline, initialResponse, variables }) => {
 
   const [listFilter, setListFilter] = useState([
     { name: "Brand", open: false },
-    { name: "Jacket Features", open: false },
-    { name: "Jacket Material", open: false },
-    { name: "Season", open: false },
-    { name: "Ride Style", open: false },
-    { name: "Price", open: false },
+    // { name: "Jacket Features", open: false },
+    // { name: "Jacket Material", open: false },
+    // { name: "Season", open: false },
+    // { name: "Ride Style", open: false },
+    // { name: "Price", open: false },
   ])
 
   const sortFilter = () => {
@@ -122,16 +116,32 @@ const ResultComponent = ({ pipeline, initialResponse, variables }) => {
 
   const { results } = useSearchContext()
 
+  const productTypeFilter = new FilterBuilder({
+    name: "type",
+    field: "brand",
+    count: true,
+    multi: true,
+  })
+
+  const priceFilter = new FilterBuilder({
+    name: "price",
+    options: {
+      High: "price >= 200",
+      Mid: "price >= 50",
+      Low: "price < 50",
+    },
+    multi: false,
+    initial: ["High"],
+  })
+
   return (
     <>
       <SortFilterButton />
       <SearchProvider
         search={{
           pipeline,
-          fields: new FieldDictionary({
-            title: "name",
-          }),
-          filters: [productTypeFilter],
+          variables,
+          // filters: ["productTypeFilter", "priceFilter"],
         }}
         initialResponse={initialResponse}
         searchOnLoad={!initialResponse}
@@ -153,14 +163,14 @@ const ResultComponent = ({ pipeline, initialResponse, variables }) => {
           <SortFilterDynamic
             list={listSorting}
             setOpen={setOpenSortingCollapse}
-            type={"sort"}
+            type="sort"
             setChanged={setChanged}
           />
           {/* Filter feature */}
           <SortFilterDynamic
             list={listFilter}
             setOpen={setOpenFilterCollapse}
-            type={"filter"}
+            type="filter"
             setChanged={setChanged}
           />
           <div onClick={handleClose} className={styles.button_sajari}>
