@@ -144,11 +144,27 @@
     }
   }
 }
+.backBtn {
+  font-size: 12px;
+  line-height: 20px;
+  font-style: normal;
+  font-weight: 400;
+  padding: 6px 16px;
+}
+
+//BestSeller Component
+.bestSellersHeading {
+  text-transform: uppercase;
+  @include font-family(Rajdhani, 21px, 700, $primary-text-color);
+  margin-top: 48px;
+  padding-left: 17px;
+}
 
 //Brand List
 .padTopBottom20 {
   padding-top: 20px;
   padding-bottom: 20px;
+  margin-top: 48px;
 }
 
 .containerBrandList {

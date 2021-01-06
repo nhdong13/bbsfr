@@ -3,31 +3,19 @@ import { useEffect, useState } from "react"
 import SessionBrowseByCategoryComponent from "../../DepartmentDetail/Sesstion/SessionBrowseByCategoryComponent"
 import { getDepartmentByUID } from "../../../lib/prismic/api"
 import styles from "../Brand.module.scss"
+import dynamic from "next/dynamic"
 
-const BrandHomeComponent = ({ element }) => {
-  const [collections, setCollections] = useState([])
-  useEffect(async () => {
-    const { collections } = await getDepartmentByUID(element.department_slug)
-    setCollections(collections)
-  }, [element])
+const ListProductsDynamic = dynamic(() =>
+  import("../../Collection/Components/ListProductsComponent")
+)
+
+const BestSellersComponent = (props) => {
+  const { products, brandHeading } = props
   return (
     <>
-      <Container
-        fluid
-        className={styles.imagedHeader}
-        style={{
-          backgroundImage:
-            "url('https://news.itu.int/wp-content/uploads/2018/07/citymobility-min-e1530886118305.jpg')",
-        }}
-      >
-        <p className={styles.header}>ALPINESTARS</p>
-      </Container>
-      <SessionBrowseByCategoryComponent
-        departmentSlug={element.department_slug}
-        collections={collections}
-        disableTitleContainer={true}
-      />
+      <p className={styles.bestSellersHeading}>{brandHeading} BEST SELLERS</p>
+      {/* {products && <ListProductsDynamic products={products} />} */}
     </>
   )
 }
-export default BrandHomeComponent
+export default BestSellersComponent
