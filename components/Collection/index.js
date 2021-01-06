@@ -20,6 +20,7 @@ const CollectionComponent = ({
   initialResponse,
   pipeline,
   testimonials,
+  variables,
 }) => {
   const {
     meta_description,
@@ -50,6 +51,7 @@ const CollectionComponent = ({
       <SearchProvider
         search={{
           pipeline,
+          variables,
         }}
         initialResponse={initialResponse}
         searchOnLoad={!initialResponse}
@@ -74,7 +76,11 @@ const CollectionComponent = ({
           }
         />
 
-        <ResultDynamic pipeline={pipeline} initialResponse={initialResponse} />
+        <ResultDynamic
+          variables={variables}
+          pipeline={pipeline}
+          initialResponse={initialResponse}
+        />
       </SearchProvider>
       <TestimonialsDynamic testimonials={testimonials} type="collection" />
       <FAQDynamic FAQ={{ faq, faq_title }} />
