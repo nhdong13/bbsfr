@@ -31,7 +31,7 @@ export const mockupDataFilterCategory = (params) => {
     "Micro SD (SD, SDHC, SDXC)",
     "Micro SDHC",
   ]
-  const categoryId = params?.collection
+  const categoryId = params?.category ? params.category : params.collection
   switch (categoryId) {
     case "road-jackets":
       return "Cameras & Camcorders"

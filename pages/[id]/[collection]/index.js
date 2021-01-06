@@ -12,10 +12,7 @@ import { getDataForMainNav } from "../../../services/mainNav"
 import { mockupDataFilterCategory } from "../../../services/collection"
 
 const pipeline = new Pipeline({ ...getConfigPipeline("best-buy") }, "query")
-
-var searchObj = {
-  variables: null,
-}
+var searchObj = { variables: null }
 
 const initVariable = (params) => {
   //Filter options will replace base params for per page --> this is code demo

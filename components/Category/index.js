@@ -24,6 +24,7 @@ const CategoryComponent = ({
   initialResponse,
   pipeline,
   testimonials,
+  variables,
 }) => {
   const router = useRouter()
   const { meta_description, meta_title, faq, faq_title } = categoryData
@@ -52,6 +53,7 @@ const CategoryComponent = ({
       <SearchProvider
         search={{
           pipeline,
+          variables,
         }}
         initialResponse={initialResponse}
         searchOnLoad={!initialResponse}
@@ -66,7 +68,11 @@ const CategoryComponent = ({
           }
         />
         <BackToPageBeforeDynamic page={router.query.collection} />
-        <ResultDynamic pipeline={pipeline} initialResponse={initialResponse} />
+        <ResultDynamic
+          variables={variables}
+          pipeline={pipeline}
+          initialResponse={initialResponse}
+        />
       </SearchProvider>
       <TestimonialsDynamic testimonials={testimonials} type="category" />
       <FAQDynamic FAQ={{ faq, faq_title }} />
