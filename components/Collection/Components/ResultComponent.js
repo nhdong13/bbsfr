@@ -11,11 +11,7 @@ import {
   listUpdate,
 } from "../../../services/collection"
 import styles from "../Collections.module.scss"
-import {
-  useSearchContext,
-  useVariables,
-  useResultsPerPage,
-} from "@sajari/react-hooks"
+import { useSearchContext, useResultsPerPage } from "@sajari/react-hooks"
 import dynamic from "next/dynamic"
 import { constants } from "../../../constant"
 
@@ -26,20 +22,13 @@ const PaginationDynamic = dynamic(() =>
 const ListProductsDynamic = dynamic(() => import("./ListProductsComponent"))
 const SortFilterDynamic = dynamic(() => import("./SortFilterComponent"))
 
-const productTypeFilter = new FilterBuilder({
-  name: "type",
-  field: "brand",
-  count: true,
-  multi: true,
-})
 
-const ResultComponent = (props) => {
-  const { pipeline, initialResponse } = props
-
+const ResultComponent = ({ pipeline, initialResponse, variables }) => {
   const [show, setShow] = useState(false)
   const [sortFilterChanged, setChanged] = useState(false)
   const [countBol, setCountBol] = useState(0)
   const [isSetResultPerPage, setIsResultPerPage] = useState(false)
+
   // TOTO: wating for data from Prismic or Sajari
   const [listSorting, setListSorting] = useState([
     {
@@ -50,11 +39,11 @@ const ResultComponent = (props) => {
 
   const [listFilter, setListFilter] = useState([
     { name: "Brand", open: false },
-    { name: "Jacket Features", open: false },
-    { name: "Jacket Material", open: false },
-    { name: "Season", open: false },
-    { name: "Ride Style", open: false },
-    { name: "Price", open: false },
+    // { name: "Jacket Features", open: false },
+    // { name: "Jacket Material", open: false },
+    // { name: "Season", open: false },
+    // { name: "Ride Style", open: false },
+    // { name: "Price", open: false },
   ])
 
   const sortFilter = () => {
@@ -125,8 +114,25 @@ const ResultComponent = (props) => {
     setResultsPerPage(constants.RESULT_PER_PAGE)
   }
 
-  const { variables } = useVariables()
   const { results } = useSearchContext()
+
+  const productTypeFilter = new FilterBuilder({
+    name: "type",
+    field: "brand",
+    count: true,
+    multi: true,
+  })
+
+  const priceFilter = new FilterBuilder({
+    name: "price",
+    options: {
+      High: "price >= 200",
+      Mid: "price >= 50",
+      Low: "price < 50",
+    },
+    multi: false,
+    initial: ["High"],
+  })
 
   return (
     <>
@@ -135,10 +141,7 @@ const ResultComponent = (props) => {
         search={{
           pipeline,
           variables,
-          fields: new FieldDictionary({
-            title: "name",
-          }),
-          filters: [productTypeFilter],
+          // filters: ["productTypeFilter", "priceFilter"],
         }}
         initialResponse={initialResponse}
         searchOnLoad={!initialResponse}
@@ -160,14 +163,14 @@ const ResultComponent = (props) => {
           <SortFilterDynamic
             list={listSorting}
             setOpen={setOpenSortingCollapse}
-            type={"sort"}
+            type="sort"
             setChanged={setChanged}
           />
           {/* Filter feature */}
           <SortFilterDynamic
             list={listFilter}
             setOpen={setOpenFilterCollapse}
-            type={"filter"}
+            type="filter"
             setChanged={setChanged}
           />
           <div onClick={handleClose} className={styles.button_sajari}>

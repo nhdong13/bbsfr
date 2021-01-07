@@ -9,10 +9,13 @@ const ImagedHeaderComponent = (props) => {
     <Container
       fluid
       className={styles.imagedHeader}
-      style={{
-        backgroundImage: `url(${imgUrl})`,
-        backgroundColor: 'black'
-      }}
+      style={
+        imgUrl && imgUrl != ""
+          ? {
+              backgroundImage: `url(${imgUrl})`,
+            }
+          : { backgroundColor: "#181818" }
+      }
     >
       <div className={styles.header}>{header}</div>
       <div className={styles.productCount}>{`${

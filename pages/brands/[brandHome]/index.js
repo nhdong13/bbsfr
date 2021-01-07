@@ -1,8 +1,14 @@
 import BrandHomeComponent from "../../../components/Brand/BrandHome"
-import { getBrandByUid, listAllBrands } from "../../../lib/prismic/api"
+import {
+  getAllFAQ,
+  getBrandByUid,
+  listAllBrands,
+} from "../../../lib/prismic/api"
 import { Pipeline, Variables } from "@sajari/react-search-ui"
 import { search } from "@sajari/server"
 import { getConfigPipeline } from "../../../services/getPipelineSajari"
+import { getDataForMainNav } from "../../../services/mainNav"
+import { authenticationFromStamped } from "../../../services/testimonial"
 
 const pipeline = new Pipeline({ ...getConfigPipeline("best-buy") }, "query")
 const variables = new Variables({ resultsPerPage: 20, q: "" })
@@ -13,8 +19,12 @@ export async function getStaticProps({ params }) {
     variables,
   })
   const brand = await getBrandByUid(params.brandHome)
+  const requestOptions = authenticationFromStamped()
+  const resStamped = await fetch(process.env.STAMPED_API_URL, requestOptions)
+  const testimonials = await resStamped.json()
+  const dataNav = await getDataForMainNav()
   return {
-    props: { initialResponse, brand },
+    props: { initialResponse, brand, dataNav, testimonials },
     revalidate: +process.env.NEXT_PUBLIC_REVALIDATE_PAGE_TIME,
   }
 }
@@ -33,13 +43,14 @@ export async function getStaticPaths() {
   return { paths, fallback: false }
 }
 
-const BrandHomePage = ({ initialResponse, brand }) => {
+const BrandHomePage = ({ initialResponse, brand, testimonials }) => {
   return (
     <BrandHomeComponent
       initialResponse={initialResponse}
       pipeline={pipeline}
       variables={variables}
       brand={brand}
+      testimonials={testimonials}
     />
   )
 }

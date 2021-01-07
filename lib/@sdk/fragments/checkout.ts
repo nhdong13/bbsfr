@@ -155,5 +155,11 @@ export const checkoutFragment = gql`
     discountName
     translatedDiscountName
     voucherCode
+    voucherifies {
+      code
+      redemptionId
+      currentBalanceAmount
+      type
+    }
   }
 `

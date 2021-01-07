@@ -91,7 +91,7 @@ export class NetworkManager implements INetworkManager {
               if (errors?.length) {
                 reject(errors)
               } else {
-                resolve(data.me?.checkout)
+                resolve(data.me?.checkout || null)
               }
             },
             (error) => {
@@ -796,6 +796,7 @@ export class NetworkManager implements INetworkManager {
     availableShippingMethods,
     shippingMethod,
     totalPrice,
+    voucherifies,
   }: Checkout): ICheckoutModel => ({
     availableShippingMethods: availableShippingMethods
       ? availableShippingMethods.filter(filterNotEmptyArrayItems)
@@ -833,6 +834,7 @@ export class NetworkManager implements INetworkManager {
     shippingMethod,
     token,
     totalPrice,
+    voucherifies,
   })
 
   private constructPaymentModel = ({

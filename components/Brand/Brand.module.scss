@@ -14,11 +14,11 @@
   }
 }
 .imagedHeader {
-  height: 136px;
+  height: auto;
   background-repeat: no-repeat;
   background-size: cover;
-  padding-top: 40px;
-  padding-bottom: 40px;
+  padding-top: 42.5px;
+  padding-bottom: 42.5px;
   .header {
     @include font-family(Rajdhani, 31px, 700, #ffffff);
     text-align: left;
@@ -143,6 +143,21 @@
       }
     }
   }
+}
+.backBtn {
+  font-size: 12px;
+  line-height: 20px;
+  font-style: normal;
+  font-weight: 400;
+  padding: 6px 16px;
+}
+
+//BestSeller Component
+.bestSellersHeading {
+  text-transform: uppercase;
+  @include font-family(Rajdhani, 21px, 700, $primary-text-color);
+  margin-top: 48px;
+  padding-left: 17px;
 }
 
 //Brand List
