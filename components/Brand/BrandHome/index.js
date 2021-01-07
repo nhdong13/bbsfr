@@ -8,7 +8,15 @@ import Link from "next/link"
 import styles from "../Brand.module.scss"
 
 const SEODynamic = dynamic(() => import("../../HomePage/SEO"))
-const BrandHomeComponent = ({ initialResponse, pipeline, brand }) => {
+const FAQDynamic = dynamic(() => import("../../HomePage/FAQ"))
+const TestimonialsDynamic = dynamic(() => import("../../HomePage/Testimonials"))
+
+const BrandHomeComponent = ({
+  initialResponse,
+  pipeline,
+  brand,
+  testimonials,
+}) => {
   const {
     meta_description,
     meta_title,
@@ -76,6 +84,8 @@ const BrandHomeComponent = ({ initialResponse, pipeline, brand }) => {
         disableTitleContainer={true}
       />
       {/* <BestSellerComponent products={[]} brandHeading={heading1} /> */}
+      <TestimonialsDynamic testimonials={testimonials} type="home" />
+      <FAQDynamic FAQ={{ faq, faq_title }} />
       <SEODynamic
         heading1={heading1}
         pageParagraph={
