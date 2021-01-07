@@ -23,7 +23,6 @@ const BrandHomeComponent = ({
     brand_hero_image,
   } = brand
   const jsonFAQ = convertSchemaFAQ({ faq, faq_title })
-  console.log(brand_hero_image)
   const collections =
     brand.brand_collections &&
     brand.brand_collections.map((i) => {
@@ -66,7 +65,7 @@ const BrandHomeComponent = ({
               : "Brand Home"
           }
           pipeline={pipeline}
-          imgUrl={brand_hero_image.url}
+          imgUrl={brand_hero_image?.url}
         />
       </SearchProvider>
 

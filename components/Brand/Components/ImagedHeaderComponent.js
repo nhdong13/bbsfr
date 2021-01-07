@@ -11,6 +11,7 @@ const ImagedHeaderComponent = (props) => {
       className={styles.imagedHeader}
       style={{
         backgroundImage: `url(${imgUrl})`,
+        backgroundColor: 'black'
       }}
     >
       <div className={styles.header}>{header}</div>
