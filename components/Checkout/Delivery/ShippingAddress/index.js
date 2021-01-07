@@ -31,6 +31,7 @@ export default function ShippingAddress({
     loaded,
   } = useCheckout()
   const [initShippingData, setInitShippingData] = useState(INITIAL_ADDRESS)
+  const [oldValues, setOldValues] = useState()
   const [modalShow, setModalShow] = useState(false)
 
   useEffect(() => {
@@ -132,20 +133,37 @@ export default function ShippingAddress({
     deliveryForm.setFieldValue("shippingMethod", "")
   }
 
+  const handleBlur = (e) => {
+    if (!oldValues) {
+      setOldValues(initShippingData)
+    }
+    if (
+      e.currentTarget.value ===
+      (oldValues || initShippingData)[e.currentTarget.name]
+    ) {
+      return
+    }
+    const shippingForm = shippingFormRef.current
+    setOldValues(shippingForm.values)
+    shippingForm.handleSubmit()
+  }
+
   return (
     <>
-      <Row>
-        <Form.Group controlId="btnPlaceOrder" as={Col} xs="12">
-          <Button
-            variant="link"
-            className="px-0"
-            type="button"
-            onClick={() => setModalShow(true)}
-          >
-            Select account {">"}
-          </Button>
-        </Form.Group>
-      </Row>
+      {currentUser?.addresses?.length > 0 && (
+        <Row>
+          <Form.Group controlId="btnPlaceOrder" as={Col} xs="12">
+            <Button
+              variant="link"
+              className="px-0"
+              type="button"
+              onClick={() => setModalShow(true)}
+            >
+              Select account {">"}
+            </Button>
+          </Form.Group>
+        </Row>
+      )}
       <SelectAddressModal
         show={modalShow}
         onHide={() => setModalShow(false)}
@@ -155,6 +173,7 @@ export default function ShippingAddress({
         addresses={currentUser?.addresses}
         defaultShippingAddress={currentUser?.defaultShippingAddress}
       />
+
       <Formik
         innerRef={shippingFormRef}
         enableReinitialize
@@ -187,6 +206,7 @@ export default function ShippingAddress({
                       name="firstName"
                       value={values.firstName}
                       onChange={handleChange}
+                      onBlur={handleBlur}
                     />
                     <ErrorMessageWrapper
                       errors={errors}
@@ -203,6 +223,7 @@ export default function ShippingAddress({
                       name="lastName"
                       value={values.lastName}
                       onChange={handleChange}
+                      onBlur={handleBlur}
                     />
                     <ErrorMessageWrapper
                       errors={errors}
@@ -219,6 +240,7 @@ export default function ShippingAddress({
                       name="bussinessName"
                       value={values.bussinessName}
                       onChange={handleChange}
+                      onBlur={handleBlur}
                     />
                   </Form.Group>
 
@@ -230,6 +252,7 @@ export default function ShippingAddress({
                       name="phone"
                       value={values.phone}
                       onChange={handleChange}
+                      onBlur={handleBlur}
                     />
 
                     <ErrorMessageWrapper
@@ -245,6 +268,7 @@ export default function ShippingAddress({
                       as="select"
                       name="country"
                       onChange={handleChangeCountry}
+                      onBlur={handleBlur}
                       value={values.country.code}
                       readOnly={true}
                     >
@@ -270,6 +294,7 @@ export default function ShippingAddress({
                           name="address"
                           value={values.address}
                           onChange={handleChange}
+                          onBlur={handleBlur}
                         />
                         <ErrorMessageWrapper
                           errors={errors}
@@ -305,6 +330,7 @@ export default function ShippingAddress({
                           name="streetAddress1"
                           value={values.streetAddress1}
                           onChange={handleChange}
+                          onBlur={handleBlur}
                         />
                         <ErrorMessageWrapper
                           errors={errors}
@@ -321,6 +347,7 @@ export default function ShippingAddress({
                           name="streetAddress2"
                           value={values.streetAddress2}
                           onChange={handleChange}
+                          onBlur={handleBlur}
                         />
                       </Form.Group>
 
@@ -332,6 +359,7 @@ export default function ShippingAddress({
                           name="city"
                           value={values.city}
                           onChange={handleChange}
+                          onBlur={handleBlur}
                         />
                         <ErrorMessageWrapper
                           errors={errors}
@@ -348,6 +376,7 @@ export default function ShippingAddress({
                           name="countryArea"
                           value={values.countryArea}
                           onChange={handleChange}
+                          onBlur={handleBlur}
                         />
                         <ErrorMessageWrapper
                           errors={errors}
@@ -364,6 +393,7 @@ export default function ShippingAddress({
                           name="postalCode"
                           value={values.postalCode}
                           onChange={handleChange}
+                          onBlur={handleBlur}
                         />
                         <ErrorMessageWrapper
                           errors={errors}
@@ -391,18 +421,6 @@ export default function ShippingAddress({
                   )}
                 </Form.Row>
               </Container>
-            </Row>
-            <Row>
-              <Form.Group controlId="btnPlaceOrder" as={Col} xs="12">
-                <Button
-                  variant="primary"
-                  className={clsx(styles.btnPlaceOrder, "w-100")}
-                  type="submit"
-                  disabled={isSubmitting}
-                >
-                  Update Address
-                </Button>
-              </Form.Group>
             </Row>
           </Form>
         )}
