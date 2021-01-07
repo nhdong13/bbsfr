@@ -15,6 +15,7 @@ export async function getStaticPaths() {
       if (collections?.brandCollections?.length > 0) {
         for (const collection of collections.brandCollections) {
           if (collection?.brand_collection_slug) {
+            //loop path /brands/[brandHome]/[brandCollection]
             paths.push(
               `/brands/${collections.uid}${collection.brand_collection_slug}`
             )

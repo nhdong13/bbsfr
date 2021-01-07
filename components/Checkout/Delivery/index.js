@@ -323,8 +323,12 @@ export default function DeliveryComponent() {
                       errors={errors}
                       touched={touched}
                       googlePayInstance={googlePayInstance}
+                      setShowContinue={setShowContinue}
                     />
-                    <div id="klarna-payments-container"></div>
+                    <div
+                      id="klarna-payments-container"
+                      className={showContinue ? "" : "d-none"}
+                    ></div>
 
                     <PromotionComponent
                       handleChange={handleChange}
