@@ -500,6 +500,14 @@ export interface UserCheckoutDetails_me_checkout_discount {
   amount: number;
 }
 
+export interface UserCheckoutDetails_voucherify {
+  __typename: "Voucherify";
+  code: string;
+  redemptionId: string;
+  currentBalanceAmount: number;
+  type: string;
+}
+
 export interface UserCheckoutDetails_me_checkout {
   __typename: "Checkout";
   token: any;
@@ -542,6 +550,7 @@ export interface UserCheckoutDetails_me_checkout {
   discountName: string | null;
   translatedDiscountName: string | null;
   voucherCode: string | null;
+  voucherifies: UserCheckoutDetails_voucherify[] | null;
 }
 
 export interface UserCheckoutDetails_me {
