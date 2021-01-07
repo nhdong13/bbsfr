@@ -96,6 +96,13 @@ export interface IPaymentCreditCard {
   expYear?: number
 }
 
+export interface Voucherify {
+  code: string
+  redemptionId: string
+  currentBalanceAmount: number
+  type: string
+}
+
 export interface ICheckoutModel {
   id?: string
   token?: any
@@ -110,6 +117,7 @@ export interface ICheckoutModel {
   availableShippingMethods?: Checkout_availableShippingMethods[]
   shippingMethod?: ICheckoutModelShippingMethod | null
   totalPrice?: ICheckoutModelPrice | null
+  voucherifies?: Voucherify[] | null
 }
 
 export interface IPaymentModel {

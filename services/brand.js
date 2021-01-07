@@ -37,3 +37,20 @@ export const checkID = (id, styles, length = 0) => {
   }
   return classType
 }
+
+export const mockupDataFilterBrand = () => {
+  const brands = [
+    "SanDisk",
+    "Apple",
+    "HP",
+    "Rocketfish™",
+    "Sanus",
+    "ARRIS",
+    "Sony",
+    "Skullcandy",
+    "NETGEAR",
+    "AOC",
+    "Canon",
+  ]
+  return brands[Math.floor(Math.random() * brands.length)]
+}

@@ -1,5 +1,25 @@
 import BrandCollectionComponent from "../../../../components/Brand/BrandCollection"
-import { listAllBrands as listAllBrandsCollection } from "../../../../lib/prismic/api"
+import {
+  getBrandCollectionDetail,
+  listAllBrands as listAllBrandsCollection,
+} from "../../../../lib/prismic/api"
+import { getDataForMainNav } from "../../../../services/mainNav"
+import { Pipeline, Variables } from "@sajari/react-search-ui"
+import { getConfigPipeline } from "../../../../services/getPipelineSajari"
+import { mockupDataFilterBrand } from "../../../../services/brand"
+import { search } from "@sajari/server"
+
+const pipeline = new Pipeline({ ...getConfigPipeline("best-buy") }, "query")
+var searchObj = { variables: null }
+
+const initVariable = (params) => {
+  //Filter options will replace base params for per page --> this is code demo
+  searchObj.variables = new Variables({
+    resultsPerPage: 20,
+    q: "",
+    filter: `brand = "${mockupDataFilterBrand()}"`,
+  })
+}
 
 export async function getStaticPaths() {
   const paths = []
@@ -28,13 +48,36 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
+  const dataNav = await getDataForMainNav()
+  const brandCollectionResponse = await getBrandCollectionDetail(
+    params?.brandCollection
+  )
+  initVariable(params)
+  const initialResponse = await search({
+    pipeline,
+    variables: searchObj.variables,
+  })
   return {
-    props: {},
+    props: { dataNav, initialResponse, brandCollectionResponse },
     revalidate: +process.env.NEXT_PUBLIC_REVALIDATE_PAGE_TIME,
   }
 }
 
-const BrandCollectionPage = () => {
-  return <BrandCollectionComponent />
+const BrandCollectionPage = ({
+  initialResponse,
+  params,
+  brandCollectionResponse,
+}) => {
+  if (!search.variables) {
+    initVariable(params)
+  }
+  return (
+    <BrandCollectionComponent
+      initialResponse={initialResponse}
+      pipeline={pipeline}
+      variables={searchObj.variables}
+      brandCollectionResponse={brandCollectionResponse}
+    />
+  )
 }
 export default BrandCollectionPage
