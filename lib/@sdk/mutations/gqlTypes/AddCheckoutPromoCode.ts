@@ -502,6 +502,14 @@ export interface AddCheckoutPromoCode_checkoutAddPromoCode_checkout_discount {
   amount: number;
 }
 
+export interface AddCheckoutPromoCode_checkoutAddPromoCode_checkout_voucherify {
+  __typename: "Voucherify";
+  code: string;
+  redemptionId: string;
+  currentBalanceAmount: number;
+  type: string;
+}
+
 export interface AddCheckoutPromoCode_checkoutAddPromoCode_checkout {
   __typename: "Checkout";
   token: any;
@@ -544,6 +552,7 @@ export interface AddCheckoutPromoCode_checkoutAddPromoCode_checkout {
   discountName: string | null;
   translatedDiscountName: string | null;
   voucherCode: string | null;
+  voucherifies: AddCheckoutPromoCode_checkoutAddPromoCode_checkout_voucherify[] | null;
 }
 
 export interface AddCheckoutPromoCode_checkoutAddPromoCode_errors {

@@ -515,6 +515,14 @@ export interface CreateCheckout_checkoutCreate_checkout_discount {
   amount: number;
 }
 
+export interface CreateCheckout_checkoutCreate_checkout_voucherify {
+  __typename: "Voucherify";
+  code: string;
+  redemptionId: string;
+  currentBalanceAmount: number;
+  type: string;
+}
+
 export interface CreateCheckout_checkoutCreate_checkout {
   __typename: "Checkout";
   token: any;
@@ -557,6 +565,7 @@ export interface CreateCheckout_checkoutCreate_checkout {
   discountName: string | null;
   translatedDiscountName: string | null;
   voucherCode: string | null;
+  voucherifies: CreateCheckout_checkoutCreate_checkout_voucherify[] | null;
 }
 
 export interface CreateCheckout_checkoutCreate {

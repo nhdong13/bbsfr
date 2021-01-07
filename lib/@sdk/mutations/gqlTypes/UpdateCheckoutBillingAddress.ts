@@ -515,6 +515,14 @@ export interface UpdateCheckoutBillingAddress_checkoutBillingAddressUpdate_check
   amount: number;
 }
 
+export interface UpdateCheckoutBillingAddress_checkoutBillingAddressUpdate_checkout_voucherify {
+  __typename: "Voucherify";
+  code: string;
+  redemptionId: string;
+  currentBalanceAmount: number;
+  type: string;
+}
+
 export interface UpdateCheckoutBillingAddress_checkoutBillingAddressUpdate_checkout {
   __typename: "Checkout";
   token: any;
@@ -557,6 +565,7 @@ export interface UpdateCheckoutBillingAddress_checkoutBillingAddressUpdate_check
   discountName: string | null;
   translatedDiscountName: string | null;
   voucherCode: string | null;
+  voucherifies: UpdateCheckoutBillingAddress_checkoutBillingAddressUpdate_checkout_voucherify[] | null;
 }
 
 export interface UpdateCheckoutBillingAddress_checkoutBillingAddressUpdate {

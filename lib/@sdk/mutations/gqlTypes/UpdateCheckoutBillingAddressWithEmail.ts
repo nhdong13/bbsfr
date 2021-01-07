@@ -515,6 +515,14 @@ export interface UpdateCheckoutBillingAddressWithEmail_checkoutBillingAddressUpd
   amount: number;
 }
 
+export interface UpdateCheckoutBillingAddressWithEmail_checkoutBillingAddressUpdate_checkout_voucherify {
+  __typename: "Voucherify";
+  code: string;
+  redemptionId: string;
+  currentBalanceAmount: number;
+  type: string;
+}
+
 export interface UpdateCheckoutBillingAddressWithEmail_checkoutBillingAddressUpdate_checkout {
   __typename: "Checkout";
   token: any;
@@ -557,6 +565,7 @@ export interface UpdateCheckoutBillingAddressWithEmail_checkoutBillingAddressUpd
   discountName: string | null;
   translatedDiscountName: string | null;
   voucherCode: string | null;
+  voucherifies: UpdateCheckoutBillingAddressWithEmail_checkoutBillingAddressUpdate_checkout_voucherify[] | null;
 }
 
 export interface UpdateCheckoutBillingAddressWithEmail_checkoutBillingAddressUpdate {
@@ -1065,6 +1074,14 @@ export interface UpdateCheckoutBillingAddressWithEmail_checkoutEmailUpdate_check
   amount: number;
 }
 
+export interface UpdateCheckoutBillingAddressWithEmail_checkoutEmailUpdate_checkout_voucherify {
+  __typename: "Voucherify";
+  code: string;
+  redemptionId: string;
+  currentBalanceAmount: number;
+  type: string;
+}
+
 export interface UpdateCheckoutBillingAddressWithEmail_checkoutEmailUpdate_checkout {
   __typename: "Checkout";
   token: any;
@@ -1107,6 +1124,7 @@ export interface UpdateCheckoutBillingAddressWithEmail_checkoutEmailUpdate_check
   discountName: string | null;
   translatedDiscountName: string | null;
   voucherCode: string | null;
+  voucherifies: UpdateCheckoutBillingAddressWithEmail_checkoutEmailUpdate_checkout_voucherify[] | null;
 }
 
 export interface UpdateCheckoutBillingAddressWithEmail_checkoutEmailUpdate_errors {
