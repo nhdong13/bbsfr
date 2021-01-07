@@ -796,6 +796,7 @@ export class NetworkManager implements INetworkManager {
     availableShippingMethods,
     shippingMethod,
     totalPrice,
+    voucherifies,
   }: Checkout): ICheckoutModel => ({
     availableShippingMethods: availableShippingMethods
       ? availableShippingMethods.filter(filterNotEmptyArrayItems)
@@ -833,6 +834,7 @@ export class NetworkManager implements INetworkManager {
     shippingMethod,
     token,
     totalPrice,
+    voucherifies,
   })
 
   private constructPaymentModel = ({

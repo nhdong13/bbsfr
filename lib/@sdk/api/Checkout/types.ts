@@ -4,6 +4,7 @@ import {
   ICheckoutModelPrice,
   ICheckoutModelPriceValue,
   IPaymentCreditCard,
+  Voucherify,
 } from "@sdk/repository";
 
 import { PromiseQueuedResponse, PromiseRunResponse } from "../types";
@@ -58,6 +59,7 @@ export interface ICheckout {
   shippingAddress?: IAddress | null;
   shippingMethod?: IShippingMethod | null;
   billingAddress?: IAddress | null;
+  voucherifies?: Voucherify[] | null;
 }
 
 export enum FunctionErrorCheckoutTypes {

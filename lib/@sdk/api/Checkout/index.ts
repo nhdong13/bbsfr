@@ -65,6 +65,7 @@ export class SaleorCheckoutAPI extends ErrorListener
         availableShippingMethods,
         shippingMethod,
         promoCodeDiscount,
+        voucherifies
       }: ICheckoutModel) => {
         this.checkout = {
           billingAddress,
@@ -73,6 +74,7 @@ export class SaleorCheckoutAPI extends ErrorListener
           shippingAddress,
           shippingMethod,
           token,
+          voucherifies
         };
         this.selectedShippingAddressId = selectedShippingAddressId;
         this.selectedBillingAddressId = selectedBillingAddressId;
