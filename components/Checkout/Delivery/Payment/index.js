@@ -18,6 +18,7 @@ export default function PaymentComponent({
   errors,
   touched,
   googlePayInstance,
+  setShowContinue,
 }) {
   return (
     <Row className={styles.paymentBody}>
@@ -31,8 +32,14 @@ export default function PaymentComponent({
               <Button
                 key={method.id}
                 variant={paymentMethod?.id === method.id ? "secondary" : "gray"}
-                className={styles.btn}
-                onClick={() => setFieldValue("paymentMethod", method)}
+                className={clsx(
+                  styles.btn,
+                  paymentMethod?.id === method.id ? styles.btnDisabled : ""
+                )}
+                onClick={() => {
+                  setShowContinue(false)
+                  setFieldValue("paymentMethod", method)
+                }}
               >
                 <span className={styles.btnIcon}>
                   <Image
@@ -56,14 +63,16 @@ export default function PaymentComponent({
                   methodId === "bikebiz.payments.googlepay" &&
                     !googlePayInstance
                     ? "d-none"
-                    : ""
+                    : "",
+                  paymentMethod?.subId === methodId ? styles.btnDisabled : ""
                 )}
-                onClick={() =>
+                onClick={() => {
+                  setShowContinue(false)
                   setFieldValue("paymentMethod", {
                     ...method,
                     subId: methodId,
                   })
-                }
+                }}
               >
                 <span className={styles.btnIcon}>
                   <Image
