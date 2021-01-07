@@ -97,15 +97,17 @@ const SessionBrowseByCategoryComponent = (props) => {
                             <div className={styles.categoryLeft}>
                               <div className={styles.categoryLeftImg}>
                                 <div className={styles.img}>
-                                  <Image
-                                    src={collection?.collection_image?.url}
-                                    alt={
-                                      collection?.collection_image?.alt || ""
-                                    }
-                                    layout="fill"
-                                    loading="lazy"
-                                    sizes="320px"
-                                  />
+                                  {collection?.collection_image && (
+                                    <Image
+                                      src={collection?.collection_image?.url}
+                                      alt={
+                                        collection?.collection_image?.alt || ""
+                                      }
+                                      layout="fill"
+                                      loading="lazy"
+                                      sizes="320px"
+                                    />
+                                  )}
                                 </div>
                               </div>
                               <div className={styles.categoryLeftIcon}>
