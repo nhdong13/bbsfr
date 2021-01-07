@@ -1,19 +1,21 @@
-import { useEffect, useState } from "react"
 import { SearchProvider } from "@sajari/react-hooks"
-import { getBrandByUid, getDepartmentByUID } from "../../../lib/prismic/api"
 import dynamic from "next/dynamic"
 import ImagedHeaderComponent from "../Components/ImagedHeaderComponent"
 import SessionBrowseByCategoryComponent from "../../DepartmentDetail/Sesstion/SessionBrowseByCategoryComponent"
 import Head from "next/head"
 import { convertSchemaFAQ } from "../../../services/convertSchemaFAQ"
-import { addConsoleHandler } from "selenium-webdriver/lib/logging"
+import Link from "next/link"
+import styles from "../Brand.module.scss"
 
 const SEODynamic = dynamic(() => import("../../HomePage/SEO"))
+const FAQDynamic = dynamic(() => import("../../HomePage/FAQ"))
+const TestimonialsDynamic = dynamic(() => import("../../HomePage/Testimonials"))
+
 const BrandHomeComponent = ({
   initialResponse,
   pipeline,
-  variables,
   brand,
+  testimonials,
 }) => {
   const {
     meta_description,
@@ -23,7 +25,10 @@ const BrandHomeComponent = ({
     brand_hero_image,
   } = brand
   const jsonFAQ = convertSchemaFAQ({ faq, faq_title })
-  console.log(brand_hero_image)
+  const heading1 =
+    brand && brand.page_heading_1 && brand.page_heading_1.length > 0
+      ? brand.page_heading_1[0].text
+      : "Brand"
   const collections =
     brand.brand_collections &&
     brand.brand_collections.map((i) => {
@@ -66,22 +71,23 @@ const BrandHomeComponent = ({
               : "Brand Home"
           }
           pipeline={pipeline}
-          imgUrl={brand_hero_image.url}
+          imgUrl={brand_hero_image?.url}
         />
       </SearchProvider>
+      <div className={styles.backBtn}>
+        <Link href={`/brands`}>&lt; All brands</Link>
+      </div>
 
       <SessionBrowseByCategoryComponent
         departmentSlug={brand._meta.uid}
         collections={collections}
         disableTitleContainer={true}
       />
-
+      {/* <BestSellerComponent products={[]} brandHeading={heading1} /> */}
+      <TestimonialsDynamic testimonials={testimonials} type="home" />
+      <FAQDynamic FAQ={{ faq, faq_title }} />
       <SEODynamic
-        heading1={
-          brand && brand.page_heading_1 && brand.page_heading_1.length > 0
-            ? brand.page_heading_1[0].text
-            : ""
-        }
+        heading1={heading1}
         pageParagraph={
           brand && brand.page_paragraph && brand.page_paragraph.length > 0
             ? brand.page_paragraph
