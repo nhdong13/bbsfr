@@ -13,6 +13,33 @@
     text-transform: uppercase;
   }
 }
+.imagedHeader {
+  height: 136px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  .header {
+    @include font-family(Rajdhani, 31px, 700, #ffffff);
+    text-align: left;
+    text-transform: uppercase;
+    font-style: normal;
+    line-height: 31px;
+  }
+  .productCount {
+    display: block;
+    font-style: normal;
+    line-height: 20px;
+    font-weight: normal;
+    font-size: 12px;
+    color: $product-count-color;
+  }
+  .blurBackground {
+    width: 100%;
+    height: 100%;
+    background-color: red;
+  }
+}
 
 //Search of brand header component index
 .searchBrandIndexPosition {
@@ -171,8 +198,8 @@
       width: 80%;
       line-height: 30px;
       margin: 0px auto;
-      p{
-        @include font-family(Rajdhani, 16px, 400, #181818); 
+      p {
+        @include font-family(Rajdhani, 16px, 400, #181818);
         &:hover {
           font-weight: 700;
         }
