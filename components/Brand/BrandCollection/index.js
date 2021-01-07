@@ -6,6 +6,7 @@ const BrandCollectionComponent = ({
   initialResponse,
   brandCollectionResponse,
 }) => {
+  console.log("brandCollectionResponse", brandCollectionResponse)
   return (
     <>
       <SearchProvider
