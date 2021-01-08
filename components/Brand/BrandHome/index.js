@@ -65,11 +65,7 @@ const BrandHomeComponent = ({
         searchOnLoad={!initialResponse}
       >
         <ImagedHeaderComponent
-          header={
-            brand && brand.page_heading_1 && brand.page_heading_1.length > 0
-              ? brand.page_heading_1[0].text
-              : "Brand Home"
-          }
+          header={heading1}
           pipeline={pipeline}
           imgUrl={brand_hero_image?.url}
         />

@@ -54,3 +54,11 @@ export const mockupDataFilterBrand = () => {
   ]
   return brands[Math.floor(Math.random() * brands.length)]
 }
+
+
+export const convertDataShopByCollectionBrand = (arr) => {
+  return arr?.map((item) => ({
+    category_slug: item?.range_slug,
+    category_title: item?.range_title,
+  }))
+}

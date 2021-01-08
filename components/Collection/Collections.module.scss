@@ -33,22 +33,21 @@ $bg-sort-filter: #f6f6f6;
     }
   }
 }
+
+.header_category {
+  font-family: Rajdhani;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 21px;
+  line-height: 21px;
+  /* identical to box height, or 100% */
+
+  text-transform: uppercase;
+}
 .categories {
-  padding-top: 40px;
-  padding-bottom: 40px;
+  padding-bottom: 30px;
 
-  .header_category {
-    font-family: Rajdhani;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 21px;
-    line-height: 21px;
-    /* identical to box height, or 100% */
-
-    text-transform: uppercase;
-  }
   .list_category {
-    padding-top: 20px;
     transition: all 100ms ease-out;
     a {
       text-decoration: none;
