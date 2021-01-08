@@ -14,13 +14,13 @@ import {
 } from "@sajari/react-hooks"
 import dynamic from "next/dynamic"
 import { constants } from "../../../constant"
+import SortFilterComponent from "./SortFilterComponent"
 
 const HeaderDynamic = dynamic(() => import("../../Header"))
 const PaginationDynamic = dynamic(() =>
   import("../../Common/PaginationComponent")
 )
 const ListProductsDynamic = dynamic(() => import("./ListProductsComponent"))
-const SortFilterDynamic = dynamic(() => import("./SortFilterComponent"))
 
 
 const ResultComponent = ({ pipeline, initialResponse, variables, filter }) => {
@@ -137,73 +137,63 @@ const ResultComponent = ({ pipeline, initialResponse, variables, filter }) => {
   return (
     <>
       <SortFilterButton />
-      <SearchProvider
+      {/* <SearchProvider
         search={{
           pipeline,
         }}
         defaultFilter={filter}
         initialResponse={initialResponse}
         searchOnLoad={!initialResponse}
-        customClassNames={{
-          filter: {
-            resetButton: "resetButtonFilter",
-            list: {
-              container: "listContainerFilter",
-              checkboxGroup: "checkboxGroupFilter",
-              searchFilter: "searchFilter",
-              toggleButton: "toggleButtonFilter",
-            },
-          },
-        }}
-      >
-        {/* ------------Modal sort filter------------- */}
-        <Modal show={show} onHide={handleClose} className="short_filter_modal">
-          <HeaderDynamic />
-          {/*Sorting Feature*/}
-          <SortFilterDynamic
-            pipeline={pipeline}
-            list={listSorting}
-            setOpen={setOpenSortingCollapse}
-            type="sort"
-            setChanged={setChanged}
-            filter={filter}
-            initialResponse={initialResponse}
-          />
-          {/* Filter feature */}
-          {/* <SortFilterDynamic
+      > */}
+      <ListProductsDynamic products={results} />
+      <PaginationDynamic
+        initialResponse={initialResponse}
+        pipeline={pipeline}
+        filter={filter}
+        variables={variables}
+      />
+
+      {/* ------------Modal sort filter------------- */}
+      <Modal show={show} onHide={handleClose} className="short_filter_modal">
+        <HeaderDynamic />
+        {/*Sorting Feature*/}
+        <SortFilterComponent
+          pipeline={pipeline}
+          list={listSorting}
+          setOpen={setOpenSortingCollapse}
+          type="sort"
+          setChanged={setChanged}
+          filter={filter}
+          initialResponse={initialResponse}
+        />
+        {/* Filter feature */}
+        {/* <SortFilterDynamic
             list={listFilter}
             setOpen={setOpenFilterCollapse}
             type="filter"
             setChanged={setChanged}
           />{" "} */}
-          <div onClick={handleClose} className={styles.button_sajari}>
-            <div className={styles.modal_button}>
-              <Button
-                fixed="bottom"
-                variant={
-                  sortFilterChanged ||
-                  countBol != countBooleanSortFilter(listFilter)
-                    ? "secondary"
-                    : "primary"
-                }
-              >
-                {sortFilterChanged ||
+        <div onClick={handleClose} className={styles.button_sajari}>
+          <div className={styles.modal_button}>
+            <Button
+              fixed="bottom"
+              variant={
+                sortFilterChanged ||
                 countBol != countBooleanSortFilter(listFilter)
-                  ? "Apply"
-                  : "Cancel"}
-              </Button>
-            </div>
+                  ? "secondary"
+                  : "primary"
+              }
+            >
+              {sortFilterChanged ||
+              countBol != countBooleanSortFilter(listFilter)
+                ? "Apply"
+                : "Cancel"}
+            </Button>
           </div>
-        </Modal>
-        {/* ------------------------------------------ */}
-        <ListProductsDynamic products={results} />
-        <PaginationDynamic
-          initialResponse={initialResponse}
-          pipeline={pipeline}
-          filter={filter}
-          variables={variables}
-        />
-      </SearchProvider>
+        </div>
+      </Modal>
+      {/* ------------------------------------------ */}
+      {/* </SearchProvider> */}
     </>
   )
 }

@@ -26,6 +26,17 @@ const SortFilterComponent = ({
         defaultFilter={filter}
         initialResponse={initialResponse}
         searchOnLoad={!initialResponse}
+        customClassNames={{
+          filter: {
+            resetButton: "resetButtonFilter",
+            list: {
+              container: "listContainerFilter",
+              checkboxGroup: "checkboxGroupFilter",
+              searchFilter: "searchFilter",
+              toggleButton: "toggleButtonFilter",
+            },
+          },
+        }}
       >
         <div className={styles.sort_filter_by}>
           <div className={styles.sub_heading}>{type}</div>

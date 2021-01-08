@@ -58,6 +58,25 @@ const CollectionComponent = ({
         initialResponse={initialResponse}
         searchOnLoad={!initialResponse}
         defaultFilter={filter}
+        customClassNames={{
+          filter: {
+            // pagination: {
+            //   container: "containerPagination",
+            //   button: "buttonPagination",
+            //   active: "activePagination",
+            //   next: "nextPagination",
+            //   prev: "prevPagination",
+            //   spacerEllipsis: "spacerEllipsisPagination",
+            // },
+            resetButton: "resetButtonFilter",
+            list: {
+              container: "listContainerFilter",
+              checkboxGroup: "checkboxGroupFilter",
+              searchFilter: "searchFilter",
+              toggleButton: "toggleButtonFilter",
+            },
+          },
+        }}
       >
         <HeaderCollectionDynamic
           pipeline={pipeline}
