@@ -4,12 +4,13 @@ import ImagedHeaderComponent from "../Components/ImagedHeaderComponent"
 import SessionBrowseByCategoryComponent from "../../DepartmentDetail/Sesstion/SessionBrowseByCategoryComponent"
 import Head from "next/head"
 import { convertSchemaFAQ } from "../../../services/convertSchemaFAQ"
-import Link from "next/link"
-import styles from "../Brand.module.scss"
 
 const SEODynamic = dynamic(() => import("../../HomePage/SEO"))
 const FAQDynamic = dynamic(() => import("../../HomePage/FAQ"))
 const TestimonialsDynamic = dynamic(() => import("../../HomePage/Testimonials"))
+const BackToPageBeforeDynamic = dynamic(() =>
+  import("../../Common/BackPageComponent")
+)
 
 const BrandHomeComponent = ({
   initialResponse,
@@ -69,10 +70,8 @@ const BrandHomeComponent = ({
           pipeline={pipeline}
           imgUrl={brand_hero_image?.url}
         />
+        <BackToPageBeforeDynamic page={"All brands"} type="brandHome" />
       </SearchProvider>
-      <div className={styles.backBtn}>
-        <Link href={`/brands`}>&lt; All brands</Link>
-      </div>
 
       <SessionBrowseByCategoryComponent
         departmentSlug={brand._meta.uid}

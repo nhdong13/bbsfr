@@ -20,12 +20,19 @@ const BackToPageBeforeComponent = ({ page, type }) => {
         }
         break
 
+      case "brandHome":
+        if (router?.query?.brandHome) {
+          router.push(`/brands`)
+        }
+        break
+
       case "brandCollection":
         if (router?.query?.brandHome) {
           router.push(`/brands/${router.query.brandHome}`)
         }
         break
 
+      case "brandCategory":
       case "brandRange":
         if (router?.query?.brandCollection) {
           router.push(
