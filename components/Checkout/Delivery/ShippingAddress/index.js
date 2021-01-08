@@ -30,24 +30,25 @@ export default function ShippingAddress({
     addPromoCode,
     loaded,
   } = useCheckout()
-  const [initShippingData, setInitShippingData] = useState(INITIAL_ADDRESS)
   const [oldValues, setOldValues] = useState()
   const [modalShow, setModalShow] = useState(false)
 
   useEffect(() => {
-    if (!currentUser?.id || initShippingData.address) {
+    if (!currentUser?.id || oldValues?.address) {
       return
     }
-
-    setInitShippingData(mappingDataAddress(currentUser.defaultShippingAddress))
+    const data = mappingDataAddress(currentUser.defaultShippingAddress)
+    shippingFormRef.current.setValues(data)
+    setOldValues(data)
   }, [currentUser?.id])
 
   useEffect(() => {
     if (!loaded || !checkout.shippingAddress) {
       return
     }
-
-    setInitShippingData(mappingDataAddress(checkout.shippingAddress))
+    const data = mappingDataAddress(checkout.shippingAddress)
+    shippingFormRef.current.setValues(data)
+    setOldValues(data)
   }, [loaded])
 
   useEffect(() => {
@@ -134,13 +135,7 @@ export default function ShippingAddress({
   }
 
   const handleBlur = (e) => {
-    if (!oldValues) {
-      setOldValues(initShippingData)
-    }
-    if (
-      e.currentTarget.value ===
-      (oldValues || initShippingData)[e.currentTarget.name]
-    ) {
+    if (e.currentTarget.value === oldValues[e.currentTarget.name]) {
       return
     }
     const shippingForm = shippingFormRef.current
@@ -168,18 +163,18 @@ export default function ShippingAddress({
         show={modalShow}
         onHide={() => setModalShow(false)}
         onSelectAddress={(id) =>
-          selectAccountAddress(currentUser, id, setInitShippingData)
+          selectAccountAddress(currentUser, id, shippingFormRef)
         }
         addresses={currentUser?.addresses}
         defaultShippingAddress={currentUser?.defaultShippingAddress}
+        shippingFormRef={shippingFormRef}
       />
 
       <Formik
         innerRef={shippingFormRef}
-        enableReinitialize
         validationSchema={ShippingSchema}
         onSubmit={handleSubmitShipping}
-        initialValues={initShippingData}
+        initialValues={INITIAL_ADDRESS}
       >
         {({
           handleSubmit,

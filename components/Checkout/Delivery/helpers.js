@@ -29,9 +29,9 @@ export const mappingDataAddress = (data) => {
   }
 }
 
-export const selectAccountAddress = (currentUser, id, setInitShippingData) => {
+export const selectAccountAddress = (currentUser, id, shippingFormRef) => {
   const address = currentUser.addresses.find((address) => address.id === id)
-  setInitShippingData(mappingDataAddress(address))
+  shippingFormRef.current.setValues(mappingDataAddress(address))
 }
 
 export const createCheckout = async (
