@@ -1,12 +1,16 @@
 import { SearchProvider } from "@sajari/react-hooks"
+import dynamic from "next/dynamic"
+import { Container } from "react-bootstrap"
 import ImagedHeaderComponent from "../Components/ImagedHeaderComponent"
+import ShopByBrandCollectionComponent from "../Components/SBBrandCollectionComponent"
+
 const BrandCollectionComponent = ({
   pipeline,
   variables,
   initialResponse,
   brandCollectionResponse,
 }) => {
-  console.log("brandCollectionResponse", brandCollectionResponse)
+  const { ranges, categories } = brandCollectionResponse
   return (
     <>
       <SearchProvider
@@ -27,6 +31,19 @@ const BrandCollectionComponent = ({
           imgUrl=""
         />
       </SearchProvider>
+      <div style={{ borderBottom: "1px solid #e5e5e4" }}>
+        <ShopByBrandCollectionComponent
+          arrData={categories}
+          type={"category"}
+        />
+        <Container>
+          <div
+            fluid
+            style={{ height: "1px", borderBottom: "1px solid #e5e5e4" }}
+          />
+        </Container>
+        <ShopByBrandCollectionComponent arrData={ranges} type={"range"} />
+      </div>
     </>
   )
 }
