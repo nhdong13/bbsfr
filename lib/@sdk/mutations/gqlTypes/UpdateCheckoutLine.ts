@@ -502,6 +502,14 @@ export interface UpdateCheckoutLine_checkoutLinesUpdate_checkout_discount {
   amount: number;
 }
 
+export interface UpdateCheckoutLine_checkoutLinesUpdate_checkout_voucherify {
+  __typename: "Voucherify";
+  code: string;
+  redemptionId: string;
+  currentBalanceAmount: number;
+  type: string;
+}
+
 export interface UpdateCheckoutLine_checkoutLinesUpdate_checkout {
   __typename: "Checkout";
   token: any;
@@ -544,6 +552,7 @@ export interface UpdateCheckoutLine_checkoutLinesUpdate_checkout {
   discountName: string | null;
   translatedDiscountName: string | null;
   voucherCode: string | null;
+  voucherifies: UpdateCheckoutLine_checkoutLinesUpdate_checkout_voucherify[] | null;
 }
 
 export interface UpdateCheckoutLine_checkoutLinesUpdate_errors {

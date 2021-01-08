@@ -91,7 +91,7 @@ export class NetworkManager implements INetworkManager {
               if (errors?.length) {
                 reject(errors)
               } else {
-                resolve(data.me?.checkout)
+                resolve(data.me?.checkout || null)
               }
             },
             (error) => {

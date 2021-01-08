@@ -515,6 +515,14 @@ export interface UpdateCheckoutShippingMethod_checkoutShippingMethodUpdate_check
   amount: number;
 }
 
+export interface UpdateCheckoutShippingMethod_checkoutShippingMethodUpdate_checkout_voucherify {
+  __typename: "Voucherify";
+  code: string;
+  redemptionId: string;
+  currentBalanceAmount: number;
+  type: string;
+}
+
 export interface UpdateCheckoutShippingMethod_checkoutShippingMethodUpdate_checkout {
   __typename: "Checkout";
   token: any;
@@ -557,6 +565,7 @@ export interface UpdateCheckoutShippingMethod_checkoutShippingMethodUpdate_check
   discountName: string | null;
   translatedDiscountName: string | null;
   voucherCode: string | null;
+  voucherifies: UpdateCheckoutShippingMethod_checkoutShippingMethodUpdate_checkout_voucherify[] | null;
 }
 
 export interface UpdateCheckoutShippingMethod_checkoutShippingMethodUpdate_checkoutErrors {

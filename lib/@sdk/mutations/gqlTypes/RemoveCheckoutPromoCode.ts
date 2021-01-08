@@ -502,6 +502,15 @@ export interface RemoveCheckoutPromoCode_checkoutRemovePromoCode_checkout_discou
   amount: number;
 }
 
+export interface RemoveCheckoutPromoCode_checkoutRemovePromoCode_checkout_voucherify {
+  __typename: "Voucherify";
+  code: string;
+  redemptionId: string;
+  currentBalanceAmount: number;
+  type: string;
+}
+
+
 export interface RemoveCheckoutPromoCode_checkoutRemovePromoCode_checkout {
   __typename: "Checkout";
   token: any;
@@ -544,6 +553,7 @@ export interface RemoveCheckoutPromoCode_checkoutRemovePromoCode_checkout {
   discountName: string | null;
   translatedDiscountName: string | null;
   voucherCode: string | null;
+  voucherifies: RemoveCheckoutPromoCode_checkoutRemovePromoCode_checkout_voucherify[] | null;
 }
 
 export interface RemoveCheckoutPromoCode_checkoutRemovePromoCode_errors {

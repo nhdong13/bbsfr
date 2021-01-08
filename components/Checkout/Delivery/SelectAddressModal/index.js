@@ -7,6 +7,7 @@ export default function SelectAddressModal({
   defaultShippingAddress,
   addresses,
   onSelectAddress,
+  shippingFormRef,
 }) {
   const [selectedAddressId, setSelectedAddressId] = useState(
     defaultShippingAddress?.id
@@ -23,6 +24,7 @@ export default function SelectAddressModal({
     const value = event.currentTarget.value
     onSelectAddress(value)
     setSelectedAddressId(value)
+    shippingFormRef.current.handleSubmit()
     onHide()
   }
 
