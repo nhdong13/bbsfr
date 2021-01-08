@@ -1,9 +1,5 @@
 import BrandHomeComponent from "../../../components/Brand/BrandHome"
-import {
-  getAllFAQ,
-  getBrandByUid,
-  listAllBrands,
-} from "../../../lib/prismic/api"
+import { getBrandByUid, listAllBrands } from "../../../lib/prismic/api"
 import { Pipeline, Variables } from "@sajari/react-search-ui"
 import { search } from "@sajari/server"
 import { getConfigPipeline } from "../../../services/getPipelineSajari"
