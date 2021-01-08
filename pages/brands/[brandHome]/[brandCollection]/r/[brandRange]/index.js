@@ -6,23 +6,35 @@ import {
   listAllBrands,
   listAllBrandRangesOfCollection,
 } from "../../../../../../lib/prismic/api"
+import { mockupDataFilterBrand } from "../../../../../../services/brand"
 import { getConfigPipeline } from "../../../../../../services/getPipelineSajari"
 import { getDataForMainNav } from "../../../../../../services/mainNav"
 import { authenticationFromStamped } from "../../../../../../services/testimonial"
 
 const pipeline = new Pipeline({ ...getConfigPipeline("best-buy") }, "query")
-const variables = new Variables({ resultsPerPage: 20, q: "" })
+var searchObj = { variables: null }
+
+const initVariable = (params) => {
+  //Filter options will replace base params for per page --> this is code demo
+  searchObj.variables = new Variables({
+    resultsPerPage: 20,
+    q: "",
+    filter: `brand = "${mockupDataFilterBrand()}"`,
+  })
+}
 
 export async function getStaticProps({ params }) {
+  const dataNav = await getDataForMainNav()
+  const brandRange = await getBrandRangeByUid(params?.brandRange)
+  initVariable(params)
   const initialResponse = await search({
     pipeline,
-    variables,
+    variables: searchObj.variables,
   })
-  const brandRange = await getBrandRangeByUid(params.brandRange)
   const requestOptions = authenticationFromStamped()
   const resStamped = await fetch(process.env.STAMPED_API_URL, requestOptions)
   const testimonials = await resStamped.json()
-  const dataNav = await getDataForMainNav()
+
   return {
     props: { initialResponse, brandRange, dataNav, testimonials },
     revalidate: +process.env.NEXT_PUBLIC_REVALIDATE_PAGE_TIME,
@@ -62,12 +74,20 @@ export async function getStaticPaths() {
   return { paths, fallback: false }
 }
 
-const BrandRangePage = ({ initialResponse, brandRange, testimonials }) => {
+const BrandRangePage = ({
+  initialResponse,
+  brandRange,
+  testimonials,
+  params,
+}) => {
+  if (!search.variables) {
+    initVariable(params)
+  }
   return (
     <BrandRangeComponent
       initialResponse={initialResponse}
       pipeline={pipeline}
-      variables={variables}
+      variables={searchObj.variables}
       brandRange={brandRange}
       testimonials={testimonials}
     />
