@@ -67,7 +67,10 @@ const CategoryComponent = ({
               : "Category"
           }
         />
-        <BackToPageBeforeDynamic page={router.query.collection} />
+        <BackToPageBeforeDynamic
+          page={router.query.collection}
+          type="category"
+        />
         <ResultDynamic
           variables={variables}
           pipeline={pipeline}

@@ -273,3 +273,63 @@
     }
   }
 }
+
+//Shop bt category and range
+.titleCollapse {
+  padding-top: 20px;
+  padding-bottom: 17px;
+  display: flex;
+  justify-content: space-between;
+
+  .collapseLeft {
+    width: 95%;
+    text-transform: uppercase;
+    @include font-family(Rajdhani, 21px, 700, #181818);
+  }
+  .collapseRight {
+    width: 5%;
+    text-align: center;
+    align-items: center;
+    position: relative;
+
+    .collapseRightPosition {
+      position: absolute;
+      right: 0;
+      top: 10px;
+
+      .collapseRightImg {
+        position: relative;
+        width: 14px;
+        height: 14px;
+      }
+    }
+  }
+}
+
+
+.contextCollapse {
+  .list {
+    transition: all 100ms ease-out;
+    a {
+      text-decoration: none;
+      &:hover {
+        color: $primary-text-color;
+      }
+    }
+
+    .item {
+      min-height: 32px;
+      display: flex;
+      line-height: 20px;
+      @include font-family(Rajdhani, 16px, 600, #181818);
+
+      .count {
+        padding-left: 0.5rem;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 16px;
+        color: $product-count-color;
+      }
+    }
+  }
+}
