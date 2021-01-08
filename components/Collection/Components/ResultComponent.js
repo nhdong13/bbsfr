@@ -1,8 +1,4 @@
-import {
-  SearchProvider,
-  FieldDictionary,
-  FilterBuilder,
-} from "@sajari/react-search-ui"
+import { FilterBuilder } from "@sajari/react-search-ui"
 import React, { useState } from "react"
 import { Container, Modal, Button } from "react-bootstrap"
 import Image from "next/image"
@@ -11,10 +7,13 @@ import {
   listUpdate,
 } from "../../../services/collection"
 import styles from "../Collections.module.scss"
-import { useSearchContext, useResultsPerPage } from "@sajari/react-hooks"
+import {
+  useSearchContext,
+  useResultsPerPage,
+  SearchProvider,
+} from "@sajari/react-hooks"
 import dynamic from "next/dynamic"
 import { constants } from "../../../constant"
-import { useSorting } from "@sajari/react-hooks"
 
 const HeaderDynamic = dynamic(() => import("../../Header"))
 const PaginationDynamic = dynamic(() =>
@@ -72,7 +71,6 @@ const ResultComponent = ({ pipeline, initialResponse, variables, filter }) => {
   // }
 
   const { results } = useSearchContext()
-  const { sorting, setSorting } = useSorting()
 
   const productTypeFilter = new FilterBuilder({
     name: "type",
@@ -168,8 +166,6 @@ const ResultComponent = ({ pipeline, initialResponse, variables, filter }) => {
             setOpen={setOpenSortingCollapse}
             type="sort"
             setChanged={setChanged}
-            sorting={sorting}
-            setSorting={setSorting}
             filter={filter}
             initialResponse={initialResponse}
           />

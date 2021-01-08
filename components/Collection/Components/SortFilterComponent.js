@@ -4,9 +4,8 @@ import { Collapse } from "react-bootstrap"
 import Image from "next/image"
 import Sorting from "../../Common/Sorting"
 import Filter from "../../Common/Filter"
-import { useSorting } from "@sajari/react-hooks"
 import { Radio, RadioGroup } from "@sajari/react-components"
-import { SearchProvider } from "@sajari/react-search-ui"
+import { useSorting, SearchProvider } from "@sajari/react-hooks"
 
 const SortFilterComponent = ({
   list,
@@ -16,9 +15,8 @@ const SortFilterComponent = ({
   filter,
   pipeline,
   initialResponse,
-  sorting,
-  setSorting,
 }) => {
+  const { sorting, setSorting } = useSorting()
   return (
     <>
       <SearchProvider
