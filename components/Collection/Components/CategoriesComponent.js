@@ -13,7 +13,7 @@ const CategoriesComponent = ({ categories = [], shopByCategoryText }) => {
     <>
       <TitleCategoryDynamic title={shopByCategoryText} />
       <ListCategoriesComponent categories={categories} type="collection" />
-      <BackToPageBeforeDynamic page={router.query.id} />
+      <BackToPageBeforeDynamic page={router.query.id} type="collection" />
     </>
   )
 }
