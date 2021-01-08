@@ -8,6 +8,7 @@ import {
   listAllBrands,
   getAllBrandCategories,
   getBrandCategoryByUid,
+  getBrandCollectionDetail
 } from "../../../../../../lib/prismic/api"
 import { authenticationFromStamped } from "../../../../../../services/testimonial"
 
@@ -40,36 +41,30 @@ export async function getStaticPaths() {
     uid: brand.node._meta.uid,
     brandCollections: brand.node.brand_collections,
   }))
-  const response = await getAllBrandCategories()
-  const brandCagtegories = response.map((i) => ({
-    uid: i?.node?._meta?.uid,
-  }))
 
-  // paths = brandCollections.map((collection) => {
-  //   const brandHomeSlug = collection.uid
-  //   const brandHomeCollectionSlug = collection.brand_collection_slug
-  // })
-  for (const home of brandHomes) {
-    const brandHomeSlug = home.uid
-    console.log(brandHomeSlug)
-
-    for (const collection of home.brandCollections) {
-      const brandHomeCollectionSlug = collection.brand_collection_slug
-      if (brandHomeCollectionSlug && brandHomeSlug) {
-        for (const category in brandCagtegories) {
-          if (category.uid) {
-            paths.push(`/brands/${brandHomeSlug}${brandHomeCollectionSlug}/c/${category.uid}`)
+  if (brandHomes.length > 0) {
+    for (const collections of brandHomes) {
+      if (collections?.brandCollections?.length > 0) {
+        for (const collection of collections.brandCollections) {
+          if (collection?.brand_collection_slug) {
+            const { categories } = await getBrandCollectionDetail(
+              collection.brand_collection_slug.substr(1)
+            )
+            if (categories && categories.length > 0) {
+              for (let category of categories) {
+                if (category && category.category_slug) {
+                  paths.push(
+                    `/brands/${collections.uid}${collection.brand_collection_slug}/c/${category.category_slug}`
+                  )
+                }
+              }
+            }
           }
         }
       }
     }
   }
 
-  // if (brandCollections.length > 0) {
-  //   for (const collections of brandCollections) {
-  //     collections && paths.push(`/brands/shoei/brand-collection-test4/c/${collections?.uid}`)
-  //   }
-  // }
   return { paths, fallback: false }
 }
 
