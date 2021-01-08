@@ -45,10 +45,8 @@ export default function DeliveryComponent() {
   const { data: userData, loading } = useUserDetails()
   const { addToast } = useToasts()
   const [createPaymentCheckoutToken] = useMutation(paymentCheckoutTokenCreate)
-
   const router = useRouter()
   const { status, orderToken, result, checkoutId } = router.query
-
   const [initDeliveryData, setInitDeliveryData] = useState({
     shippingMethod: "",
     billingAddress: INITIAL_ADDRESS,
@@ -60,17 +58,13 @@ export default function DeliveryComponent() {
       discountAmount: null,
       discountedPrice: null,
     },
-    giftCard: {
-      code: "",
-      valid: false,
-    },
+    giftCard: "",
     creditCard: {
       number: "",
       expirationDate: "",
       cvv: "",
     },
   })
-
   const [showContinue, setShowContinue] = useState(false)
   const [showLoading, setShowLoading] = useState(false)
   const [hostedFieldsInstance, setHostedFieldsInstance] = useState(null)
@@ -78,6 +72,7 @@ export default function DeliveryComponent() {
   const [currentUser, setCurrentUser] = useState({
     email: localStorage.getItem("guestEmail") || "",
   })
+  const [giftCards, setGiftCards] = useState([])
 
   useEffect(() => {
     if (loading) {
@@ -127,6 +122,8 @@ export default function DeliveryComponent() {
       })
       initGooglePay(paymentsClient, clientToken, setGooglePayInstance)
     }
+
+    setGiftCards(checkout.voucherifies)
 
     let shippingMethod = checkout.shippingMethod?.id
     let promotion = initDeliveryData.promotion
@@ -346,6 +343,9 @@ export default function DeliveryComponent() {
                       shippingPrice={shippingPrice}
                       discount={discount}
                       promotion={values.promotion}
+                      giftCards={giftCards?.filter(
+                        (card) => card.type === "GIFT_VOUCHER"
+                      )}
                     ></OrderTotalCost>
 
                     {showContinue && (

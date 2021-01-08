@@ -69,7 +69,10 @@ export const createCheckout = async (
 
   const { promotion } = deliveryForm.values
 
-  if (promotion.valid) {
+  if (
+    promotion.valid &&
+    !data.voucherifies.find((voucher) => voucher.code === promotion.code)
+  ) {
     await addPromoCode(promotion.code)
   }
 

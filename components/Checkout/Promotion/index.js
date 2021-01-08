@@ -20,7 +20,7 @@ export default function PromotionComponent({
 }) {
   const [loading, setLoading] = useState(false)
   const { items, subtotalPrice } = useCart()
-  const { addPromoCode, removePromoCode } = useCheckout()
+  const { addPromoCode, removePromoCode, load } = useCheckout()
   const [validateVoucherify] = useMutation(voucherifyValidate)
 
   const handleApplyCode = async () => {
@@ -29,6 +29,7 @@ export default function PromotionComponent({
       variables: {
         input: {
           amount: subtotalPrice.gross.amount,
+          type: "DISCOUNT_VOUCHER",
           code: values.promotion.code,
           lines: items.map((item) => {
             return {
@@ -70,6 +71,37 @@ export default function PromotionComponent({
       discountedPrice: null,
     }
     setFieldValue("promotion", promotion)
+    setLoading(false)
+  }
+
+  const handleApplyGiftCard = async () => {
+    setLoading(true)
+    const { data } = await validateVoucherify({
+      variables: {
+        input: {
+          amount: subtotalPrice.gross.amount,
+          code: values.giftCard,
+          type: "GIFT_VOUCHER",
+          lines: items.map((item) => {
+            return {
+              quantity: item.quantity,
+              variantId: item.variant.id,
+            }
+          }),
+        },
+      },
+    })
+
+    const { voucherify } = data.voucherifyValidate
+
+    if (voucherify.valid === "true") {
+      await addPromoCode(values.giftCard)
+      await load()
+      setFieldValue("giftCard", "")
+    } else {
+      setFieldTouched("giftCard", true, false)
+      setFieldError("giftCard", "Invalid Gift Card Number")
+    }
     setLoading(false)
   }
 
@@ -124,14 +156,23 @@ export default function PromotionComponent({
                 <Form.Control
                   type="text"
                   placeholder="Enter gift card number"
-                  name="giftCard.code"
-                  value={values.giftCard.code}
+                  name="giftCard"
+                  value={values.giftCard}
                   onChange={handleChange}
+                />
+                <ErrorMessageWrapper
+                  errors={errors}
+                  touched={touched}
+                  fieldName="giftCard"
                 />
               </Form.Group>
 
               <Form.Group controlId="giftCardNumber" as={Col} xs="12">
-                <Button variant="primary" className={clsx(styles.btn, "w-100")}>
+                <Button
+                  variant="primary"
+                  className={clsx(styles.btn, "w-100")}
+                  onClick={handleApplyGiftCard}
+                >
                   Apply gift card
                 </Button>
               </Form.Group>

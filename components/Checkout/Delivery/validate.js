@@ -116,4 +116,5 @@ export const DeliverySchema = Yup.object().shape({
     .nullable(),
   promotion: Yup.object(),
   creditCard: Yup.object(),
+  giftCard: Yup.string(),
 })

@@ -127,7 +127,8 @@ export default function ShippingAddress({
       bag,
       handleSubmitError,
       addPromoCode,
-      deliveryForm
+      deliveryForm,
+      checkout
     )
     if (!checkoutData) return
     await setShippingMethod("")
