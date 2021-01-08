@@ -17,7 +17,7 @@ export const renderStart = (
           height: `${height}`,
         }}
       >
-        <Image loading="lazy" layout="fill" alt="start rating" src={`${s}`} />
+        <Image loading="eager" layout="fill" alt="start rating" src={`${s}`} />
       </div>
     )
   }
