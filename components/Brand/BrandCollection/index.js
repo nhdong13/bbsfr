@@ -89,7 +89,7 @@ const BrandCollectionComponent = ({
       <FAQDynamic FAQ={{ faq, faq_title }} />
       <SEODynamic
         Dynamic
-        heading1={page_heading_1[0].text}
+        heading1={page_heading_1?.length > 0 ? page_heading_1[0].text : "---"}
         pageParagraph={page_paragraph}
       />
     </>
