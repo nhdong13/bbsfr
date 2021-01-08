@@ -21,6 +21,7 @@ const CollectionComponent = ({
   pipeline,
   testimonials,
   variables,
+  filter,
 }) => {
   const {
     meta_description,
@@ -30,6 +31,7 @@ const CollectionComponent = ({
     faq_title,
   } = collections
   const jsonFAQ = convertSchemaFAQ({ faq, faq_title })
+
   return (
     <>
       <Head>
@@ -51,10 +53,11 @@ const CollectionComponent = ({
       <SearchProvider
         search={{
           pipeline,
-          variables,
+          // variables,
         }}
         initialResponse={initialResponse}
         searchOnLoad={!initialResponse}
+        defaultFilter={filter}
       >
         <HeaderCollectionDynamic
           pipeline={pipeline}
@@ -75,11 +78,11 @@ const CollectionComponent = ({
               : "List Category"
           }
         />
-
         <ResultDynamic
           variables={variables}
           pipeline={pipeline}
           initialResponse={initialResponse}
+          filter={filter}
         />
       </SearchProvider>
       <TestimonialsDynamic testimonials={testimonials} type="collection" />

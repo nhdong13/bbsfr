@@ -14,6 +14,7 @@ import styles from "../Collections.module.scss"
 import { useSearchContext, useResultsPerPage } from "@sajari/react-hooks"
 import dynamic from "next/dynamic"
 import { constants } from "../../../constant"
+import { useSorting } from "@sajari/react-hooks"
 
 const HeaderDynamic = dynamic(() => import("../../Header"))
 const PaginationDynamic = dynamic(() =>
@@ -23,13 +24,11 @@ const ListProductsDynamic = dynamic(() => import("./ListProductsComponent"))
 const SortFilterDynamic = dynamic(() => import("./SortFilterComponent"))
 
 
-const ResultComponent = ({ pipeline, initialResponse, variables }) => {
+const ResultComponent = ({ pipeline, initialResponse, variables, filter }) => {
   const [show, setShow] = useState(false)
   const [sortFilterChanged, setChanged] = useState(false)
   const [countBol, setCountBol] = useState(0)
-  const [isSetResultPerPage, setIsResultPerPage] = useState(false)
 
-  // TOTO: wating for data from Prismic or Sajari
   const [listSorting, setListSorting] = useState([
     {
       name: "Featured",
@@ -66,6 +65,34 @@ const ResultComponent = ({ pipeline, initialResponse, variables }) => {
     setCountBol(count)
   }
 
+  // const { setResultsPerPage } = useResultsPerPage()
+  // if (!isSetResultPerPage) {
+  //   setIsResultPerPage(true)
+  //   setResultsPerPage(constants.RESULT_PER_PAGE)
+  // }
+
+  const { results } = useSearchContext()
+  const { sorting, setSorting } = useSorting()
+
+  const productTypeFilter = new FilterBuilder({
+    name: "type",
+    field: "brand",
+    count: true,
+    multi: true,
+  })
+
+  const priceFilter = new FilterBuilder({
+    name: "price",
+    options: {
+      High: "price >= 200",
+      Mid: "price >= 50",
+      Low: "price < 50",
+    },
+    multi: false,
+    initial: ["High"],
+  })
+
+  //Button show sort and filter
   const SortFilterButton = () => (
     <Container fluid className={styles.filter_sort_sajari}>
       <div className={styles.short_filter}>
@@ -107,42 +134,16 @@ const ResultComponent = ({ pipeline, initialResponse, variables }) => {
       </div>
     </Container>
   )
-
-  const { setResultsPerPage } = useResultsPerPage()
-  if (!isSetResultPerPage) {
-    setIsResultPerPage(true)
-    setResultsPerPage(constants.RESULT_PER_PAGE)
-  }
-
-  const { results } = useSearchContext()
-
-  const productTypeFilter = new FilterBuilder({
-    name: "type",
-    field: "brand",
-    count: true,
-    multi: true,
-  })
-
-  const priceFilter = new FilterBuilder({
-    name: "price",
-    options: {
-      High: "price >= 200",
-      Mid: "price >= 50",
-      Low: "price < 50",
-    },
-    multi: false,
-    initial: ["High"],
-  })
-
+  // ----------- //
+  
   return (
     <>
       <SortFilterButton />
       <SearchProvider
         search={{
           pipeline,
-          variables,
-          // filters: ["productTypeFilter", "priceFilter"],
         }}
+        defaultFilter={filter}
         initialResponse={initialResponse}
         searchOnLoad={!initialResponse}
         customClassNames={{
@@ -157,22 +158,28 @@ const ResultComponent = ({ pipeline, initialResponse, variables }) => {
           },
         }}
       >
+        {/* ------------Modal sort filter------------- */}
         <Modal show={show} onHide={handleClose} className="short_filter_modal">
           <HeaderDynamic />
           {/*Sorting Feature*/}
           <SortFilterDynamic
+            pipeline={pipeline}
             list={listSorting}
             setOpen={setOpenSortingCollapse}
             type="sort"
             setChanged={setChanged}
+            sorting={sorting}
+            setSorting={setSorting}
+            filter={filter}
+            initialResponse={initialResponse}
           />
           {/* Filter feature */}
-          <SortFilterDynamic
+          {/* <SortFilterDynamic
             list={listFilter}
             setOpen={setOpenFilterCollapse}
             type="filter"
             setChanged={setChanged}
-          />
+          />{" "} */}
           <div onClick={handleClose} className={styles.button_sajari}>
             <div className={styles.modal_button}>
               <Button
@@ -192,15 +199,18 @@ const ResultComponent = ({ pipeline, initialResponse, variables }) => {
             </div>
           </div>
         </Modal>
+        {/* ------------------------------------------ */}
         <ListProductsDynamic products={results} />
         <PaginationDynamic
           initialResponse={initialResponse}
           pipeline={pipeline}
+          filter={filter}
           variables={variables}
         />
       </SearchProvider>
     </>
   )
 }
+ 
 
 export default ResultComponent

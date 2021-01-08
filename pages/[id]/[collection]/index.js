@@ -14,13 +14,12 @@ import { mockupDataFilterCategory } from "../../../services/collection"
 const pipeline = new Pipeline({ ...getConfigPipeline("best-buy") }, "query")
 var searchObj = { variables: null }
 
-const initVariable = (params) => {
-  //Filter options will replace base params for per page --> this is code demo
-  const category = mockupDataFilterCategory(params)
+const initVariable = (filter) => {
+  console.log("Debug code filter:", filter)
   searchObj.variables = new Variables({
     resultsPerPage: 20,
     q: "",
-    filter: `categories ~ ['${category}']`,
+    filter: filter,
   })
 }
 
@@ -30,12 +29,16 @@ export async function getStaticProps({ params }) {
   const testimonials = await resStamped.json()
   const collections = await getCollectionByUid(params.collection)
   const dataNav = await getDataForMainNav()
-  initVariable(params)
+
+  //Filter options will replace base params for per page --> this is code demo
+  const filter = `categories ~ ['${mockupDataFilterCategory(params)}']`
+  initVariable(filter)
 
   const initialResponse = await search({
     pipeline,
     variables: searchObj.variables,
   })
+
 
   return {
     props: {
@@ -44,6 +47,7 @@ export async function getStaticProps({ params }) {
       testimonials,
       dataNav,
       params,
+      filter,
     },
     revalidate: +process.env.NEXT_PUBLIC_REVALIDATE_PAGE_TIME,
   }
@@ -69,9 +73,19 @@ export async function getStaticPaths() {
   return { paths, fallback: false }
 }
 
-const Collection = ({ collections, testimonials, params, initialResponse }) => {
+const Collection = ({
+  collections,
+  testimonials,
+  initialResponse,
+  filter,
+  params,
+}) => {
   if (!search.variables) {
-    initVariable(params)
+    //Filter options will replace base params for per page --> this is code demo
+    const filterClient = `categories ~ ['${mockupDataFilterCategory(
+      params
+    )}']`
+    initVariable(filterClient)
   }
   return (
     <CollectionComponent
@@ -80,6 +94,7 @@ const Collection = ({ collections, testimonials, params, initialResponse }) => {
       variables={searchObj.variables}
       collections={collections}
       testimonials={testimonials}
+      filter={filter}
     />
   )
 }
