@@ -24,14 +24,12 @@ const BrandComponent = ({ brandDirectory, brands, testimonials }) => {
     meta_title,
     page_paragraph,
     meta_description,
-    page_heading_2,
   } = brandDirectory
   const title =
     page_heading_1 && page_heading_1.length > 0 && page_heading_1[0].text
       ? page_heading_1[0].text
       : "---"
-  const heading1 =
-    page_heading_2 && page_heading_2.length > 0 ? page_heading_2[0].text : ""
+  const heading1 = page_heading_1.length > 0 ? page_heading_1[0].text : "---"
   const jsonFAQ = convertSchemaFAQ({ faq, faq_title })
 
   return (
