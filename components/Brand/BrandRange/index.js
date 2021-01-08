@@ -69,7 +69,10 @@ const BrandRangeComponent = ({
           imgUrl={brand_hero_image?.url}
         />
 
-        <BackToPageBeforeDynamic page={router.query.brandCollection} />
+        <BackToPageBeforeDynamic
+          page={router.query.brandCollection}
+          type="brandRange"
+        />
         <ResultDynamic
           variables={variables}
           pipeline={pipeline}
