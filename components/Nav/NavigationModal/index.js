@@ -9,19 +9,37 @@ import RightElementNavComponent from "../Components/RightElementNav"
 const NavModalComponent = ({ show, onHide, dataNav }) => {
   const router = useRouter()
 
+  const [element, setElement] = useState({
+    name: "New Motorcycles",
+    active: true,
+    department_slug: "/new-bikes",
+  })
+
   if (router?.events) {
-    router.events.on("routeChangeComplete", () => onHide())
+    router.events.on("routeChangeComplete", () => {
+      setElement({
+        name: "New Motorcycles",
+        active: true,
+        department_slug: "/new-bikes",
+      })
+      setElementLeft(
+        elementLeft.map((item, index) => {
+          if (index === 0) {
+            item.active = true
+          } else {
+            item.active = false
+          }
+          return item
+        })
+      )
+      onHide()
+    })
   }
 
-  const [element, setElement] = useState({
-    name: "Road Gear",
-    active: true,
-    department_slug: "/road-gear",
-  })
   const [elementLeft, setElementLeft] = useState([
-    { name: "New Motorcycles", active: false, department_slug: "/new-bikes" },
+    { name: "New Motorcycles", active: true, department_slug: "/new-bikes" },
     { name: "Used Motorcycles", active: false, department_slug: "/used-bikes" },
-    { name: "Road Gear", active: true, department_slug: "/road-gear" },
+    { name: "Road Gear", active: false, department_slug: "/road-gear" },
     { name: "MX Gear", active: false, department_slug: "/mx-gear" },
     {
       name: "Adventure Gear",
