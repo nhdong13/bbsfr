@@ -11,14 +11,25 @@ import {
   getBrandCollectionDetail,
 } from "../../../../../../lib/prismic/api"
 import { authenticationFromStamped } from "../../../../../../services/testimonial"
+import { mockupDataFilterBrand } from "../../../../../../services/brand"
 
 const pipeline = new Pipeline({ ...getConfigPipeline("best-buy") }, "query")
-const variables = new Variables({ resultsPerPage: 20, q: "" })
+var searchObj = { variables: null }
+
+const initVariable = (params) => {
+  //Filter options will replace base params for per page --> this is code demo
+  searchObj.variables = new Variables({
+    resultsPerPage: 20,
+    q: "",
+    filter: `brand = "${mockupDataFilterBrand()}"`,
+  })
+}
 
 export async function getStaticProps({ params }) {
+  initVariable(params)
   const initialResponse = await search({
     pipeline,
-    variables,
+    variables: searchObj.variables,
   })
   const category = await getBrandCategoryByUid(params.brandCategory)
   const dataNav = await getDataForMainNav()
@@ -66,13 +77,21 @@ export async function getStaticPaths() {
   return { paths, fallback: false }
 }
 
-const BrandCategoryPage = ({ initialResponse, category, testimonials }) => {
+const BrandCategoryPage = ({
+  initialResponse,
+  category,
+  testimonials,
+  params,
+}) => {
+  if (!search.variables) {
+    initVariable(params)
+  }
   return (
     <BrandCategoryComponent
       initialResponse={initialResponse}
       category={category}
       pipeline={pipeline}
-      variables={variables}
+      variables={searchObj.variables}
       testimonials={testimonials}
     />
   )
