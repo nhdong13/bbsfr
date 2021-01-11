@@ -50,78 +50,49 @@ const CollectionComponent = ({
           dangerouslySetInnerHTML={{ __html: jsonFAQ }}
         />
       </Head>
-      {/* <SearchProvider
-        search={{
-          pipeline,
-          // variables,
-        }}
+      <HeaderCollectionDynamic
+        pipeline={pipeline}
+        pageHeading={
+          collections &&
+          collections.page_heading_1 &&
+          collections.page_heading_1.length > 0
+            ? collections.page_heading_1[0].text
+            : "Collections"
+        }
+      />
+      <CategoriesDynamic
+        categories={categories}
+        shopByCategoryText={
+          collections.shop_by_category_text != undefined &&
+          collections.shop_by_category_text.length
+            ? collections.shop_by_category_text[0].text
+            : "List Category"
+        }
+      />
+      <ResultDynamic
+        variables={variables}
+        pipeline={pipeline}
         initialResponse={initialResponse}
-        searchOnLoad={!initialResponse}
-        defaultFilter={filter}
-        customClassNames={{
-          filter: {
-            // pagination: {
-            //   container: "containerPagination",
-            //   button: "buttonPagination",
-            //   active: "activePagination",
-            //   next: "nextPagination",
-            //   prev: "prevPagination",
-            //   spacerEllipsis: "spacerEllipsisPagination",
-            // },
-            resetButton: "resetButtonFilter",
-            list: {
-              container: "listContainerFilter",
-              checkboxGroup: "checkboxGroupFilter",
-              searchFilter: "searchFilter",
-              toggleButton: "toggleButtonFilter",
-            },
-          },
-        }}
-      > */}
-        <HeaderCollectionDynamic
-          pipeline={pipeline}
-          pageHeading={
-            collections &&
-            collections.page_heading_1 &&
-            collections.page_heading_1.length > 0
-              ? collections.page_heading_1[0].text
-              : "Collections"
-          }
-        />
-        <CategoriesDynamic
-          categories={categories}
-          shopByCategoryText={
-            collections.shop_by_category_text != undefined &&
-            collections.shop_by_category_text.length
-              ? collections.shop_by_category_text[0].text
-              : "List Category"
-          }
-        />
-        <ResultDynamic
-          variables={variables}
-          pipeline={pipeline}
-          initialResponse={initialResponse}
-          filter={filter}
-        />
-        <TestimonialsDynamic testimonials={testimonials} type="collection" />
-        <FAQDynamic FAQ={{ faq, faq_title }} />
-        <SEODynamic
-          heading1={
-            collections &&
-            collections.page_heading_1 &&
-            collections.page_heading_1.length > 0
-              ? collections.page_heading_1[0].text
-              : ""
-          }
-          pageParagraph={
-            collections &&
-            collections.page_paragraph &&
-            collections.page_paragraph.length > 0
-              ? collections.page_paragraph
-              : []
-          }
-        />
-      {/* </SearchProvider> */}
+        filter={filter}
+      />
+      <TestimonialsDynamic testimonials={testimonials} type="collection" />
+      <FAQDynamic FAQ={{ faq, faq_title }} />
+      <SEODynamic
+        heading1={
+          collections &&
+          collections.page_heading_1 &&
+          collections.page_heading_1.length > 0
+            ? collections.page_heading_1[0].text
+            : ""
+        }
+        pageParagraph={
+          collections &&
+          collections.page_paragraph &&
+          collections.page_paragraph.length > 0
+            ? collections.page_paragraph
+            : []
+        }
+      />
     </>
   )
 }

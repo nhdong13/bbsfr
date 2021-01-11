@@ -134,28 +134,7 @@ $bg-sort-filter: #f6f6f6;
 
 //Sort/Filter Sajari
 
-.radio_sajari {
-  label {
-    margin-bottom: 0px;
-  }
-  input {
-    color: black;
-  }
-  input:checked {
-    color: black;
-  }
 
-  button:hover,
-  button:focus {
-    color: #999;
-  }
-
-  button:active {
-    background-color: white;
-    color: black;
-    outline: 1px solid black;
-  }
-}
 
 .sort_filter_by {
   margin: 0.5rem 0.5rem;

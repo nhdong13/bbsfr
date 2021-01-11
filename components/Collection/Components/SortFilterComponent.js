@@ -6,6 +6,7 @@ import Sorting from "../../Common/Sorting"
 import Filter from "../../Common/Filter"
 import { Radio, RadioGroup } from "@sajari/react-components"
 import { useSorting, SearchProvider } from "@sajari/react-hooks"
+import SortingComponent from "../../Common/Sorting"
 
 const SortFilterComponent = ({
   list,
@@ -17,8 +18,6 @@ const SortFilterComponent = ({
   initialResponse,
   variables,
 }) => {
-  const { sorting, setSorting } = useSorting()
-  console.log("sorting", sorting)
   return (
     <>
       <div className={styles.sort_filter_by}>
@@ -51,68 +50,13 @@ const SortFilterComponent = ({
               <Collapse in={item.open}>
                 <div id="example2-collapse-text">
                   {type == "sort" ? (
-                    <div className="">
-                      <div
-                        className={styles.radio_sajari}
-                        onChange={(e) => {
-                          setSorting(e.target.value)
-                          setChanged(true)
-                        }}
-                      >
-                        <fieldset>
-                          <input
-                            id="sort1"
-                            type="radio"
-                            name="sort"
-                            value=""
-                            defaultChecked
-                            checked={sorting === ""}
-                          />
-                          <label for="sort1">&nbsp;Most relevant</label>
-                          <br />
-
-                          <input
-                            id="sort2"
-                            type="radio"
-                            name="sort"
-                            value="name"
-                            checked={sorting === "name"}
-                          />
-                          <label for="sort2">&nbsp;Name: A to Z</label>
-                          <br />
-
-                          <input
-                            id="sort3"
-                            type="radio"
-                            name="sort"
-                            value="-name"
-                            checked={sorting === "-name"}
-                          />
-                          <label for="sort3">&nbsp;Name: Z to A</label>
-                          <br />
-
-                          <input
-                            id="sort4"
-                            type="radio"
-                            name="sort"
-                            value="price"
-                            checked={sorting === "price"}
-                          />
-                          <label for="sort4">&nbsp;Price: Low to High</label>
-                          <br />
-
-                          <input
-                            id="sort5"
-                            type="radio"
-                            name="sort"
-                            value="-price"
-                            checked={sorting === "-price"}
-                          />
-                          <label for="sort5">&nbsp;Price: High to Low</label>
-                          <br />
-                        </fieldset>
-                      </div>
-                    </div>
+                    <SortingComponent
+                      filter={filter}
+                      pipeline={pipeline}
+                      initialResponse={initialResponse}
+                      setChanged={setChanged}
+                      variables={variables}
+                    />
                   ) : (
                     <Filter
                       filter={filter}

@@ -1,4 +1,3 @@
-import { FilterBuilder } from "@sajari/react-search-ui"
 import React, { useState } from "react"
 import { Container, Modal, Button } from "react-bootstrap"
 import Image from "next/image"
