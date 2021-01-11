@@ -88,47 +88,23 @@ const FilterComponent = ({
   variables,
   filter,
   initialResponse,
-}) =>  {
-  const brandFilter = new FilterBuilder({
-    name: "brand",
-    options: {
-      Apple: "brand = 'Apple'",
-      Samsung: "brand = 'Samsung'",
-      Dell: "brand = 'Dell'",
-      HP: "brand = 'HP'",
-      Garmin: "brand = 'Garmin'",
-    },
-    multi: true,
-  })
-
-  const priceFilter = new FilterBuilder({
-    name: "price",
-    options: {
-      High: "price >= 200",
-      Mid: "price >= 50",
-      Low: "price < 50",
-    },
-    multi: false,
-    initial: ["High"],
-  })
-
-  
- return (
-   <SearchProvider
-     search={{
-       pipeline,
-       variables,
-       filters: [priceFilter, brandFilter],
-     }}
-     initialResponse={initialResponse}
-     searchOnLoad={!initialResponse}
-   >
-     <div className="">
-       <FilterRender name="brand" title="brand" setChanged={setChanged} />
-       <FilterRender name="price" title="price" setChanged={setChanged} />
-     </div>
-   </SearchProvider>
- )
+}) => {
+  return (
+    <SearchProvider
+      search={{
+        pipeline,
+        variables,
+        filters: [priceFilter, brandFilter],
+      }}
+      initialResponse={initialResponse}
+      searchOnLoad={!initialResponse}
+    >
+      <div className="">
+        <FilterRender name="brand" title="brand" setChanged={setChanged} />
+        <FilterRender name="price" title="price" setChanged={setChanged} />
+      </div>
+    </SearchProvider>
+  )
 }
 
 export default FilterComponent

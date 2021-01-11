@@ -12,8 +12,8 @@ import {
   SearchProvider,
 } from "@sajari/react-hooks"
 import dynamic from "next/dynamic"
-import { constants } from "../../../constant"
-import SortFilterComponent from "./SortFilterComponent"
+import SortComponent from "./SortComponent"
+import FilterComponent from "./FilterComponent"
 
 const HeaderDynamic = dynamic(() => import("../../Header"))
 const PaginationDynamic = dynamic(() =>
@@ -21,27 +21,26 @@ const PaginationDynamic = dynamic(() =>
 )
 const ListProductsDynamic = dynamic(() => import("./ListProductsComponent"))
 
-
 const ResultComponent = ({ pipeline, initialResponse, variables, filter }) => {
   const [show, setShow] = useState(false)
   const [sortFilterChanged, setChanged] = useState(false)
   const [countBol, setCountBol] = useState(0)
 
-  const [listSorting, setListSorting] = useState([
-    {
-      name: "Featured",
-      open: false,
-    },
-  ])
+  // const [listSorting, setListSorting] = useState([
+  //   {
+  //     name: "Featured",
+  //     open: false,
+  //   },
+  // ])
 
-  const [listFilter, setListFilter] = useState([
-    { name: "Brand", open: false },
-    // { name: "Jacket Features", open: false },
-    // { name: "Jacket Material", open: false },
-    // { name: "Season", open: false },
-    // { name: "Ride Style", open: false },
-    // { name: "Price", open: false },
-  ])
+  // const [listFilter, setListFilter] = useState([
+  //   { name: "Brand", open: false },
+  //   // { name: "Jacket Features", open: false },
+  //   // { name: "Jacket Material", open: false },
+  //   // { name: "Season", open: false },
+  //   // { name: "Ride Style", open: false },
+  //   // { name: "Price", open: false },
+  // ])
 
   const sortFilter = () => {
     setShow(!show)
@@ -51,16 +50,12 @@ const ResultComponent = ({ pipeline, initialResponse, variables, filter }) => {
     setListFilter(listUpdate(listFilter, id, bol))
   }
 
-  const setOpenSortingCollapse = (id, bol) => {
-    setListSorting(listUpdate(listSorting, id, bol))
-  }
-
   //Handle Close Modal
   const handleClose = () => {
-    let count = countBooleanSortFilter(listFilter)
+    // let count = countBooleanSortFilter(listFilter)
     setShow(false)
     setChanged(false)
-    setCountBol(count)
+    // setCountBol(count)
   }
 
   const { results } = useSearchContext()
@@ -125,11 +120,8 @@ const ResultComponent = ({ pipeline, initialResponse, variables, filter }) => {
         <HeaderDynamic />
 
         {/*Sorting Feature*/}
-        <SortFilterComponent
+        <SortComponent
           pipeline={pipeline}
-          list={listSorting}
-          setOpen={setOpenSortingCollapse}
-          type="sort"
           setChanged={setChanged}
           filter={filter}
           initialResponse={initialResponse}
@@ -137,10 +129,7 @@ const ResultComponent = ({ pipeline, initialResponse, variables, filter }) => {
         />
 
         {/* Filter feature */}
-        <SortFilterComponent
-          list={listFilter}
-          setOpen={setOpenFilterCollapse}
-          type="filter"
+        <FilterComponent
           setChanged={setChanged}
           variables={variables}
           pipeline={pipeline}
@@ -152,16 +141,12 @@ const ResultComponent = ({ pipeline, initialResponse, variables, filter }) => {
           <div className={styles.modal_button}>
             <Button
               fixed="bottom"
-              variant={
-                sortFilterChanged ||
-                countBol != countBooleanSortFilter(listFilter)
-                  ? "secondary"
-                  : "primary"
-              }
+              variant={sortFilterChanged ? "secondary" : "primary"}
             >
-              {sortFilterChanged ||
-              countBol != countBooleanSortFilter(listFilter)
-                ? "Apply"
+              {sortFilterChanged
+                ? //  ||
+                  // countBol != countBooleanSortFilter(listFilter)
+                  "Apply"
                 : "Cancel"}
             </Button>
           </div>
@@ -171,6 +156,5 @@ const ResultComponent = ({ pipeline, initialResponse, variables, filter }) => {
     </>
   )
 }
- 
 
 export default ResultComponent

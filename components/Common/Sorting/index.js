@@ -1,6 +1,7 @@
 import React from "react"
 import styles from "./sorting.module.scss"
 import { useSorting, SearchProvider } from "@sajari/react-hooks"
+import { Container } from "react-bootstrap"
 
 const SortingComponent = ({
   setChanged,
@@ -34,7 +35,6 @@ const SortingComponent = ({
               type="radio"
               name="sort"
               value=""
-              defaultChecked
               checked={sorting === ""}
             />
             <label for="sort1">&nbsp;Most relevant</label>
