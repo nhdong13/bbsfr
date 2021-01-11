@@ -52,6 +52,7 @@ const BrandCategoryComponent = ({
       <SearchProvider
         search={{
           pipeline,
+          variables,
         }}
         initialResponse={initialResponse}
         searchOnLoad={!initialResponse}

@@ -5,14 +5,25 @@ import { search } from "@sajari/server"
 import { getConfigPipeline } from "../../../services/getPipelineSajari"
 import { getDataForMainNav } from "../../../services/mainNav"
 import { authenticationFromStamped } from "../../../services/testimonial"
+import { mockupDataFilterBrand } from "../../../services/brand"
 
 const pipeline = new Pipeline({ ...getConfigPipeline("best-buy") }, "query")
-const variables = new Variables({ resultsPerPage: 20, q: "" })
+var searchObj = { variables: null }
+
+const initVariable = (params) => {
+  //Filter options will replace base params for per page --> this is code demo
+  searchObj.variables = new Variables({
+    resultsPerPage: 20,
+    q: "",
+    filter: `brand = "${mockupDataFilterBrand()}"`,
+  })
+}
 
 export async function getStaticProps({ params }) {
+  initVariable(params)
   const initialResponse = await search({
     pipeline,
-    variables,
+    variables: searchObj.variables,
   })
   const brand = await getBrandByUid(params.brandHome)
   const requestOptions = authenticationFromStamped()
@@ -44,7 +55,7 @@ const BrandHomePage = ({ initialResponse, brand, testimonials }) => {
     <BrandHomeComponent
       initialResponse={initialResponse}
       pipeline={pipeline}
-      variables={variables}
+      variables={searchObj.variables}
       brand={brand}
       testimonials={testimonials}
     />
