@@ -72,24 +72,6 @@ const ResultComponent = ({ pipeline, initialResponse, variables, filter }) => {
 
   const { results } = useSearchContext()
 
-  const productTypeFilter = new FilterBuilder({
-    name: "type",
-    field: "brand",
-    count: true,
-    multi: true,
-  })
-
-  const priceFilter = new FilterBuilder({
-    name: "price",
-    options: {
-      High: "price >= 200",
-      Mid: "price >= 50",
-      Low: "price < 50",
-    },
-    multi: false,
-    initial: ["High"],
-  })
-
   //Button show sort and filter
   const SortFilterButton = () => (
     <Container fluid className={styles.filter_sort_sajari}>
@@ -133,7 +115,7 @@ const ResultComponent = ({ pipeline, initialResponse, variables, filter }) => {
     </Container>
   )
   // ----------- //
-  
+
   return (
     <>
       <SortFilterButton />

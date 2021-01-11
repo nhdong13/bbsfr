@@ -103,25 +103,25 @@ const CollectionComponent = ({
           initialResponse={initialResponse}
           filter={filter}
         />
+        <TestimonialsDynamic testimonials={testimonials} type="collection" />
+        <FAQDynamic FAQ={{ faq, faq_title }} />
+        <SEODynamic
+          heading1={
+            collections &&
+            collections.page_heading_1 &&
+            collections.page_heading_1.length > 0
+              ? collections.page_heading_1[0].text
+              : ""
+          }
+          pageParagraph={
+            collections &&
+            collections.page_paragraph &&
+            collections.page_paragraph.length > 0
+              ? collections.page_paragraph
+              : []
+          }
+        />
       </SearchProvider>
-      <TestimonialsDynamic testimonials={testimonials} type="collection" />
-      <FAQDynamic FAQ={{ faq, faq_title }} />
-      <SEODynamic
-        heading1={
-          collections &&
-          collections.page_heading_1 &&
-          collections.page_heading_1.length > 0
-            ? collections.page_heading_1[0].text
-            : ""
-        }
-        pageParagraph={
-          collections &&
-          collections.page_paragraph &&
-          collections.page_paragraph.length > 0
-            ? collections.page_paragraph
-            : []
-        }
-      />
     </>
   )
 }

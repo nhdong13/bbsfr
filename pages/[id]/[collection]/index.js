@@ -15,7 +15,6 @@ const pipeline = new Pipeline({ ...getConfigPipeline("best-buy") }, "query")
 var searchObj = { variables: null }
 
 const initVariable = (filter) => {
-  console.log("Debug code filter:", filter)
   searchObj.variables = new Variables({
     resultsPerPage: 20,
     q: "",

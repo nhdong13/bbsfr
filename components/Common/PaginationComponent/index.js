@@ -13,7 +13,7 @@ const PaginationComponent = ({
       <SearchProvider
         search={{
           pipeline,
-          // variables,
+          variables,
         }}
         initialResponse={initialResponse}
         searchOnLoad={!initialResponse}
