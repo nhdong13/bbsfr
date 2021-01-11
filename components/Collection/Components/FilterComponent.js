@@ -41,7 +41,7 @@ const FilterComponent = ({ pipeline, variables, initialResponse }) => {
   })
 
   return (
-    <div className={styles.providerFilter}>
+    <>
       <SearchProvider
         search={{
           pipeline,
@@ -78,14 +78,13 @@ const FilterComponent = ({ pipeline, variables, initialResponse }) => {
           <FilterRender name="category" title="Category" />
         </div>
       </SearchProvider>
-    </div>
+    </>
   )
 }
 export default FilterComponent
 
 const FilterRender = ({ name, title }) => {
   const { multi, options, selected, setSelected, reset } = useFilter(name)
-  console.log("Debug code options:", options)
   const [filterArray, setFilterArray] = useState([...options])
   const router = useRouter()
   router.events.on("routeChangeComplete", () => reset())
