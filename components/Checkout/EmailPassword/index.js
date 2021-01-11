@@ -14,6 +14,7 @@ import LoadingSpinner from "../../LoadingSpinner"
 import { EmailPasswordSchema } from "./validate"
 import { checkEmailExistedQuery } from "lib/queries"
 import { accountRegisterMutation } from "lib/mutations"
+import { MAX_TOASTS_ALLOWED } from "../constants"
 import styles from "./CheckoutEmailPassword.module.scss"
 
 export default function CheckoutEmailPasswordComponent() {
@@ -27,7 +28,7 @@ export default function CheckoutEmailPasswordComponent() {
     checkEmailExistedQuery
   )
   const [registerAccount] = useMutation(accountRegisterMutation)
-  const { addToast } = useToasts()
+  const { addToast, toastStack, removeToast } = useToasts()
   // const { signIn } = useAuth()
   // Will remove when upgrade Saleor v11
   const [signIn] = useSignIn()
@@ -58,6 +59,10 @@ export default function CheckoutEmailPasswordComponent() {
           autoDismiss: true,
           className: "mt-4 mr-2 w-auto",
         })
+
+        if (toastStack.length > MAX_TOASTS_ALLOWED) {
+          removeToast(toastStack[0].id)
+        }
         return
       }
     }
