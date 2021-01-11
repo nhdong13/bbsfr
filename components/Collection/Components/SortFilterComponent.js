@@ -15,38 +15,12 @@ const SortFilterComponent = ({
   filter,
   pipeline,
   initialResponse,
+  variables,
 }) => {
   const { sorting, setSorting } = useSorting()
   console.log("sorting", sorting)
   return (
     <>
-      {/* <SearchProvider
-        search={{
-          pipeline,
-        }}
-        customClassNames={{
-          filter: {
-            pagination: {
-              container: "containerPagination",
-              button: "buttonPagination",
-              active: "activePagination",
-              next: "nextPagination",
-              prev: "prevPagination",
-              spacerEllipsis: "spacerEllipsisPagination",
-            },
-            resetButton: "resetButtonFilter",
-            list: {
-              container: "listContainerFilter",
-              checkboxGroup: "checkboxGroupFilter",
-              searchFilter: "searchFilter",
-              toggleButton: "toggleButtonFilter",
-            },
-          },
-        }}
-        defaultFilter={filter}
-        initialResponse={initialResponse}
-        searchOnLoad={!initialResponse}
-      > */}
       <div className={styles.sort_filter_by}>
         <div className={styles.sub_heading}>{type}</div>
         {list.map((item, id) => (
@@ -78,22 +52,6 @@ const SortFilterComponent = ({
                 <div id="example2-collapse-text">
                   {type == "sort" ? (
                     <div className="">
-                      {/* <div>
-                          <RadioGroup
-                            className={styles.radio_sajari}
-                            value={sorting}
-                            onChange={(e) => {
-                              setSorting(e.target.value)
-                              setChanged(true)
-                            }}
-                          >
-                            <Radio value="">Most relevant</Radio>
-                            <Radio value="name">Name: A to Z</Radio>
-                            <Radio value="-name">Name: Z to A</Radio>
-                            <Radio value="price">Price: Low to High</Radio>
-                            <Radio value="-price">Price: High to Low</Radio>
-                          </RadioGroup>
-                        </div> */}
                       <div
                         className={styles.radio_sajari}
                         onChange={(e) => {
@@ -155,28 +113,21 @@ const SortFilterComponent = ({
                         </fieldset>
                       </div>
                     </div>
-                  ) : // <Sorting
-                  //   setChanged={setChanged}
-                  //   pipeline={pipeline}
-                  //   filter={filter}
-                  //   initialResponse={initialResponse}
-                  // />
-                  // <></>
-                  id == 0 ? (
-                    <></>
                   ) : (
-                    <div>Filter Feature</div>
-                    // <Filter setChanged={setChanged} />
+                    <Filter
+                      filter={filter}
+                      pipeline={pipeline}
+                      initialResponse={initialResponse}
+                      setChanged={setChanged}
+                      variables={variables}
+                    />
                   )}
-                  {/*Id == 0 => TOTO: Pending for real data, just show option of one filter from filed on 
-                    sajara of filter(first element of listFilter)*/}
                 </div>
               </Collapse>
             </div>
           </div>
         ))}
       </div>
-      {/* </SearchProvider> */}
     </>
   )
 }

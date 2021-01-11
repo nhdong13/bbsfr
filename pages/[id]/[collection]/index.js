@@ -4,12 +4,17 @@ import {
   listAllocationsByDepartmentUID,
 } from "../../../lib/prismic/api"
 import { search } from "@sajari/server"
-import { Pipeline, Variables } from "@sajari/react-search-ui"
 import { getConfigPipeline } from "../../../services/getPipelineSajari"
 import { authenticationFromStamped } from "../../../services/testimonial"
 import CollectionComponent from "../../../components/Collection"
 import { getDataForMainNav } from "../../../services/mainNav"
 import { mockupDataFilterCategory } from "../../../services/collection"
+import {
+  SearchProvider,
+  Pipeline,
+  Variables,
+  FilterBuilder,
+} from "@sajari/react-hooks"
 
 const pipeline = new Pipeline({ ...getConfigPipeline("best-buy") }, "query")
 var searchObj = { variables: null }
@@ -81,20 +86,29 @@ const Collection = ({
 }) => {
   if (!search.variables) {
     //Filter options will replace base params for per page --> this is code demo
-    const filterClient = `categories ~ ['${mockupDataFilterCategory(
-      params
-    )}']`
+    const filterClient = `categories ~ ['${mockupDataFilterCategory(params)}']`
     initVariable(filterClient)
   }
+
   return (
-    <CollectionComponent
+    <SearchProvider
+      search={{
+        pipeline,
+        variables: searchObj.variables,
+      }}
       initialResponse={initialResponse}
-      pipeline={pipeline}
-      variables={searchObj.variables}
-      collections={collections}
-      testimonials={testimonials}
-      filter={filter}
-    />
+      searchOnLoad={!initialResponse}
+      // defaultFilter={filter}
+    >
+      <CollectionComponent
+        initialResponse={initialResponse}
+        pipeline={pipeline}
+        variables={searchObj.variables}
+        collections={collections}
+        testimonials={testimonials}
+        filter={filter}
+      />
+    </SearchProvider>
   )
 }
 export default Collection

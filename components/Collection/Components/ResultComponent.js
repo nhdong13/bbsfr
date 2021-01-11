@@ -64,12 +64,6 @@ const ResultComponent = ({ pipeline, initialResponse, variables, filter }) => {
     setCountBol(count)
   }
 
-  // const { setResultsPerPage } = useResultsPerPage()
-  // if (!isSetResultPerPage) {
-  //   setIsResultPerPage(true)
-  //   setResultsPerPage(constants.RESULT_PER_PAGE)
-  // }
-
   const { results } = useSearchContext()
 
   //Button show sort and filter
@@ -119,14 +113,6 @@ const ResultComponent = ({ pipeline, initialResponse, variables, filter }) => {
   return (
     <>
       <SortFilterButton />
-      {/* <SearchProvider
-        search={{
-          pipeline,
-        }}
-        defaultFilter={filter}
-        initialResponse={initialResponse}
-        searchOnLoad={!initialResponse}
-      > */}
       <ListProductsDynamic products={results} />
       <PaginationDynamic
         initialResponse={initialResponse}
@@ -138,6 +124,7 @@ const ResultComponent = ({ pipeline, initialResponse, variables, filter }) => {
       {/* ------------Modal sort filter------------- */}
       <Modal show={show} onHide={handleClose} className="short_filter_modal">
         <HeaderDynamic />
+
         {/*Sorting Feature*/}
         <SortFilterComponent
           pipeline={pipeline}
@@ -147,14 +134,21 @@ const ResultComponent = ({ pipeline, initialResponse, variables, filter }) => {
           setChanged={setChanged}
           filter={filter}
           initialResponse={initialResponse}
+          variables={variables}
         />
+
         {/* Filter feature */}
-        {/* <SortFilterDynamic
-            list={listFilter}
-            setOpen={setOpenFilterCollapse}
-            type="filter"
-            setChanged={setChanged}
-          />{" "} */}
+        <SortFilterComponent
+          list={listFilter}
+          setOpen={setOpenFilterCollapse}
+          type="filter"
+          setChanged={setChanged}
+          variables={variables}
+          pipeline={pipeline}
+          filter={filter}
+          initialResponse={initialResponse}
+        />
+
         <div onClick={handleClose} className={styles.button_sajari}>
           <div className={styles.modal_button}>
             <Button
@@ -175,7 +169,6 @@ const ResultComponent = ({ pipeline, initialResponse, variables, filter }) => {
         </div>
       </Modal>
       {/* ------------------------------------------ */}
-      {/* </SearchProvider> */}
     </>
   )
 }

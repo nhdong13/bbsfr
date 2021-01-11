@@ -1,5 +1,5 @@
 import Head from "next/head"
-import { SearchProvider } from "@sajari/react-hooks"
+// import { SearchProvider } from "@sajari/react-hooks"
 import dynamic from "next/dynamic"
 import { convertSchemaFAQ } from "../../services/convertSchemaFAQ"
 const SEODynamic = dynamic(() => import("../HomePage/SEO"))
@@ -50,7 +50,7 @@ const CollectionComponent = ({
           dangerouslySetInnerHTML={{ __html: jsonFAQ }}
         />
       </Head>
-      <SearchProvider
+      {/* <SearchProvider
         search={{
           pipeline,
           // variables,
@@ -77,7 +77,7 @@ const CollectionComponent = ({
             },
           },
         }}
-      >
+      > */}
         <HeaderCollectionDynamic
           pipeline={pipeline}
           pageHeading={
@@ -121,7 +121,7 @@ const CollectionComponent = ({
               : []
           }
         />
-      </SearchProvider>
+      {/* </SearchProvider> */}
     </>
   )
 }

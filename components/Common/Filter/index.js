@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import styles from "./filter.module.scss"
-import { useFilter } from "@sajari/react-hooks"
+import { SearchProvider } from "@sajari/react-search-ui"
+import { useFilter, FilterBuilder } from "@sajari/react-hooks"
 import {
   Radio,
   RadioGroup,
@@ -14,8 +15,10 @@ let arrayToFilter = []
 let isSetArrayToFilter = false
 
 const FilterRender = ({ name, setChanged }) => {
+  console.log("name", name)
   const [searchInputFilter, setSearch] = useState("")
   const { multi, options, selected, setSelected, reset } = useFilter(name)
+  console.log("options", options)
 
   const router = useRouter()
   router.events.on("routeChangeComplete", () => reset())
@@ -39,7 +42,7 @@ const FilterRender = ({ name, setChanged }) => {
   }
   const Group = multi ? CheckboxGroup : RadioGroup
   const Control = multi ? Checkbox : Radio
-  
+
   return (
     <div className="mb-4">
       <Combobox
@@ -49,7 +52,7 @@ const FilterRender = ({ name, setChanged }) => {
         onChange={handleFilter}
       />
       <div className="flex items-center justify-between mb-2"></div>
-      
+
       <Group
         name={name}
         value={selected}
@@ -79,10 +82,53 @@ const FilterRender = ({ name, setChanged }) => {
   )
 }
 
-const FilterComponent = ({ setChanged }) => (
-  <div className="">
-    {/* <FilterRender name="type" title="Category" setChanged={setChanged} /> */}
-  </div>
-)
+const FilterComponent = ({
+  setChanged,
+  pipeline,
+  variables,
+  filter,
+  initialResponse,
+}) =>  {
+  const brandFilter = new FilterBuilder({
+    name: "brand",
+    options: {
+      Apple: "brand = 'Apple'",
+      Samsung: "brand = 'Samsung'",
+      Dell: "brand = 'Dell'",
+      HP: "brand = 'HP'",
+      Garmin: "brand = 'Garmin'",
+    },
+    multi: true,
+  })
+
+  const priceFilter = new FilterBuilder({
+    name: "price",
+    options: {
+      High: "price >= 200",
+      Mid: "price >= 50",
+      Low: "price < 50",
+    },
+    multi: false,
+    initial: ["High"],
+  })
+
+  
+ return (
+   <SearchProvider
+     search={{
+       pipeline,
+       variables,
+       filters: [priceFilter, brandFilter],
+     }}
+     initialResponse={initialResponse}
+     searchOnLoad={!initialResponse}
+   >
+     <div className="">
+       <FilterRender name="brand" title="brand" setChanged={setChanged} />
+       <FilterRender name="price" title="price" setChanged={setChanged} />
+     </div>
+   </SearchProvider>
+ )
+}
 
 export default FilterComponent
