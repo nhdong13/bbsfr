@@ -1,11 +1,10 @@
-import Head from "next/head";
+import Head from "next/head"
 import { SearchProvider } from "@sajari/react-hooks"
 import { getBrandCategoryByUid } from "../../../lib/prismic/api"
 import { convertSchemaFAQ } from "../../../services/convertSchemaFAQ"
-import ImagedHeaderComponent from "../Components/ImagedHeaderComponent";
+import ImagedHeaderComponent from "../Components/ImagedHeaderComponent"
 import { useRouter } from "next/router"
 import dynamic from "next/dynamic"
-
 
 const SEODynamic = dynamic(() => import("../../HomePage/SEO"))
 const FAQDynamic = dynamic(() => import("../../HomePage/FAQ"))
@@ -21,15 +20,16 @@ const BrandCategoryComponent = ({
   initialResponse,
   pipeline,
   variables,
-  category
+  category,
+  testimonials,
 }) => {
-  const {
-    meta_title,
-    meta_description,
-    faq
-  } = category
+  const { meta_title, meta_description, faq, faq_title } = category
   const router = useRouter()
-  const jsonFAQ = convertSchemaFAQ({faq, meta_title})
+  const jsonFAQ = convertSchemaFAQ({ faq, meta_title })
+  const heading1 =
+    category && category.page_heading_1 && category.page_heading_1.length > 0
+      ? category.page_heading_1[0].text
+      : "Brand Home"
 
   return (
     <>
@@ -57,16 +57,15 @@ const BrandCategoryComponent = ({
         searchOnLoad={!initialResponse}
       >
         <ImagedHeaderComponent
-          header={
-            category && category.page_heading_1 && category.page_heading_1.length > 0
-              ? category.page_heading_1[0].text
-              : "Brand Home"
-          }
+          header={heading1}
           pipeline={pipeline}
           imgUrl={null}
         />
 
-        <BackToPageBeforeDynamic page={router.query.brandCollection} />
+        <BackToPageBeforeDynamic
+          page={router.query.brandCollection}
+          type="brandCategory"
+        />
         <ResultDynamic
           variables={variables}
           pipeline={pipeline}
@@ -74,6 +73,18 @@ const BrandCategoryComponent = ({
         />
       </SearchProvider>
 
+      <TestimonialsDynamic testimonials={testimonials} type="home" />
+      <FAQDynamic FAQ={{ faq, faq_title }} />
+      <SEODynamic
+        heading1={heading1}
+        pageParagraph={
+          category &&
+          category.page_paragraph &&
+          category.page_paragraph.length > 0
+            ? category.page_paragraph
+            : []
+        }
+      />
     </>
   )
 }

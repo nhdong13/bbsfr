@@ -8,14 +8,12 @@ import {
   listAllBrands,
   getAllBrandCategories,
   getBrandCategoryByUid,
-  getBrandCollectionDetail
+  getBrandCollectionDetail,
 } from "../../../../../../lib/prismic/api"
 import { authenticationFromStamped } from "../../../../../../services/testimonial"
 
-
 const pipeline = new Pipeline({ ...getConfigPipeline("best-buy") }, "query")
 const variables = new Variables({ resultsPerPage: 20, q: "" })
-
 
 export async function getStaticProps({ params }) {
   const initialResponse = await search({
@@ -68,13 +66,15 @@ export async function getStaticPaths() {
   return { paths, fallback: false }
 }
 
-const BrandCategoryPage = ( { initialResponse, category, testimonials } ) => {
-  return <BrandCategoryComponent
-    initialResponse={initialResponse}
-    category={category}
-    pipeline={pipeline}
-    variables={variables}
-    testimonials={testimonials}
-  />
+const BrandCategoryPage = ({ initialResponse, category, testimonials }) => {
+  return (
+    <BrandCategoryComponent
+      initialResponse={initialResponse}
+      category={category}
+      pipeline={pipeline}
+      variables={variables}
+      testimonials={testimonials}
+    />
+  )
 }
 export default BrandCategoryPage
