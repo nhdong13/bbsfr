@@ -30,6 +30,10 @@ const BrandHomeComponent = ({
     brand && brand.page_heading_1 && brand.page_heading_1.length > 0
       ? brand.page_heading_1[0].text
       : "Brand"
+  const heading2 =
+    brand && brand.page_heading_2 && brand.page_heading_2.length > 0
+      ? brand.page_heading_2[0].text
+      : "Brand"
   const collections =
     brand.brand_collections &&
     brand.brand_collections.map((i) => {
@@ -69,6 +73,7 @@ const BrandHomeComponent = ({
           header={heading1}
           pipeline={pipeline}
           imgUrl={brand_hero_image?.url}
+          notShowProductCount={true}
         />
         <BackToPageBeforeDynamic page={"All brands"} type="brandHome" />
       </SearchProvider>
@@ -79,10 +84,10 @@ const BrandHomeComponent = ({
         disableTitleContainer={true}
       />
       {/* <BestSellerComponent products={[]} brandHeading={heading1} /> */}
-      <TestimonialsDynamic testimonials={testimonials} type="home" />
+      <TestimonialsDynamic testimonials={testimonials} type="brand" />
       <FAQDynamic FAQ={{ faq, faq_title }} />
       <SEODynamic
-        heading1={heading1}
+        heading1={heading2}
         pageParagraph={
           brand && brand.page_paragraph && brand.page_paragraph.length > 0
             ? brand.page_paragraph
