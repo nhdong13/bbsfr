@@ -9,17 +9,13 @@ import { authenticationFromStamped } from "../../../services/testimonial"
 import CollectionComponent from "../../../components/Collection"
 import { getDataForMainNav } from "../../../services/mainNav"
 import { mockupDataFilterCategory } from "../../../services/collection"
-import {
-  SearchProvider,
-  Pipeline,
-  Variables,
-  FilterBuilder,
-} from "@sajari/react-hooks"
+import { Pipeline, Variables, FilterBuilder } from "@sajari/react-hooks"
 
 const pipeline = new Pipeline({ ...getConfigPipeline("best-buy") }, "query")
 var searchObj = { variables: null }
 
 const initVariable = (filter) => {
+  console.log("Debug code filter:", filter)
   searchObj.variables = new Variables({
     resultsPerPage: 20,
     q: "",
@@ -38,11 +34,13 @@ export async function getStaticProps({ params }) {
   const filter = `categories ~ ['${mockupDataFilterCategory(params)}']`
   initVariable(filter)
 
+  console.log("Debug code searchObj.variables:", searchObj.variables)
   const initialResponse = await search({
     pipeline,
     variables: searchObj.variables,
   })
 
+  console.log("Debug code initialResponse:", initialResponse)
 
   return {
     props: {
@@ -89,26 +87,54 @@ const Collection = ({
     const filterClient = `categories ~ ['${mockupDataFilterCategory(params)}']`
     initVariable(filterClient)
   }
+  const brandFilter = new FilterBuilder({
+    name: "brand",
+    options: {
+      Apple: "brand = 'Apple'",
+      Samsung: "brand = 'Samsung'",
+      Dell: "brand = 'Dell'",
+      HP: "brand = 'HP'",
+      Garmin: "brand = 'Garmin'",
+    },
+    multi: true,
+  })
+
+  const categoryFilter = new FilterBuilder({
+    name: "category",
+    field: "level1",
+    count: true,
+    multi: true,
+  })
+
+  const priceRangeFilter = new FilterBuilder({
+    name: "priceRange",
+    count: true,
+    field: "price_range",
+    multi: true,
+  })
 
   return (
-    <SearchProvider
-      search={{
-        pipeline,
-        variables: searchObj.variables,
-      }}
+    // <SearchProvider
+    //   search={{
+    //     pipeline,
+    //     // variables: searchObj.variables,
+    //     filters: [priceRangeFilter, brandFilter, categoryFilter],
+    //   }}
+    //   initialResponse={initialResponse}
+    //   searchOnLoad={!initialResponse}
+    //   defaultFilter={filter}
+    // >
+    <CollectionComponent
+      priceRangeFilter={priceRangeFilter}
+      brandFilter={brandFilter}
+      categoryFilter={categoryFilter}
       initialResponse={initialResponse}
-      searchOnLoad={!initialResponse}
-      // defaultFilter={filter}
-    >
-      <CollectionComponent
-        initialResponse={initialResponse}
-        pipeline={pipeline}
-        variables={searchObj.variables}
-        collections={collections}
-        testimonials={testimonials}
-        filter={filter}
-      />
-    </SearchProvider>
+      pipeline={pipeline}
+      variables={searchObj.variables}
+      collections={collections}
+      testimonials={testimonials}
+      filter={filter}
+    />
   )
 }
 export default Collection

@@ -1,7 +1,7 @@
 import React from "react"
 import styles from "./sorting.module.scss"
 import { useSorting, SearchProvider } from "@sajari/react-hooks"
-import { Container } from "react-bootstrap"
+import { constants } from "../../../constant"
 
 const SortingComponent = ({
   setChanged,
@@ -11,11 +11,15 @@ const SortingComponent = ({
   variables,
 }) => {
   const { sorting, setSorting } = useSorting()
+  console.log("Debug code filter:", filter)
   return (
     <SearchProvider
       search={{
         pipeline,
-        variables,
+        // variables,
+        variables: new Variables({
+          resultsPerPage: constants.RESULT_PER_PAGE,
+        }),
       }}
       defaultFilter={filter}
       initialResponse={initialResponse}

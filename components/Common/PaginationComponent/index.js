@@ -1,5 +1,6 @@
-import { Pagination, SearchProvider } from "@sajari/react-search-ui"
+import { Pagination, SearchProvider, Variables } from "@sajari/react-search-ui"
 import { Container } from "react-bootstrap";
+import { constants } from "../../../constant"
 import styles from "../Common.module.scss"
 
 const PaginationComponent = ({
@@ -13,7 +14,10 @@ const PaginationComponent = ({
       <SearchProvider
         search={{
           pipeline,
-          variables,
+          // variables,
+          variables: new Variables({
+            resultsPerPage: constants.RESULT_PER_PAGE,
+          }),
         }}
         initialResponse={initialResponse}
         searchOnLoad={!initialResponse}

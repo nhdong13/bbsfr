@@ -13,54 +13,25 @@ import {
   Combobox,
 } from "@sajari/react-components"
 
-const FilterComponent = ({ pipeline, variables, initialResponse }) => {
-  const brandFilter = new FilterBuilder({
-    name: "brand",
-    options: {
-      Apple: "brand = 'Apple'",
-      Samsung: "brand = 'Samsung'",
-      Dell: "brand = 'Dell'",
-      HP: "brand = 'HP'",
-      Garmin: "brand = 'Garmin'",
-    },
-    multi: true,
-  })
-
-  const categoryFilter = new FilterBuilder({
-    name: "category",
-    field: "level1",
-    count: true,
-    multi: true,
-  })
-
-  const priceRangeFilter = new FilterBuilder({
-    name: "priceRange",
-    count: true,
-    field: "price_range",
-    multi: true,
-  })
-
+const FilterComponent = ({
+  pipeline,
+  variables,
+  initialResponse,
+  filter,
+  brandFilter,
+  categoryFilter,
+  priceRangeFilter,
+}) => {
   return (
     <>
       <SearchProvider
         search={{
           pipeline,
-          variables,
           filters: [priceRangeFilter, brandFilter, categoryFilter],
         }}
         initialResponse={initialResponse}
         searchOnLoad={!initialResponse}
-        // customClassNames={{
-        //   filter: {
-        //     resetButton: "resetButtonFilter",
-        //     list: {
-        //       container: "listContainerFilter",
-        //       checkboxGroup: "checkboxGroupFilter",
-        //       searchFilter: "searchFilter",
-        //       toggleButton: "toggleButtonFilter",
-        //     },
-        //   },
-        // }}
+        defaultFilter={filter}
       >
         <div className="">
           <div className={styles.filterTitle}>
@@ -91,6 +62,8 @@ const FilterRender = ({ name, title }) => {
   const Group = multi ? CheckboxGroup : RadioGroup
   const Control = multi ? Checkbox : Radio
   const [open, setOpen] = useState(false)
+  console.log("Debug code options:", options)
+
   return (
     <>
       {options?.length > 0 && (

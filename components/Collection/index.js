@@ -1,5 +1,5 @@
 import Head from "next/head"
-// import { SearchProvider } from "@sajari/react-hooks"
+import { SearchProvider } from "@sajari/react-hooks"
 import dynamic from "next/dynamic"
 import { convertSchemaFAQ } from "../../services/convertSchemaFAQ"
 const SEODynamic = dynamic(() => import("../HomePage/SEO"))
@@ -22,6 +22,9 @@ const CollectionComponent = ({
   testimonials,
   variables,
   filter,
+  priceRangeFilter,
+  brandFilter,
+  categoryFilter,
 }) => {
   const {
     meta_description,
@@ -50,49 +53,63 @@ const CollectionComponent = ({
           dangerouslySetInnerHTML={{ __html: jsonFAQ }}
         />
       </Head>
-      <HeaderCollectionDynamic
-        pipeline={pipeline}
-        pageHeading={
-          collections &&
-          collections.page_heading_1 &&
-          collections.page_heading_1.length > 0
-            ? collections.page_heading_1[0].text
-            : "Collections"
-        }
-      />
-      <CategoriesDynamic
-        categories={categories}
-        shopByCategoryText={
-          collections.shop_by_category_text != undefined &&
-          collections.shop_by_category_text.length
-            ? collections.shop_by_category_text[0].text
-            : "List Category"
-        }
-      />
-      <ResultDynamic
-        variables={variables}
-        pipeline={pipeline}
+      <SearchProvider
+        search={{
+          pipeline,
+          // variables: searchObj.variables,
+          filters: [priceRangeFilter, brandFilter, categoryFilter],
+        }}
         initialResponse={initialResponse}
-        filter={filter}
-      />
-      <TestimonialsDynamic testimonials={testimonials} type="collection" />
-      <FAQDynamic FAQ={{ faq, faq_title }} />
-      <SEODynamic
-        heading1={
-          collections &&
-          collections.page_heading_1 &&
-          collections.page_heading_1.length > 0
-            ? collections.page_heading_1[0].text
-            : ""
-        }
-        pageParagraph={
-          collections &&
-          collections.page_paragraph &&
-          collections.page_paragraph.length > 0
-            ? collections.page_paragraph
-            : []
-        }
-      />
+        searchOnLoad={!initialResponse}
+        defaultFilter={filter}
+      >
+        <HeaderCollectionDynamic
+          pipeline={pipeline}
+          pageHeading={
+            collections &&
+            collections.page_heading_1 &&
+            collections.page_heading_1.length > 0
+              ? collections.page_heading_1[0].text
+              : "Collections"
+          }
+        />
+        <CategoriesDynamic
+          categories={categories}
+          shopByCategoryText={
+            collections.shop_by_category_text != undefined &&
+            collections.shop_by_category_text.length
+              ? collections.shop_by_category_text[0].text
+              : "List Category"
+          }
+        />
+        <ResultDynamic
+          categoryFilter={categoryFilter}
+          brandFilter={brandFilter}
+          priceRangeFilter={priceRangeFilter}
+          variables={variables}
+          pipeline={pipeline}
+          initialResponse={initialResponse}
+          filter={filter}
+        />
+        <TestimonialsDynamic testimonials={testimonials} type="collection" />
+        <FAQDynamic FAQ={{ faq, faq_title }} />
+        <SEODynamic
+          heading1={
+            collections &&
+            collections.page_heading_1 &&
+            collections.page_heading_1.length > 0
+              ? collections.page_heading_1[0].text
+              : ""
+          }
+          pageParagraph={
+            collections &&
+            collections.page_paragraph &&
+            collections.page_paragraph.length > 0
+              ? collections.page_paragraph
+              : []
+          }
+        />
+      </SearchProvider>
     </>
   )
 }
