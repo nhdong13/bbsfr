@@ -81,7 +81,8 @@ const BrandHomeComponent = ({
       <SessionBrowseByCategoryComponent
         departmentSlug={brand._meta.uid}
         collections={collections}
-        disableTitleContainer={true}
+        disableTitleContainer={false}
+        disableViewAllBtn={true}
       />
       {/* <BestSellerComponent products={[]} brandHeading={heading1} /> */}
       <TestimonialsDynamic testimonials={testimonials} type="brand" />
