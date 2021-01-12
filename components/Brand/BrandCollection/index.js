@@ -74,9 +74,8 @@ const BrandCollectionComponent = ({
           arrData={categories}
           type={"category"}
         />
-        <Container>
+        <Container fluid>
           <div
-            fluid
             style={{ height: "1px", borderBottom: "1px solid #e5e5e4" }}
           />
         </Container>
