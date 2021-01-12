@@ -20,6 +20,8 @@ const SessionBrowseByCategoryComponent = (props) => {
   return (
     <>
       {/* Switch other title if component called form Nav */}
+      {/* disableTitleContainer = true => title size = 14px */}
+      {/* disableTitleContainer = false => title size = 21px */}
       {props?.disableTitleContainer ? (
         <Container className={styles.sessionTitleCategoryFromNav}>
           <p className={styles.sessionTitleCategoryTextRightFromNav}>
@@ -35,13 +37,19 @@ const SessionBrowseByCategoryComponent = (props) => {
               </p>
             </Col>
             <Col style={{ textAlign: "right" }} xs={3} sm={4} md={4} lg={4}>
-              <Link href={`${router?.query?.id}/all`}>
-                <a>
-                  <p className={styles.sessionTitleCategoryTextLeft}>
-                    VIEW ALL
-                  </p>
-                </a>
-              </Link>
+              {/* disableViewAllBtn = true => Not show view all btn */}
+              {/* disableViewAllBtn = false => Show view all btn */}
+              {props?.disableViewAllBtn ? (
+                <></>
+              ) : (
+                <Link href={`${router?.query?.id}/all`}>
+                  <a>
+                    <p className={styles.sessionTitleCategoryTextLeft}>
+                      VIEW ALL
+                    </p>
+                  </a>
+                </Link>
+              )}
             </Col>
           </Row>
         </Container>

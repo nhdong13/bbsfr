@@ -26,6 +26,7 @@ const BrandCollectionComponent = ({
     ranges,
     categories,
     page_heading_1,
+    page_heading_2,
     page_paragraph,
     faq,
     faq_title,
@@ -74,11 +75,8 @@ const BrandCollectionComponent = ({
           arrData={categories}
           type={"category"}
         />
-        <Container>
-          <div
-            fluid
-            style={{ height: "1px", borderBottom: "1px solid #e5e5e4" }}
-          />
+        <Container fluid>
+          <div style={{ height: "1px", borderBottom: "1px solid #e5e5e4" }} />
         </Container>
         <ShopByBrandCollectionComponent arrData={ranges} type={"brandRange"} />
       </div>
@@ -89,7 +87,7 @@ const BrandCollectionComponent = ({
       <FAQDynamic FAQ={{ faq, faq_title }} />
       <SEODynamic
         Dynamic
-        heading1={page_heading_1?.length > 0 ? page_heading_1[0].text : "---"}
+        heading1={page_heading_2?.length > 0 ? page_heading_2[0].text : "---"}
         pageParagraph={page_paragraph?.length > 0 ? page_paragraph : []}
       />
     </>
