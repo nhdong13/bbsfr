@@ -14,12 +14,14 @@ const ImagedHeaderDynamic = dynamic(() =>
 )
 const SEODynamic = dynamic(() => import("../../HomePage/SEO"))
 const FAQDynamic = dynamic(() => import("../../HomePage/FAQ"))
+const TestimonialsDynamic = dynamic(() => import("../../HomePage/Testimonials"))
 
 const BrandCollectionComponent = ({
   pipeline,
   variables,
   initialResponse,
   brandCollectionResponse,
+  testimonials,
 }) => {
   const router = useRouter()
   const {
@@ -83,6 +85,10 @@ const BrandCollectionComponent = ({
       <BackToPageBeforeDynamic
         page={router.query.brandHome}
         type="brandCollection"
+      />
+      <TestimonialsDynamic
+        testimonials={testimonials}
+        type="brand-collection"
       />
       <FAQDynamic FAQ={{ faq, faq_title }} />
       <SEODynamic
