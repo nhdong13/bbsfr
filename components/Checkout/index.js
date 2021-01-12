@@ -2,13 +2,12 @@ import React, { useEffect } from "react"
 import { Container, Col, Row, Button } from "react-bootstrap"
 import { useRouter } from "next/router"
 import clsx from "clsx"
-
+import _ from "lodash"
 // import { useCart } from "@saleor/sdk"
 import { useCart, useProductDetails } from "@sdk/react"
 
 import { generateCart, buildCartItem } from "./helpers"
 import Money from "../Money"
-import OrderTotalCost from "./OrderTotalCost"
 import styles from "./Checkout.module.scss"
 
 export default function CheckoutComponent() {
@@ -52,7 +51,10 @@ export default function CheckoutComponent() {
             <Col md="12" className="text-center">
               <h2 className={styles.headerTitle}>YOUR CART</h2>
               <span className="font-weight-bold">
-                <span className="secondary mr-1">{items?.length} Items</span>{" "}
+                <span className="secondary mr-1">
+                  {items?.length > 0 && _.sumBy(items, (item) => item.quantity)}{" "}
+                  Items
+                </span>{" "}
                 <Money money={subtotalPrice?.gross} />
               </span>
             </Col>
@@ -66,16 +68,11 @@ export default function CheckoutComponent() {
 
       <Row className={styles.footerSection}>
         <Container>
-          <OrderTotalCost
-            totalPrice={subtotalPrice}
-            subtotalPrice={subtotalPrice}
-          />
           <Row>
-            <Col xs="12" className={styles.fixedButton}>
+            <Col xs="12" className={styles.continueButton}>
               <Button
                 variant="secondary"
                 className={clsx(styles.btn, "w-100")}
-                fixed="bottom"
                 onClick={handleClick}
               >
                 CONTINUE TO CHECKOUT

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React from "react"
 import styles from "./HomePage.module.scss"
 import Head from "next/head"
 import { convertSchemaFAQ } from "../../services/convertSchemaFAQ"

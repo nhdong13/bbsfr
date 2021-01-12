@@ -2,20 +2,27 @@ import * as Yup from "yup"
 import _ from "lodash"
 
 export const ShippingSchema = Yup.object().shape({
-  firstName: Yup.string().required("This field is required"),
-  lastName: Yup.string().required("This field is required"),
-  phone: Yup.string().required("This field is required"),
+  firstName: Yup.string().trim().required("This field is required"),
+  lastName: Yup.string().trim().required("This field is required"),
+  phone: Yup.string().trim().required("This field is required"),
   country: Yup.object().shape({
     country: Yup.string().required("This field is required"),
     code: Yup.string(),
   }),
-  city: Yup.string().required("This field is required"),
-  countryArea: Yup.string().required("This field is required"),
-  streetAddress1: Yup.string().required("This field is required"),
+  city: Yup.string()
+    .trim()
+    .required("This field is required")
+    .min(2, "Invalid name")
+    .max(54, "Invalid name"),
+  countryArea: Yup.string().trim().required("This field is required"),
+  streetAddress1: Yup.string().trim().required("This field is required"),
   streetAddress2: Yup.string(),
-  postalCode: Yup.string().required("This field is required"),
+  postalCode: Yup.string()
+    .trim()
+    .required("This field is required")
+    .max(20, "Invalid code"),
   address: Yup.string().when("useFullForm", (useFullForm, schema) =>
-    useFullForm ? schema : schema.required("This field is required")
+    useFullForm ? schema : schema.trim().required("This field is required")
   ),
   bussinessName: Yup.string(),
   useFullForm: Yup.boolean(),
@@ -67,16 +74,15 @@ export const DeliverySchema = Yup.object().shape({
         }
       ),
     }),
-    city: Yup.string().test(
-      "require",
-      "This field is required",
-      function (fieldValue) {
+    city: Yup.string()
+      .test("require", "This field is required", function (fieldValue) {
         if (!this.from[1].value.billingDifferentAddress) {
           return true
         }
         return fieldValue && fieldValue.trim()
-      }
-    ),
+      })
+      .min(2, "Invalid name")
+      .max(54, "Invalid name"),
     countryArea: Yup.string().test(
       "require",
       "This field is required",
@@ -98,16 +104,14 @@ export const DeliverySchema = Yup.object().shape({
       }
     ),
     streetAddress2: Yup.string(),
-    postalCode: Yup.string().test(
-      "require",
-      "This field is required",
-      function (fieldValue) {
+    postalCode: Yup.string()
+      .test("require", "This field is required", function (fieldValue) {
         if (!this.from[1].value.billingDifferentAddress) {
           return true
         }
         return fieldValue && fieldValue.trim()
-      }
-    ),
+      })
+      .max(20, "Invalid code"),
     address: Yup.string(),
     bussinessName: Yup.string(),
   }),

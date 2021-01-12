@@ -6,7 +6,7 @@ export const EmailPasswordSchema = (activeStep) => {
       .email("Invalid email address")
       .required("This field is required"),
     password: Yup.string()
-      .min(8, "Password must have at least 6 characters")
+      .min(6, "Password must have at least 6 characters")
       .test("required", "This field is required", function (fieldValue) {
         if (activeStep === 1) {
           return true

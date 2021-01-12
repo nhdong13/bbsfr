@@ -63,7 +63,7 @@ export default function ItemComponent({
                       custom
                       className={styles.selectQty}
                       onChange={(ev) =>
-                        onQuantityChange(ev.currentTarget.value)
+                        onQuantityChange(parseInt(ev.currentTarget.value))
                       }
                     >
                       {Array(

@@ -1,7 +1,8 @@
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useState } from "react"
 import { Formik } from "formik"
 import { Row, Col, Button, Form, Container } from "react-bootstrap"
-import { useCheckout, useUserDetails, useCart } from "@sdk/react"
+import { useCheckout } from "@sdk/react"
+import Input from "react-phone-number-input/input"
 import clsx from "clsx"
 
 import LoadingSpinner from "components/LoadingSpinner"
@@ -30,7 +31,7 @@ export default function ShippingAddress({
     addPromoCode,
     loaded,
   } = useCheckout()
-  const [oldValues, setOldValues] = useState()
+  const [oldValues, setOldValues] = useState(INITIAL_ADDRESS)
   const [modalShow, setModalShow] = useState(false)
 
   useEffect(() => {
@@ -53,24 +54,24 @@ export default function ShippingAddress({
 
   useEffect(() => {
     const shippingForm = shippingFormRef.current
-    if (shippingForm?.values?.useFullForm) {
-      return
-    }
 
     function initAutocomplete() {
-      if (!document.getElementById("address")) return
+      const input = document.getElementById("address")
+      if (!input) return
 
-      const autocomplete = new google.maps.places.Autocomplete(
-        document.getElementById("address"),
-        {
-          types: ["geocode"],
-          componentRestrictions: {
-            country: ["au"],
-          },
-        }
-      )
+      const autocomplete = new google.maps.places.Autocomplete(input, {
+        types: ["geocode"],
+        componentRestrictions: {
+          country: ["au"],
+        },
+      })
 
       autocomplete.setFields(["address_component", "formatted_address"])
+      google.maps.event.addDomListener(input, "focus", (e) =>
+        e.target.setAttribute("autocomplete", "new-password")
+      )
+
+      disableAutofill()
       autocomplete.addListener("place_changed", () =>
         fillInAddress(autocomplete, shippingForm)
       )
@@ -105,10 +106,25 @@ export default function ShippingAddress({
 
       shippingForm.setFieldValue("streetAddress1", streetAddress1)
       shippingForm.setFieldValue("address", place.formatted_address)
+      shippingForm.handleSubmit()
+    }
+
+    function disableAutofill() {
+      // Autofill workaround adapted from https://stackoverflow.com/questions/29931712/chrome-autofill-covers-autocomplete-for-google-maps-api-v3/49161445#49161445
+      if (window.MutationObserver) {
+        const observerHack = new MutationObserver(() => {
+          observerHack.disconnect()
+          document.getElementById("address").autocomplete = "new-password"
+        })
+        observerHack.observe(document.getElementById("address"), {
+          attributes: true,
+          attributeFilter: ["autocomplete"],
+        })
+      }
     }
 
     initAutocomplete()
-  }, [shippingFormRef.current?.values?.useFullForm])
+  }, [])
 
   const handleChangeCountry = (ev) => {
     const selectedCountry = COUNTRIES_RESTRICTION.find(
@@ -136,7 +152,10 @@ export default function ShippingAddress({
   }
 
   const handleBlur = (e) => {
-    if (e.currentTarget.value === oldValues[e.currentTarget.name]) {
+    if (
+      e.currentTarget.name === "address" ||
+      e.currentTarget.value === oldValues[e.currentTarget.name]
+    ) {
       return
     }
     const shippingForm = shippingFormRef.current
@@ -242,12 +261,14 @@ export default function ShippingAddress({
 
                   <Form.Group controlId="phone" as={Col} xs="12">
                     <Form.Label>Phone Number</Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder="Phone Number"
+                    <Input
+                      className="form-control"
+                      placeholder="+61 4 33 232 793"
                       name="phone"
                       value={values.phone}
-                      onChange={handleChange}
+                      onChange={(phoneNumber) => {
+                        setFieldValue("phone", phoneNumber)
+                      }}
                       onBlur={handleBlur}
                     />
 
@@ -280,40 +301,45 @@ export default function ShippingAddress({
                       fieldName="country.country"
                     />
                   </Form.Group>
+
+                  <Form.Group
+                    controlId="address"
+                    as={Col}
+                    xs="12"
+                    className={values.useFullForm ? "d-none" : ""}
+                  >
+                    <Form.Label>Delivery Address</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="e.g 30 Hazelwood st, Alexandria, 2020"
+                      name="address"
+                      value={values.address}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      autoComplete="new-password"
+                    />
+                    <ErrorMessageWrapper
+                      errors={errors}
+                      touched={touched}
+                      fieldName="address"
+                    />
+                  </Form.Group>
                   {!values.useFullForm && (
-                    <>
-                      <Form.Group controlId="address" as={Col} xs="12">
-                        <Form.Label>Delivery Address</Form.Label>
-                        <Form.Control
-                          type="text"
-                          placeholder="e.g 30 Hazelwood st, Alexandria, 2020"
-                          name="address"
-                          value={values.address}
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                        />
-                        <ErrorMessageWrapper
-                          errors={errors}
-                          touched={touched}
-                          fieldName="address"
-                        />
-                      </Form.Group>
-                      <Form.Group
-                        controlId="fullform"
-                        as={Col}
-                        xs="12"
-                        className={styles.fullformBtn}
+                    <Form.Group
+                      controlId="fullform"
+                      as={Col}
+                      xs="12"
+                      className={styles.fullformBtn}
+                    >
+                      No match?
+                      <Button
+                        variant="link"
+                        className={clsx("primary", styles.btnLink)}
+                        onClick={() => setFieldValue("useFullForm", true)}
                       >
-                        No match?
-                        <Button
-                          variant="link"
-                          className={clsx("primary", styles.btnLink)}
-                          onClick={() => setFieldValue("useFullForm", true)}
-                        >
-                          Use the full form
-                        </Button>
-                      </Form.Group>
-                    </>
+                        Use the full form
+                      </Button>
+                    </Form.Group>
                   )}
 
                   {values.useFullForm && (

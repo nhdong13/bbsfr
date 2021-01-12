@@ -23,7 +23,7 @@ import { paymentCheckoutTokenCreate } from "lib/mutations"
 import { authorizeKlarna } from "./klarna"
 import { validateCreditCard, authorizeCreditCard } from "./credit_card"
 import { initGooglePay } from "./google_pay"
-import { INITIAL_ADDRESS } from "../constants"
+import { INITIAL_ADDRESS, MAX_TOASTS_ALLOWED } from "../constants"
 import { mappingDataAddress, setBilling, processPayment } from "./helpers"
 import styles from "./Delivery.module.scss"
 
@@ -43,7 +43,7 @@ export default function DeliveryComponent() {
   const shippingFormRef = useRef()
   const { totalPrice, subtotalPrice, shippingPrice, discount } = useCart()
   const { data: userData, loading } = useUserDetails()
-  const { addToast } = useToasts()
+  const { addToast, removeToast, toastStack } = useToasts()
   const [createPaymentCheckoutToken] = useMutation(paymentCheckoutTokenCreate)
   const router = useRouter()
   const { status, orderToken, result, checkoutId } = router.query
@@ -193,6 +193,10 @@ export default function DeliveryComponent() {
       autoDismiss: true,
       className: "mt-4 mr-2 w-auto",
     })
+
+    if (toastStack.length > MAX_TOASTS_ALLOWED) {
+      removeToast(toastStack[0].id)
+    }
     if (bag) {
       bag.setSubmitting(false)
     }

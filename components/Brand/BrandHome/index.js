@@ -4,12 +4,13 @@ import ImagedHeaderComponent from "../Components/ImagedHeaderComponent"
 import SessionBrowseByCategoryComponent from "../../DepartmentDetail/Sesstion/SessionBrowseByCategoryComponent"
 import Head from "next/head"
 import { convertSchemaFAQ } from "../../../services/convertSchemaFAQ"
-import Link from "next/link"
-import styles from "../Brand.module.scss"
 
 const SEODynamic = dynamic(() => import("../../HomePage/SEO"))
 const FAQDynamic = dynamic(() => import("../../HomePage/FAQ"))
 const TestimonialsDynamic = dynamic(() => import("../../HomePage/Testimonials"))
+const BackToPageBeforeDynamic = dynamic(() =>
+  import("../../Common/BackPageComponent")
+)
 
 const BrandHomeComponent = ({
   initialResponse,
@@ -28,6 +29,10 @@ const BrandHomeComponent = ({
   const heading1 =
     brand && brand.page_heading_1 && brand.page_heading_1.length > 0
       ? brand.page_heading_1[0].text
+      : "Brand"
+  const heading2 =
+    brand && brand.page_heading_2 && brand.page_heading_2.length > 0
+      ? brand.page_heading_2[0].text
       : "Brand"
   const collections =
     brand.brand_collections &&
@@ -65,18 +70,13 @@ const BrandHomeComponent = ({
         searchOnLoad={!initialResponse}
       >
         <ImagedHeaderComponent
-          header={
-            brand && brand.page_heading_1 && brand.page_heading_1.length > 0
-              ? brand.page_heading_1[0].text
-              : "Brand Home"
-          }
+          header={heading1}
           pipeline={pipeline}
           imgUrl={brand_hero_image?.url}
+          notShowProductCount={true}
         />
+        <BackToPageBeforeDynamic page={"All brands"} type="brandHome" />
       </SearchProvider>
-      <div className={styles.backBtn}>
-        <Link href={`/brands`}>&lt; All brands</Link>
-      </div>
 
       <SessionBrowseByCategoryComponent
         departmentSlug={brand._meta.uid}
@@ -84,10 +84,10 @@ const BrandHomeComponent = ({
         disableTitleContainer={true}
       />
       {/* <BestSellerComponent products={[]} brandHeading={heading1} /> */}
-      <TestimonialsDynamic testimonials={testimonials} type="home" />
+      <TestimonialsDynamic testimonials={testimonials} type="brand" />
       <FAQDynamic FAQ={{ faq, faq_title }} />
       <SEODynamic
-        heading1={heading1}
+        heading1={heading2}
         pageParagraph={
           brand && brand.page_paragraph && brand.page_paragraph.length > 0
             ? brand.page_paragraph
