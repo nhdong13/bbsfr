@@ -33,7 +33,7 @@ const PaginationComponent = ({
           },
         }}
       >
-        <Pagination />
+        <Pagination compact={false} />
       </SearchProvider>
     </Container>
   )
