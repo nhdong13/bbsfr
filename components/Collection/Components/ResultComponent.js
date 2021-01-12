@@ -24,12 +24,12 @@ const ListProductsDynamic = dynamic(() => import("./ListProductsComponent"))
 const ResultComponent = ({
   pipeline,
   initialResponse,
-  variables,
   filter,
   priceRangeFilter,
   brandFilter,
   categoryFilter,
   listBrandsFilter,
+  ratingFilter,
 }) => {
   const [show, setShow] = useState(false)
   const [sortFilterChanged, setChanged] = useState(false)
@@ -105,7 +105,7 @@ const ResultComponent = ({
         initialResponse={initialResponse}
         pipeline={pipeline}
         filter={filter}
-        variables={variables}
+        // variables={variables}
       />
 
       {/* ------------Modal sort filter------------- */}
@@ -118,13 +118,11 @@ const ResultComponent = ({
           setChanged={setChanged}
           filter={filter}
           initialResponse={initialResponse}
-          variables={variables}
         />
 
         {/* Filter feature */}
         <FilterComponent
           setChanged={setChanged}
-          variables={variables}
           pipeline={pipeline}
           filter={filter}
           initialResponse={initialResponse}
@@ -132,6 +130,7 @@ const ResultComponent = ({
           brandFilter={brandFilter}
           priceRangeFilter={priceRangeFilter}
           listBrandsFilter={listBrandsFilter}
+          ratingFilter={ratingFilter}
         />
 
         <div onClick={handleClose} className={styles.button_sajari}>

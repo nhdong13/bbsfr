@@ -26,6 +26,7 @@ const CollectionComponent = ({
   brandFilter,
   categoryFilter,
   listBrandsFilter,
+  ratingFilter,
 }) => {
   const {
     meta_description,
@@ -54,16 +55,6 @@ const CollectionComponent = ({
           dangerouslySetInnerHTML={{ __html: jsonFAQ }}
         />
       </Head>
-      <SearchProvider
-        search={{
-          pipeline,
-          // variables: searchObj.variables,
-          filters: [priceRangeFilter, brandFilter, categoryFilter],
-        }}
-        initialResponse={initialResponse}
-        searchOnLoad={!initialResponse}
-        defaultFilter={filter}
-      >
         <HeaderCollectionDynamic
           pipeline={pipeline}
           pageHeading={
@@ -91,6 +82,7 @@ const CollectionComponent = ({
           pipeline={pipeline}
           initialResponse={initialResponse}
           listBrandsFilter={listBrandsFilter}
+          ratingFilter={ratingFilter}
           filter={filter}
         />
         <TestimonialsDynamic testimonials={testimonials} type="collection" />
@@ -111,7 +103,6 @@ const CollectionComponent = ({
               : []
           }
         />
-      </SearchProvider>
     </>
   )
 }

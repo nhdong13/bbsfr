@@ -8,15 +8,12 @@ const SortingComponent = ({
   filter,
   pipeline,
   initialResponse,
-  variables,
 }) => {
   const { sorting, setSorting } = useSorting()
-  console.log("Debug code filter:", filter)
   return (
     <SearchProvider
       search={{
         pipeline,
-        // variables,
         variables: new Variables({
           resultsPerPage: constants.RESULT_PER_PAGE,
         }),

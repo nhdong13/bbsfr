@@ -3,18 +3,12 @@ import { Container } from "react-bootstrap";
 import { constants } from "../../../constant"
 import styles from "../Common.module.scss"
 
-const PaginationComponent = ({
-  variables,
-  pipeline,
-  initialResponse,
-  filter,
-}) => {
+const PaginationComponent = ({ pipeline, initialResponse, filter }) => {
   return (
     <Container className={styles.containerPagination}>
       <SearchProvider
         search={{
           pipeline,
-          // variables,
           variables: new Variables({
             resultsPerPage: constants.RESULT_PER_PAGE,
           }),

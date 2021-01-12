@@ -2,8 +2,8 @@ import React, { useState } from "react"
 import styles from "../Collections.module.scss"
 import { Collapse, Container } from "react-bootstrap"
 import Image from "next/image"
-import { SearchProvider, Filter } from "@sajari/react-search-ui"
-import { useFilter, FilterBuilder } from "@sajari/react-hooks"
+import { Filter, Input, SearchProvider } from "@sajari/react-search-ui"
+import { useFilter, Variables } from "@sajari/react-hooks"
 import { useRouter } from "next/router"
 import {
   Radio,
@@ -12,27 +12,32 @@ import {
   Checkbox,
   Combobox,
 } from "@sajari/react-components"
+import { constants } from "../../../constant"
 
 const FilterComponent = ({
   pipeline,
-  variables,
   initialResponse,
   filter,
   brandFilter,
   categoryFilter,
   priceRangeFilter,
   listBrandsFilter,
+  ratingFilter,
 }) => {
   return (
     <>
       <SearchProvider
         search={{
           pipeline,
+          variables: new Variables({
+            resultsPerPage: constants.RESULT_PER_PAGE,
+          }),
           filters: [
+            listBrandsFilter,
             priceRangeFilter,
             brandFilter,
             categoryFilter,
-            listBrandsFilter,
+            ratingFilter,
           ],
         }}
         initialResponse={initialResponse}
@@ -45,15 +50,16 @@ const FilterComponent = ({
           </div>
           {/* <Filter
             type="list"
-            name="brand"
-            title="Category"
+            name="listBrands"
+            title="List brands"
             searchable
             sort="alpha"
           /> */}
           <FilterRender name="brand" title="Brand" />
-          <FilterRender name="brands" title="List Brands" />
+          <FilterRender name="listBrands" title="List Brands" />
           <FilterRender name="priceRange" title="Range ($)" />
           <FilterRender name="category" title="Category" />
+          {/* <Filter type="rating" name="rating" title="Rating" /> */}
         </div>
       </SearchProvider>
     </>
@@ -93,12 +99,15 @@ const FilterRender = ({ name, title }) => {
               <Collapse in={open}>
                 <div>
                   {name && name === "brand" && (
+                    <>
                     <Combobox
                       className={styles.sajari_combobox}
                       placeholder="Search"
                       // value={searchInputFilter}
                       // onChange={handleFilter}
                     />
+                     {/* <Input /> */}
+                     </>
                   )}
                   <div className="flex items-center justify-between mb-2"></div>
                   <Group
