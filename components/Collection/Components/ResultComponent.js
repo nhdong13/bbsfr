@@ -29,6 +29,7 @@ const ResultComponent = ({
   priceRangeFilter,
   brandFilter,
   categoryFilter,
+  listBrandsFilter,
 }) => {
   const [show, setShow] = useState(false)
   const [sortFilterChanged, setChanged] = useState(false)
@@ -130,6 +131,7 @@ const ResultComponent = ({
           categoryFilter={categoryFilter}
           brandFilter={brandFilter}
           priceRangeFilter={priceRangeFilter}
+          listBrandsFilter={listBrandsFilter}
         />
 
         <div onClick={handleClose} className={styles.button_sajari}>

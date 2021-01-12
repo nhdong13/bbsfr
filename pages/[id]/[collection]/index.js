@@ -99,6 +99,13 @@ const Collection = ({
     multi: true,
   })
 
+  const listBrandsFilter = new FilterBuilder({
+    name: "brands",
+    field: "brand",
+    count: true,
+    multi: true,
+  })
+
   const categoryFilter = new FilterBuilder({
     name: "category",
     field: "level1",
@@ -128,6 +135,7 @@ const Collection = ({
       priceRangeFilter={priceRangeFilter}
       brandFilter={brandFilter}
       categoryFilter={categoryFilter}
+      listBrandsFilter={listBrandsFilter}
       initialResponse={initialResponse}
       pipeline={pipeline}
       variables={searchObj.variables}

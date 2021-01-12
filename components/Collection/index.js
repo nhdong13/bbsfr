@@ -25,6 +25,7 @@ const CollectionComponent = ({
   priceRangeFilter,
   brandFilter,
   categoryFilter,
+  listBrandsFilter,
 }) => {
   const {
     meta_description,
@@ -89,6 +90,7 @@ const CollectionComponent = ({
           variables={variables}
           pipeline={pipeline}
           initialResponse={initialResponse}
+          listBrandsFilter={listBrandsFilter}
           filter={filter}
         />
         <TestimonialsDynamic testimonials={testimonials} type="collection" />

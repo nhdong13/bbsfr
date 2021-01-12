@@ -21,13 +21,19 @@ const FilterComponent = ({
   brandFilter,
   categoryFilter,
   priceRangeFilter,
+  listBrandsFilter,
 }) => {
   return (
     <>
       <SearchProvider
         search={{
           pipeline,
-          filters: [priceRangeFilter, brandFilter, categoryFilter],
+          filters: [
+            priceRangeFilter,
+            brandFilter,
+            categoryFilter,
+            listBrandsFilter,
+          ],
         }}
         initialResponse={initialResponse}
         searchOnLoad={!initialResponse}
@@ -45,6 +51,7 @@ const FilterComponent = ({
             sort="alpha"
           /> */}
           <FilterRender name="brand" title="Brand" />
+          <FilterRender name="brands" title="List Brands" />
           <FilterRender name="priceRange" title="Range ($)" />
           <FilterRender name="category" title="Category" />
         </div>

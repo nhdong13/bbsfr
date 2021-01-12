@@ -1,6 +1,6 @@
 import React from "react"
 import styles from "./sorting.module.scss"
-import { useSorting, SearchProvider } from "@sajari/react-hooks"
+import { useSorting, SearchProvider, Variables } from "@sajari/react-hooks"
 import { constants } from "../../../constant"
 
 const SortingComponent = ({

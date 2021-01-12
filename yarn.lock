@@ -592,6 +592,15 @@
     "@sajari/sdk-js" "2.0.0-alpha.18"
     js-cookie "^2.2.1"
 
+"@sajari/react-hooks@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@sajari/react-hooks/-/react-hooks-1.2.0.tgz#98a5e8a0bbb7bac702e84e065eaaba3dc153d9e4"
+  integrity sha512-4l0ZFi9dzApkIu3hGP+pMHaZWmJT74LWFkE7Z1dkZfeDXIi1lF5UbREFhBZs4oDEhe65c/zaR7mYH9zfE5KShQ==
+  dependencies:
+    "@sajari/react-sdk-utils" "^1.3.0"
+    "@sajari/sdk-js" "2.0.0-alpha.18"
+    js-cookie "^2.2.1"
+
 "@sajari/react-sdk-utils@^1.2.2":
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/@sajari/react-sdk-utils/-/react-sdk-utils-1.2.2.tgz#e607dfa0fec20167a2ad067e0760e3f05cfcb4f2"
@@ -607,15 +616,30 @@
     tailwindcss-truncate-multiline "^1.0.3"
     twin.macro "^1.12.1"
 
-"@sajari/react-search-ui@1.5.0":
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/@sajari/react-search-ui/-/react-search-ui-1.5.0.tgz#3563f15ff920331c78a6d2f08b9be6ff1a93c771"
-  integrity sha512-mb1k1XUBjTKdCXX8Th7lGhRulaL3eClKCESRQGVXoZpQEc5o8REeA6QH5BM92wv6Xhmawnb1SKwtgGA7QGff3g==
+"@sajari/react-sdk-utils@^1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@sajari/react-sdk-utils/-/react-sdk-utils-1.3.0.tgz#6c224109e3b2325dec08979b3d41ee90f90ff2ea"
+  integrity sha512-WfNHfgELboPF25Xf3fycO6sA5moo3ioZa/Qtw8Hpc+/YeOSvL4LuaMk/lTdMRBoMWN423mFcbKfFu9acqAMY+g==
+  dependencies:
+    "@emotion/core" "^10.1.1"
+    "@emotion/is-prop-valid" "1.0.0"
+    "@emotion/styled" "^10.0.27"
+    "@tailwindcss/ui" "^0.7.2"
+    emotion-theming "^10.0.27"
+    tailwindcss "^1.9.6"
+    tailwindcss-filters "^3.0.0"
+    tailwindcss-truncate-multiline "^1.0.3"
+    twin.macro "^1.12.1"
+
+"@sajari/react-search-ui@1.6.1":
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/@sajari/react-search-ui/-/react-search-ui-1.6.1.tgz#793f872673e957981ff0db82f927528d14c8013e"
+  integrity sha512-FUI0HEzU1neAsPjcyiqVQZ0MP9igl3baro25H9eK2/muXTfh1v9sxDa5McHhnLgkrqsWYS8jtprDptYAsdB6IQ==
   dependencies:
     "@react-aria/utils" "3.5.0"
     "@sajari/react-components" "^1.4.1"
-    "@sajari/react-hooks" "^1.1.3"
-    "@sajari/react-sdk-utils" "^1.2.2"
+    "@sajari/react-hooks" "^1.2.0"
+    "@sajari/react-sdk-utils" "^1.3.0"
     i18next "19.8.4"
     i18next-browser-languagedetector "^6.0.1"
     react-aria-live "^2.0.5"
