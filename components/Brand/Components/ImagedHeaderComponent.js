@@ -3,7 +3,7 @@ import { Container } from "react-bootstrap"
 import styles from "../Brand.module.scss"
 
 const ImagedHeaderComponent = (props) => {
-  const { imgUrl, header } = props
+  const { imgUrl, header, notShowProductCount } = props
   const { totalResults } = useSearchContext()
   return (
     <Container
@@ -18,9 +18,11 @@ const ImagedHeaderComponent = (props) => {
       }
     >
       <div className={styles.header}>{header}</div>
-      <div className={styles.productCount}>{`${
-        totalResults != undefined ? totalResults : 0
-      } Products`}</div>
+      <div className={styles.productCount}>
+        {!notShowProductCount
+          ? `${totalResults != undefined ? totalResults : 0} Products`
+          : "\u00A0"}
+      </div>
     </Container>
   )
 }

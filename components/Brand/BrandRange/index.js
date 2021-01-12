@@ -36,6 +36,12 @@ const BrandRangeComponent = ({
     brandRange.page_heading_1.length > 0
       ? brandRange.page_heading_1[0].text
       : "Brand"
+  const heading2 =
+    brandRange &&
+    brandRange.page_heading_2 &&
+    brandRange.page_heading_2.length > 0
+      ? brandRange.page_heading_2[0].text
+      : "Brand"
 
   return (
     <>
@@ -80,10 +86,10 @@ const BrandRangeComponent = ({
         />
       </SearchProvider>
 
-      <TestimonialsDynamic testimonials={testimonials} type="home" />
+      <TestimonialsDynamic testimonials={testimonials} type="brand" />
       <FAQDynamic FAQ={{ faq, faq_title }} />
       <SEODynamic
-        heading1={heading1}
+        heading1={heading2}
         pageParagraph={
           brandRange &&
           brandRange.page_paragraph &&

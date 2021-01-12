@@ -74,7 +74,7 @@ const BrandCategoryComponent = ({
         />
       </SearchProvider>
 
-      <TestimonialsDynamic testimonials={testimonials} type="home" />
+      <TestimonialsDynamic testimonials={testimonials} type="category" />
       <FAQDynamic FAQ={{ faq, faq_title }} />
       <SEODynamic
         heading1={heading1}
