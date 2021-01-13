@@ -9,13 +9,6 @@ const FilterComponent = ({ arrFilter, handleSetOpenCollapse, setChanged }) => {
         <div className={styles.filterTitle}>
           <p>REFINE BY</p>
         </div>
-        {/* <Filter
-            type="list"
-            name="listBrands"
-            title="List brands"
-            searchable
-            sort="alpha"
-          /> */}
         {arrFilter.map((item, index) => (
           <FilterRender
             handleSetOpenCollapse={handleSetOpenCollapse}

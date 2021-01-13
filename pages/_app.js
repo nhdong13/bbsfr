@@ -29,7 +29,6 @@ if (typeof window === "undefined") {
   require("localstorage-polyfill")
 }
 
-
 export default function MyApp({ Component, pageProps }) {
   const store = useStore(pageProps.initialReduxState)
   const apolloClient = useApollo(pageProps.initialApolloState)
