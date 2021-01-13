@@ -2,18 +2,24 @@ import React, { useState } from "react"
 import styles from "../Collections.module.scss"
 import { Collapse } from "react-bootstrap"
 import Image from "next/image"
-import Filter from "../../Common/Filter"
 import SortingComponent from "../../Common/Sorting"
 
-const SortComponent = ({ setChanged }) => {
-  const [open, setOpen] = useState(false)
+const SortComponent = ({
+  setChanged,
+  openCollapseSort,
+  setOpenCollapseSort,
+}) => {
+  const [open, setOpen] = useState(openCollapseSort)
   return (
     <>
       <div className={styles.sort_filter_by}>
         <div className={styles.sub_heading}>SORT BY</div>
         <div className={`${styles.group_heading} ${open ? styles.active : ""}`}>
           <div
-            onClick={() => setOpen(!open)}
+            onClick={() => {
+              setOpen(!open)
+              setOpenCollapseSort(!open)
+            }}
             aria-controls="sort-collapse"
             aria-expanded={open}
           >

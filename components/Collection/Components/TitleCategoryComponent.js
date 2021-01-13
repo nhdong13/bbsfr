@@ -4,7 +4,7 @@ import styles from "./../Collections.module.scss"
 const TitleCategoryComponent = ({ title }) => {
   return (
     <Container fluid style={{ paddingTop: "40px", paddingBottom: "17px" }}>
-      <div className={styles.header_category}>{title}</div>
+      <div className={styles.headerCategory}>{title}</div>
     </Container>
   )
 }

@@ -1,10 +1,6 @@
 import React, { useState } from "react"
 import { Container, Modal, Button } from "react-bootstrap"
 import Image from "next/image"
-import {
-  countBooleanSortFilter,
-  listUpdate,
-} from "../../../services/collection"
 import styles from "../Collections.module.scss"
 import { useSearchContext } from "@sajari/react-hooks"
 import dynamic from "next/dynamic"
@@ -20,30 +16,65 @@ const ListProductsDynamic = dynamic(() => import("./ListProductsComponent"))
 const ResultComponent = () => {
   const [show, setShow] = useState(false)
   const [sortFilterChanged, setChanged] = useState(false)
-  const [countBol, setCountBol] = useState(0)
+  const [openCollapseSort, setOpenCollapseSort] = useState(false)
+  const [arrFilter, setArrFilter] = useState([
+    {
+      name: "brand",
+      open: false,
+      title: "Brand",
+    },
+    {
+      name: "listBrands",
+      open: false,
+      title: "List Brands",
+    },
+    {
+      name: "priceRange",
+      open: false,
+      title: "Range ($)",
+    },
+    {
+      name: "category",
+      open: false,
+      title: "Category",
+    },
+    // {
+    //   name: "rating",
+    //   open: false,
+    //   title: "Rating",
+    // },
+  ])
 
   const sortFilter = () => {
     setShow(!show)
   }
 
-  const setOpenFilterCollapse = (id, bol) => {
-    setListFilter(listUpdate(listFilter, id, bol))
-  }
-
   //Handle Close Modal
   const handleClose = () => {
-    // let count = countBooleanSortFilter(listFilter)
     setShow(false)
     setChanged(false)
-    // setCountBol(count)
+  }
+
+  const handleSetOpenCollapse = (name) => {
+    const mapArrFilter = arrFilter.map((i) => {
+      if (i.name === name) {
+        return {
+          ...i,
+          open: !i.open,
+        }
+      } else {
+        return { ...i }
+      }
+    })
+    setArrFilter(mapArrFilter)
   }
 
   const { results } = useSearchContext()
 
   //Button show sort and filter
   const SortFilterButton = () => (
-    <Container fluid className={styles.filter_sort_sajari}>
-      <div className={styles.short_filter}>
+    <Container fluid className={styles.filterSortContainer}>
+      <div className={styles.shortFilter}>
         <div className={styles.title} onClick={sortFilter}>
           <div
             style={{
@@ -78,7 +109,7 @@ const ResultComponent = () => {
           </div>
           <div>Filter</div>
         </div>
-        <div className={styles.horizontal_line}></div>
+        <div className={styles.horizontalLine}></div>
       </div>
     </Container>
   )
@@ -88,7 +119,7 @@ const ResultComponent = () => {
     <>
       <SortFilterButton />
       <ListProductsDynamic products={results} />
-      <PaginationDynamic/>
+      <PaginationDynamic />
 
       {/* ------------Modal sort filter------------- */}
       <Modal show={show} onHide={handleClose} className="short_filter_modal">
@@ -97,10 +128,14 @@ const ResultComponent = () => {
         {/*Sorting Feature*/}
         <SortComponent
           setChanged={setChanged}
+          openCollapseSort={openCollapseSort}
+          setOpenCollapseSort={setOpenCollapseSort}
         />
 
         {/* Filter feature */}
         <FilterComponent
+          handleSetOpenCollapse={handleSetOpenCollapse}
+          arrFilter={arrFilter}
           setChanged={setChanged}
         />
 
@@ -110,11 +145,7 @@ const ResultComponent = () => {
               fixed="bottom"
               variant={sortFilterChanged ? "secondary" : "primary"}
             >
-              {sortFilterChanged
-                ? //  ||
-                  // countBol != countBooleanSortFilter(listFilter)
-                  "Apply"
-                : "Cancel"}
+              {sortFilterChanged ? "Apply" : "Cancel"}
             </Button>
           </div>
         </div>

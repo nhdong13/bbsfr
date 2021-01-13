@@ -1,9 +1,14 @@
-import React from "react"
+import React, { useEffect } from "react"
 import styles from "./sorting.module.scss"
 import { useSorting } from "@sajari/react-hooks"
 
 const SortingComponent = ({ setChanged }) => {
   const { sorting, setSorting } = useSorting()
+  //this code will remove if sajari fix filter for search
+  useEffect(() => {
+    setSorting("")
+  }, [])
+  //----
   return (
     <div className="">
       <div
