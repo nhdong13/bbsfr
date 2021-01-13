@@ -35,8 +35,11 @@ const YearGroupedComponent = (props) => {
       </div>
       <Collapse in={open}>
         <div>
-          {yearGrouped.map((vehicle) => (
-            <Link href={`/vehicles/${vehicle?._meta?.uid}`}>
+          {yearGrouped.map((vehicle, i) => (
+            <Link
+              key={`motorcycle-model-${i}`}
+              href={`/vehicles/${vehicle?._meta?.uid}`}
+            >
               <p className={styles.vehicleLink}>{vehicle.motorcycle_model}</p>
             </Link>
           ))}

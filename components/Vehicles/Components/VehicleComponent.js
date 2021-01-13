@@ -39,8 +39,9 @@ const VehicleComponent = (props) => {
       </div>
       <Collapse in={open}>
         <div className={styles.yearGroupedContainer}>
-          {vehicle.map((item) => (
+          {vehicle.map((item, i) => (
             <YearGroupedComponent
+              key={`motorcycle-year-${i}`}
               title={Object.keys(item)[0]}
               yearGrouped={Object.values(item)[0]}
             />

@@ -63,6 +63,7 @@ const VehiclesComponent = ({ vehiclesDirectory, vehicles, testimonials }) => {
         <div className={styles.vehicleList}>
           {Object.keys(generatedData).map((key, i, arr) => (
             <VehicleDynamic
+              key={`motorcycle-make-${i}`}
               title={key}
               vehicle={generatedData[key]}
               noBorder={arr.length - 1 === i ? true : false}
