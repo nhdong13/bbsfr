@@ -1,9 +1,8 @@
 import React, { useState } from "react"
 import styles from "../Collections.module.scss"
-import { Collapse, Container } from "react-bootstrap"
+import { Collapse } from "react-bootstrap"
 import Image from "next/image"
-import { Filter, Input, SearchProvider } from "@sajari/react-search-ui"
-import { useFilter, Variables } from "@sajari/react-hooks"
+import { useFilter } from "@sajari/react-hooks"
 import { useRouter } from "next/router"
 import {
   Radio,
@@ -12,56 +11,28 @@ import {
   Checkbox,
   Combobox,
 } from "@sajari/react-components"
-import { constants } from "../../../constant"
+import { Filter } from "@sajari/react-search-ui"
 
-const FilterComponent = ({
-  pipeline,
-  initialResponse,
-  filter,
-  brandFilter,
-  categoryFilter,
-  priceRangeFilter,
-  listBrandsFilter,
-  ratingFilter,
-}) => {
+const FilterComponent = ({}) => {
   return (
     <>
-      <SearchProvider
-        search={{
-          pipeline,
-          variables: new Variables({
-            resultsPerPage: constants.RESULT_PER_PAGE,
-          }),
-          filters: [
-            listBrandsFilter,
-            priceRangeFilter,
-            brandFilter,
-            categoryFilter,
-            ratingFilter,
-          ],
-        }}
-        initialResponse={initialResponse}
-        searchOnLoad={!initialResponse}
-        defaultFilter={filter}
-      >
-        <div className="">
-          <div className={styles.filterTitle}>
-            <p>REFINE BY</p>
-          </div>
-          {/* <Filter
+      <div className="">
+        <div className={styles.filterTitle}>
+          <p>REFINE BY</p>
+        </div>
+        {/* <Filter
             type="list"
             name="listBrands"
             title="List brands"
             searchable
             sort="alpha"
           /> */}
-          <FilterRender name="brand" title="Brand" />
-          <FilterRender name="listBrands" title="List Brands" />
-          <FilterRender name="priceRange" title="Range ($)" />
-          <FilterRender name="category" title="Category" />
-          {/* <Filter type="rating" name="rating" title="Rating" /> */}
-        </div>
-      </SearchProvider>
+        <FilterRender name="brand" title="Brand" />
+        <FilterRender name="listBrands" title="List Brands" />
+        <FilterRender name="priceRange" title="Range ($)" />
+        <FilterRender name="category" title="Category" />
+        {/* <Filter type="rating" name="rating" title="Rating" /> */}
+      </div>
     </>
   )
 }
@@ -100,14 +71,14 @@ const FilterRender = ({ name, title }) => {
                 <div>
                   {name && name === "brand" && (
                     <>
-                    <Combobox
-                      className={styles.sajari_combobox}
-                      placeholder="Search"
-                      // value={searchInputFilter}
-                      // onChange={handleFilter}
-                    />
-                     {/* <Input /> */}
-                     </>
+                      <Combobox
+                        className={styles.sajari_combobox}
+                        placeholder="Search"
+                        // value={searchInputFilter}
+                        // onChange={handleFilter}
+                      />
+                      {/* <Input /> */}
+                    </>
                   )}
                   <div className="flex items-center justify-between mb-2"></div>
                   <Group

@@ -4,33 +4,11 @@ import {
   listAllocationsByDepartmentUID,
 } from "../../../lib/prismic/api"
 import { search } from "@sajari/server"
-import { getConfigPipeline } from "../../../services/getPipelineSajari"
 import { authenticationFromStamped } from "../../../services/testimonial"
 import CollectionComponent from "../../../components/Collection"
 import { getDataForMainNav } from "../../../services/mainNav"
 import { mockupDataFilterCategory } from "../../../services/collection"
-import {
-  Pipeline,
-  Variables,
-  FilterBuilder,
-  SearchProvider,
-} from "@sajari/react-hooks"
-
-const pipeline = new Pipeline({ ...getConfigPipeline("best-buy") }, "query")
-const variables = new Variables({
-  resultsPerPage: 20,
-  q: "",
-})
-// var searchObj = { variables: null }
-
-// const initVariable = (filter) => {
-//   console.log("Debug code filter:", filter)
-//   searchObj.variables = new Variables({
-//     resultsPerPage: 20,
-//     q: "",
-//     filter: filter,
-//   })
-// }
+import { pipelineConfig, variablesConfig } from "../../../lib/sajari/config"
 
 export async function getStaticProps({ params }) {
   const requestOptions = authenticationFromStamped()
@@ -38,19 +16,15 @@ export async function getStaticProps({ params }) {
   const testimonials = await resStamped.json()
   const collections = await getCollectionByUid(params.collection)
   const dataNav = await getDataForMainNav()
-
   //Filter options will replace base params for per page --> this is code demo
   const filter = `categories ~ ['${mockupDataFilterCategory(params)}']`
-  // initVariable(filter)
-  // console.log("Debug code searchObj.variables:", searchObj.variables)
   const initialResponse = await search(
     {
-      pipeline,
-      variables,
+      pipeline: pipelineConfig,
+      variables: variablesConfig,
     },
     filter
   )
-  console.log("Debug code initialResponse:", initialResponse)
 
   return {
     props: {
@@ -58,7 +32,6 @@ export async function getStaticProps({ params }) {
       collections,
       testimonials,
       dataNav,
-      params,
       filter,
     },
     revalidate: +process.env.NEXT_PUBLIC_REVALIDATE_PAGE_TIME,
@@ -85,84 +58,12 @@ export async function getStaticPaths() {
   return { paths, fallback: false }
 }
 
-const Collection = ({
-  collections,
-  testimonials,
-  initialResponse,
-  filter,
-  params,
-}) => {
-  // if (!search.variables) {
-  //   //Filter options will replace base params for per page --> this is code demo
-  //   const filterClient = `categories ~ ['${mockupDataFilterCategory(params)}']`
-  //   initVariable(filterClient)
-  // }
-  const brandFilter = new FilterBuilder({
-    name: "brand",
-    options: {
-      Apple: "brand = 'Apple'",
-      Samsung: "brand = 'Samsung'",
-      Dell: "brand = 'Dell'",
-      HP: "brand = 'HP'",
-      Garmin: "brand = 'Garmin'",
-    },
-    multi: true,
-  })
-
-  const listBrandsFilter = new FilterBuilder({
-    name: "listBrands",
-    field: "brand",
-  })
-
-  const categoryFilter = new FilterBuilder({
-    name: "category",
-    field: "level1",
-    count: true,
-    multi: true,
-  })
-
-  const priceRangeFilter = new FilterBuilder({
-    name: "priceRange",
-    count: true,
-    field: "price_range",
-    multi: true,
-  })
-
-  const ratingFilter = new FilterBuilder({
-    name: "rating",
-    field: "rating",
-  })
-
+const Collection = ({ collections, testimonials }) => {
   return (
-    // <SearchProvider
-    //   search={{
-    //     pipeline,
-    //     // filters: [
-    //     //   priceRangeFilter,
-    //     //   brandFilter,
-    //     //   categoryFilter,
-    //     //   ratingFilter,
-    //     //   listBrandsFilter,
-    //     // ],
-    //   }}
-    //   initialResponse={initialResponse}
-    //   searchOnLoad={!initialResponse}
-    //   defaultFilter={filter}
-    // >
-      <CollectionComponent
-        priceRangeFilter={priceRangeFilter}
-        brandFilter={brandFilter}
-        categoryFilter={categoryFilter}
-        listBrandsFilter={listBrandsFilter}
-        initialResponse={initialResponse}
-        pipeline={pipeline}
-        // variables={searchObj.variables}
-        collections={collections}
-        testimonials={testimonials}
-        filter={filter}
-        ratingFilter={ratingFilter}
-      />
-    // </SearchProvider>
+    <CollectionComponent
+      collections={collections}
+      testimonials={testimonials}
+    />
   )
 }
 export default Collection

@@ -5,7 +5,7 @@ import Image from "next/image"
 import Filter from "../../Common/Filter"
 import SortingComponent from "../../Common/Sorting"
 
-const SortComponent = ({ setChanged, filter, pipeline, initialResponse }) => {
+const SortComponent = ({ setChanged }) => {
   const [open, setOpen] = useState(false)
   return (
     <>
@@ -32,12 +32,7 @@ const SortComponent = ({ setChanged, filter, pipeline, initialResponse }) => {
           <div className={styles.sort_filter_collapse}>
             <Collapse in={open}>
               <div>
-                <SortingComponent
-                  filter={filter}
-                  pipeline={pipeline}
-                  initialResponse={initialResponse}
-                  setChanged={setChanged}
-                />
+                <SortingComponent setChanged={setChanged} />
               </div>
             </Collapse>
           </div>

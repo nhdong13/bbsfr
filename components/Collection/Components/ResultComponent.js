@@ -6,11 +6,7 @@ import {
   listUpdate,
 } from "../../../services/collection"
 import styles from "../Collections.module.scss"
-import {
-  useSearchContext,
-  useResultsPerPage,
-  SearchProvider,
-} from "@sajari/react-hooks"
+import { useSearchContext } from "@sajari/react-hooks"
 import dynamic from "next/dynamic"
 import SortComponent from "./SortComponent"
 import FilterComponent from "./FilterComponent"
@@ -21,16 +17,7 @@ const PaginationDynamic = dynamic(() =>
 )
 const ListProductsDynamic = dynamic(() => import("./ListProductsComponent"))
 
-const ResultComponent = ({
-  pipeline,
-  initialResponse,
-  filter,
-  priceRangeFilter,
-  brandFilter,
-  categoryFilter,
-  listBrandsFilter,
-  ratingFilter,
-}) => {
+const ResultComponent = () => {
   const [show, setShow] = useState(false)
   const [sortFilterChanged, setChanged] = useState(false)
   const [countBol, setCountBol] = useState(0)
@@ -101,12 +88,7 @@ const ResultComponent = ({
     <>
       <SortFilterButton />
       <ListProductsDynamic products={results} />
-      <PaginationDynamic
-        initialResponse={initialResponse}
-        pipeline={pipeline}
-        filter={filter}
-        // variables={variables}
-      />
+      <PaginationDynamic/>
 
       {/* ------------Modal sort filter------------- */}
       <Modal show={show} onHide={handleClose} className="short_filter_modal">
@@ -114,23 +96,12 @@ const ResultComponent = ({
 
         {/*Sorting Feature*/}
         <SortComponent
-          pipeline={pipeline}
           setChanged={setChanged}
-          filter={filter}
-          initialResponse={initialResponse}
         />
 
         {/* Filter feature */}
         <FilterComponent
           setChanged={setChanged}
-          pipeline={pipeline}
-          filter={filter}
-          initialResponse={initialResponse}
-          categoryFilter={categoryFilter}
-          brandFilter={brandFilter}
-          priceRangeFilter={priceRangeFilter}
-          listBrandsFilter={listBrandsFilter}
-          ratingFilter={ratingFilter}
         />
 
         <div onClick={handleClose} className={styles.button_sajari}>

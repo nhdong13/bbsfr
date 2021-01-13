@@ -5,19 +5,19 @@ import { useStore } from "../redux/store"
 import { useApollo } from "../lib/apollo"
 import { SaleorProvider } from "../lib/@sdk/react"
 import Layout from "components/Layout"
+import NProgressBarComponent from "../components/Common/NProgressBar"
+import { SSRProvider, SearchProvider } from "@sajari/react-search-ui"
+import { pipelineConfig, variablesConfig } from "../lib/sajari/config"
 import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
 import "../styles/globals.scss"
-import NProgressBarComponent from "../components/Common/NProgressBar"
-import { getConfigPipeline } from "../services/getPipelineSajari"
 import {
-  SSRProvider,
-  Variables,
-  Pipeline,
-  FilterBuilder,
-  SearchProvider,
-} from "@sajari/react-search-ui"
-import App from "next/app"
+  brandFilter,
+  categoryFilter,
+  listBrandsFilter,
+  priceRangeFilter,
+  ratingFilter,
+} from "../lib/sajari/filter"
 
 const SALEOR_CONFIG = {
   apiUrl: process.env.NEXT_PUBLIC_API_URI,
@@ -29,16 +29,10 @@ if (typeof window === "undefined") {
   require("localstorage-polyfill")
 }
 
-const pipeline = new Pipeline({ ...getConfigPipeline("best-buy") }, "query")
-const variables = new Variables({
-  resultsPerPage: 20,
-  q: "",
-})
 
 export default function MyApp({ Component, pageProps }) {
   const store = useStore(pageProps.initialReduxState)
   const apolloClient = useApollo(pageProps.initialApolloState)
-  console.log("Debug code pageProps:", pageProps)
   return (
     <Provider store={store}>
       <ApolloProvider client={apolloClient}>
@@ -50,22 +44,29 @@ export default function MyApp({ Component, pageProps }) {
           <SSRProvider>
             <SearchProvider
               search={{
-                pipeline,
-                // variables,
+                pipeline: pipelineConfig,
+                variables: variablesConfig,
+                filters: [
+                  listBrandsFilter,
+                  priceRangeFilter,
+                  brandFilter,
+                  categoryFilter,
+                  ratingFilter,
+                ],
               }}
-              // initialResponse={pageProps?.initialResponse}
-              // searchOnLoad={!pageProps?.initialResponse}
+              initialResponse={pageProps?.initialResponse}
+              searchOnLoad={!pageProps?.initialResponse}
               defaultFilter={pageProps?.filter}
-              // customClassNames={{
-              //   pagination: {
-              //     container: "containerPagination",
-              //     button: "buttonPagination",
-              //     active: "activePagination",
-              //     next: "nextPagination",
-              //     prev: "prevPagination",
-              //     spacerEllipsis: "spacerEllipsisPagination",
-              //   },
-              // }}
+              customClassNames={{
+                pagination: {
+                  container: "containerPagination",
+                  button: "buttonPagination",
+                  active: "activePagination",
+                  next: "nextPagination",
+                  prev: "prevPagination",
+                  spacerEllipsis: "spacerEllipsisPagination",
+                },
+              }}
             >
               <ToastProvider>
                 <NProgressBarComponent />

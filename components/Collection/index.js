@@ -1,5 +1,4 @@
 import Head from "next/head"
-import { SearchProvider } from "@sajari/react-hooks"
 import dynamic from "next/dynamic"
 import { convertSchemaFAQ } from "../../services/convertSchemaFAQ"
 const SEODynamic = dynamic(() => import("../HomePage/SEO"))
@@ -17,16 +16,7 @@ const TestimonialsDynamic = dynamic(() =>
 
 const CollectionComponent = ({
   collections,
-  initialResponse,
-  pipeline,
   testimonials,
-  // variables,
-  filter,
-  priceRangeFilter,
-  brandFilter,
-  categoryFilter,
-  listBrandsFilter,
-  ratingFilter,
 }) => {
   const {
     meta_description,
@@ -56,7 +46,6 @@ const CollectionComponent = ({
         />
       </Head>
       <HeaderCollectionDynamic
-        pipeline={pipeline}
         pageHeading={
           collections &&
           collections.page_heading_1 &&
@@ -74,17 +63,7 @@ const CollectionComponent = ({
             : "List Category"
         }
       />
-      <ResultDynamic
-        categoryFilter={categoryFilter}
-        brandFilter={brandFilter}
-        priceRangeFilter={priceRangeFilter}
-        // variables={variables}
-        pipeline={pipeline}
-        initialResponse={initialResponse}
-        listBrandsFilter={listBrandsFilter}
-        ratingFilter={ratingFilter}
-        filter={filter}
-      />
+      <ResultDynamic />
       <TestimonialsDynamic testimonials={testimonials} type="collection" />
       <FAQDynamic FAQ={{ faq, faq_title }} />
       <SEODynamic
