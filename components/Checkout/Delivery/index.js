@@ -123,7 +123,7 @@ export default function DeliveryComponent() {
       initGooglePay(paymentsClient, clientToken, setGooglePayInstance)
     }
 
-    setGiftCards(checkout.voucherifies)
+    setGiftCards(checkout.voucherifies || [])
 
     let shippingMethod = checkout.shippingMethod?.id
     let promotion = initDeliveryData.promotion
@@ -264,6 +264,8 @@ export default function DeliveryComponent() {
                 deliveryFormRef={deliveryFormRef}
                 handleSubmitError={handleSubmitError}
                 currentUser={currentUser}
+                giftCards={giftCards}
+                setGiftCards={setGiftCards}
               />
 
               <Formik
@@ -339,6 +341,9 @@ export default function DeliveryComponent() {
                       setFieldValue={setFieldValue}
                       setFieldTouched={setFieldTouched}
                       setFieldError={setFieldError}
+                      promoCodeDiscount={promoCodeDiscount}
+                      giftCards={giftCards}
+                      setGiftCards={setGiftCards}
                     />
 
                     <OrderTotalCost
@@ -347,9 +352,9 @@ export default function DeliveryComponent() {
                       shippingPrice={shippingPrice}
                       discount={discount}
                       promotion={values.promotion}
-                      giftCards={giftCards?.filter(
-                        (card) => card.type === "GIFT_VOUCHER"
-                      )}
+                      giftCards={giftCards}
+                      setGiftCards={setGiftCards}
+                      voucherifies={checkout?.voucherifies || []}
                     ></OrderTotalCost>
 
                     {showContinue && (

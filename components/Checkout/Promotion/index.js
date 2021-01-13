@@ -17,11 +17,15 @@ export default function PromotionComponent({
   setFieldValue,
   setFieldTouched,
   setFieldError,
+  promoCodeDiscount,
+  giftCards,
+  setGiftCards,
 }) {
   const [loading, setLoading] = useState(false)
   const { items, subtotalPrice } = useCart()
   const { addPromoCode, removePromoCode, load } = useCheckout()
   const [validateVoucherify] = useMutation(voucherifyValidate)
+  const valid = promoCodeDiscount?.voucherCode || values.promotion.valid
 
   const handleApplyCode = async () => {
     setLoading(true)
@@ -63,7 +67,9 @@ export default function PromotionComponent({
 
   const handleDeletePromoCode = async () => {
     setLoading(true)
-    await removePromoCode(values.promotion.code)
+    await removePromoCode(
+      promoCodeDiscount?.voucherCode || values.promotion.code
+    )
     const promotion = {
       valid: false,
       code: "",
@@ -96,8 +102,11 @@ export default function PromotionComponent({
 
     if (voucherify.valid === "true") {
       await addPromoCode(values.giftCard)
-      await load()
       setFieldValue("giftCard", "")
+      setGiftCards([
+        ...giftCards,
+        { ...voucherify, currentBalanceAmount: voucherify.discountAmount },
+      ])
     } else {
       setFieldTouched("giftCard", true, false)
       setFieldError("giftCard", "Invalid Gift Card Number")
@@ -121,22 +130,20 @@ export default function PromotionComponent({
                     type="text"
                     placeholder="Enter promo code"
                     name="promotion.code"
-                    value={values.promotion.code}
+                    value={
+                      promoCodeDiscount?.voucherCode || values.promotion.code
+                    }
                     onChange={handleChange}
-                    disabled={values.promotion.valid}
+                    disabled={valid}
                   />
                   <InputGroup.Append>
                     <Button
                       variant="primary"
                       className={styles.btn}
                       type="button"
-                      onClick={
-                        values.promotion.valid
-                          ? handleDeletePromoCode
-                          : handleApplyCode
-                      }
+                      onClick={valid ? handleDeletePromoCode : handleApplyCode}
                     >
-                      {values.promotion.valid ? "Delete" : "Apply"}
+                      {valid ? "Delete" : "Apply"}
                     </Button>
                   </InputGroup.Append>
                 </InputGroup>

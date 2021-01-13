@@ -228,7 +228,7 @@ export class CheckoutJobs {
     } else {
       this.repository.setCheckout({
         ...checkout,
-        promoCodeDiscount: data?.promoCodeDiscount,
+        ...data,
       });
       return { data };
     }
@@ -258,7 +258,7 @@ export class CheckoutJobs {
     } else {
       this.repository.setCheckout({
         ...checkout,
-        promoCodeDiscount: data?.promoCodeDiscount,
+        ...data,
       });
       return { data };
     }

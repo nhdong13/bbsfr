@@ -41,7 +41,9 @@ export const createCheckout = async (
   bag,
   handleSubmitError,
   addPromoCode,
-  deliveryForm
+  deliveryForm,
+  giftCards,
+  setGiftCards
 ) => {
   const { data, dataError } = await setShippingAddress(shippingAddress, email)
 
@@ -74,6 +76,14 @@ export const createCheckout = async (
     !data.voucherifies.find((voucher) => voucher.code === promotion.code)
   ) {
     await addPromoCode(promotion.code)
+  }
+
+  if (giftCards.length) {
+    for (let index = 0; index < giftCards.length; index++) {
+      const card = giftCards[index]
+      await addPromoCode(card.code)
+    }
+    setGiftCards([])
   }
 
   return { checkoutData: data }

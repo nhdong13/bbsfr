@@ -23,6 +23,8 @@ export default function ShippingAddress({
   deliveryFormRef,
   handleSubmitError,
   currentUser,
+  giftCards,
+  setGiftCards,
 }) {
   const {
     checkout,
@@ -144,7 +146,8 @@ export default function ShippingAddress({
       handleSubmitError,
       addPromoCode,
       deliveryForm,
-      checkout
+      giftCards,
+      setGiftCards
     )
     if (!checkoutData) return
     await setShippingMethod("")

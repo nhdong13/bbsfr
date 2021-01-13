@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Row, Col, Button } from "react-bootstrap"
 import clxs from "clsx"
+import _ from "lodash"
 import Image from "next/image"
 import { useCheckout } from "@sdk/react"
 import LoadingSpinner from "components/LoadingSpinner"
@@ -14,15 +15,24 @@ export default function OrderTotalCost({
   promotion,
   discount,
   giftCards,
+  setGiftCards,
+  voucherifies,
 }) {
   const discountAmount =
     discount?.amount > 0 ? discount : promotion?.discountAmount
   const { removePromoCode } = useCheckout()
   const [loading, setLoading] = useState(false)
+  const listGiftCards = _.uniqBy(
+    [...giftCards, ...voucherifies].filter(
+      (card) => card.type === "GIFT_VOUCHER"
+    ),
+    "code"
+  )
 
   const handleDeleteGiftCard = async (code) => {
     setLoading(true)
     await removePromoCode(code)
+    setGiftCards(giftCards.filter((card) => card.code !== code))
     setLoading(false)
   }
   return (
@@ -32,28 +42,27 @@ export default function OrderTotalCost({
         <p>Sub Total</p>
         {discountAmount?.amount > 0 && <p>Discount amount</p>}
         <p>Delivery</p>
-        {giftCards &&
-          giftCards.map((card) => (
-            <p key={card.redemptionId}>
-              {card.code}{" "}
-              {
-                <Button
-                  variant="link"
-                  type="button"
-                  className="p-0"
-                  onClick={() => handleDeleteGiftCard(card.code)}
-                >
-                  Delete
-                  {/* <Image
+        {listGiftCards.map((card) => (
+          <p key={card.code}>
+            {card.code}{" "}
+            {
+              <Button
+                variant="link"
+                type="button"
+                className="p-0"
+                onClick={() => handleDeleteGiftCard(card.code)}
+              >
+                Delete
+                {/* <Image
                     src={"/open-eye.svg"}
                     alt="delete"
                     width={16}
                     height={16}
                   /> */}
-                </Button>
-              }
-            </p>
-          ))}
+              </Button>
+            }
+          </p>
+        ))}
         <p className={styles.totalCost}>TOTAL</p>
       </Col>
 
@@ -72,14 +81,13 @@ export default function OrderTotalCost({
             defaultValue="FREE"
           />
         </p>
-        {giftCards &&
-          giftCards.map((card) => (
-            <p key={card.redemptionId}>
-              <Money
-                money={{ amount: card.currentBalanceAmount, currency: "AUD" }}
-              />
-            </p>
-          ))}
+        {listGiftCards.map((card) => (
+          <p key={card.code}>
+            <Money
+              money={{ amount: card.currentBalanceAmount, currency: "AUD" }}
+            />
+          </p>
+        ))}
         <p className={styles.totalCost}>
           <Money
             money={
