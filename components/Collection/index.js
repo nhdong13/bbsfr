@@ -1,5 +1,4 @@
 import Head from "next/head"
-import { SearchProvider } from "@sajari/react-hooks"
 import dynamic from "next/dynamic"
 import { convertSchemaFAQ } from "../../services/convertSchemaFAQ"
 const SEODynamic = dynamic(() => import("../HomePage/SEO"))
@@ -17,10 +16,7 @@ const TestimonialsDynamic = dynamic(() =>
 
 const CollectionComponent = ({
   collections,
-  initialResponse,
-  pipeline,
   testimonials,
-  variables,
 }) => {
   const {
     meta_description,
@@ -30,6 +26,7 @@ const CollectionComponent = ({
     faq_title,
   } = collections
   const jsonFAQ = convertSchemaFAQ({ faq, faq_title })
+
   return (
     <>
       <Head>
@@ -48,40 +45,25 @@ const CollectionComponent = ({
           dangerouslySetInnerHTML={{ __html: jsonFAQ }}
         />
       </Head>
-      <SearchProvider
-        search={{
-          pipeline,
-          variables,
-        }}
-        initialResponse={initialResponse}
-        searchOnLoad={!initialResponse}
-      >
-        <HeaderCollectionDynamic
-          pipeline={pipeline}
-          pageHeading={
-            collections &&
-            collections.page_heading_1 &&
-            collections.page_heading_1.length > 0
-              ? collections.page_heading_1[0].text
-              : "Collections"
-          }
-        />
-        <CategoriesDynamic
-          categories={categories}
-          shopByCategoryText={
-            collections.shop_by_category_text != undefined &&
-            collections.shop_by_category_text.length
-              ? collections.shop_by_category_text[0].text
-              : "List Category"
-          }
-        />
-
-        <ResultDynamic
-          variables={variables}
-          pipeline={pipeline}
-          initialResponse={initialResponse}
-        />
-      </SearchProvider>
+      <HeaderCollectionDynamic
+        pageHeading={
+          collections &&
+          collections.page_heading_1 &&
+          collections.page_heading_1.length > 0
+            ? collections.page_heading_1[0].text
+            : "Collections"
+        }
+      />
+      <CategoriesDynamic
+        categories={categories}
+        shopByCategoryText={
+          collections.shop_by_category_text != undefined &&
+          collections.shop_by_category_text.length
+            ? collections.shop_by_category_text[0].text
+            : "List Category"
+        }
+      />
+      <ResultDynamic />
       <TestimonialsDynamic testimonials={testimonials} type="collection" />
       <FAQDynamic FAQ={{ faq, faq_title }} />
       <SEODynamic

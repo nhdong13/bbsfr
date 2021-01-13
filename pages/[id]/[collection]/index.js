@@ -4,25 +4,11 @@ import {
   listAllocationsByDepartmentUID,
 } from "../../../lib/prismic/api"
 import { search } from "@sajari/server"
-import { Pipeline, Variables } from "@sajari/react-search-ui"
-import { getConfigPipeline } from "../../../services/getPipelineSajari"
 import { authenticationFromStamped } from "../../../services/testimonial"
 import CollectionComponent from "../../../components/Collection"
 import { getDataForMainNav } from "../../../services/mainNav"
 import { mockupDataFilterCategory } from "../../../services/collection"
-
-const pipeline = new Pipeline({ ...getConfigPipeline("best-buy") }, "query")
-var searchObj = { variables: null }
-
-const initVariable = (params) => {
-  //Filter options will replace base params for per page --> this is code demo
-  const category = mockupDataFilterCategory(params)
-  searchObj.variables = new Variables({
-    resultsPerPage: 20,
-    q: "",
-    filter: `categories ~ ['${category}']`,
-  })
-}
+import { pipelineConfig, variablesConfig } from "../../../lib/sajari/config"
 
 export async function getStaticProps({ params }) {
   const requestOptions = authenticationFromStamped()
@@ -30,12 +16,15 @@ export async function getStaticProps({ params }) {
   const testimonials = await resStamped.json()
   const collections = await getCollectionByUid(params.collection)
   const dataNav = await getDataForMainNav()
-  initVariable(params)
-
-  const initialResponse = await search({
-    pipeline,
-    variables: searchObj.variables,
-  })
+  //Filter options will replace base params for per page --> this is code demo
+  const filter = `categories ~ ['${mockupDataFilterCategory(params)}']`
+  const initialResponse = await search(
+    {
+      pipeline: pipelineConfig,
+      variables: variablesConfig,
+    },
+    filter
+  )
 
   return {
     props: {
@@ -43,7 +32,7 @@ export async function getStaticProps({ params }) {
       collections,
       testimonials,
       dataNav,
-      params,
+      filter,
     },
     revalidate: +process.env.NEXT_PUBLIC_REVALIDATE_PAGE_TIME,
   }
@@ -69,15 +58,9 @@ export async function getStaticPaths() {
   return { paths, fallback: false }
 }
 
-const Collection = ({ collections, testimonials, params, initialResponse }) => {
-  if (!search.variables) {
-    initVariable(params)
-  }
+const Collection = ({ collections, testimonials }) => {
   return (
     <CollectionComponent
-      initialResponse={initialResponse}
-      pipeline={pipeline}
-      variables={searchObj.variables}
       collections={collections}
       testimonials={testimonials}
     />
