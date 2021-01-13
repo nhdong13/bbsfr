@@ -11,17 +11,17 @@ const SortingComponent = ({
 }) => {
   const { sorting, setSorting } = useSorting()
   return (
-    <SearchProvider
-      search={{
-        pipeline,
-        variables: new Variables({
-          resultsPerPage: constants.RESULT_PER_PAGE,
-        }),
-      }}
-      defaultFilter={filter}
-      initialResponse={initialResponse}
-      searchOnLoad={!initialResponse}
-    >
+    // <SearchProvider
+    //   search={{
+    //     pipeline,
+    //     variables: new Variables({
+    //       resultsPerPage: constants.RESULT_PER_PAGE,
+    //     }),
+    //   }}
+    //   defaultFilter={filter}
+    //   initialResponse={initialResponse}
+    //   searchOnLoad={!initialResponse}
+    // >
       <div className="">
         <div
           className={styles.radio_sajari}
@@ -83,7 +83,7 @@ const SortingComponent = ({
           </fieldset>
         </div>
       </div>
-    </SearchProvider>
+    // </SearchProvider>
   )
 }
 

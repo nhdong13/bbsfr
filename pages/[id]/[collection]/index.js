@@ -17,16 +17,20 @@ import {
 } from "@sajari/react-hooks"
 
 const pipeline = new Pipeline({ ...getConfigPipeline("best-buy") }, "query")
-var searchObj = { variables: null }
+const variables = new Variables({
+  resultsPerPage: 20,
+  q: "",
+})
+// var searchObj = { variables: null }
 
-const initVariable = (filter) => {
-  console.log("Debug code filter:", filter)
-  searchObj.variables = new Variables({
-    resultsPerPage: 20,
-    q: "",
-    filter: filter,
-  })
-}
+// const initVariable = (filter) => {
+//   console.log("Debug code filter:", filter)
+//   searchObj.variables = new Variables({
+//     resultsPerPage: 20,
+//     q: "",
+//     filter: filter,
+//   })
+// }
 
 export async function getStaticProps({ params }) {
   const requestOptions = authenticationFromStamped()
@@ -37,12 +41,12 @@ export async function getStaticProps({ params }) {
 
   //Filter options will replace base params for per page --> this is code demo
   const filter = `categories ~ ['${mockupDataFilterCategory(params)}']`
-  initVariable(filter)
-  console.log("Debug code searchObj.variables:", searchObj.variables)
+  // initVariable(filter)
+  // console.log("Debug code searchObj.variables:", searchObj.variables)
   const initialResponse = await search(
     {
       pipeline,
-      variables: searchObj.variables,
+      variables,
     },
     filter
   )
@@ -88,11 +92,11 @@ const Collection = ({
   filter,
   params,
 }) => {
-  if (!search.variables) {
-    //Filter options will replace base params for per page --> this is code demo
-    const filterClient = `categories ~ ['${mockupDataFilterCategory(params)}']`
-    initVariable(filterClient)
-  }
+  // if (!search.variables) {
+  //   //Filter options will replace base params for per page --> this is code demo
+  //   const filterClient = `categories ~ ['${mockupDataFilterCategory(params)}']`
+  //   initVariable(filterClient)
+  // }
   const brandFilter = new FilterBuilder({
     name: "brand",
     options: {
@@ -130,21 +134,21 @@ const Collection = ({
   })
 
   return (
-    <SearchProvider
-      search={{
-        pipeline,
-        filters: [
-          priceRangeFilter,
-          brandFilter,
-          categoryFilter,
-          ratingFilter,
-          listBrandsFilter,
-        ],
-      }}
-      initialResponse={initialResponse}
-      searchOnLoad={!initialResponse}
-      defaultFilter={filter}
-    >
+    // <SearchProvider
+    //   search={{
+    //     pipeline,
+    //     // filters: [
+    //     //   priceRangeFilter,
+    //     //   brandFilter,
+    //     //   categoryFilter,
+    //     //   ratingFilter,
+    //     //   listBrandsFilter,
+    //     // ],
+    //   }}
+    //   initialResponse={initialResponse}
+    //   searchOnLoad={!initialResponse}
+    //   defaultFilter={filter}
+    // >
       <CollectionComponent
         priceRangeFilter={priceRangeFilter}
         brandFilter={brandFilter}
@@ -152,13 +156,13 @@ const Collection = ({
         listBrandsFilter={listBrandsFilter}
         initialResponse={initialResponse}
         pipeline={pipeline}
-        variables={searchObj.variables}
+        // variables={searchObj.variables}
         collections={collections}
         testimonials={testimonials}
         filter={filter}
         ratingFilter={ratingFilter}
       />
-    </SearchProvider>
+    // </SearchProvider>
   )
 }
 export default Collection
