@@ -8,6 +8,7 @@ import { Pipeline, Variables } from "@sajari/react-search-ui"
 import { getConfigPipeline } from "../../../../services/getPipelineSajari"
 import { mockupDataFilterBrand } from "../../../../services/brand"
 import { search } from "@sajari/server"
+import { authenticationFromStamped } from "../../../../services/testimonial"
 
 const pipeline = new Pipeline({ ...getConfigPipeline("best-buy") }, "query")
 var searchObj = { variables: null }
@@ -49,6 +50,11 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   const dataNav = await getDataForMainNav()
+  const resStamped = await fetch(
+    process.env.STAMPED_API_URL,
+    authenticationFromStamped()
+  )
+  const testimonials = await resStamped.json()
   const brandCollectionResponse = await getBrandCollectionDetail(
     params?.brandCollection
   )
@@ -58,7 +64,7 @@ export async function getStaticProps({ params }) {
     variables: searchObj.variables,
   })
   return {
-    props: { dataNav, initialResponse, brandCollectionResponse },
+    props: { dataNav, initialResponse, brandCollectionResponse, testimonials },
     revalidate: +process.env.NEXT_PUBLIC_REVALIDATE_PAGE_TIME,
   }
 }
@@ -67,6 +73,7 @@ const BrandCollectionPage = ({
   initialResponse,
   params,
   brandCollectionResponse,
+  testimonials,
 }) => {
   if (!search.variables) {
     initVariable(params)
@@ -77,6 +84,7 @@ const BrandCollectionPage = ({
       pipeline={pipeline}
       variables={searchObj.variables}
       brandCollectionResponse={brandCollectionResponse}
+      testimonials={testimonials}
     />
   )
 }

@@ -56,7 +56,7 @@ export const createCheckout = async (
     if (fieldErrors.length) {
       fieldErrors.forEach((field) =>
         bag.setErrors({
-          [`shippingAddress.${field}`]: "Please check this field and try again",
+          [field]: "Please check this field and try again",
         })
       )
       bag.setSubmitting(false)

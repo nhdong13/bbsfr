@@ -34,6 +34,12 @@ function detectTagFromSlug(router, type) {
       return "brand-directory"
     case "vehicle directory":
       return "vehicle directory"
+    case "brand-collection":
+      return "collection"
+    case "brand-category":
+      return "category"
+    case "brand":
+      return "brand"
     default:
       return ""
   }
