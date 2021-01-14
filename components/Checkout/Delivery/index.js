@@ -52,12 +52,7 @@ export default function DeliveryComponent() {
     billingAddress: INITIAL_ADDRESS,
     billingDifferentAddress: false,
     paymentMethod: null,
-    promotion: {
-      code: "",
-      valid: false,
-      discountAmount: null,
-      discountedPrice: null,
-    },
+    promotion: "",
     giftCard: "",
     creditCard: {
       number: "",
@@ -123,21 +118,12 @@ export default function DeliveryComponent() {
     }
 
     let shippingMethod = checkout.shippingMethod?.id
-    let promotion = initDeliveryData.promotion
-    if (promoCodeDiscount.voucherCode) {
-      promotion = {
-        code: promoCodeDiscount.voucherCode,
-        valid: true,
-        discountAmount: null,
-        discountedPrice: null,
-      }
-    }
 
     setInitDeliveryData({
       ...initDeliveryData,
       paymentMethod,
       shippingMethod,
-      promotion,
+      promotion: promoCodeDiscount.voucherCode || "",
     })
   }, [loaded])
 
@@ -336,7 +322,6 @@ export default function DeliveryComponent() {
                       setFieldValue={setFieldValue}
                       setFieldTouched={setFieldTouched}
                       setFieldError={setFieldError}
-                      promoCodeDiscount={promoCodeDiscount}
                     />
 
                     <OrderTotalCost
@@ -344,7 +329,6 @@ export default function DeliveryComponent() {
                       subtotalPrice={subtotalPrice}
                       shippingPrice={shippingPrice}
                       discount={discount}
-                      promotion={values.promotion}
                       voucherifies={checkout?.voucherifies || []}
                     ></OrderTotalCost>
 

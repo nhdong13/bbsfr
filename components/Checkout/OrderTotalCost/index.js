@@ -14,14 +14,10 @@ export default function OrderTotalCost({
   totalPrice,
   subtotalPrice,
   shippingPrice,
-  promotion,
   discount,
   voucherifies,
 }) {
-  console.log("voucherifies", voucherifies)
-  const discountAmount =
-    discount?.amount > 0 ? discount : promotion?.discountAmount
-  const { removePromoCode } = useCheckout()
+  const { removePromoCode, load } = useCheckout()
   const [loading, setLoading] = useState(false)
   const listGiftCards = _.uniqBy(
     voucherifies.filter((card) => card.type === "GIFT_VOUCHER"),
@@ -33,11 +29,15 @@ export default function OrderTotalCost({
     setLoading(true)
 
     const checkout = repository.getCheckout()
-    const voucherifies = checkout?.voucherifies?.filter(
-      (card) => card.code !== code
-    )
-    repository.setCheckout({ ...checkout, voucherifies })
-    await removePromoCode(code)
+    if (checkout?.id) {
+      await removePromoCode(code)
+    } else {
+      const voucherifies = checkout?.voucherifies?.filter(
+        (card) => card.code !== code
+      )
+      repository.setCheckout({ ...checkout, voucherifies })
+      await load()
+    }
 
     setLoading(false)
   }
@@ -46,7 +46,7 @@ export default function OrderTotalCost({
       <LoadingSpinner show={loading} />
       <Col xs="6">
         <p>Sub Total</p>
-        {discountAmount?.amount > 0 && <p>Discount amount</p>}
+        {discount?.amount > 0 && <p>Discount amount</p>}
         <p>Delivery</p>
         {listGiftCards.map((card) => (
           <p key={card.code}>
@@ -55,16 +55,15 @@ export default function OrderTotalCost({
               <Button
                 variant="link"
                 type="button"
-                className="p-0"
+                className="p-0 align-text-top"
                 onClick={() => handleDeleteGiftCard(card.code)}
               >
-                Delete
-                {/* <Image
-                    src={"/open-eye.svg"}
-                    alt="delete"
-                    width={16}
-                    height={16}
-                  /> */}
+                <Image
+                  src={"/icons/x-icon.svg"}
+                  alt="delete"
+                  width={16}
+                  height={16}
+                />
               </Button>
             }
           </p>
@@ -76,9 +75,9 @@ export default function OrderTotalCost({
         <p>
           <Money money={subtotalPrice?.gross} />
         </p>
-        {discountAmount?.amount > 0 && (
+        {discount?.amount > 0 && (
           <p>
-            <Money money={discountAmount} />
+            <Money money={{ ...discount, amount: -discount.amount }} />
           </p>
         )}
         <p>
@@ -90,18 +89,12 @@ export default function OrderTotalCost({
         {listGiftCards.map((card) => (
           <p key={card.code}>
             <Money
-              money={{ amount: card.currentBalanceAmount, currency: "AUD" }}
+              money={{ amount: -card.currentBalanceAmount, currency: "AUD" }}
             />
           </p>
         ))}
         <p className={styles.totalCost}>
-          <Money
-            money={
-              promotion?.discountedPrice?.amount > 0 && !discount?.amount
-                ? promotion?.discountedPrice
-                : totalPrice?.gross
-            }
-          />
+          <Money money={totalPrice?.gross} />
         </p>
       </Col>
     </Row>

@@ -18,13 +18,17 @@ export default function PromotionComponent({
   setFieldValue,
   setFieldTouched,
   setFieldError,
-  promoCodeDiscount,
 }) {
   const [loading, setLoading] = useState(false)
   const { items, subtotalPrice } = useCart()
-  const { addPromoCode, removePromoCode, load } = useCheckout()
+  const {
+    addPromoCode,
+    removePromoCode,
+    promoCodeDiscount,
+    load,
+  } = useCheckout()
   const [validateVoucherify] = useMutation(voucherifyValidate)
-  const valid = promoCodeDiscount?.voucherCode || values.promotion.valid
+  const valid = promoCodeDiscount?.voucherCode
   const repository = new LocalRepository()
 
   const handleApplyCode = async () => {
@@ -34,7 +38,7 @@ export default function PromotionComponent({
         input: {
           amount: subtotalPrice.gross.amount,
           type: "DISCOUNT_VOUCHER",
-          code: values.promotion.code,
+          code: values.promotion,
           lines: items.map((item) => {
             return {
               quantity: item.quantity,
@@ -48,35 +52,53 @@ export default function PromotionComponent({
     const { voucherify } = data.voucherifyValidate
 
     if (voucherify.valid === "true") {
-      setFieldValue("promotion.valid", true)
-      setFieldValue("promotion.discountAmount", {
-        amount: voucherify.discountAmount,
-        currency: "AUD",
-      })
-      setFieldValue("promotion.discountedPrice", {
-        amount: voucherify.discountedPrice,
-        currency: "AUD",
-      })
-      await addPromoCode(values.promotion.code)
+      const checkout = repository.getCheckout()
+      if (checkout?.id) {
+        await addPromoCode(values.promotion)
+      } else {
+        const voucherifies = [
+          ...(checkout.voucherifies || []),
+          { ...voucherify, currentBalanceAmount: voucherify.discountAmount },
+        ]
+        repository.setCheckout({
+          ...checkout,
+          voucherifies,
+          promoCodeDiscount: {
+            discount: {
+              amount: voucherify.discountAmount,
+              currency: "AUD",
+            },
+            voucherCode: values.promotion,
+          },
+        })
+        await load()
+      }
     } else {
-      setFieldTouched("promotion.code", true, false)
-      setFieldError("promotion.code", "Invalid promotion code")
+      setFieldTouched("promotion", true, false)
+      setFieldError("promotion", "Invalid promotion code")
     }
     setLoading(false)
   }
 
   const handleDeletePromoCode = async () => {
     setLoading(true)
-    await removePromoCode(
-      promoCodeDiscount?.voucherCode || values.promotion.code
-    )
-    const promotion = {
-      valid: false,
-      code: "",
-      discountAmount: null,
-      discountedPrice: null,
+
+    const checkout = repository.getCheckout()
+    if (checkout?.id) {
+      await removePromoCode(promoCodeDiscount.voucherCode)
+    } else {
+      const voucherifies = checkout?.voucherifies?.filter(
+        (card) => card.code !== promoCodeDiscount.voucherCode
+      )
+      repository.setCheckout({
+        ...checkout,
+        voucherifies,
+        promoCodeDiscount: undefined,
+      })
+      await load()
     }
-    setFieldValue("promotion", promotion)
+
+    setFieldValue("promotion", "")
     setLoading(false)
   }
 
@@ -101,15 +123,18 @@ export default function PromotionComponent({
     const { voucherify } = data.voucherifyValidate
 
     if (voucherify.valid === "true") {
-      await addPromoCode(values.giftCard)
-      setFieldValue("giftCard", "")
       const checkout = repository.getCheckout()
-      const voucherifies = [
-        ...(checkout.voucherifies || []),
-        { ...voucherify, currentBalanceAmount: voucherify.discountAmount },
-      ]
-      repository.setCheckout({ ...checkout, voucherifies })
-      await load()
+      if (checkout?.id) {
+        await addPromoCode(values.giftCard)
+      } else {
+        const voucherifies = [
+          ...(checkout.voucherifies || []),
+          { ...voucherify, currentBalanceAmount: voucherify.discountAmount },
+        ]
+        repository.setCheckout({ ...checkout, voucherifies })
+        await load()
+      }
+      setFieldValue("giftCard", "")
     } else {
       setFieldTouched("giftCard", true, false)
       setFieldError("giftCard", "Invalid Gift Card Number")
@@ -132,28 +157,30 @@ export default function PromotionComponent({
                   <Form.Control
                     type="text"
                     placeholder="Enter promo code"
-                    name="promotion.code"
-                    value={
-                      promoCodeDiscount?.voucherCode || values.promotion.code
-                    }
+                    name="promotion"
+                    value={promoCodeDiscount?.voucherCode || values.promotion}
                     onChange={handleChange}
-                    disabled={valid}
+                    disabled={promoCodeDiscount?.voucherCode}
                   />
                   <InputGroup.Append>
                     <Button
                       variant="primary"
                       className={styles.btn}
                       type="button"
-                      onClick={valid ? handleDeletePromoCode : handleApplyCode}
+                      onClick={
+                        promoCodeDiscount?.voucherCode
+                          ? handleDeletePromoCode
+                          : handleApplyCode
+                      }
                     >
-                      {valid ? "Delete" : "Apply"}
+                      {promoCodeDiscount?.voucherCode ? "Delete" : "Apply"}
                     </Button>
                   </InputGroup.Append>
                 </InputGroup>
                 <ErrorMessageWrapper
                   errors={errors}
                   touched={touched}
-                  fieldName="promotion.code"
+                  fieldName="promotion"
                 />
               </Form.Group>
             </Form.Row>
