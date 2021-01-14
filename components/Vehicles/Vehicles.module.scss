@@ -23,7 +23,7 @@
   }
   .vehicleList {
     background-color: $department-category-color;
-    padding: 0 16px 5px;
+    padding: 0 16px;
     margin-top: 19px;
     @include font-family(Rajdhani, 16px, 700, $primary-text-color);
     .collapseHeader {

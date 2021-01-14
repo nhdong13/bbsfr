@@ -14,15 +14,19 @@ const SearchVehiclesIndexComponent = () => {
     <div className={styles.searchVehiclesIndexPosition}>
       <div className={styles.searchVehiclesIndex}>
         <Container fluid className={styles.searchVehiclesIndexContainer}>
-          <p className={styles.searchVehiclesIndexTitle}>
+          <label
+            className={styles.searchVehiclesIndexTitle}
+            htmlFor="searchVehicles"
+          >
             Enter your bikes details
-          </p>
+          </label>
           <input
             onChange={handleClick}
             className={styles.searchVehiclesIndexInput}
             type="text"
             name="search"
             placeholder="Type here"
+            id="searchVehicles"
           />
         </Container>
       </div>
