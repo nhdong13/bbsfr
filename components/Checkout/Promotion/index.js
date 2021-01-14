@@ -3,6 +3,7 @@ import { Container, InputGroup, Row, Col, Form, Button } from "react-bootstrap"
 import clsx from "clsx"
 import { useMutation } from "@apollo/client"
 import { useCart, useCheckout } from "@sdk/react"
+import { LocalRepository } from "@sdk/repository"
 
 import LoadingSpinner from "components/LoadingSpinner"
 import { voucherifyValidate } from "lib/mutations"
@@ -18,14 +19,13 @@ export default function PromotionComponent({
   setFieldTouched,
   setFieldError,
   promoCodeDiscount,
-  giftCards,
-  setGiftCards,
 }) {
   const [loading, setLoading] = useState(false)
   const { items, subtotalPrice } = useCart()
   const { addPromoCode, removePromoCode, load } = useCheckout()
   const [validateVoucherify] = useMutation(voucherifyValidate)
   const valid = promoCodeDiscount?.voucherCode || values.promotion.valid
+  const repository = new LocalRepository()
 
   const handleApplyCode = async () => {
     setLoading(true)
@@ -103,10 +103,13 @@ export default function PromotionComponent({
     if (voucherify.valid === "true") {
       await addPromoCode(values.giftCard)
       setFieldValue("giftCard", "")
-      setGiftCards([
-        ...giftCards,
+      const checkout = repository.getCheckout()
+      const voucherifies = [
+        ...(checkout.voucherifies || []),
         { ...voucherify, currentBalanceAmount: voucherify.discountAmount },
-      ])
+      ]
+      repository.setCheckout({ ...checkout, voucherifies })
+      await load()
     } else {
       setFieldTouched("giftCard", true, false)
       setFieldError("giftCard", "Invalid Gift Card Number")

@@ -4,6 +4,8 @@ import clxs from "clsx"
 import _ from "lodash"
 import Image from "next/image"
 import { useCheckout } from "@sdk/react"
+import { LocalRepository } from "@sdk/repository"
+
 import LoadingSpinner from "components/LoadingSpinner"
 import Money from "../../Money"
 import styles from "../Checkout.module.scss"
@@ -14,25 +16,29 @@ export default function OrderTotalCost({
   shippingPrice,
   promotion,
   discount,
-  giftCards,
-  setGiftCards,
   voucherifies,
 }) {
+  console.log("voucherifies", voucherifies)
   const discountAmount =
     discount?.amount > 0 ? discount : promotion?.discountAmount
   const { removePromoCode } = useCheckout()
   const [loading, setLoading] = useState(false)
   const listGiftCards = _.uniqBy(
-    [...giftCards, ...voucherifies].filter(
-      (card) => card.type === "GIFT_VOUCHER"
-    ),
+    voucherifies.filter((card) => card.type === "GIFT_VOUCHER"),
     "code"
   )
+  const repository = new LocalRepository()
 
   const handleDeleteGiftCard = async (code) => {
     setLoading(true)
+
+    const checkout = repository.getCheckout()
+    const voucherifies = checkout?.voucherifies?.filter(
+      (card) => card.code !== code
+    )
+    repository.setCheckout({ ...checkout, voucherifies })
     await removePromoCode(code)
-    setGiftCards(giftCards.filter((card) => card.code !== code))
+
     setLoading(false)
   }
   return (
