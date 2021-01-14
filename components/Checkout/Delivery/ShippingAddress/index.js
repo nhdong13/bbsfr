@@ -143,7 +143,7 @@ export default function ShippingAddress({
       bag,
       handleSubmitError,
       addPromoCode,
-      deliveryForm
+      checkout.voucherifies
     )
     if (!checkoutData) return
     await setShippingMethod("")
