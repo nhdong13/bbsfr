@@ -16,7 +16,9 @@ const SEODynamic = dynamic(() => import("../HomePage/SEO"))
 const TestimonialsDynamic = dynamic(() =>
   import("../HomePage/Testimonials/index")
 )
-const VehicleDynamic = dynamic(() => import("./Components/VehicleComponent"))
+const VehicleDynamic = dynamic(() =>
+  import("./Components/MakeGroupedComponent")
+)
 
 const VehiclesComponent = ({ vehiclesDirectory, vehicles, testimonials }) => {
   const {
@@ -36,7 +38,7 @@ const VehiclesComponent = ({ vehiclesDirectory, vehicles, testimonials }) => {
   return (
     <>
       <Head>
-        <title>{meta_title || "Brand Directory"}</title>
+        <title>{meta_title || "Vehicle Directory"}</title>
         <meta name="description" content={meta_description} />
         <meta
           name="og:description"
@@ -46,9 +48,12 @@ const VehiclesComponent = ({ vehiclesDirectory, vehicles, testimonials }) => {
         <meta
           name="og:title"
           property="og:title"
-          content={meta_title || "Brand Directory"}
+          content={meta_title || "Vehicle Directory"}
         />
-        <meta name="twitter:title" content={meta_title || "Brand Directory"} />
+        <meta
+          name="twitter:title"
+          content={meta_title || "Vehicle Directory"}
+        />
         <meta name="twitter:description" content={meta_description} />
         <script
           type="application/ld+json"

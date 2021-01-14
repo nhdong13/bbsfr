@@ -29,6 +29,8 @@ const ListCategoriesComponent = ({ categories, type, typeBrand }) => {
           return `/brands/${router?.query?.brandHome}/${router?.query?.brandCollection}/c/${category.category_slug}`
         }
         return `/brands/${router?.query?.brandHome}/${router?.query?.brandCollection}/r/${category.category_slug}`
+      case "vehicle":
+        return `/vehicles/${router?.query?.vehicle}${category.category_slug}`
       default:
         return `/`
     }
