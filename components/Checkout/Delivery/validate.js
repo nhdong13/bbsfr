@@ -118,6 +118,7 @@ export const DeliverySchema = Yup.object().shape({
   paymentMethod: Yup.object()
     .required("Please select a payment method to proceed")
     .nullable(),
-  promotion: Yup.object(),
+  promotion: Yup.string(),
   creditCard: Yup.object(),
+  giftCard: Yup.string(),
 })
