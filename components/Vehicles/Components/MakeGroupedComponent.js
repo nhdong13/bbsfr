@@ -4,8 +4,7 @@ import { useState } from "react"
 import Image from "next/image"
 import YearGroupedComponent from "./YearGroupedComponent"
 
-const VehicleComponent = (props) => {
-  const { title, vehicle, noBorder } = props
+const MakeGroupedComponent = ({ title, vehicle, noBorder }) => {
   const [open, setOpen] = useState(false)
   return (
     <>
@@ -51,4 +50,4 @@ const VehicleComponent = (props) => {
     </>
   )
 }
-export default VehicleComponent
+export default MakeGroupedComponent
