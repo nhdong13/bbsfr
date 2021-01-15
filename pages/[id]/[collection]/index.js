@@ -9,6 +9,13 @@ import CollectionComponent from "../../../components/Collection"
 import { getDataForMainNav } from "../../../services/mainNav"
 import { mockupDataFilterCategory } from "../../../services/collection"
 import { pipelineConfig, variablesConfig } from "../../../lib/sajari/config"
+import {
+  brandFilter,
+  categoryFilter,
+  listBrandsFilter,
+  priceRangeFilter,
+  ratingFilter,
+} from "../../../lib/sajari/filter"
 
 export async function getStaticProps({ params }) {
   const requestOptions = authenticationFromStamped()
@@ -18,13 +25,17 @@ export async function getStaticProps({ params }) {
   const dataNav = await getDataForMainNav()
   //Filter options will replace base params for per page --> this is code demo
   const filter = `categories ~ ['${mockupDataFilterCategory(params)}']`
-  const initialResponse = await search(
-    {
-      pipeline: pipelineConfig,
-      variables: variablesConfig,
-    },
-    filter
-  )
+  const initialResponse = await search({
+    pipeline: pipelineConfig,
+    variables: variablesConfig(filter),
+    filters: [
+      listBrandsFilter,
+      priceRangeFilter,
+      brandFilter,
+      categoryFilter,
+      ratingFilter,
+    ],
+  })
 
   return {
     props: {
@@ -33,6 +44,7 @@ export async function getStaticProps({ params }) {
       testimonials,
       dataNav,
       filter,
+      timeNow: Date.now(),
     },
     revalidate: +process.env.NEXT_PUBLIC_REVALIDATE_PAGE_TIME,
   }

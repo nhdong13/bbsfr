@@ -4,23 +4,17 @@ import {
   listAllBrands as listAllBrandsCollection,
 } from "../../../../lib/prismic/api"
 import { getDataForMainNav } from "../../../../services/mainNav"
-import { Pipeline, Variables } from "@sajari/react-search-ui"
-import { getConfigPipeline } from "../../../../services/getPipelineSajari"
 import { mockupDataFilterBrand } from "../../../../services/brand"
 import { search } from "@sajari/server"
 import { authenticationFromStamped } from "../../../../services/testimonial"
-
-const pipeline = new Pipeline({ ...getConfigPipeline("best-buy") }, "query")
-var searchObj = { variables: null }
-
-const initVariable = (params) => {
-  //Filter options will replace base params for per page --> this is code demo
-  searchObj.variables = new Variables({
-    resultsPerPage: 20,
-    q: "",
-    filter: `brand = "${mockupDataFilterBrand()}"`,
-  })
-}
+import { pipelineConfig, variablesConfig } from "../../../../lib/sajari/config"
+import {
+  brandFilter,
+  categoryFilter,
+  listBrandsFilter,
+  priceRangeFilter,
+  ratingFilter,
+} from "../../../../lib/sajari/filter"
 
 export async function getStaticPaths() {
   const paths = []
@@ -58,31 +52,35 @@ export async function getStaticProps({ params }) {
   const brandCollectionResponse = await getBrandCollectionDetail(
     params?.brandCollection
   )
-  initVariable(params)
+  //Filter options will replace base params for per page --> this is code demo
+  const filter = `brand = "${mockupDataFilterBrand()}"`
   const initialResponse = await search({
-    pipeline,
-    variables: searchObj.variables,
+    pipeline: pipelineConfig,
+    variables: variablesConfig(filter),
+    filters: [
+      listBrandsFilter,
+      priceRangeFilter,
+      brandFilter,
+      categoryFilter,
+      ratingFilter,
+    ],
   })
   return {
-    props: { dataNav, initialResponse, brandCollectionResponse, testimonials },
+    props: {
+      dataNav,
+      initialResponse,
+      brandCollectionResponse,
+      testimonials,
+      filter,
+      timeNow: Date.now(),
+    },
     revalidate: +process.env.NEXT_PUBLIC_REVALIDATE_PAGE_TIME,
   }
 }
 
-const BrandCollectionPage = ({
-  initialResponse,
-  params,
-  brandCollectionResponse,
-  testimonials,
-}) => {
-  if (!search.variables) {
-    initVariable(params)
-  }
+const BrandCollectionPage = ({ brandCollectionResponse, testimonials }) => {
   return (
     <BrandCollectionComponent
-      initialResponse={initialResponse}
-      pipeline={pipeline}
-      variables={searchObj.variables}
       brandCollectionResponse={brandCollectionResponse}
       testimonials={testimonials}
     />

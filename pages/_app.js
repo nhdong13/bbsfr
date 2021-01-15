@@ -6,7 +6,7 @@ import { useApollo } from "../lib/apollo"
 import { SaleorProvider } from "../lib/@sdk/react"
 import Layout from "components/Layout"
 import NProgressBarComponent from "../components/Common/NProgressBar"
-import { SSRProvider, SearchProvider } from "@sajari/react-search-ui"
+import { SSRProvider, SearchProvider, Pipeline } from "@sajari/react-search-ui"
 import { pipelineConfig, variablesConfig } from "../lib/sajari/config"
 import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
@@ -29,9 +29,27 @@ if (typeof window === "undefined") {
   require("localstorage-polyfill")
 }
 
+
 export default function MyApp({ Component, pageProps }) {
+  const initSearch = {
+    queryValues: {
+      q: "",
+      resultsPerPage: "19",
+      filter: "",
+      countFilters: "",
+      buckets: "",
+      count: "",
+    },
+    response: {
+      time: -1.003004,
+      totalResults: 1,
+      results: [],
+    },
+  }
+ 
   const store = useStore(pageProps.initialReduxState)
   const apolloClient = useApollo(pageProps.initialApolloState)
+  const initialSearch = pageProps.initialResponse || initSearch
   return (
     <Provider store={store}>
       <ApolloProvider client={apolloClient}>
@@ -42,9 +60,10 @@ export default function MyApp({ Component, pageProps }) {
         >
           <SSRProvider>
             <SearchProvider
+              key={pageProps.timeNow || Date.now()}
               search={{
                 pipeline: pipelineConfig,
-                variables: variablesConfig,
+                variables: variablesConfig(pageProps?.filter),
                 filters: [
                   listBrandsFilter,
                   priceRangeFilter,
@@ -53,8 +72,8 @@ export default function MyApp({ Component, pageProps }) {
                   ratingFilter,
                 ],
               }}
-              initialResponse={pageProps?.initialResponse}
-              searchOnLoad={!pageProps?.initialResponse}
+              initialResponse={initialSearch}
+              searchOnLoad={!initialSearch}
               defaultFilter={pageProps?.filter}
               customClassNames={{
                 pagination: {

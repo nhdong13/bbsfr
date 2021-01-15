@@ -1,21 +1,25 @@
 import React, { useEffect } from "react"
 import styles from "./sorting.module.scss"
 import { useSorting } from "@sajari/react-hooks"
+import { useRouter } from "next/router"
 
-const SortingComponent = ({ setChanged }) => {
+const SortingComponent = ({ sortChanged, setSortChanged }) => {
   const { sorting, setSorting } = useSorting()
-  //this code will remove if sajari fix filter for search
+  const router = useRouter()
+
   useEffect(() => {
-    setSorting("")
-  }, [])
-  //----
+    if (sortChanged) {
+      router.events.on("routeChangeComplete", () => setSorting(""))
+    }
+  })
+
   return (
     <div className="">
       <div
         className={styles.radio_sajari}
         onChange={(e) => {
           setSorting(e.target.value)
-          setChanged(true)
+          setSortChanged(true)
         }}
       >
         <fieldset>

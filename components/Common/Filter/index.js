@@ -17,14 +17,18 @@ const FilterRender = ({
   title,
   isOpen,
   handleSetOpenCollapse,
-  setChanged,
+  filterChanged,
+  setFilterChanged,
 }) => {
   const router = useRouter()
-  router.events.on("routeChangeComplete", () => reset())
   const { multi, options, selected, setSelected, reset } = useFilter(name)
   const Group = multi ? CheckboxGroup : RadioGroup
   const Control = multi ? Checkbox : Radio
   const [open, setOpen] = useState(isOpen)
+
+  if (filterChanged) {
+    router.events.on("routeChangeComplete", () => reset())
+  }
 
   return (
     <>
@@ -67,7 +71,7 @@ const FilterRender = ({
                     value={selected}
                     onChange={(values) => {
                       setSelected(Array.isArray(values) ? values : [values])
-                      setChanged(true)
+                      setFilterChanged(true)
                     }}
                   >
                     {options.map(({ value, label, count }) => (

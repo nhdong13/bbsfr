@@ -1,11 +1,8 @@
 import Head from "next/head"
-import { SearchProvider } from "@sajari/react-hooks"
-import { getBrandCategoryByUid } from "../../../lib/prismic/api"
 import { convertSchemaFAQ } from "../../../services/convertSchemaFAQ"
 import ImagedHeaderComponent from "../Components/ImagedHeaderComponent"
 import { useRouter } from "next/router"
 import dynamic from "next/dynamic"
-
 const SEODynamic = dynamic(() => import("../../HomePage/SEO"))
 const FAQDynamic = dynamic(() => import("../../HomePage/FAQ"))
 const TestimonialsDynamic = dynamic(() => import("../../HomePage/Testimonials"))
@@ -16,13 +13,7 @@ const ResultDynamic = dynamic(() =>
   import("../../Collection/Components/ResultComponent")
 )
 
-const BrandCategoryComponent = ({
-  initialResponse,
-  pipeline,
-  variables,
-  category,
-  testimonials,
-}) => {
+const BrandCategoryComponent = ({ category, testimonials }) => {
   const { meta_title, meta_description, faq, faq_title } = category
   const router = useRouter()
   const jsonFAQ = convertSchemaFAQ({ faq, meta_title })
@@ -49,31 +40,12 @@ const BrandCategoryComponent = ({
           dangerouslySetInnerHTML={{ __html: jsonFAQ }}
         />
       </Head>
-      <SearchProvider
-        search={{
-          pipeline,
-          variables,
-        }}
-        initialResponse={initialResponse}
-        searchOnLoad={!initialResponse}
-      >
-        <ImagedHeaderComponent
-          header={heading1}
-          pipeline={pipeline}
-          imgUrl={null}
-        />
-
-        <BackToPageBeforeDynamic
-          page={router.query.brandCollection}
-          type="brandCategory"
-        />
-        <ResultDynamic
-          variables={variables}
-          pipeline={pipeline}
-          initialResponse={initialResponse}
-        />
-      </SearchProvider>
-
+      <ImagedHeaderComponent header={heading1} imgUrl={null} />
+      <BackToPageBeforeDynamic
+        page={router.query.brandCollection}
+        type="brandCategory"
+      />
+      <ResultDynamic />
       <TestimonialsDynamic testimonials={testimonials} type="brand-category" />
       <FAQDynamic FAQ={{ faq, faq_title }} />
       <SEODynamic

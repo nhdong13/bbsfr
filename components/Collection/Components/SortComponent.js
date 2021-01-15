@@ -5,9 +5,10 @@ import Image from "next/image"
 import SortingComponent from "../../Common/Sorting"
 
 const SortComponent = ({
-  setChanged,
   openCollapseSort,
   setOpenCollapseSort,
+  sortChanged,
+  setSortChanged,
 }) => {
   const [open, setOpen] = useState(openCollapseSort)
   return (
@@ -38,7 +39,10 @@ const SortComponent = ({
           <div className={styles.sort_filter_collapse}>
             <Collapse in={open}>
               <div>
-                <SortingComponent setChanged={setChanged} />
+                <SortingComponent
+                  sortChanged={sortChanged}
+                  setSortChanged={setSortChanged}
+                />
               </div>
             </Collapse>
           </div>
