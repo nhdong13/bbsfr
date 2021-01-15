@@ -28,15 +28,13 @@ const BrandHomeComponent = ({ brand, testimonials }) => {
     brand && brand.page_heading_2 && brand.page_heading_2.length > 0
       ? brand.page_heading_2[0].text
       : "Brand"
-  const collections =
-    brand.brand_collections &&
-    brand.brand_collections.map((i) => {
-      return {
-        collection_image: i.brand_collection_image,
-        collection_title: i.brand_collection_title,
-        collection_slug: i.brand_collection_slug,
-      }
-    })
+  const collections = brand?.brand_collections
+    .map((i) => ({
+      collection_image: i.brand_collection_image,
+      collection_title: i.brand_collection_title,
+      collection_slug: i.brand_collection_slug,
+    }))
+    .filter((i) => i.collection_title)
 
   return (
     <>
