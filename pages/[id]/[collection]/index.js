@@ -9,6 +9,7 @@ import CollectionComponent from "../../../components/Collection"
 import { getDataForMainNav } from "../../../services/mainNav"
 import { mockupDataFilterCategory } from "../../../services/collection"
 import { pipelineConfig, variablesConfig } from "../../../lib/sajari/config"
+import { SSRProvider, SearchProvider } from "@sajari/react-search-ui"
 import {
   brandFilter,
   categoryFilter,
@@ -44,7 +45,6 @@ export async function getStaticProps({ params }) {
       testimonials,
       dataNav,
       filter,
-      timeNow: Date.now(),
     },
     revalidate: +process.env.NEXT_PUBLIC_REVALIDATE_PAGE_TIME,
   }
@@ -70,12 +70,41 @@ export async function getStaticPaths() {
   return { paths, fallback: false }
 }
 
-const Collection = ({ collections, testimonials }) => {
+const Collection = ({ collections, testimonials, initialResponse, filter }) => {
   return (
-    <CollectionComponent
-      collections={collections}
-      testimonials={testimonials}
-    />
+    <SSRProvider>
+      <SearchProvider
+        search={{
+          pipeline: pipelineConfig,
+          variables: variablesConfig(filter),
+          filters: [
+            listBrandsFilter,
+            priceRangeFilter,
+            brandFilter,
+            categoryFilter,
+            ratingFilter,
+          ],
+        }}
+        initialResponse={initialResponse}
+        searchOnLoad={!initialResponse}
+        defaultFilter={filter}
+        customClassNames={{
+          pagination: {
+            container: "containerPagination",
+            button: "buttonPagination",
+            active: "activePagination",
+            next: "nextPagination",
+            prev: "prevPagination",
+            spacerEllipsis: "spacerEllipsisPagination",
+          },
+        }}
+      >
+        <CollectionComponent
+          collections={collections}
+          testimonials={testimonials}
+        />
+      </SearchProvider>
+    </SSRProvider>
   )
 }
 export default Collection

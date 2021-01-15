@@ -4,6 +4,7 @@ import { getDataForMainNav } from "../../../services/mainNav"
 import { authenticationFromStamped } from "../../../services/testimonial"
 import { search } from "@sajari/server"
 import { pipelineConfig, variablesConfig } from "../../../lib/sajari/config"
+import { SSRProvider, SearchProvider } from "@sajari/react-search-ui"
 import {
   brandFilter,
   categoryFilter,
@@ -51,7 +52,38 @@ export async function getStaticProps({ params }) {
   }
 }
 
-const VehiclePage = ({ vehicle, testimonials }) => {
-  return <VehicleComponent vehicle={vehicle} testimonials={testimonials} />
+const VehiclePage = ({ vehicle, testimonials, filter, initialResponse }) => {
+  return (
+    <SSRProvider>
+      <SearchProvider
+        search={{
+          pipeline: pipelineConfig,
+          variables: variablesConfig(filter || ""),
+          filters: [
+            listBrandsFilter,
+            priceRangeFilter,
+            brandFilter,
+            categoryFilter,
+            ratingFilter,
+          ],
+        }}
+        initialResponse={initialResponse}
+        searchOnLoad={!initialResponse}
+        defaultFilter={filter || ""}
+        customClassNames={{
+          pagination: {
+            container: "containerPagination",
+            button: "buttonPagination",
+            active: "activePagination",
+            next: "nextPagination",
+            prev: "prevPagination",
+            spacerEllipsis: "spacerEllipsisPagination",
+          },
+        }}
+      >
+        <VehicleComponent vehicle={vehicle} testimonials={testimonials} />
+      </SearchProvider>
+    </SSRProvider>
+  )
 }
 export default VehiclePage
