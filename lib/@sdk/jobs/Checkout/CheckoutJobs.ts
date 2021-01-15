@@ -91,6 +91,7 @@ export class CheckoutJobs {
         email: data?.email,
         selectedShippingAddressId,
         shippingAddress: data?.shippingAddress,
+        totalPrice: data?.totalPrice,
       });
       return { data };
     }
@@ -181,7 +182,6 @@ export class CheckoutJobs {
     shippingMethodId: string;
   }): PromiseCheckoutJobRunResponse => {
     const checkout = this.repository.getCheckout();
-
     const { data, error } = await this.networkManager.setShippingMethod(
       shippingMethodId,
       checkoutId
@@ -199,6 +199,7 @@ export class CheckoutJobs {
         ...checkout,
         promoCodeDiscount: data?.promoCodeDiscount,
         shippingMethod: data?.shippingMethod,
+        totalPrice: data?.totalPrice,
       });
       return { data };
     }
@@ -228,7 +229,7 @@ export class CheckoutJobs {
     } else {
       this.repository.setCheckout({
         ...checkout,
-        promoCodeDiscount: data?.promoCodeDiscount,
+        ...data,
       });
       return { data };
     }
@@ -258,7 +259,7 @@ export class CheckoutJobs {
     } else {
       this.repository.setCheckout({
         ...checkout,
-        promoCodeDiscount: data?.promoCodeDiscount,
+        ...data,
       });
       return { data };
     }

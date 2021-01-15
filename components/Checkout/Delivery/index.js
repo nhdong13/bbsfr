@@ -45,32 +45,21 @@ export default function DeliveryComponent() {
   const { data: userData, loading } = useUserDetails()
   const { addToast, removeToast, toastStack } = useToasts()
   const [createPaymentCheckoutToken] = useMutation(paymentCheckoutTokenCreate)
-
   const router = useRouter()
   const { status, orderToken, result, checkoutId } = router.query
-
   const [initDeliveryData, setInitDeliveryData] = useState({
     shippingMethod: "",
     billingAddress: INITIAL_ADDRESS,
     billingDifferentAddress: false,
     paymentMethod: null,
-    promotion: {
-      code: "",
-      valid: false,
-      discountAmount: null,
-      discountedPrice: null,
-    },
-    giftCard: {
-      code: "",
-      valid: false,
-    },
+    promotion: "",
+    giftCard: "",
     creditCard: {
       number: "",
       expirationDate: "",
       cvv: "",
     },
   })
-
   const [showContinue, setShowContinue] = useState(false)
   const [showLoading, setShowLoading] = useState(false)
   const [hostedFieldsInstance, setHostedFieldsInstance] = useState(null)
@@ -129,21 +118,12 @@ export default function DeliveryComponent() {
     }
 
     let shippingMethod = checkout.shippingMethod?.id
-    let promotion = initDeliveryData.promotion
-    if (promoCodeDiscount.voucherCode) {
-      promotion = {
-        code: promoCodeDiscount.voucherCode,
-        valid: true,
-        discountAmount: null,
-        discountedPrice: null,
-      }
-    }
 
     setInitDeliveryData({
       ...initDeliveryData,
       paymentMethod,
       shippingMethod,
-      promotion,
+      promotion: promoCodeDiscount.voucherCode || "",
     })
   }, [loaded])
 
@@ -349,7 +329,7 @@ export default function DeliveryComponent() {
                       subtotalPrice={subtotalPrice}
                       shippingPrice={shippingPrice}
                       discount={discount}
-                      promotion={values.promotion}
+                      voucherifies={checkout?.voucherifies || []}
                     ></OrderTotalCost>
 
                     {showContinue && (
