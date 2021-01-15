@@ -7,7 +7,7 @@ import "slick-carousel/slick/slick-theme.css"
 import dynamic from "next/dynamic"
 
 const BrandDynamic = dynamic(() => import("./Brand"))
-const BlogDynamic = dynamic(() => import("./Blog"))
+// const BlogDynamic = dynamic(() => import("./Blog"))
 const FAQDynamic = dynamic(() => import("./FAQ"))
 const TestimonialsDynamic = dynamic(() => import("./Testimonials"))
 const SEODynamic = dynamic(() => import("./SEO"))
@@ -55,7 +55,7 @@ function Home(props) {
           />
         ))}
         <BrandDynamic brands={brands} />
-        <BlogDynamic />
+        {/* <BlogDynamic /> */}
         <TestimonialsDynamic testimonials={testimonials} type="home" />
         <FAQDynamic FAQ={FAQ} />
         <SEODynamic

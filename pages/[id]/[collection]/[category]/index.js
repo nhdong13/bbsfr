@@ -5,25 +5,18 @@ import {
   getCategoryByUid,
 } from "../../../../lib/prismic/api"
 import { search } from "@sajari/server"
-import { Pipeline, Variables } from "@sajari/react-search-ui"
-import { getConfigPipeline } from "../../../../services/getPipelineSajari"
 import { authenticationFromStamped } from "../../../../services/testimonial"
 import CategoryComponent from "../../../../components/Category"
 import { getDataForMainNav } from "../../../../services/mainNav"
 import { mockupDataFilterCategory } from "../../../../services/collection"
-
-const pipeline = new Pipeline({ ...getConfigPipeline("best-buy") }, "query")
-var searchObj = { variables: null }
-
-const initVariable = (params) => {
-  //Filter options will replace base params for per page --> this is code demo
-  const category = mockupDataFilterCategory(params)
-  searchObj.variables = new Variables({
-    resultsPerPage: 20,
-    q: "",
-    filter: `categories ~ ['${category}']`,
-  })
-}
+import { pipelineConfig, variablesConfig } from "../../../../lib/sajari/config"
+import {
+  brandFilter,
+  categoryFilter,
+  listBrandsFilter,
+  priceRangeFilter,
+  ratingFilter,
+} from "../../../../lib/sajari/filter"
 
 export async function getStaticProps({ params }) {
   const requestOptions = authenticationFromStamped()
@@ -31,14 +24,30 @@ export async function getStaticProps({ params }) {
   const testimonials = await resStamped.json()
   const categoryData = await getCategoryByUid(params.category)
   const dataNav = await getDataForMainNav()
-  initVariable(params)
+  //Filter options will replace base params for per page --> this is code demo
+  const filter = `categories ~ ['${mockupDataFilterCategory(params)}']`
   const initialResponse = await search({
-    pipeline,
-    variables: searchObj.variables,
+    pipeline: pipelineConfig,
+    variables: variablesConfig(filter),
+    filters: [
+      listBrandsFilter,
+      priceRangeFilter,
+      brandFilter,
+      categoryFilter,
+      ratingFilter,
+    ],
   })
 
   return {
-    props: { categoryData, initialResponse, testimonials, dataNav, params },
+    props: {
+      categoryData,
+      initialResponse,
+      testimonials,
+      dataNav,
+      params,
+      filter,
+      timeNow: Date.now(),
+    },
     revalidate: +process.env.NEXT_PUBLIC_REVALIDATE_PAGE_TIME,
   }
 }
@@ -71,16 +80,10 @@ export async function getStaticPaths() {
   }
   return { paths, fallback: false }
 }
-const Category = ({ categoryData, initialResponse, testimonials, params }) => {
-  if (!search.variables) {
-    initVariable(params)
-  }
+const Category = ({ categoryData, testimonials }) => {
   return (
     <CategoryComponent
       categoryData={categoryData}
-      initialResponse={initialResponse}
-      pipeline={pipeline}
-      variables={searchObj.variables}
       testimonials={testimonials}
     />
   )

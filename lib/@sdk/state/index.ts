@@ -228,19 +228,31 @@ export class SaleorState
             promoCodeDiscount?.currency || firstItemTotalPrice.gross.currency,
         }
 
-        const totalPrice = {
+        const voucherDiscount =
+          checkout?.voucherifies
+            ?.filter((voucher) => voucher.type === "GIFT_VOUCHER")
+            ?.map((voucher) => voucher.currentBalanceAmount)
+            ?.reduce((prev, next) => prev + next, 0) || 0
+
+        const totalPrice = checkout?.totalPrice || {
           ...subtotalPrice,
           gross: {
             ...subtotalPrice.gross,
             amount: round(
-              itmesGrossPrice + shippingPrice.amount - discount.amount,
+              itmesGrossPrice +
+                shippingPrice.amount -
+                discount.amount -
+                voucherDiscount,
               2
             ),
           },
           net: {
             ...subtotalPrice.net,
             amount: round(
-              itemsNetPrice + shippingPrice.amount - discount.amount,
+              itemsNetPrice +
+                shippingPrice.amount -
+                discount.amount -
+                voucherDiscount,
               2
             ),
           },

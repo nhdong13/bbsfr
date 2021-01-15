@@ -1,4 +1,3 @@
-import { SearchProvider } from "@sajari/react-hooks"
 import dynamic from "next/dynamic"
 import { Container } from "react-bootstrap"
 import ShopByBrandCollectionComponent from "../Components/SBBrandCollectionComponent"
@@ -17,9 +16,6 @@ const FAQDynamic = dynamic(() => import("../../HomePage/FAQ"))
 const TestimonialsDynamic = dynamic(() => import("../../HomePage/Testimonials"))
 
 const BrandCollectionComponent = ({
-  pipeline,
-  variables,
-  initialResponse,
   brandCollectionResponse,
   testimonials,
 }) => {
@@ -54,24 +50,14 @@ const BrandCollectionComponent = ({
           dangerouslySetInnerHTML={{ __html: jsonFAQ }}
         />
       </Head>
-      <SearchProvider
-        search={{
-          pipeline,
-          variables,
-        }}
-        initialResponse={initialResponse}
-        searchOnLoad={!initialResponse}
-      >
-        <ImagedHeaderDynamic
-          header={
-            brandCollectionResponse?.page_heading_1?.length > 0
-              ? brandCollectionResponse.page_heading_1[0].text
-              : "Brand Collection"
-          }
-          pipeline={pipeline}
-          imgUrl=""
-        />
-      </SearchProvider>
+      <ImagedHeaderDynamic
+        header={
+          brandCollectionResponse?.page_heading_1?.length > 0
+            ? brandCollectionResponse.page_heading_1[0].text
+            : "Brand Collection"
+        }
+        imgUrl=""
+      />
       <div>
         <ShopByBrandCollectionComponent
           arrData={categories}
@@ -93,7 +79,7 @@ const BrandCollectionComponent = ({
       <FAQDynamic FAQ={{ faq, faq_title }} />
       <SEODynamic
         Dynamic
-        heading1={page_heading_2?.length > 0 ? page_heading_2[0].text : "---"}
+        heading1={page_heading_2?.length > 0 ? page_heading_2[0].text : ""}
         pageParagraph={page_paragraph?.length > 0 ? page_paragraph : []}
       />
     </>

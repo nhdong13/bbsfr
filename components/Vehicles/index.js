@@ -16,11 +16,14 @@ const SEODynamic = dynamic(() => import("../HomePage/SEO"))
 const TestimonialsDynamic = dynamic(() =>
   import("../HomePage/Testimonials/index")
 )
-const VehicleDynamic = dynamic(() => import("./Components/VehicleComponent"))
+const VehicleDynamic = dynamic(() =>
+  import("./Components/MakeGroupedComponent")
+)
 
 const VehiclesComponent = ({ vehiclesDirectory, vehicles, testimonials }) => {
   const {
     page_heading_1,
+    page_heading_2,
     faq,
     faq_title,
     meta_title,
@@ -31,12 +34,16 @@ const VehiclesComponent = ({ vehiclesDirectory, vehicles, testimonials }) => {
     page_heading_1 && page_heading_1.length > 0 && page_heading_1[0].text
       ? page_heading_1[0].text
       : "---"
+  const titleSeo =
+    page_heading_2?.length > 0 && page_heading_2[0].text
+      ? page_heading_2[0].text
+      : ""
   const jsonFAQ = convertSchemaFAQ({ faq, faq_title })
   const generatedData = generateMotorcyclesGroup(vehicles)
   return (
     <>
       <Head>
-        <title>{meta_title || "Brand Directory"}</title>
+        <title>{meta_title || "Vehicle Directory"}</title>
         <meta name="description" content={meta_description} />
         <meta
           name="og:description"
@@ -46,9 +53,12 @@ const VehiclesComponent = ({ vehiclesDirectory, vehicles, testimonials }) => {
         <meta
           name="og:title"
           property="og:title"
-          content={meta_title || "Brand Directory"}
+          content={meta_title || "Vehicle Directory"}
         />
-        <meta name="twitter:title" content={meta_title || "Brand Directory"} />
+        <meta
+          name="twitter:title"
+          content={meta_title || "Vehicle Directory"}
+        />
         <meta name="twitter:description" content={meta_description} />
         <script
           type="application/ld+json"
@@ -77,7 +87,7 @@ const VehiclesComponent = ({ vehiclesDirectory, vehicles, testimonials }) => {
         type="vehicle directory"
       />
       <FAQDynamic FAQ={{ faq, faq_title }} />
-      <SEODynamic heading1={title} pageParagraph={page_paragraph || []} />
+      <SEODynamic heading1={titleSeo} pageParagraph={page_paragraph || []} />
     </>
   )
 }

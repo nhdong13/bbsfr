@@ -1,37 +1,47 @@
 import BrandHomeComponent from "../../../components/Brand/BrandHome"
 import { getBrandByUid, listAllBrands } from "../../../lib/prismic/api"
-import { Pipeline, Variables } from "@sajari/react-search-ui"
 import { search } from "@sajari/server"
-import { getConfigPipeline } from "../../../services/getPipelineSajari"
 import { getDataForMainNav } from "../../../services/mainNav"
 import { authenticationFromStamped } from "../../../services/testimonial"
 import { mockupDataFilterBrand } from "../../../services/brand"
-
-const pipeline = new Pipeline({ ...getConfigPipeline("best-buy") }, "query")
-var searchObj = { variables: null }
-
-const initVariable = (params) => {
-  //Filter options will replace base params for per page --> this is code demo
-  searchObj.variables = new Variables({
-    resultsPerPage: 20,
-    q: "",
-    filter: `brand = "${mockupDataFilterBrand()}"`,
-  })
-}
+import { pipelineConfig, variablesConfig } from "../../../lib/sajari/config"
+import {
+  brandFilter,
+  categoryFilter,
+  listBrandsFilter,
+  priceRangeFilter,
+  ratingFilter,
+} from "../../../lib/sajari/filter"
 
 export async function getStaticProps({ params }) {
-  initVariable(params)
-  const initialResponse = await search({
-    pipeline,
-    variables: searchObj.variables,
-  })
   const brand = await getBrandByUid(params.brandHome)
   const requestOptions = authenticationFromStamped()
   const resStamped = await fetch(process.env.STAMPED_API_URL, requestOptions)
   const testimonials = await resStamped.json()
   const dataNav = await getDataForMainNav()
+  //Filter options will replace base params for per page --> this is code demo
+  const filter = `brand = "${mockupDataFilterBrand()}"`
+  const initialResponse = await search({
+    pipeline: pipelineConfig,
+    variables: variablesConfig(filter),
+    filters: [
+      listBrandsFilter,
+      priceRangeFilter,
+      brandFilter,
+      categoryFilter,
+      ratingFilter,
+    ],
+  })
+
   return {
-    props: { initialResponse, brand, dataNav, testimonials },
+    props: {
+      initialResponse,
+      brand,
+      dataNav,
+      testimonials,
+      filter,
+      timeNow: Date.now(),
+    },
     revalidate: +process.env.NEXT_PUBLIC_REVALIDATE_PAGE_TIME,
   }
 }
@@ -50,15 +60,7 @@ export async function getStaticPaths() {
   return { paths, fallback: false }
 }
 
-const BrandHomePage = ({ initialResponse, brand, testimonials }) => {
-  return (
-    <BrandHomeComponent
-      initialResponse={initialResponse}
-      pipeline={pipeline}
-      variables={searchObj.variables}
-      brand={brand}
-      testimonials={testimonials}
-    />
-  )
+const BrandHomePage = ({ brand, testimonials }) => {
+  return <BrandHomeComponent brand={brand} testimonials={testimonials} />
 }
 export default BrandHomePage

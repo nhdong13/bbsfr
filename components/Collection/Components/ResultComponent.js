@@ -15,7 +15,8 @@ const ListProductsDynamic = dynamic(() => import("./ListProductsComponent"))
 
 const ResultComponent = () => {
   const [show, setShow] = useState(false)
-  const [sortFilterChanged, setChanged] = useState(false)
+  const [filterChanged, setFilterChanged] = useState(false)
+  const [sortChanged, setSortChanged] = useState(false)
   const [openCollapseSort, setOpenCollapseSort] = useState(false)
   const [arrFilter, setArrFilter] = useState([
     {
@@ -52,7 +53,8 @@ const ResultComponent = () => {
   //Handle Close Modal
   const handleClose = () => {
     setShow(false)
-    setChanged(false)
+    setFilterChanged(false)
+    setSortChanged(false)
   }
 
   const handleSetOpenCollapse = (name) => {
@@ -127,7 +129,8 @@ const ResultComponent = () => {
 
         {/*Sorting Feature*/}
         <SortComponent
-          setChanged={setChanged}
+          sortChanged={sortChanged}
+          setSortChanged={setSortChanged}
           openCollapseSort={openCollapseSort}
           setOpenCollapseSort={setOpenCollapseSort}
         />
@@ -136,16 +139,17 @@ const ResultComponent = () => {
         <FilterComponent
           handleSetOpenCollapse={handleSetOpenCollapse}
           arrFilter={arrFilter}
-          setChanged={setChanged}
+          filterChanged={filterChanged}
+          setFilterChanged={setFilterChanged}
         />
 
         <div onClick={handleClose} className={styles.button_sajari}>
           <div className={styles.modal_button}>
             <Button
               fixed="bottom"
-              variant={sortFilterChanged ? "secondary" : "primary"}
+              variant={sortChanged || filterChanged ? "secondary" : "primary"}
             >
-              {sortFilterChanged ? "Apply" : "Cancel"}
+              {sortChanged || filterChanged ? "Apply" : "Cancel"}
             </Button>
           </div>
         </div>
