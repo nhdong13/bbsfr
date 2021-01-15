@@ -14,8 +14,8 @@ import {
   variablesConfig,
 } from "../../../../../../lib/sajari/config"
 import {
-  brandFilter,
   categoryFilter,
+  colorFilter,
   listBrandsFilter,
   priceRangeFilter,
   ratingFilter,
@@ -36,9 +36,9 @@ export async function getStaticProps({ params }) {
     filters: [
       listBrandsFilter,
       priceRangeFilter,
-      brandFilter,
       categoryFilter,
       ratingFilter,
+      colorFilter,
     ],
   })
 
@@ -103,9 +103,9 @@ const BrandCategoryPage = ({
           filters: [
             listBrandsFilter,
             priceRangeFilter,
-            brandFilter,
             categoryFilter,
             ratingFilter,
+            colorFilter,
           ],
         }}
         initialResponse={initialResponse}

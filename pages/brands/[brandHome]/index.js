@@ -7,11 +7,12 @@ import { mockupDataFilterBrand } from "../../../services/brand"
 import { pipelineConfig, variablesConfig } from "../../../lib/sajari/config"
 import { SSRProvider, SearchProvider } from "@sajari/react-search-ui"
 import {
-  brandFilter,
   categoryFilter,
+  colorFilter,
   listBrandsFilter,
   priceRangeFilter,
   ratingFilter,
+  colorFilter,
 } from "../../../lib/sajari/filter"
 
 export async function getStaticProps({ params }) {
@@ -28,9 +29,9 @@ export async function getStaticProps({ params }) {
     filters: [
       listBrandsFilter,
       priceRangeFilter,
-      brandFilter,
       categoryFilter,
       ratingFilter,
+      colorFilter,
     ],
   })
 
@@ -70,9 +71,9 @@ const BrandHomePage = ({ brand, testimonials, filter, initialResponse }) => {
           filters: [
             listBrandsFilter,
             priceRangeFilter,
-            brandFilter,
             categoryFilter,
             ratingFilter,
+            colorFilter,
           ],
         }}
         initialResponse={initialResponse}

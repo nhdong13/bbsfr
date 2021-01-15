@@ -1,4 +1,3 @@
-import { SearchProvider } from "@sajari/react-hooks"
 import dynamic from "next/dynamic"
 import Head from "next/head"
 import { convertSchemaFAQ } from "../../../services/convertSchemaFAQ"
@@ -15,13 +14,7 @@ const TestimonialsDynamic = dynamic(() =>
   import("../../HomePage/Testimonials/index")
 )
 
-const VehicleCategoryComponent = ({
-  vehicleCategory,
-  testimonials,
-  pipeline,
-  variables,
-  initialResponse,
-}) => {
+const VehicleCategoryComponent = ({ vehicleCategory, testimonials }) => {
   const {
     page_heading_1,
     page_heading_2,
@@ -63,27 +56,13 @@ const VehicleCategoryComponent = ({
           dangerouslySetInnerHTML={{ __html: jsonFAQ }}
         />
       </Head>
-      <SearchProvider
-        search={{
-          pipeline,
-          variables,
-        }}
-        initialResponse={initialResponse}
-        searchOnLoad={!initialResponse}
-      >
-        <ImagedHeaderComponent header={heading1} />
 
-        <BackToPageBeforeComponent
-          page={router?.query?.vehicleCollection}
-          type="vehicle"
-        />
-
-        <ResultDynamic
-          variables={variables}
-          pipeline={pipeline}
-          initialResponse={initialResponse}
-        />
-      </SearchProvider>
+      <ImagedHeaderComponent header={heading1} />
+      <BackToPageBeforeComponent
+        page={router?.query?.vehicleCollection}
+        type="vehicle"
+      />
+      <ResultDynamic />
       <TestimonialsDynamic
         testimonials={testimonials}
         type="vehicle directory"
