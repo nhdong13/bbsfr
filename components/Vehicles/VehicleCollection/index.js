@@ -2,10 +2,11 @@ import { SearchProvider } from "@sajari/react-hooks"
 import dynamic from "next/dynamic"
 import Head from "next/head"
 import { convertSchemaFAQ } from "../../../services/convertSchemaFAQ"
-import ImagedHeaderComponent from "../../Brand/Components/ImagedHeaderComponent"
 import ListCategoriesComponent from "../../Collection/Components/ListCategoriesComponent"
 import BackToPageBeforeComponent from "../../Common/BackPageComponent"
 import styles from "../Vehicles.module.scss"
+import ImagedHeaderComponent from "../../Brand/Components/ImagedHeaderComponent"
+import { useRouter } from "next/router"
 
 const ResultDynamic = dynamic(() =>
   import("../../Collection/Components/ResultComponent")
@@ -16,8 +17,8 @@ const TestimonialsDynamic = dynamic(() =>
   import("../../HomePage/Testimonials/index")
 )
 
-const VehicleComponent = ({
-  vehicle,
+const VehicleCollectionComponent = ({
+  vehicleCollection,
   testimonials,
   pipeline,
   variables,
@@ -31,8 +32,8 @@ const VehicleComponent = ({
     meta_title,
     page_paragraph,
     meta_description,
-    collections,
-  } = vehicle
+    categories,
+  } = vehicleCollection
   const heading1 =
     page_heading_1 && page_heading_1.length > 0 && page_heading_1[0].text
       ? page_heading_1[0].text
@@ -42,12 +43,7 @@ const VehicleComponent = ({
       ? page_heading_2[0].text
       : "---"
   const jsonFAQ = convertSchemaFAQ({ faq, faq_title })
-  const mappedCollection = collections.map((collection) => {
-    return {
-      category_title: collection.collection_title,
-      category_slug: `/${collection.collection_slug}`,
-    }
-  })
+  const router = useRouter()
   return (
     <>
       <Head>
@@ -79,14 +75,21 @@ const VehicleComponent = ({
         searchOnLoad={!initialResponse}
       >
         <ImagedHeaderComponent header={heading1} />
+
         <div className={styles.shopByText}>
-          {vehicle.shop_by_category_text != undefined &&
-          vehicle.shop_by_category_text.length
-            ? vehicle.shop_by_category_text[0].text
+          {vehicleCollection.shop_by_category_text != undefined &&
+          vehicleCollection.shop_by_category_text.length
+            ? vehicleCollection.shop_by_category_text[0].text
             : "Shop by Category"}
         </div>
-        <ListCategoriesComponent categories={mappedCollection} type="vehicle" />
-        <BackToPageBeforeComponent page="All Vehicles" type="vehicle" />
+        <ListCategoriesComponent
+          categories={categories}
+          type="vehicleCollection"
+        />
+        <BackToPageBeforeComponent
+          page={router?.query?.vehicle}
+          type="vehicle"
+        />
 
         <ResultDynamic
           variables={variables}
@@ -103,4 +106,4 @@ const VehicleComponent = ({
     </>
   )
 }
-export default VehicleComponent
+export default VehicleCollectionComponent
