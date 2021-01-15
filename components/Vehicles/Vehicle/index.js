@@ -2,13 +2,11 @@ import { SearchProvider } from "@sajari/react-hooks"
 import dynamic from "next/dynamic"
 import Head from "next/head"
 import { convertSchemaFAQ } from "../../../services/convertSchemaFAQ"
+import ImagedHeaderComponent from "../../Brand/Components/ImagedHeaderComponent"
 import ListCategoriesComponent from "../../Collection/Components/ListCategoriesComponent"
 import BackToPageBeforeComponent from "../../Common/BackPageComponent"
 import styles from "../Vehicles.module.scss"
 
-const HeaderDynamic = dynamic(() =>
-  import("../../Collection/Components/HeaderCollectionComponent")
-)
 const ResultDynamic = dynamic(() =>
   import("../../Collection/Components/ResultComponent")
 )
@@ -80,7 +78,7 @@ const VehicleComponent = ({
         initialResponse={initialResponse}
         searchOnLoad={!initialResponse}
       >
-        <HeaderDynamic pipeline={pipeline} pageHeading={heading1} />
+        <ImagedHeaderComponent header={heading1} />
         <div className={styles.shopByText}>
           {vehicle.shop_by_category_text != undefined &&
           vehicle.shop_by_category_text.length
