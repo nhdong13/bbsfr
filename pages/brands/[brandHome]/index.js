@@ -12,7 +12,6 @@ import {
   listBrandsFilter,
   priceRangeFilter,
   ratingFilter,
-  colorFilter,
 } from "../../../lib/sajari/filter"
 
 export async function getStaticProps({ params }) {
