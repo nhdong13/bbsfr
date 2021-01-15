@@ -6,7 +6,7 @@ import {
   getAllSEO,
   getAllFAQ,
 } from "../lib/prismic/api"
-import { setDepartments } from "../redux/reducers/departments"
+// import { setDepartments } from "../redux/reducers/departments"
 import dynamic from "next/dynamic"
 import { authenticationFromStamped } from "../services/testimonial"
 import { getDataForMainNav } from "../services/mainNav"
@@ -15,7 +15,7 @@ const HomePageDynamic = dynamic(() => import("components/HomePage"))
 
 function Home({ department, brands, SEO, resPriFAQ, testimonials }) {
   let list_department = department[0].node.department_link
-  setDepartments(list_department)
+  // setDepartments(list_department)
   return (
     <HomePageDynamic
       department={list_department}

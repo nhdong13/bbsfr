@@ -53,7 +53,8 @@ const ResultComponent = () => {
   //Handle Close Modal
   const handleClose = () => {
     setShow(false)
-    setChanged(false)
+    setFilterChanged(false)
+    setSortChanged(false)
   }
 
   const handleSetOpenCollapse = (name) => {

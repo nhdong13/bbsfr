@@ -14,14 +14,23 @@ const ResultDynamic = dynamic(() =>
 )
 
 const BrandCategoryComponent = ({ category, testimonials }) => {
-  const { meta_title, meta_description, faq, faq_title } = category
+  const {
+    meta_title,
+    meta_description,
+    faq,
+    faq_title,
+    page_heading_2,
+  } = category
   const router = useRouter()
   const jsonFAQ = convertSchemaFAQ({ faq, meta_title })
-  const heading1 =
+  const titleHeader =
     category && category.page_heading_1 && category.page_heading_1.length > 0
       ? category.page_heading_1[0].text
-      : "Brand Home"
-
+      : "Brand Category"
+  const titleSeo =
+    page_heading_2?.length > 0 && page_heading_2[0].text
+      ? page_heading_2[0].text
+      : ""  
   return (
     <>
       <Head>
@@ -40,7 +49,7 @@ const BrandCategoryComponent = ({ category, testimonials }) => {
           dangerouslySetInnerHTML={{ __html: jsonFAQ }}
         />
       </Head>
-      <ImagedHeaderComponent header={heading1} imgUrl={null} />
+      <ImagedHeaderComponent header={titleHeader} imgUrl={null} />
       <BackToPageBeforeDynamic
         page={router.query.brandCollection}
         type="brandCategory"
@@ -49,7 +58,7 @@ const BrandCategoryComponent = ({ category, testimonials }) => {
       <TestimonialsDynamic testimonials={testimonials} type="brand-category" />
       <FAQDynamic FAQ={{ faq, faq_title }} />
       <SEODynamic
-        heading1={heading1}
+        heading1={titleSeo}
         pageParagraph={
           category &&
           category.page_paragraph &&

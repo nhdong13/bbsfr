@@ -5,20 +5,17 @@ import {
   getAllVehicles,
   getVehicleCollectionByUid,
 } from "../../../../lib/prismic/api"
+import { pipelineConfig, variablesConfig } from "../../../../lib/sajari/config"
+import {
+  brandFilter,
+  categoryFilter,
+  listBrandsFilter,
+  priceRangeFilter,
+  ratingFilter,
+} from "../../../../lib/sajari/filter"
 import { getConfigPipeline } from "../../../../services/getPipelineSajari"
 import { getDataForMainNav } from "../../../../services/mainNav"
 import { authenticationFromStamped } from "../../../../services/testimonial"
-
-const pipeline = new Pipeline({ ...getConfigPipeline("best-buy") }, "query")
-var searchObj = { variables: null }
-
-const initVariable = (params) => {
-  //Filter options will replace base params for per page --> this is code demo
-  searchObj.variables = new Variables({
-    resultsPerPage: 20,
-    q: "",
-  })
-}
 
 export async function getStaticPaths() {
   const paths = []
@@ -50,10 +47,17 @@ export async function getStaticProps({ params }) {
   const vehicleCollection = await getVehicleCollectionByUid(
     params?.vehicleCollection
   )
-  initVariable(params)
+  //Filter options will replace base params for per page --> this is code demo
   const initialResponse = await search({
-    pipeline,
-    variables: searchObj.variables,
+    pipeline: pipelineConfig,
+    variables: variablesConfig(),
+    filters: [
+      listBrandsFilter,
+      priceRangeFilter,
+      brandFilter,
+      categoryFilter,
+      ratingFilter,
+    ],
   })
   return {
     props: { dataNav, vehicleCollection, initialResponse, testimonials },
@@ -61,20 +65,9 @@ export async function getStaticProps({ params }) {
   }
 }
 
-const VehicleCollectionPage = ({
-  vehicleCollection,
-  testimonials,
-  initialResponse,
-  params,
-}) => {
-  if (!search.variables) {
-    initVariable(params)
-  }
+const VehicleCollectionPage = ({ vehicleCollection, testimonials }) => {
   return (
     <VehicleCollectionComponent
-      initialResponse={initialResponse}
-      pipeline={pipeline}
-      variables={searchObj.variables}
       vehicleCollection={vehicleCollection}
       testimonials={testimonials}
     />

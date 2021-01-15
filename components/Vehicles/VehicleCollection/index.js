@@ -17,13 +17,7 @@ const TestimonialsDynamic = dynamic(() =>
   import("../../HomePage/Testimonials/index")
 )
 
-const VehicleCollectionComponent = ({
-  vehicleCollection,
-  testimonials,
-  pipeline,
-  variables,
-  initialResponse,
-}) => {
+const VehicleCollectionComponent = ({ vehicleCollection, testimonials }) => {
   const {
     page_heading_1,
     page_heading_2,
@@ -66,37 +60,19 @@ const VehicleCollectionComponent = ({
           dangerouslySetInnerHTML={{ __html: jsonFAQ }}
         />
       </Head>
-      <SearchProvider
-        search={{
-          pipeline,
-          variables,
-        }}
-        initialResponse={initialResponse}
-        searchOnLoad={!initialResponse}
-      >
-        <ImagedHeaderComponent header={heading1} />
-
-        <div className={styles.shopByText}>
-          {vehicleCollection.shop_by_category_text != undefined &&
-          vehicleCollection.shop_by_category_text.length
-            ? vehicleCollection.shop_by_category_text[0].text
-            : "Shop by Category"}
-        </div>
-        <ListCategoriesComponent
-          categories={categories}
-          type="vehicleCollection"
-        />
-        <BackToPageBeforeComponent
-          page={router?.query?.vehicle}
-          type="vehicle"
-        />
-
-        <ResultDynamic
-          variables={variables}
-          pipeline={pipeline}
-          initialResponse={initialResponse}
-        />
-      </SearchProvider>
+      <ImagedHeaderComponent header={heading1} />
+      <div className={styles.shopByText}>
+        {vehicleCollection.shop_by_category_text != undefined &&
+        vehicleCollection.shop_by_category_text.length
+          ? vehicleCollection.shop_by_category_text[0].text
+          : "Shop by Category"}
+      </div>
+      <ListCategoriesComponent
+        categories={categories}
+        type="vehicleCollection"
+      />
+      <BackToPageBeforeComponent page={router?.query?.vehicle} type="vehicle" />
+      <ResultDynamic />
       <TestimonialsDynamic
         testimonials={testimonials}
         type="vehicle directory"

@@ -23,15 +23,11 @@ const BrandRangeComponent = ({ brandRange, testimonials }) => {
   const router = useRouter()
   const jsonFAQ = convertSchemaFAQ({ faq, faq_title })
   const heading1 =
-    brandRange &&
-    brandRange.page_heading_1 &&
-    brandRange.page_heading_1.length > 0
+    brandRange?.page_heading_1?.length > 0
       ? brandRange.page_heading_1[0].text
       : "Brand"
   const heading2 =
-    brandRange &&
-    brandRange.page_heading_2 &&
-    brandRange.page_heading_2.length > 0
+    brandRange?.page_heading_2?.length > 0
       ? brandRange.page_heading_2[0].text
       : "Brand"
 

@@ -50,14 +50,14 @@ const BrandCollectionComponent = ({
           dangerouslySetInnerHTML={{ __html: jsonFAQ }}
         />
       </Head>
-        <ImagedHeaderDynamic
-          header={
-            brandCollectionResponse?.page_heading_1?.length > 0
-              ? brandCollectionResponse.page_heading_1[0].text
-              : "Brand Collection"
-          }
-          imgUrl=""
-        />
+      <ImagedHeaderDynamic
+        header={
+          brandCollectionResponse?.page_heading_1?.length > 0
+            ? brandCollectionResponse.page_heading_1[0].text
+            : "Brand Collection"
+        }
+        imgUrl=""
+      />
       <div>
         <ShopByBrandCollectionComponent
           arrData={categories}
@@ -79,7 +79,7 @@ const BrandCollectionComponent = ({
       <FAQDynamic FAQ={{ faq, faq_title }} />
       <SEODynamic
         Dynamic
-        heading1={page_heading_2?.length > 0 ? page_heading_2[0].text : "---"}
+        heading1={page_heading_2?.length > 0 ? page_heading_2[0].text : ""}
         pageParagraph={page_paragraph?.length > 0 ? page_paragraph : []}
       />
     </>

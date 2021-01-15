@@ -19,6 +19,7 @@ const TestimonialsDynamic = dynamic(() =>
 const BrandComponent = ({ brandDirectory, brands, testimonials }) => {
   const {
     page_heading_1,
+    page_heading_2,
     faq,
     faq_title,
     meta_title,
@@ -29,7 +30,7 @@ const BrandComponent = ({ brandDirectory, brands, testimonials }) => {
     page_heading_1 && page_heading_1.length > 0 && page_heading_1[0].text
       ? page_heading_1[0].text
       : "---"
-  const heading1 = page_heading_1.length > 0 ? page_heading_1[0].text : "---"
+  const titleSeo = page_heading_2.length > 0 ? page_heading_2[0].text : ""
   const jsonFAQ = convertSchemaFAQ({ faq, faq_title })
 
   return (
@@ -61,7 +62,7 @@ const BrandComponent = ({ brandDirectory, brands, testimonials }) => {
       </div>
       <TestimonialsDynamic testimonials={testimonials} type="brand-directory" />
       <FAQDynamic FAQ={{ faq, faq_title }} />
-      <SEODynamic heading1={heading1} pageParagraph={page_paragraph || []} />
+      <SEODynamic heading1={titleSeo} pageParagraph={page_paragraph || []} />
     </>
   )
 }

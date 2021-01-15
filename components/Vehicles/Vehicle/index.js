@@ -16,13 +16,7 @@ const TestimonialsDynamic = dynamic(() =>
   import("../../HomePage/Testimonials/index")
 )
 
-const VehicleComponent = ({
-  vehicle,
-  testimonials,
-  pipeline,
-  variables,
-  initialResponse,
-}) => {
+const VehicleComponent = ({ vehicle, testimonials }) => {
   const {
     page_heading_1,
     page_heading_2,
@@ -70,30 +64,16 @@ const VehicleComponent = ({
           dangerouslySetInnerHTML={{ __html: jsonFAQ }}
         />
       </Head>
-      <SearchProvider
-        search={{
-          pipeline,
-          variables,
-        }}
-        initialResponse={initialResponse}
-        searchOnLoad={!initialResponse}
-      >
-        <ImagedHeaderComponent header={heading1} />
-        <div className={styles.shopByText}>
-          {vehicle.shop_by_category_text != undefined &&
-          vehicle.shop_by_category_text.length
-            ? vehicle.shop_by_category_text[0].text
-            : "Shop by Category"}
-        </div>
-        <ListCategoriesComponent categories={mappedCollection} type="vehicle" />
-        <BackToPageBeforeComponent page="All Vehicles" type="vehicle" />
-
-        <ResultDynamic
-          variables={variables}
-          pipeline={pipeline}
-          initialResponse={initialResponse}
-        />
-      </SearchProvider>
+      <ImagedHeaderComponent header={heading1} />
+      <div className={styles.shopByText}>
+        {vehicle.shop_by_category_text != undefined &&
+        vehicle.shop_by_category_text.length
+          ? vehicle.shop_by_category_text[0].text
+          : "Shop by Category"}
+      </div>
+      <ListCategoriesComponent categories={mappedCollection} type="vehicle" />
+      <BackToPageBeforeComponent page="All Vehicles" type="vehicle" />
+      <ResultDynamic />
       <TestimonialsDynamic
         testimonials={testimonials}
         type="vehicle directory"
