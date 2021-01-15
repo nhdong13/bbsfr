@@ -19,18 +19,12 @@ import { SSRProvider, SearchProvider } from "@sajari/react-search-ui"
 export async function getStaticPaths() {
   const paths = []
   const vehicleList = await getAllVehicles()
-  if (vehicleList.length > 0) {
-    for (const vehicle of vehicleList) {
-      let vehicleCollections = vehicle?.node?.collections
-      if (vehicleCollections.length > 0) {
-        for (const collection of vehicleCollections) {
-          if (collection?.collection_slug) {
-            paths.push(
-              `/vehicles/${vehicle.node._meta.uid}/${collection.collection_slug}`
-            )
-          }
-        }
-      }
+  for (const vehicle of vehicleList || []) {
+    let vehicleCollections = vehicle?.node?.collections || []
+    for (const collection of vehicleCollections) {
+      paths.push(
+        `/vehicles/${vehicle.node._meta.uid}/${collection.collection_slug}`
+      )
     }
   }
   return { paths, fallback: false }
