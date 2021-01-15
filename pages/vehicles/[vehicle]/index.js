@@ -6,8 +6,8 @@ import { search } from "@sajari/server"
 import { pipelineConfig, variablesConfig } from "../../../lib/sajari/config"
 import { SSRProvider, SearchProvider } from "@sajari/react-search-ui"
 import {
-  brandFilter,
   categoryFilter,
+  colorFilter,
   listBrandsFilter,
   priceRangeFilter,
   ratingFilter,
@@ -41,9 +41,9 @@ export async function getStaticProps({ params }) {
     filters: [
       listBrandsFilter,
       priceRangeFilter,
-      brandFilter,
       categoryFilter,
       ratingFilter,
+      colorFilter,
     ],
   })
   return {
@@ -62,9 +62,9 @@ const VehiclePage = ({ vehicle, testimonials, filter, initialResponse }) => {
           filters: [
             listBrandsFilter,
             priceRangeFilter,
-            brandFilter,
             categoryFilter,
             ratingFilter,
+            colorFilter,
           ],
         }}
         initialResponse={initialResponse}

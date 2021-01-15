@@ -10,8 +10,8 @@ import { authenticationFromStamped } from "../../../../services/testimonial"
 import { pipelineConfig, variablesConfig } from "../../../../lib/sajari/config"
 import { SSRProvider, SearchProvider } from "@sajari/react-search-ui"
 import {
-  brandFilter,
   categoryFilter,
+  colorFilter,
   listBrandsFilter,
   priceRangeFilter,
   ratingFilter,
@@ -61,9 +61,9 @@ export async function getStaticProps({ params }) {
     filters: [
       listBrandsFilter,
       priceRangeFilter,
-      brandFilter,
       categoryFilter,
       ratingFilter,
+      colorFilter,
     ],
   })
   return {
@@ -93,9 +93,9 @@ const BrandCollectionPage = ({
           filters: [
             listBrandsFilter,
             priceRangeFilter,
-            brandFilter,
             categoryFilter,
             ratingFilter,
+            colorFilter,
           ],
         }}
         initialResponse={initialResponse}

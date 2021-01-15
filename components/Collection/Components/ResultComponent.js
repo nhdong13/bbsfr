@@ -25,25 +25,25 @@ const ResultComponent = () => {
       title: "Brand",
     },
     {
-      name: "listBrands",
-      open: false,
-      title: "List Brands",
-    },
-    {
       name: "priceRange",
       open: false,
       title: "Range ($)",
     },
-    {
-      name: "category",
-      open: false,
-      title: "Category",
-    },
     // {
-    //   name: "rating",
+    //   name: "category",
     //   open: false,
-    //   title: "Rating",
+    //   title: "Category",
     // },
+    {
+      name: "rating",
+      open: false,
+      title: "Rating",
+    },
+    {
+      name: "color",
+      open: false,
+      title: "Color",
+    },
   ])
 
   const sortFilter = () => {

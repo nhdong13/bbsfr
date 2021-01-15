@@ -11,11 +11,11 @@ import { mockupDataFilterCategory } from "../../../services/collection"
 import { pipelineConfig, variablesConfig } from "../../../lib/sajari/config"
 import { SSRProvider, SearchProvider } from "@sajari/react-search-ui"
 import {
-  brandFilter,
   categoryFilter,
   listBrandsFilter,
   priceRangeFilter,
   ratingFilter,
+  colorFilter,
 } from "../../../lib/sajari/filter"
 
 export async function getStaticProps({ params }) {
@@ -32,9 +32,9 @@ export async function getStaticProps({ params }) {
     filters: [
       listBrandsFilter,
       priceRangeFilter,
-      brandFilter,
       categoryFilter,
       ratingFilter,
+      colorFilter,
     ],
   })
 
@@ -80,9 +80,9 @@ const Collection = ({ collections, testimonials, initialResponse, filter }) => {
           filters: [
             listBrandsFilter,
             priceRangeFilter,
-            brandFilter,
             categoryFilter,
             ratingFilter,
+            colorFilter,
           ],
         }}
         initialResponse={initialResponse}

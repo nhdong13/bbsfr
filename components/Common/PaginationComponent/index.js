@@ -1,4 +1,4 @@
-import { Pagination, SearchProvider, Variables } from "@sajari/react-search-ui"
+import { Pagination } from "@sajari/react-search-ui"
 import { Container } from "react-bootstrap"
 import styles from "../Common.module.scss"
 

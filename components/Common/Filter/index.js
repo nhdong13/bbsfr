@@ -4,13 +4,9 @@ import { Collapse } from "react-bootstrap"
 import Image from "next/image"
 import { useFilter } from "@sajari/react-hooks"
 import { useRouter } from "next/router"
-import {
-  Radio,
-  RadioGroup,
-  CheckboxGroup,
-  Checkbox,
-  Combobox,
-} from "@sajari/react-components"
+import FilterOptionComponent from "./FilterOptions"
+import FilterRatingOption from "./FilterRatingOption"
+import ColorFilter from "./FilterColorOptions"
 
 const FilterRender = ({
   name,
@@ -22,8 +18,6 @@ const FilterRender = ({
 }) => {
   const router = useRouter()
   const { multi, options, selected, setSelected, reset } = useFilter(name)
-  const Group = multi ? CheckboxGroup : RadioGroup
-  const Control = multi ? Checkbox : Radio
   const [open, setOpen] = useState(isOpen)
 
   if (filterChanged) {
@@ -57,38 +51,36 @@ const FilterRender = ({
             <div className={styles.contextCollapse}>
               <Collapse in={open}>
                 <div>
-                  {name && name === "brand" && (
-                    <>
-                      <Combobox
-                        className={styles.sajari_combobox}
-                        placeholder="Search"
-                      />
-                    </>
+                  {name && name !== "rating" && name !== "color" && (
+                    <FilterOptionComponent
+                      name={name}
+                      setSelected={setSelected}
+                      setFilterChanged={setFilterChanged}
+                      selected={selected}
+                      multi={multi}
+                      options={options}
+                    />
                   )}
-                  <div className="flex items-center justify-between mb-2"></div>
-                  <Group
-                    name={name}
-                    value={selected}
-                    onChange={(values) => {
-                      setSelected(Array.isArray(values) ? values : [values])
-                      setFilterChanged(true)
-                    }}
-                  >
-                    {options.map(({ value, label, count }) => (
-                      <div className={styles.itemFilter} key={label + count}>
-                        <Control
-                          className={styles.itemFilterLabel}
-                          value={label}
-                          checked={selected.includes(label)}
-                        >
-                          {label}
-                        </Control>
-                        <span className={styles.itemFilterCount}>
-                          &nbsp;{`(${count})`}
-                        </span>
-                      </div>
-                    ))}
-                  </Group>
+                  {name && name === "rating" && (
+                    <FilterRatingOption
+                      name={name}
+                      setSelected={setSelected}
+                      setFilterChanged={setFilterChanged}
+                      selected={selected}
+                      multi={multi}
+                      options={options}
+                    />
+                  )}
+                  {name && name === "color" && (
+                    <ColorFilter
+                      name={name}
+                      setSelected={setSelected}
+                      setFilterChanged={setFilterChanged}
+                      selected={selected}
+                      multi={multi}
+                      options={options}
+                    />
+                  )}
                 </div>
               </Collapse>
             </div>
