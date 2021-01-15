@@ -63,7 +63,12 @@ export default function CheckoutComponent() {
       </Row>
 
       <Row className={styles.listItemSection}>
-        {generateCart(items, removeItem, updateItem, false)}
+        {items.length > 0 && generateCart(items, removeItem, updateItem, false)}
+        {!items.length && (
+          <Col md="12" className="text-center my-2">
+            There is no item in cart
+          </Col>
+        )}
       </Row>
 
       <Row className={styles.footerSection}>
@@ -74,6 +79,7 @@ export default function CheckoutComponent() {
                 variant="secondary"
                 className={clsx(styles.btn, "w-100")}
                 onClick={handleClick}
+                disabled={!items.length}
               >
                 CONTINUE TO CHECKOUT
               </Button>
