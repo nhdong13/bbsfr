@@ -1,4 +1,3 @@
-import { Pipeline, Variables } from "@sajari/react-search-ui"
 import { search } from "@sajari/server"
 import VehicleCategoryComponent from "../../../../../components/Vehicles/VehicleCategory"
 import {
@@ -6,20 +5,20 @@ import {
   getVehicleCollectionByUid,
   getVehicleCategoryByUid,
 } from "../../../../../lib/prismic/api"
-import { getConfigPipeline } from "../../../../../services/getPipelineSajari"
+import {
+  pipelineConfig,
+  variablesConfig,
+} from "../../../../../lib/sajari/config"
+import {
+  brandFilter,
+  categoryFilter,
+  listBrandsFilter,
+  priceRangeFilter,
+  ratingFilter,
+} from "../../../../../lib/sajari/filter"
 import { getDataForMainNav } from "../../../../../services/mainNav"
 import { authenticationFromStamped } from "../../../../../services/testimonial"
-
-const pipeline = new Pipeline({ ...getConfigPipeline("best-buy") }, "query")
-var searchObj = { variables: null }
-
-const initVariable = (params) => {
-  //Filter options will replace base params for per page --> this is code demo
-  searchObj.variables = new Variables({
-    resultsPerPage: 20,
-    q: "",
-  })
-}
+import { SearchProvider, SSRProvider } from "@sajari/react-search-ui"
 
 export async function getStaticPaths() {
   const paths = []
@@ -48,10 +47,16 @@ export async function getStaticProps({ params }) {
   )
   const testimonials = await resStamped.json()
   const vehicleCategory = await getVehicleCategoryByUid(params?.vehicleCategory)
-  initVariable(params)
   const initialResponse = await search({
-    pipeline,
-    variables: searchObj.variables,
+    pipeline: pipelineConfig,
+    variables: variablesConfig(),
+    filters: [
+      listBrandsFilter,
+      priceRangeFilter,
+      brandFilter,
+      categoryFilter,
+      ratingFilter,
+    ],
   })
   return {
     props: { dataNav, vehicleCategory, initialResponse, testimonials },
@@ -63,19 +68,42 @@ const VehicleCategoryPage = ({
   vehicleCategory,
   testimonials,
   initialResponse,
-  params,
+  filter,
 }) => {
-  if (!search.variables) {
-    initVariable(params)
-  }
   return (
-    <VehicleCategoryComponent
-      initialResponse={initialResponse}
-      pipeline={pipeline}
-      variables={searchObj.variables}
-      vehicleCategory={vehicleCategory}
-      testimonials={testimonials}
-    />
+    <SSRProvider>
+      <SearchProvider
+        search={{
+          pipeline: pipelineConfig,
+          variables: variablesConfig(filter || ""),
+          filters: [
+            listBrandsFilter,
+            priceRangeFilter,
+            brandFilter,
+            categoryFilter,
+            ratingFilter,
+          ],
+        }}
+        initialResponse={initialResponse}
+        searchOnLoad={!initialResponse}
+        defaultFilter={filter || ""}
+        customClassNames={{
+          pagination: {
+            container: "containerPagination",
+            button: "buttonPagination",
+            active: "activePagination",
+            next: "nextPagination",
+            prev: "prevPagination",
+            spacerEllipsis: "spacerEllipsisPagination",
+          },
+        }}
+      >
+        <VehicleCategoryComponent
+          vehicleCategory={vehicleCategory}
+          testimonials={testimonials}
+        />
+      </SearchProvider>
+    </SSRProvider>
   )
 }
 export default VehicleCategoryPage

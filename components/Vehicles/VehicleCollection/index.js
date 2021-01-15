@@ -1,4 +1,3 @@
-import { SearchProvider } from "@sajari/react-hooks"
 import dynamic from "next/dynamic"
 import Head from "next/head"
 import { convertSchemaFAQ } from "../../../services/convertSchemaFAQ"
