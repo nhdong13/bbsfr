@@ -11,7 +11,7 @@ export default function ItemComponent({
   name,
   quantity,
   thumbnail,
-  totalPrice,
+  unitPrice,
   onRemove,
   attributes,
   viewOnly,
@@ -46,14 +46,18 @@ export default function ItemComponent({
             </Col>
             <Col xs="9">
               <p className={styles.itemName}>{name}</p>
-              <p className={styles.itemPrice}>{totalPrice}</p>
+              <p className={styles.itemPrice}>{unitPrice}</p>
               <Form.Row>
                 <Form.Group controlId="itemSize" as={Col} xs="4">
                   <Form.Label className={styles.formLabel}>Size</Form.Label>
                   {viewOnly ? ` ${size.value}` : <div>{size.value}</div>}
                 </Form.Group>
 
-                <Form.Group controlId="itemQty" as={Col} xs="4">
+                <Form.Group
+                  controlId="itemQty"
+                  as={Col}
+                  xs={viewOnly ? "6" : "4"}
+                >
                   <Form.Label className={styles.formLabel}>Quantity</Form.Label>
                   {viewOnly ? (
                     ` ${quantity}`
