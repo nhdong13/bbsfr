@@ -6,6 +6,7 @@ import ListCategoriesComponent from "../../Collection/Components/ListCategoriesC
 import { convertDataShopByCollectionBrand } from "../../../services/brand"
 
 const ShopByBrandCollectionComponent = ({ type, arrData }) => {
+  console.log("Debug code arrData:", arrData)
   const [open, setOpen] = useState(false)
   const dataShopBy =
     type && type === "category"

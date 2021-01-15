@@ -1,4 +1,3 @@
-import { Pipeline, Variables } from "@sajari/react-search-ui"
 import { search } from "@sajari/server"
 import VehicleCollectionComponent from "../../../../components/Vehicles/VehicleCollection"
 import {
@@ -13,9 +12,9 @@ import {
   priceRangeFilter,
   ratingFilter,
 } from "../../../../lib/sajari/filter"
-import { getConfigPipeline } from "../../../../services/getPipelineSajari"
 import { getDataForMainNav } from "../../../../services/mainNav"
 import { authenticationFromStamped } from "../../../../services/testimonial"
+import { SSRProvider, SearchProvider } from "@sajari/react-search-ui"
 
 export async function getStaticPaths() {
   const paths = []
@@ -65,12 +64,46 @@ export async function getStaticProps({ params }) {
   }
 }
 
-const VehicleCollectionPage = ({ vehicleCollection, testimonials }) => {
+const VehicleCollectionPage = ({
+  vehicleCollection,
+  testimonials,
+  filter,
+  initialResponse,
+}) => {
   return (
-    <VehicleCollectionComponent
-      vehicleCollection={vehicleCollection}
-      testimonials={testimonials}
-    />
+    <SSRProvider>
+      <SearchProvider
+        search={{
+          pipeline: pipelineConfig,
+          variables: variablesConfig(filter || ""),
+          filters: [
+            listBrandsFilter,
+            priceRangeFilter,
+            brandFilter,
+            categoryFilter,
+            ratingFilter,
+          ],
+        }}
+        initialResponse={initialResponse}
+        searchOnLoad={!initialResponse}
+        defaultFilter={filter || ""}
+        customClassNames={{
+          pagination: {
+            container: "containerPagination",
+            button: "buttonPagination",
+            active: "activePagination",
+            next: "nextPagination",
+            prev: "prevPagination",
+            spacerEllipsis: "spacerEllipsisPagination",
+          },
+        }}
+      >
+        <VehicleCollectionComponent
+          vehicleCollection={vehicleCollection}
+          testimonials={testimonials}
+        />
+      </SearchProvider>
+    </SSRProvider>
   )
 }
 export default VehicleCollectionPage

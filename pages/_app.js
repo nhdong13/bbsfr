@@ -6,18 +6,18 @@ import { useApollo } from "../lib/apollo"
 import { SaleorProvider } from "../lib/@sdk/react"
 import Layout from "components/Layout"
 import NProgressBarComponent from "../components/Common/NProgressBar"
-import { SSRProvider, SearchProvider, Pipeline } from "@sajari/react-search-ui"
-import { pipelineConfig, variablesConfig } from "../lib/sajari/config"
+// import { SSRProvider, SearchProvider, Pipeline } from "@sajari/react-search-ui"
+// import { pipelineConfig, variablesConfig } from "../lib/sajari/config"
 import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
 import "../styles/globals.scss"
-import {
-  brandFilter,
-  categoryFilter,
-  listBrandsFilter,
-  priceRangeFilter,
-  ratingFilter,
-} from "../lib/sajari/filter"
+// import {
+//   brandFilter,
+//   categoryFilter,
+//   listBrandsFilter,
+//   priceRangeFilter,
+//   ratingFilter,
+// } from "../lib/sajari/filter"
 
 const SALEOR_CONFIG = {
   apiUrl: process.env.NEXT_PUBLIC_API_URI,
@@ -30,26 +30,26 @@ if (typeof window === "undefined") {
 }
 
 
-export default function MyApp({ Component, pageProps }) {
-  const initSearch = {
-    queryValues: {
-      q: "",
-      resultsPerPage: "19",
-      filter: "",
-      countFilters: "",
-      buckets: "",
-      count: "",
-    },
-    response: {
-      time: -1.003004,
-      totalResults: 1,
-      results: [],
-    },
-  }
+export default function App({ Component, pageProps }) {
+  // const initSearch = {
+  //   queryValues: {
+  //     q: "",
+  //     resultsPerPage: "19",
+  //     filter: "",
+  //     countFilters: "",
+  //     buckets: "",
+  //     count: "",
+  //   },
+  //   response: {
+  //     time: -1.003004,
+  //     totalResults: 1,
+  //     results: [],
+  //   },
+  // }
  
   const store = useStore(pageProps.initialReduxState)
   const apolloClient = useApollo(pageProps.initialApolloState)
-  const initialSearch = pageProps.initialResponse || initSearch
+  // const initialSearch = pageProps.initialResponse || initSearch
   return (
     <Provider store={store}>
       <ApolloProvider client={apolloClient}>
@@ -58,7 +58,7 @@ export default function MyApp({ Component, pageProps }) {
           config={SALEOR_CONFIG}
           apolloConfig={{ client: apolloClient }}
         >
-          <SSRProvider>
+          {/* <SSRProvider>
             <SearchProvider
               key={pageProps.timeNow || Date.now()}
               search={{
@@ -85,15 +85,15 @@ export default function MyApp({ Component, pageProps }) {
                   spacerEllipsis: "spacerEllipsisPagination",
                 },
               }}
-            >
+            > */}
               <ToastProvider>
                 <NProgressBarComponent />
                 <Layout>
                   <Component {...pageProps} />
                 </Layout>
               </ToastProvider>
-            </SearchProvider>
-          </SSRProvider>
+            {/* </SearchProvider>
+          </SSRProvider> */}
         </SaleorProvider>
       </ApolloProvider>
     </Provider>

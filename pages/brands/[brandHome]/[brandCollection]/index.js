@@ -8,6 +8,7 @@ import { mockupDataFilterBrand } from "../../../../services/brand"
 import { search } from "@sajari/server"
 import { authenticationFromStamped } from "../../../../services/testimonial"
 import { pipelineConfig, variablesConfig } from "../../../../lib/sajari/config"
+import { SSRProvider, SearchProvider } from "@sajari/react-search-ui"
 import {
   brandFilter,
   categoryFilter,
@@ -72,18 +73,51 @@ export async function getStaticProps({ params }) {
       brandCollectionResponse,
       testimonials,
       filter,
-      timeNow: Date.now(),
     },
     revalidate: +process.env.NEXT_PUBLIC_REVALIDATE_PAGE_TIME,
   }
 }
 
-const BrandCollectionPage = ({ brandCollectionResponse, testimonials }) => {
+const BrandCollectionPage = ({
+  brandCollectionResponse,
+  testimonials,
+  filter,
+  initialResponse,
+}) => {
   return (
-    <BrandCollectionComponent
-      brandCollectionResponse={brandCollectionResponse}
-      testimonials={testimonials}
-    />
+    <SSRProvider>
+      <SearchProvider
+        search={{
+          pipeline: pipelineConfig,
+          variables: variablesConfig(filter),
+          filters: [
+            listBrandsFilter,
+            priceRangeFilter,
+            brandFilter,
+            categoryFilter,
+            ratingFilter,
+          ],
+        }}
+        initialResponse={initialResponse}
+        searchOnLoad={!initialResponse}
+        defaultFilter={filter}
+        customClassNames={{
+          pagination: {
+            container: "containerPagination",
+            button: "buttonPagination",
+            active: "activePagination",
+            next: "nextPagination",
+            prev: "prevPagination",
+            spacerEllipsis: "spacerEllipsisPagination",
+          },
+        }}
+      >
+        <BrandCollectionComponent
+          brandCollectionResponse={brandCollectionResponse}
+          testimonials={testimonials}
+        />
+      </SearchProvider>
+    </SSRProvider>
   )
 }
 export default BrandCollectionPage

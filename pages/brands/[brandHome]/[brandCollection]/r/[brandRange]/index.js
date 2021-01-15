@@ -19,6 +19,7 @@ import {
 import { mockupDataFilterBrand } from "../../../../../../services/brand"
 import { getDataForMainNav } from "../../../../../../services/mainNav"
 import { authenticationFromStamped } from "../../../../../../services/testimonial"
+import { SSRProvider, SearchProvider } from "@sajari/react-search-ui"
 
 export async function getStaticProps({ params }) {
   const dataNav = await getDataForMainNav()
@@ -47,7 +48,6 @@ export async function getStaticProps({ params }) {
       dataNav,
       testimonials,
       filter,
-      timeNow: Date.now(),
     },
     revalidate: +process.env.NEXT_PUBLIC_REVALIDATE_PAGE_TIME,
   }
@@ -86,9 +86,46 @@ export async function getStaticPaths() {
   return { paths, fallback: false }
 }
 
-const BrandRangePage = ({ brandRange, testimonials }) => {
+const BrandRangePage = ({
+  brandRange,
+  testimonials,
+  filter,
+  initialResponse,
+}) => {
   return (
-    <BrandRangeComponent brandRange={brandRange} testimonials={testimonials} />
+    <SSRProvider>
+      <SearchProvider
+        search={{
+          pipeline: pipelineConfig,
+          variables: variablesConfig(filter),
+          filters: [
+            listBrandsFilter,
+            priceRangeFilter,
+            brandFilter,
+            categoryFilter,
+            ratingFilter,
+          ],
+        }}
+        initialResponse={initialResponse}
+        searchOnLoad={!initialResponse}
+        defaultFilter={filter}
+        customClassNames={{
+          pagination: {
+            container: "containerPagination",
+            button: "buttonPagination",
+            active: "activePagination",
+            next: "nextPagination",
+            prev: "prevPagination",
+            spacerEllipsis: "spacerEllipsisPagination",
+          },
+        }}
+      >
+        <BrandRangeComponent
+          brandRange={brandRange}
+          testimonials={testimonials}
+        />
+      </SearchProvider>
+    </SSRProvider>
   )
 }
 export default BrandRangePage

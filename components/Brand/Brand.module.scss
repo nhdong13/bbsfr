@@ -71,13 +71,11 @@
         position: absolute;
         overflow: auto;
         z-index: 1;
-
-        border-radius: 6px;
+        border-radius: 4px;
 
         .searchBrandIndexInput {
           border: 1px solid #afb0b1;
           box-sizing: border-box;
-          border-radius: 4px;
           width: 100%;
           box-sizing: border-box;
           border-radius: 4px;
@@ -92,7 +90,7 @@
         .searchBrandIndexOptions {
           background-color: #ffffff;
           height: auto;
-          border-radius: 6px;
+          border-radius: 4px;
 
           .searchBrandIndexOptionItem {
             padding: 22px 20px;
