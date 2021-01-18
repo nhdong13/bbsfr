@@ -1,15 +1,23 @@
+import React, { useState } from 'react';
 import Slider from "react-slick";
 import Image from "next/image";
+import Link from "next/link"
+import { Row, Col } from "react-bootstrap";
 import styles  from "./ProductImageCarousel.module.scss";
 
-function ProductImageCarousel({images}) {
+function ProductImageCarousel({images, category}) {
+  const [activeSlide, setActiveSlide] = useState(1);
+
   const settings = {
     dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
-    slidesToScroll: 1
+    slidesToScroll: 1,
+    afterChange: current => setActiveSlide(current + 1)
   };
+
+  console.log(activeSlide)
 
   return (
     <div className={styles.productPageImageContainer}>
@@ -30,6 +38,16 @@ function ProductImageCarousel({images}) {
           })
         }
       </Slider>
+      <Row className={styles.categoryNameSliderIndex}>
+        <Col className={styles.categoryName} xs={6}>
+          <Link href={`/${category.name}`}>
+            { category.name }
+          </Link>
+        </Col>
+        <Col className={styles.sliderIndex} xs={6}>
+          <div className={styles.sliderIndexContent}>{activeSlide} / {images.length}</div>
+        </Col>
+      </Row>
     </div>
   )
 }

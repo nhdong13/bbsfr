@@ -25,7 +25,10 @@ function ProductDetailsComponent ({ loading, product }) {
           <Row>
             <Col md={8} xs={12}>
               <Row>
-                <ProductImageCarousel images={data.images}/>
+                <ProductImageCarousel
+                  images={product.images}
+                  category={product.category}
+                />
               </Row>
             </Col>
           </Row>
