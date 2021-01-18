@@ -42,10 +42,12 @@ export default function ShippingMethods({
           availableShippingMethods.map((method) => (
             <Button
               key={method.id}
-              variant={
-                method.id === values.shippingMethod ? "secondary" : "white"
-              }
-              className={clsx(styles.btn, "w-100")}
+              variant="white"
+              className={clsx(
+                styles.btn,
+                "w-100",
+                method.id === values.shippingMethod ? styles.active : ""
+              )}
               onClick={() => selectMethod(method.id)}
               type="button"
             >
