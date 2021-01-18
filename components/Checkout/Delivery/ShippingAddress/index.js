@@ -35,12 +35,19 @@ export default function ShippingAddress({
   const [modalShow, setModalShow] = useState(false)
 
   useEffect(() => {
-    if (!currentUser?.id || oldValues?.address) {
-      return
+    async function initShippingData() {
+      if (!currentUser?.id || oldValues?.address) {
+        return
+      }
+
+      const data = mappingDataAddress(currentUser.defaultShippingAddress)
+      const shippingForm = shippingFormRef.current
+      await shippingForm.setValues(data)
+      setOldValues(data)
+      shippingForm.handleSubmit()
     }
-    const data = mappingDataAddress(currentUser.defaultShippingAddress)
-    shippingFormRef.current.setValues(data)
-    setOldValues(data)
+
+    initShippingData()
   }, [currentUser?.id])
 
   useEffect(() => {

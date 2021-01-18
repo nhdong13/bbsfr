@@ -42,61 +42,63 @@ export default function OrderTotalCost({
     setLoading(false)
   }
   return (
-    <Row className={clxs("my-4", styles.orderTotalCost)}>
-      <LoadingSpinner show={loading} />
-      <Col xs="6">
-        <p>Sub Total</p>
-        {discount?.amount > 0 && <p>Discount amount</p>}
-        <p>Delivery</p>
-        {listGiftCards.map((card) => (
-          <p key={card.code}>
-            {card.code}{" "}
-            {
-              <Button
-                variant="link"
-                type="button"
-                className="p-0 align-text-top"
-                onClick={() => handleDeleteGiftCard(card.code)}
-              >
-                <Image
-                  src={"/icons/x-icon.svg"}
-                  alt="delete"
-                  width={16}
-                  height={16}
-                />
-              </Button>
-            }
-          </p>
-        ))}
-        <p className={styles.totalCost}>TOTAL</p>
-      </Col>
+    <div className={clxs("my-4", styles.totalCostWrapper, "black-bg")}>
+      <Row className={clxs(styles.orderTotalCost, "secondary")}>
+        <LoadingSpinner show={loading} />
+        <Col xs="6">
+          <p>Sub Total</p>
+          {discount?.amount > 0 && <p>Discount amount</p>}
+          <p>Delivery</p>
+          {listGiftCards.map((card) => (
+            <p key={card.code}>
+              {card.code}{" "}
+              {
+                <Button
+                  variant="link"
+                  type="button"
+                  className="p-0 align-text-top"
+                  onClick={() => handleDeleteGiftCard(card.code)}
+                >
+                  <Image
+                    src={"/icons/x-icon.svg"}
+                    alt="delete"
+                    width={16}
+                    height={16}
+                  />
+                </Button>
+              }
+            </p>
+          ))}
+          <p className={clxs(styles.totalCost, "white")}>TOTAL</p>
+        </Col>
 
-      <Col xs="6" className="text-right">
-        <p>
-          <Money money={subtotalPrice?.gross} />
-        </p>
-        {discount?.amount > 0 && (
+        <Col xs="6" className="text-right">
           <p>
-            <Money money={{ ...discount, amount: -discount.amount }} />
+            <Money money={subtotalPrice?.gross} />
           </p>
-        )}
-        <p>
-          <Money
-            money={shippingPrice?.amount ? shippingPrice : null}
-            defaultValue="FREE"
-          />
-        </p>
-        {listGiftCards.map((card) => (
-          <p key={card.code}>
+          {discount?.amount > 0 && (
+            <p>
+              <Money money={{ ...discount, amount: -discount.amount }} />
+            </p>
+          )}
+          <p>
             <Money
-              money={{ amount: -card.currentBalanceAmount, currency: "AUD" }}
+              money={shippingPrice?.amount ? shippingPrice : null}
+              defaultValue="FREE"
             />
           </p>
-        ))}
-        <p className={styles.totalCost}>
-          <Money money={totalPrice?.gross} />
-        </p>
-      </Col>
-    </Row>
+          {listGiftCards.map((card) => (
+            <p key={card.code}>
+              <Money
+                money={{ amount: -card.currentBalanceAmount, currency: "AUD" }}
+              />
+            </p>
+          ))}
+          <p className={clxs(styles.totalCost, "white")}>
+            <Money money={totalPrice?.gross} />
+          </p>
+        </Col>
+      </Row>
+    </div>
   )
 }
