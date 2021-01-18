@@ -30,7 +30,6 @@ function ProductImageCarousel({images}) {
           })
         }
       </Slider>
-      {/* <div className={styles.rectangleGradient}></div> */}
     </div>
   )
 }

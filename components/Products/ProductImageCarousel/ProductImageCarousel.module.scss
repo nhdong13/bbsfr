@@ -1,24 +1,18 @@
 .productPageImageContainer {
   position: relative;
+  max-width: 640px;
   @media(max-width: 768px) {
     width: 100%;
   }
 
   .productPageImage {
+    min-height: 375px;
     @media(max-width: 768px) {
-      min-height: 380px;
+      min-height: 375px;
     }
   }
 
   .slick-dots {
     margin-bottom: 0;
   }
-}
-
-.rectangleGradient {
-  // position: absolute;
-  // bottom: 0;
-  // height: 50px;
-  // width: 360px;
-  // background: linear-gradient(180deg, #FFFFFF 0%, #D8D8D8 100%);
 }
