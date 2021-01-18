@@ -34,7 +34,7 @@ function ProductDetailsComponent ({id}) {
       { !loading && data &&
         <Container fluid className='product-details' >
           <Row>
-            <ProductImageCarousel />
+            <ProductImageCarousel images={data.images}/>
           </Row>
           <ProductVariant />
           <ProductShipping />
