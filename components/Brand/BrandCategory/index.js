@@ -1,11 +1,8 @@
 import Head from "next/head"
-import { SearchProvider } from "@sajari/react-hooks"
-import { getBrandCategoryByUid } from "../../../lib/prismic/api"
 import { convertSchemaFAQ } from "../../../services/convertSchemaFAQ"
 import ImagedHeaderComponent from "../Components/ImagedHeaderComponent"
 import { useRouter } from "next/router"
 import dynamic from "next/dynamic"
-
 const SEODynamic = dynamic(() => import("../../HomePage/SEO"))
 const FAQDynamic = dynamic(() => import("../../HomePage/FAQ"))
 const TestimonialsDynamic = dynamic(() => import("../../HomePage/Testimonials"))
@@ -16,21 +13,24 @@ const ResultDynamic = dynamic(() =>
   import("../../Collection/Components/ResultComponent")
 )
 
-const BrandCategoryComponent = ({
-  initialResponse,
-  pipeline,
-  variables,
-  category,
-  testimonials,
-}) => {
-  const { meta_title, meta_description, faq, faq_title } = category
+const BrandCategoryComponent = ({ category, testimonials }) => {
+  const {
+    meta_title,
+    meta_description,
+    faq,
+    faq_title,
+    page_heading_2,
+  } = category
   const router = useRouter()
   const jsonFAQ = convertSchemaFAQ({ faq, meta_title })
-  const heading1 =
+  const titleHeader =
     category && category.page_heading_1 && category.page_heading_1.length > 0
       ? category.page_heading_1[0].text
-      : "Brand Home"
-
+      : "Brand Category"
+  const titleSeo =
+    page_heading_2?.length > 0 && page_heading_2[0].text
+      ? page_heading_2[0].text
+      : ""  
   return (
     <>
       <Head>
@@ -49,35 +49,16 @@ const BrandCategoryComponent = ({
           dangerouslySetInnerHTML={{ __html: jsonFAQ }}
         />
       </Head>
-      <SearchProvider
-        search={{
-          pipeline,
-          variables,
-        }}
-        initialResponse={initialResponse}
-        searchOnLoad={!initialResponse}
-      >
-        <ImagedHeaderComponent
-          header={heading1}
-          pipeline={pipeline}
-          imgUrl={null}
-        />
-
-        <BackToPageBeforeDynamic
-          page={router.query.brandCollection}
-          type="brandCategory"
-        />
-        <ResultDynamic
-          variables={variables}
-          pipeline={pipeline}
-          initialResponse={initialResponse}
-        />
-      </SearchProvider>
-
+      <ImagedHeaderComponent header={titleHeader} imgUrl={null} />
+      <BackToPageBeforeDynamic
+        page={router.query.brandCollection}
+        type="brandCategory"
+      />
+      <ResultDynamic />
       <TestimonialsDynamic testimonials={testimonials} type="brand-category" />
       <FAQDynamic FAQ={{ faq, faq_title }} />
       <SEODynamic
-        heading1={heading1}
+        heading1={titleSeo}
         pageParagraph={
           category &&
           category.page_paragraph &&

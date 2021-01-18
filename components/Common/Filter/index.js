@@ -1,88 +1,98 @@
 import React, { useState } from "react"
 import styles from "./filter.module.scss"
+import { Collapse, Container } from "react-bootstrap"
+import Image from "next/image"
 import { useFilter } from "@sajari/react-hooks"
-import {
-  Radio,
-  RadioGroup,
-  CheckboxGroup,
-  Checkbox,
-  Combobox,
-} from "@sajari/react-components"
 import { useRouter } from "next/router"
+import FilterOptionComponent from "./FilterOptions"
+import FilterRatingOption from "./FilterRatingOption"
+import ColorFilter from "./FilterColorOptions"
 
-let arrayToFilter = []
-let isSetArrayToFilter = false
-
-const FilterRender = ({ name, setChanged }) => {
-  const [searchInputFilter, setSearch] = useState("")
-  const { multi, options, selected, setSelected, reset } = useFilter(name)
-
+const FilterRender = ({
+  name,
+  title,
+  isOpen,
+  handleSetOpenCollapse,
+  filterChanged,
+  setFilterChanged,
+}) => {
   const router = useRouter()
-  router.events.on("routeChangeComplete", () => reset())
+  const { multi, options, selected, setSelected, reset } = useFilter(name)
+  const [open, setOpen] = useState(isOpen)
 
-  if (options.length === 0) {
-    return null
-  } else {
-    if (!isSetArrayToFilter) {
-      arrayToFilter = options
-      isSetArrayToFilter = !isSetArrayToFilter
-    }
+  if (filterChanged) {
+    router.events.on("routeChangeComplete", () => reset())
   }
 
-  const [filterArray, setFilterArray] = useState([...arrayToFilter])
-  const handleFilter = (e) => {
-    let updateArray = arrayToFilter.filter((x) =>
-      x.label.toLowerCase().includes(e.toLowerCase())
-    )
-    setFilterArray(updateArray)
-    setSearch(e)
-  }
-  const Group = multi ? CheckboxGroup : RadioGroup
-  const Control = multi ? Checkbox : Radio
-  
   return (
-    <div className="mb-4">
-      <Combobox
-        className={styles.sajari_combobox}
-        placeholder="Search"
-        value={searchInputFilter}
-        onChange={handleFilter}
-      />
-      <div className="flex items-center justify-between mb-2"></div>
-      
-      <Group
-        name={name}
-        value={selected}
-        onChange={(values) => {
-          setSelected(Array.isArray(values) ? values : [values])
-          setChanged(true)
-        }}
-      >
-        {filterArray.map(({ value, label, count }) => (
-          <div
-            className="flex justify-between items-center"
-            key={label + count}
-          >
-            <Control
-              className={styles.sajari_checkbox}
-              value={label}
-              checked={selected.includes(label)}
-              onChange={() => {}}
-              fontSize="sm"
+    <>
+      {options?.length > 0 && (
+        <div className={styles.containerFilter}>
+          <>
+            <div
+              onClick={() => {
+                setOpen(!open)
+                handleSetOpenCollapse(name)
+              }}
+              className={styles.titleFilter}
             >
-              {label}
-            </Control>
-          </div>
-        ))}
-      </Group>
-    </div>
+              <div className={styles.heading}>
+                <p>{title}</p>
+              </div>
+              <div className={styles.icon}>
+                <Image
+                  src={open ? "/icons/subtract.svg" : "/icons/plus.svg"}
+                  alt={open ? "Icon subtract" : "Icon plus"}
+                  loading="lazy"
+                  layout="fill"
+                ></Image>
+              </div>
+            </div>
+            <div className={styles.contextCollapse}>
+              <Collapse in={open}>
+                <div>
+                  {name && name !== "rating" && name !== "color" && (
+                    <FilterOptionComponent
+                      name={name}
+                      setSelected={setSelected}
+                      setFilterChanged={setFilterChanged}
+                      selected={selected}
+                      multi={multi}
+                      options={options}
+                    />
+                  )}
+                  {name && name === "rating" && (
+                    <FilterRatingOption
+                      name={name}
+                      setSelected={setSelected}
+                      setFilterChanged={setFilterChanged}
+                      selected={selected}
+                      multi={multi}
+                      options={options}
+                    />
+                  )}
+                  {name && name === "color" && (
+                    <ColorFilter
+                      name={name}
+                      setSelected={setSelected}
+                      setFilterChanged={setFilterChanged}
+                      selected={selected}
+                      multi={multi}
+                      options={options}
+                    />
+                  )}
+                </div>
+              </Collapse>
+            </div>
+          </>
+        </div>
+      )}
+      {!open && (
+        <Container fluid>
+          <div className={styles.containerFilterOpen}></div>
+        </Container>
+      )}
+    </>
   )
 }
-
-const FilterComponent = ({ setChanged }) => (
-  <div className="">
-    {/* <FilterRender name="type" title="Category" setChanged={setChanged} /> */}
-  </div>
-)
-
-export default FilterComponent
+export default FilterRender

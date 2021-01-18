@@ -23,10 +23,8 @@ export const mockupDataFilterCategory = (params) => {
     "Office & School Supplies",
     "Printer Ink & Toner",
     "Printer Ink",
-    "Cameras & Camcorders",
     "Memory Cards",
     "All Memory Cards",
-    "Cameras & Camcorders",
     "Memory Cards",
     "Micro SD (SD, SDHC, SDXC)",
     "Micro SDHC",
@@ -42,7 +40,7 @@ export const mockupDataFilterCategory = (params) => {
     case "road-clearance":
       return "Memory Cards"
     case "mx-goggles":
-      return "Cameras & Camcorders"
+      return "Micro SDHC"
     default:
       return arrCategory[Math.floor(Math.random() * arrCategory.length)]
   }

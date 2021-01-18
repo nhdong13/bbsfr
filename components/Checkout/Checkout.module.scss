@@ -47,15 +47,18 @@
   }
 }
 
-.orderTotalCost {
-  p {
-    margin-bottom: 8px;
-    font-size: 16px;
-  }
+.totalCostWrapper {
+  padding: 26px 24px;
+  .orderTotalCost {
+    p {
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
 
-  .totalCost {
-    font-family: Rajdhani;
-    font-weight: 700;
-    font-size: 21px;
+    .totalCost {
+      font-family: Rajdhani;
+      font-weight: 700;
+      font-size: 21px;
+    }
   }
 }

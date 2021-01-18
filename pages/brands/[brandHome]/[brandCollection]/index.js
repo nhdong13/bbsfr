@@ -1,30 +1,25 @@
 import BrandCollectionComponent from "../../../../components/Brand/BrandCollection"
-import {
-  getBrandCollectionDetail,
-  listAllBrands as listAllBrandsCollection,
-} from "../../../../lib/prismic/api"
+import { getBrandCollectionDetail } from "../../../../lib/prismic/api"
 import { getDataForMainNav } from "../../../../services/mainNav"
-import { Pipeline, Variables } from "@sajari/react-search-ui"
-import { getConfigPipeline } from "../../../../services/getPipelineSajari"
-import { mockupDataFilterBrand } from "../../../../services/brand"
+import {
+  listAllBrandService,
+  mockupDataFilterBrand,
+} from "../../../../services/brand"
 import { search } from "@sajari/server"
 import { authenticationFromStamped } from "../../../../services/testimonial"
-
-const pipeline = new Pipeline({ ...getConfigPipeline("best-buy") }, "query")
-var searchObj = { variables: null }
-
-const initVariable = (params) => {
-  //Filter options will replace base params for per page --> this is code demo
-  searchObj.variables = new Variables({
-    resultsPerPage: 20,
-    q: "",
-    filter: `brand = "${mockupDataFilterBrand()}"`,
-  })
-}
+import { pipelineConfig, variablesConfig } from "../../../../lib/sajari/config"
+import { SSRProvider, SearchProvider } from "@sajari/react-search-ui"
+import {
+  categoryFilter,
+  colorFilter,
+  listBrandsFilter,
+  priceRangeFilter,
+  ratingFilter,
+} from "../../../../lib/sajari/filter"
 
 export async function getStaticPaths() {
   const paths = []
-  const response = await listAllBrandsCollection()
+  const response = await listAllBrandService()
   const brandCollections =
     response?.length > 0 &&
     response.map((i) => ({
@@ -58,34 +53,71 @@ export async function getStaticProps({ params }) {
   const brandCollectionResponse = await getBrandCollectionDetail(
     params?.brandCollection
   )
-  initVariable(params)
+  //Filter options will replace base params for per page --> this is code demo
+  const filter = `brand = "${mockupDataFilterBrand()}"`
   const initialResponse = await search({
-    pipeline,
-    variables: searchObj.variables,
+    pipeline: pipelineConfig,
+    variables: variablesConfig(filter),
+    filters: [
+      listBrandsFilter,
+      priceRangeFilter,
+      categoryFilter,
+      ratingFilter,
+      colorFilter,
+    ],
   })
   return {
-    props: { dataNav, initialResponse, brandCollectionResponse, testimonials },
+    props: {
+      dataNav,
+      initialResponse,
+      brandCollectionResponse,
+      testimonials,
+      filter,
+    },
     revalidate: +process.env.NEXT_PUBLIC_REVALIDATE_PAGE_TIME,
   }
 }
 
 const BrandCollectionPage = ({
-  initialResponse,
-  params,
   brandCollectionResponse,
   testimonials,
+  filter,
+  initialResponse,
 }) => {
-  if (!search.variables) {
-    initVariable(params)
-  }
   return (
-    <BrandCollectionComponent
-      initialResponse={initialResponse}
-      pipeline={pipeline}
-      variables={searchObj.variables}
-      brandCollectionResponse={brandCollectionResponse}
-      testimonials={testimonials}
-    />
+    <SSRProvider>
+      <SearchProvider
+        search={{
+          pipeline: pipelineConfig,
+          variables: variablesConfig(filter),
+          filters: [
+            listBrandsFilter,
+            priceRangeFilter,
+            categoryFilter,
+            ratingFilter,
+            colorFilter,
+          ],
+        }}
+        initialResponse={initialResponse}
+        searchOnLoad={!initialResponse}
+        defaultFilter={filter}
+        customClassNames={{
+          pagination: {
+            container: "containerPagination",
+            button: "buttonPagination",
+            active: "activePagination",
+            next: "nextPagination",
+            prev: "prevPagination",
+            spacerEllipsis: "spacerEllipsisPagination",
+          },
+        }}
+      >
+        <BrandCollectionComponent
+          brandCollectionResponse={brandCollectionResponse}
+          testimonials={testimonials}
+        />
+      </SearchProvider>
+    </SSRProvider>
   )
 }
 export default BrandCollectionPage

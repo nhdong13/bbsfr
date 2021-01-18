@@ -1,4 +1,3 @@
-import { SearchProvider } from "@sajari/react-hooks"
 import dynamic from "next/dynamic"
 import ImagedHeaderComponent from "../Components/ImagedHeaderComponent"
 import SessionBrowseByCategoryComponent from "../../DepartmentDetail/Sesstion/SessionBrowseByCategoryComponent"
@@ -12,12 +11,7 @@ const BackToPageBeforeDynamic = dynamic(() =>
   import("../../Common/BackPageComponent")
 )
 
-const BrandHomeComponent = ({
-  initialResponse,
-  pipeline,
-  brand,
-  testimonials,
-}) => {
+const BrandHomeComponent = ({ brand, testimonials }) => {
   const {
     meta_description,
     meta_title,
@@ -34,15 +28,13 @@ const BrandHomeComponent = ({
     brand && brand.page_heading_2 && brand.page_heading_2.length > 0
       ? brand.page_heading_2[0].text
       : "Brand"
-  const collections =
-    brand.brand_collections &&
-    brand.brand_collections.map((i) => {
-      return {
-        collection_image: i.brand_collection_image,
-        collection_title: i.brand_collection_title,
-        collection_slug: i.brand_collection_slug,
-      }
-    })
+  const collections = brand?.brand_collections
+    .map((i) => ({
+      collection_image: i.brand_collection_image,
+      collection_title: i.brand_collection_title,
+      collection_slug: i.brand_collection_slug,
+    }))
+    .filter((i) => i.collection_title)
 
   return (
     <>
@@ -62,22 +54,12 @@ const BrandHomeComponent = ({
           dangerouslySetInnerHTML={{ __html: jsonFAQ }}
         />
       </Head>
-      <SearchProvider
-        search={{
-          pipeline,
-        }}
-        initialResponse={initialResponse}
-        searchOnLoad={!initialResponse}
-      >
-        <ImagedHeaderComponent
-          header={heading1}
-          pipeline={pipeline}
-          imgUrl={brand_hero_image?.url}
-          notShowProductCount={true}
-        />
-        <BackToPageBeforeDynamic page={"All brands"} type="brandHome" />
-      </SearchProvider>
-
+      <ImagedHeaderComponent
+        header={heading1}
+        imgUrl={brand_hero_image?.url}
+        notShowProductCount={true}
+      />
+      <BackToPageBeforeDynamic page={"All brands"} type="brandHome" />
       <SessionBrowseByCategoryComponent
         departmentSlug={brand._meta.uid}
         collections={collections}

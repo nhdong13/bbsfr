@@ -1,32 +1,13 @@
-import { Pagination, SearchProvider } from "@sajari/react-search-ui"
-import { Container } from "react-bootstrap";
+import { Pagination } from "@sajari/react-search-ui"
+import { Container } from "react-bootstrap"
 import styles from "../Common.module.scss"
 
-const PaginationComponent = ({ variables, pipeline, initialResponse }) => {
+const PaginationComponent = ({}) => {
   return (
     <Container className={styles.containerPagination}>
-      <SearchProvider
-        search={{
-          pipeline,
-          variables,
-        }}
-        initialResponse={initialResponse}
-        searchOnLoad={!initialResponse}
-        customClassNames={{
-          pagination: {
-            container: "containerPagination",
-            button: "buttonPagination",
-            active: "activePagination",
-            next: "nextPagination",
-            prev: "prevPagination",
-            spacerEllipsis: "spacerEllipsisPagination",
-          },
-        }}
-      >
-        <Pagination />
-      </SearchProvider>
+      <Pagination compact={false} />
     </Container>
   )
 }
 
-export default PaginationComponent;
+export default PaginationComponent

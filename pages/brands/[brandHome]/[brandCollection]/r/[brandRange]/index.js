@@ -1,49 +1,63 @@
-import { Pipeline, Variables } from "@sajari/react-hooks"
 import { search } from "@sajari/server"
 import BrandRangeComponent from "../../../../../../components/Brand/BrandRange"
 import {
   getBrandRangeByUid,
-  listAllBrands,
   listAllBrandRangesOfCollection,
 } from "../../../../../../lib/prismic/api"
-import { mockupDataFilterBrand } from "../../../../../../services/brand"
-import { getConfigPipeline } from "../../../../../../services/getPipelineSajari"
+import {
+  pipelineConfig,
+  variablesConfig,
+} from "../../../../../../lib/sajari/config"
+import {
+  categoryFilter,
+  colorFilter,
+  listBrandsFilter,
+  priceRangeFilter,
+  ratingFilter,
+} from "../../../../../../lib/sajari/filter"
+import {
+  listAllBrandService,
+  mockupDataFilterBrand,
+} from "../../../../../../services/brand"
 import { getDataForMainNav } from "../../../../../../services/mainNav"
 import { authenticationFromStamped } from "../../../../../../services/testimonial"
-
-const pipeline = new Pipeline({ ...getConfigPipeline("best-buy") }, "query")
-var searchObj = { variables: null }
-
-const initVariable = (params) => {
-  //Filter options will replace base params for per page --> this is code demo
-  searchObj.variables = new Variables({
-    resultsPerPage: 20,
-    q: "",
-    filter: `brand = "${mockupDataFilterBrand()}"`,
-  })
-}
+import { SSRProvider, SearchProvider } from "@sajari/react-search-ui"
 
 export async function getStaticProps({ params }) {
   const dataNav = await getDataForMainNav()
   const brandRange = await getBrandRangeByUid(params?.brandRange)
-  initVariable(params)
-  const initialResponse = await search({
-    pipeline,
-    variables: searchObj.variables,
-  })
   const requestOptions = authenticationFromStamped()
   const resStamped = await fetch(process.env.STAMPED_API_URL, requestOptions)
   const testimonials = await resStamped.json()
+  //Filter options will replace base params for per page --> this is code demo
+  const filter = `brand = "${mockupDataFilterBrand()}"`
+  const initialResponse = await search({
+    pipeline: pipelineConfig,
+    variables: variablesConfig(filter),
+    filters: [
+      listBrandsFilter,
+      priceRangeFilter,
+      categoryFilter,
+      ratingFilter,
+      colorFilter,
+    ],
+  })
 
   return {
-    props: { initialResponse, brandRange, dataNav, testimonials },
+    props: {
+      initialResponse,
+      brandRange,
+      dataNav,
+      testimonials,
+      filter,
+    },
     revalidate: +process.env.NEXT_PUBLIC_REVALIDATE_PAGE_TIME,
   }
 }
 
 export async function getStaticPaths() {
   const paths = []
-  const response = await listAllBrands()
+  const response = await listAllBrandService()
   const brandCollections = response.map((i) => ({
     uid: i.node._meta.uid,
     brandCollections: i.node.brand_collections,
@@ -75,22 +89,45 @@ export async function getStaticPaths() {
 }
 
 const BrandRangePage = ({
-  initialResponse,
   brandRange,
   testimonials,
-  params,
+  filter,
+  initialResponse,
 }) => {
-  if (!search.variables) {
-    initVariable(params)
-  }
   return (
-    <BrandRangeComponent
-      initialResponse={initialResponse}
-      pipeline={pipeline}
-      variables={searchObj.variables}
-      brandRange={brandRange}
-      testimonials={testimonials}
-    />
+    <SSRProvider>
+      <SearchProvider
+        search={{
+          pipeline: pipelineConfig,
+          variables: variablesConfig(filter),
+          filters: [
+            listBrandsFilter,
+            priceRangeFilter,
+            categoryFilter,
+            ratingFilter,
+            colorFilter,
+          ],
+        }}
+        initialResponse={initialResponse}
+        searchOnLoad={!initialResponse}
+        defaultFilter={filter}
+        customClassNames={{
+          pagination: {
+            container: "containerPagination",
+            button: "buttonPagination",
+            active: "activePagination",
+            next: "nextPagination",
+            prev: "prevPagination",
+            spacerEllipsis: "spacerEllipsisPagination",
+          },
+        }}
+      >
+        <BrandRangeComponent
+          brandRange={brandRange}
+          testimonials={testimonials}
+        />
+      </SearchProvider>
+    </SSRProvider>
   )
 }
 export default BrandRangePage

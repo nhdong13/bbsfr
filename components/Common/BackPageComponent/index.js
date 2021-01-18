@@ -42,7 +42,13 @@ const BackToPageBeforeComponent = ({ page, type }) => {
         break
 
       case "vehicle":
-        if (router?.query?.vehicle) {
+        if (router?.query?.vehicleCategory) {
+          router.push(
+            `/vehicles/${router.query.vehicle}/${router.query.vehicleCollection}`
+          )
+        } else if (router?.query?.vehicleCollection) {
+          router.push(`/vehicles/${router.query.vehicle}`)
+        } else if (router?.query?.vehicle) {
           router.push(`/vehicles`)
         }
         break

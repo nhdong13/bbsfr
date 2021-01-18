@@ -5,10 +5,10 @@ import { useStore } from "../redux/store"
 import { useApollo } from "../lib/apollo"
 import { SaleorProvider } from "../lib/@sdk/react"
 import Layout from "components/Layout"
+import NProgressBarComponent from "../components/Common/NProgressBar"
 import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
 import "../styles/globals.scss"
-import NProgressBarComponent from "../components/Common/NProgressBar";
 
 const SALEOR_CONFIG = {
   apiUrl: process.env.NEXT_PUBLIC_API_URI,
@@ -23,7 +23,6 @@ if (typeof window === "undefined") {
 export default function App({ Component, pageProps }) {
   const store = useStore(pageProps.initialReduxState)
   const apolloClient = useApollo(pageProps.initialApolloState)
-  
   return (
     <Provider store={store}>
       <ApolloProvider client={apolloClient}>
@@ -33,7 +32,7 @@ export default function App({ Component, pageProps }) {
           apolloConfig={{ client: apolloClient }}
         >
           <ToastProvider>
-          <NProgressBarComponent  />
+            <NProgressBarComponent />
             <Layout>
               <Component {...pageProps} />
             </Layout>
@@ -41,5 +40,5 @@ export default function App({ Component, pageProps }) {
         </SaleorProvider>
       </ApolloProvider>
     </Provider>
-  );
+  )
 }

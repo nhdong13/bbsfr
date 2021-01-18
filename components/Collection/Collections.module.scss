@@ -34,14 +34,13 @@ $bg-sort-filter: #f6f6f6;
   }
 }
 
-.header_category {
+.headerCategory {
   font-family: Rajdhani;
   font-style: normal;
   font-weight: 600;
   font-size: 21px;
   line-height: 21px;
   /* identical to box height, or 100% */
-
   text-transform: uppercase;
 }
 .categories {
@@ -86,11 +85,11 @@ $bg-sort-filter: #f6f6f6;
   }
 }
 
-.filter_sort_sajari {
+.filterSortContainer {
   padding: 16px;
   background-color: $bg-sort-filter;
 
-  .short_filter {
+  .shortFilter {
     cursor: pointer;
     position: relative;
 
@@ -122,7 +121,7 @@ $bg-sort-filter: #f6f6f6;
       }
     }
 
-    .horizontal_line {
+    .horizontalLine {
       position: absolute;
       width: 1px;
       top: 20%;
@@ -133,59 +132,61 @@ $bg-sort-filter: #f6f6f6;
 }
 
 //Sort/Filter Sajari
+.filterTitle {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  color: #939393;
+  padding: 17px 28px 0px 28px;
+  margin-bottom: -8px;
+}
 
-.radio_sajari {
-  input {
-    color: black;
-  }
+.border {
+  margin-left: 10px;
+  margin-right: 10px;
+  border-bottom: 1px solid #e5e5e4;
+}
+.sort_filter_by_open {
+  border-bottom: 0.5px solid #e5e5e4;
 }
 
 .sort_filter_by {
-  margin: 0.5rem 0.5rem;
   .sub_heading {
     text-transform: uppercase;
     color: $product-count-color;
     font-size: 12px;
     font-weight: 400;
     line-height: 20px;
-    margin-bottom: -10px;
-    // padding-top: 18px;
-    padding-left: 1rem;
+    padding: 10px 28px 0 28px;
+    margin-bottom: -8px;
   }
   .group_heading {
-    border-bottom: 0.5px solid #e5e5e4;
+    min-height: 56px;
+    box-sizing: border-box;
+    padding-top: 0;
     .text_heading {
       display: flex;
-      align-items: center;
       justify-content: space-between;
-
-      font-family: Rajhani;
-      font-weight: 600;
-      font-size: 16px;
+      @include font-family(Rajdhani, 16px, 600, $primary-text-color);
       line-height: 20px;
-      color: $primary-text-color;
-
-      padding: 18px 1rem;
+      padding: 18px 28px 0px 28px;
       cursor: pointer;
-
+      .text {
+        @include font-family(Rajdhani, 16px, 700, $primary-text-color);
+      }
       .icon {
         position: relative;
         width: 12px;
         height: 12px;
+        margin-top: 6px;
       }
     }
     .sort_filter_collapse {
-      padding-left: 1rem;
-      margin-top: -10px;
-      padding-bottom: 10px;
-
+      padding: 0px 28px 17px 28px;
       font-size: 14px !important;
       text-transform: uppercase;
       line-height: 20px;
     }
-  }
-  .group_heading.active {
-    border: none;
   }
 }
 
@@ -196,13 +197,14 @@ $bg-sort-filter: #f6f6f6;
 .button_sajari {
   padding: 1rem 0;
   background-color: #fff;
-
   position: sticky;
   width: 100%;
   bottom: 0;
+
   .modal_button {
     padding: 0 0.5rem;
   }
+
   button {
     height: 48px;
     width: 100%;
@@ -224,29 +226,6 @@ $bg-sort-filter: #f6f6f6;
   label {
     font-size: 12px;
     line-height: 20px;
-  }
-}
-
-.sajari_combobox > div {
-  height: 48px;
-  border-radius: 24px;
-  input {
-    font-size: 14px;
-    font-weight: 400;
-  }
-}
-
-.sajari_combobox > div > div {
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  svg {
-    width: 24px;
-    height: 24px;
-    background-image: url("../../public/searchicon.svg");
-    path {
-      display: none;
-    }
   }
 }
 //End Sort/Filter Sajari
@@ -315,7 +294,7 @@ $bg-sort-filter: #f6f6f6;
             display: flex;
             span {
               font-size: 12px;
-              color:#939393
+              color: #939393;
             }
           }
         }
