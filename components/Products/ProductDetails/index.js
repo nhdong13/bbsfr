@@ -12,18 +12,7 @@ import ProductCustomerReviews from "../ProductCustomerReviews";
 import AddToCart from "../AddToCart";
 import LoadingSpinner from "../../LoadingSpinner";
 
-
-function ProductDetailsComponent ({id}) {
-  const router = useRouter();
-  const { loading, data, error } = useProductDetails({id: id})
-
-  console.log(data)
-  useEffect(() => {
-    if (!loading && (error || !data)) {
-      router.push('/')
-    }
-  }, [data, loading])
-
+function ProductDetailsComponent ({ loading, product }) {
   return(
     <>
       {
@@ -31,7 +20,7 @@ function ProductDetailsComponent ({id}) {
         <LoadingSpinner show={loading}></LoadingSpinner>
       }
 
-      { !loading && data &&
+      { !loading && product &&
         <Container fluid className='product-details' >
           <Row>
             <Col md={8} xs={12}>
