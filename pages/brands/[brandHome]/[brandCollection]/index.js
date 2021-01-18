@@ -1,16 +1,17 @@
 import BrandCollectionComponent from "../../../../components/Brand/BrandCollection"
-import {
-  getBrandCollectionDetail,
-  listAllBrands as listAllBrandsCollection,
-} from "../../../../lib/prismic/api"
+import { getBrandCollectionDetail } from "../../../../lib/prismic/api"
 import { getDataForMainNav } from "../../../../services/mainNav"
-import { mockupDataFilterBrand } from "../../../../services/brand"
+import {
+  listAllBrandService,
+  mockupDataFilterBrand,
+} from "../../../../services/brand"
 import { search } from "@sajari/server"
 import { authenticationFromStamped } from "../../../../services/testimonial"
 import { pipelineConfig, variablesConfig } from "../../../../lib/sajari/config"
+import { SSRProvider, SearchProvider } from "@sajari/react-search-ui"
 import {
-  brandFilter,
   categoryFilter,
+  colorFilter,
   listBrandsFilter,
   priceRangeFilter,
   ratingFilter,
@@ -18,7 +19,7 @@ import {
 
 export async function getStaticPaths() {
   const paths = []
-  const response = await listAllBrandsCollection()
+  const response = await listAllBrandService()
   const brandCollections =
     response?.length > 0 &&
     response.map((i) => ({
@@ -60,9 +61,9 @@ export async function getStaticProps({ params }) {
     filters: [
       listBrandsFilter,
       priceRangeFilter,
-      brandFilter,
       categoryFilter,
       ratingFilter,
+      colorFilter,
     ],
   })
   return {
@@ -72,18 +73,51 @@ export async function getStaticProps({ params }) {
       brandCollectionResponse,
       testimonials,
       filter,
-      timeNow: Date.now(),
     },
     revalidate: +process.env.NEXT_PUBLIC_REVALIDATE_PAGE_TIME,
   }
 }
 
-const BrandCollectionPage = ({ brandCollectionResponse, testimonials }) => {
+const BrandCollectionPage = ({
+  brandCollectionResponse,
+  testimonials,
+  filter,
+  initialResponse,
+}) => {
   return (
-    <BrandCollectionComponent
-      brandCollectionResponse={brandCollectionResponse}
-      testimonials={testimonials}
-    />
+    <SSRProvider>
+      <SearchProvider
+        search={{
+          pipeline: pipelineConfig,
+          variables: variablesConfig(filter),
+          filters: [
+            listBrandsFilter,
+            priceRangeFilter,
+            categoryFilter,
+            ratingFilter,
+            colorFilter,
+          ],
+        }}
+        initialResponse={initialResponse}
+        searchOnLoad={!initialResponse}
+        defaultFilter={filter}
+        customClassNames={{
+          pagination: {
+            container: "containerPagination",
+            button: "buttonPagination",
+            active: "activePagination",
+            next: "nextPagination",
+            prev: "prevPagination",
+            spacerEllipsis: "spacerEllipsisPagination",
+          },
+        }}
+      >
+        <BrandCollectionComponent
+          brandCollectionResponse={brandCollectionResponse}
+          testimonials={testimonials}
+        />
+      </SearchProvider>
+    </SSRProvider>
   )
 }
 export default BrandCollectionPage

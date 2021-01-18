@@ -1,20 +1,22 @@
 import VehicleComponent from "../../../components/Vehicles/Vehicle"
-import { getAllVehicles, getVehicleByUid } from "../../../lib/prismic/api"
+import { getVehicleByUid } from "../../../lib/prismic/api"
 import { getDataForMainNav } from "../../../services/mainNav"
 import { authenticationFromStamped } from "../../../services/testimonial"
 import { search } from "@sajari/server"
 import { pipelineConfig, variablesConfig } from "../../../lib/sajari/config"
+import { SSRProvider, SearchProvider } from "@sajari/react-search-ui"
 import {
-  brandFilter,
   categoryFilter,
+  colorFilter,
   listBrandsFilter,
   priceRangeFilter,
   ratingFilter,
 } from "../../../lib/sajari/filter"
+import { listVehicleService } from "../../../services/vehicle"
 
 export async function getStaticPaths() {
   const paths = []
-  const vehicleList = await getAllVehicles()
+  const vehicleList = await listVehicleService()
   if (vehicleList.length > 0) {
     for (const vehicle of vehicleList) {
       if (vehicle?.node?._meta?.uid) {
@@ -40,9 +42,9 @@ export async function getStaticProps({ params }) {
     filters: [
       listBrandsFilter,
       priceRangeFilter,
-      brandFilter,
       categoryFilter,
       ratingFilter,
+      colorFilter,
     ],
   })
   return {
@@ -51,7 +53,38 @@ export async function getStaticProps({ params }) {
   }
 }
 
-const VehiclePage = ({ vehicle, testimonials }) => {
-  return <VehicleComponent vehicle={vehicle} testimonials={testimonials} />
+const VehiclePage = ({ vehicle, testimonials, filter, initialResponse }) => {
+  return (
+    <SSRProvider>
+      <SearchProvider
+        search={{
+          pipeline: pipelineConfig,
+          variables: variablesConfig(filter || ""),
+          filters: [
+            listBrandsFilter,
+            priceRangeFilter,
+            categoryFilter,
+            ratingFilter,
+            colorFilter,
+          ],
+        }}
+        initialResponse={initialResponse}
+        searchOnLoad={!initialResponse}
+        defaultFilter={filter || ""}
+        customClassNames={{
+          pagination: {
+            container: "containerPagination",
+            button: "buttonPagination",
+            active: "activePagination",
+            next: "nextPagination",
+            prev: "prevPagination",
+            spacerEllipsis: "spacerEllipsisPagination",
+          },
+        }}
+      >
+        <VehicleComponent vehicle={vehicle} testimonials={testimonials} />
+      </SearchProvider>
+    </SSRProvider>
+  )
 }
 export default VehiclePage

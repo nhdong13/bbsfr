@@ -1,37 +1,28 @@
-import { Pipeline, Variables } from "@sajari/react-search-ui"
 import { search } from "@sajari/server"
 import VehicleCollectionComponent from "../../../../components/Vehicles/VehicleCollection"
-import {
-  getAllVehicles,
-  getVehicleCollectionByUid,
-} from "../../../../lib/prismic/api"
+import { getVehicleCollectionByUid } from "../../../../lib/prismic/api"
 import { pipelineConfig, variablesConfig } from "../../../../lib/sajari/config"
 import {
-  brandFilter,
   categoryFilter,
+  colorFilter,
   listBrandsFilter,
   priceRangeFilter,
   ratingFilter,
 } from "../../../../lib/sajari/filter"
-import { getConfigPipeline } from "../../../../services/getPipelineSajari"
 import { getDataForMainNav } from "../../../../services/mainNav"
 import { authenticationFromStamped } from "../../../../services/testimonial"
+import { SSRProvider, SearchProvider } from "@sajari/react-search-ui"
+import { listVehicleService } from "../../../../services/vehicle"
 
 export async function getStaticPaths() {
   const paths = []
-  const vehicleList = await getAllVehicles()
-  if (vehicleList.length > 0) {
-    for (const vehicle of vehicleList) {
-      let vehicleCollections = vehicle?.node?.collections
-      if (vehicleCollections.length > 0) {
-        for (const collection of vehicleCollections) {
-          if (collection?.collection_slug) {
-            paths.push(
-              `/vehicles/${vehicle.node._meta.uid}/${collection.collection_slug}`
-            )
-          }
-        }
-      }
+  const vehicleList = await listVehicleService()
+  for (const vehicle of vehicleList || []) {
+    let vehicleCollections = vehicle?.node?.collections || []
+    for (const collection of vehicleCollections) {
+      paths.push(
+        `/vehicles/${vehicle.node._meta.uid}/${collection.collection_slug}`
+      )
     }
   }
   return { paths, fallback: false }
@@ -54,9 +45,9 @@ export async function getStaticProps({ params }) {
     filters: [
       listBrandsFilter,
       priceRangeFilter,
-      brandFilter,
       categoryFilter,
       ratingFilter,
+      colorFilter,
     ],
   })
   return {
@@ -65,12 +56,46 @@ export async function getStaticProps({ params }) {
   }
 }
 
-const VehicleCollectionPage = ({ vehicleCollection, testimonials }) => {
+const VehicleCollectionPage = ({
+  vehicleCollection,
+  testimonials,
+  filter,
+  initialResponse,
+}) => {
   return (
-    <VehicleCollectionComponent
-      vehicleCollection={vehicleCollection}
-      testimonials={testimonials}
-    />
+    <SSRProvider>
+      <SearchProvider
+        search={{
+          pipeline: pipelineConfig,
+          variables: variablesConfig(filter || ""),
+          filters: [
+            listBrandsFilter,
+            priceRangeFilter,
+            categoryFilter,
+            ratingFilter,
+            colorFilter,
+          ],
+        }}
+        initialResponse={initialResponse}
+        searchOnLoad={!initialResponse}
+        defaultFilter={filter || ""}
+        customClassNames={{
+          pagination: {
+            container: "containerPagination",
+            button: "buttonPagination",
+            active: "activePagination",
+            next: "nextPagination",
+            prev: "prevPagination",
+            spacerEllipsis: "spacerEllipsisPagination",
+          },
+        }}
+      >
+        <VehicleCollectionComponent
+          vehicleCollection={vehicleCollection}
+          testimonials={testimonials}
+        />
+      </SearchProvider>
+    </SSRProvider>
   )
 }
 export default VehicleCollectionPage

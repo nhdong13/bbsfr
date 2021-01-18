@@ -2,8 +2,11 @@ import { useState } from "react"
 import { Collapse, Container } from "react-bootstrap"
 import styles from "../Brand.module.scss"
 import Image from "next/image"
-import ListCategoriesComponent from "../../Collection/Components/ListCategoriesComponent"
 import { convertDataShopByCollectionBrand } from "../../../services/brand"
+import dynamic from "next/dynamic"
+const ListCategoryDynamic = dynamic(() =>
+  import("../../Collection/Components/ListCategoriesComponent")
+)
 
 const ShopByBrandCollectionComponent = ({ type, arrData }) => {
   const [open, setOpen] = useState(false)
@@ -41,7 +44,7 @@ const ShopByBrandCollectionComponent = ({ type, arrData }) => {
       <Collapse in={open}>
         <div>
           <div className={styles.section}>
-            <ListCategoriesComponent
+            <ListCategoryDynamic
               categories={dataShopBy}
               typeBrand={type && type === "category" ? "category" : "range"}
               type="brandCollection"

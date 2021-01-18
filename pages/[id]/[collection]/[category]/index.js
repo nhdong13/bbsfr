@@ -11,12 +11,13 @@ import { getDataForMainNav } from "../../../../services/mainNav"
 import { mockupDataFilterCategory } from "../../../../services/collection"
 import { pipelineConfig, variablesConfig } from "../../../../lib/sajari/config"
 import {
-  brandFilter,
   categoryFilter,
   listBrandsFilter,
   priceRangeFilter,
   ratingFilter,
+  colorFilter,
 } from "../../../../lib/sajari/filter"
+import { SSRProvider, SearchProvider } from "@sajari/react-search-ui"
 
 export async function getStaticProps({ params }) {
   const requestOptions = authenticationFromStamped()
@@ -32,9 +33,9 @@ export async function getStaticProps({ params }) {
     filters: [
       listBrandsFilter,
       priceRangeFilter,
-      brandFilter,
       categoryFilter,
       ratingFilter,
+      colorFilter,
     ],
   })
 
@@ -46,7 +47,6 @@ export async function getStaticProps({ params }) {
       dataNav,
       params,
       filter,
-      timeNow: Date.now(),
     },
     revalidate: +process.env.NEXT_PUBLIC_REVALIDATE_PAGE_TIME,
   }
@@ -80,12 +80,41 @@ export async function getStaticPaths() {
   }
   return { paths, fallback: false }
 }
-const Category = ({ categoryData, testimonials }) => {
+const Category = ({ categoryData, testimonials, initialResponse, filter }) => {
   return (
-    <CategoryComponent
-      categoryData={categoryData}
-      testimonials={testimonials}
-    />
+    <SSRProvider>
+      <SearchProvider
+        search={{
+          pipeline: pipelineConfig,
+          variables: variablesConfig(filter),
+          filters: [
+            listBrandsFilter,
+            priceRangeFilter,
+            categoryFilter,
+            ratingFilter,
+            colorFilter,
+          ],
+        }}
+        initialResponse={initialResponse}
+        searchOnLoad={!initialResponse}
+        defaultFilter={filter}
+        customClassNames={{
+          pagination: {
+            container: "containerPagination",
+            button: "buttonPagination",
+            active: "activePagination",
+            next: "nextPagination",
+            prev: "prevPagination",
+            spacerEllipsis: "spacerEllipsisPagination",
+          },
+        }}
+      >
+        <CategoryComponent
+          categoryData={categoryData}
+          testimonials={testimonials}
+        />
+      </SearchProvider>
+    </SSRProvider>
   )
 }
 export default Category

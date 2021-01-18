@@ -1,9 +1,7 @@
 import dynamic from "next/dynamic"
 import Head from "next/head"
 import { convertSchemaFAQ } from "../../../services/convertSchemaFAQ"
-import ListCategoriesComponent from "../../Collection/Components/ListCategoriesComponent"
 import BackToPageBeforeComponent from "../../Common/BackPageComponent"
-import styles from "../Vehicles.module.scss"
 import ImagedHeaderComponent from "../../Brand/Components/ImagedHeaderComponent"
 import { useRouter } from "next/router"
 
@@ -16,7 +14,7 @@ const TestimonialsDynamic = dynamic(() =>
   import("../../HomePage/Testimonials/index")
 )
 
-const VehicleCollectionComponent = ({ vehicleCollection, testimonials }) => {
+const VehicleCategoryComponent = ({ vehicleCategory, testimonials }) => {
   const {
     page_heading_1,
     page_heading_2,
@@ -25,8 +23,7 @@ const VehicleCollectionComponent = ({ vehicleCollection, testimonials }) => {
     meta_title,
     page_paragraph,
     meta_description,
-    categories,
-  } = vehicleCollection
+  } = vehicleCategory
   const heading1 =
     page_heading_1 && page_heading_1.length > 0 && page_heading_1[0].text
       ? page_heading_1[0].text
@@ -59,18 +56,12 @@ const VehicleCollectionComponent = ({ vehicleCollection, testimonials }) => {
           dangerouslySetInnerHTML={{ __html: jsonFAQ }}
         />
       </Head>
+
       <ImagedHeaderComponent header={heading1} />
-      <div className={styles.shopByText}>
-        {vehicleCollection.shop_by_category_text != undefined &&
-        vehicleCollection.shop_by_category_text.length
-          ? vehicleCollection.shop_by_category_text[0].text
-          : "Shop by Category"}
-      </div>
-      <ListCategoriesComponent
-        categories={categories}
-        type="vehicleCollection"
+      <BackToPageBeforeComponent
+        page={router?.query?.vehicleCollection}
+        type="vehicle"
       />
-      <BackToPageBeforeComponent page={router?.query?.vehicle} type="vehicle" />
       <ResultDynamic />
       <TestimonialsDynamic
         testimonials={testimonials}
@@ -81,4 +72,4 @@ const VehicleCollectionComponent = ({ vehicleCollection, testimonials }) => {
     </>
   )
 }
-export default VehicleCollectionComponent
+export default VehicleCategoryComponent
