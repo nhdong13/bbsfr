@@ -14,10 +14,8 @@ function ProductImageCarousel({images, category}) {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    afterChange: current => setActiveSlide(current + 1)
+    afterChange: current => setActiveSlide(current + 1) // current start from 0
   };
-
-  console.log(activeSlide)
 
   return (
     <div className={styles.productPageImageContainer}>
