@@ -25,7 +25,11 @@ export default function OrderSumaryComponent() {
         >
           Order Summary
           <div className={styles.icon}>
-            <Image src="/icons/arrow-down2.svg" alt="arrow" layout="fill" />
+            <Image
+              src={open ? "/icons/arrow-up2.svg" : "/icons/arrow-down2.svg"}
+              alt="arrow"
+              layout="fill"
+            />
           </div>
         </Button>
         <Collapse in={open}>

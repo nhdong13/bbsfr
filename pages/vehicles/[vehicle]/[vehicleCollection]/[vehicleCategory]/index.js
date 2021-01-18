@@ -10,8 +10,8 @@ import {
   variablesConfig,
 } from "../../../../../lib/sajari/config"
 import {
-  brandFilter,
   categoryFilter,
+  colorFilter,
   listBrandsFilter,
   priceRangeFilter,
   ratingFilter,
@@ -50,13 +50,8 @@ export async function getStaticProps({ params }) {
   const initialResponse = await search({
     pipeline: pipelineConfig,
     variables: variablesConfig(),
-    filters: [
-      listBrandsFilter,
-      priceRangeFilter,
-      brandFilter,
-      categoryFilter,
-      ratingFilter,
-    ],
+
+    filters: [listBrandsFilter, priceRangeFilter, categoryFilter, ratingFilter],
   })
   return {
     props: { dataNav, vehicleCategory, initialResponse, testimonials },
@@ -79,9 +74,9 @@ const VehicleCategoryPage = ({
           filters: [
             listBrandsFilter,
             priceRangeFilter,
-            brandFilter,
             categoryFilter,
             ratingFilter,
+            colorFilter,
           ],
         }}
         initialResponse={initialResponse}

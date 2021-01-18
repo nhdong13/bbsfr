@@ -6,18 +6,9 @@ import { useApollo } from "../lib/apollo"
 import { SaleorProvider } from "../lib/@sdk/react"
 import Layout from "components/Layout"
 import NProgressBarComponent from "../components/Common/NProgressBar"
-// import { SSRProvider, SearchProvider, Pipeline } from "@sajari/react-search-ui"
-// import { pipelineConfig, variablesConfig } from "../lib/sajari/config"
 import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
 import "../styles/globals.scss"
-// import {
-//   brandFilter,
-//   categoryFilter,
-//   listBrandsFilter,
-//   priceRangeFilter,
-//   ratingFilter,
-// } from "../lib/sajari/filter"
 
 const SALEOR_CONFIG = {
   apiUrl: process.env.NEXT_PUBLIC_API_URI,
@@ -29,27 +20,9 @@ if (typeof window === "undefined") {
   require("localstorage-polyfill")
 }
 
-
 export default function App({ Component, pageProps }) {
-  // const initSearch = {
-  //   queryValues: {
-  //     q: "",
-  //     resultsPerPage: "19",
-  //     filter: "",
-  //     countFilters: "",
-  //     buckets: "",
-  //     count: "",
-  //   },
-  //   response: {
-  //     time: -1.003004,
-  //     totalResults: 1,
-  //     results: [],
-  //   },
-  // }
- 
   const store = useStore(pageProps.initialReduxState)
   const apolloClient = useApollo(pageProps.initialApolloState)
-  // const initialSearch = pageProps.initialResponse || initSearch
   return (
     <Provider store={store}>
       <ApolloProvider client={apolloClient}>
@@ -58,42 +31,12 @@ export default function App({ Component, pageProps }) {
           config={SALEOR_CONFIG}
           apolloConfig={{ client: apolloClient }}
         >
-          {/* <SSRProvider>
-            <SearchProvider
-              key={pageProps.timeNow || Date.now()}
-              search={{
-                pipeline: pipelineConfig,
-                variables: variablesConfig(pageProps?.filter),
-                filters: [
-                  listBrandsFilter,
-                  priceRangeFilter,
-                  brandFilter,
-                  categoryFilter,
-                  ratingFilter,
-                ],
-              }}
-              initialResponse={initialSearch}
-              searchOnLoad={!initialSearch}
-              defaultFilter={pageProps?.filter}
-              customClassNames={{
-                pagination: {
-                  container: "containerPagination",
-                  button: "buttonPagination",
-                  active: "activePagination",
-                  next: "nextPagination",
-                  prev: "prevPagination",
-                  spacerEllipsis: "spacerEllipsisPagination",
-                },
-              }}
-            > */}
-              <ToastProvider>
-                <NProgressBarComponent />
-                <Layout>
-                  <Component {...pageProps} />
-                </Layout>
-              </ToastProvider>
-            {/* </SearchProvider>
-          </SSRProvider> */}
+          <ToastProvider>
+            <NProgressBarComponent />
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </ToastProvider>
         </SaleorProvider>
       </ApolloProvider>
     </Provider>

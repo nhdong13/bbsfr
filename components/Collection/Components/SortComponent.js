@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import styles from "../Collections.module.scss"
-import { Collapse } from "react-bootstrap"
+import { Collapse, Container } from "react-bootstrap"
 import Image from "next/image"
 import SortingComponent from "../../Common/Sorting"
 
@@ -15,7 +15,7 @@ const SortComponent = ({
     <>
       <div className={styles.sort_filter_by}>
         <div className={styles.sub_heading}>SORT BY</div>
-        <div className={`${styles.group_heading} ${open ? styles.active : ""}`}>
+        <div className={styles.group_heading}>
           <div
             onClick={() => {
               setOpen(!open)
@@ -48,6 +48,12 @@ const SortComponent = ({
           </div>
         </div>
       </div>
+
+      {!open && (
+        <Container fluid>
+          <div className={styles.sort_filter_by_open}></div>
+        </Container>
+      )}
     </>
   )
 }
