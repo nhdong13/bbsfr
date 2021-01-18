@@ -36,7 +36,11 @@ export default function ShippingAddress({
 
   useEffect(() => {
     async function initShippingData() {
-      if (!currentUser?.id || oldValues?.address) {
+      if (
+        !currentUser?.id ||
+        oldValues?.address ||
+        !currentUser.defaultShippingAddress
+      ) {
         return
       }
 
