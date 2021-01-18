@@ -164,13 +164,16 @@ export default function PromotionComponent({
                   />
                   <InputGroup.Append>
                     <Button
-                      variant="primary"
+                      variant="green"
                       className={styles.btn}
                       type="button"
                       onClick={
                         promoCodeDiscount?.voucherCode
                           ? handleDeletePromoCode
                           : handleApplyCode
+                      }
+                      disabled={
+                        !promoCodeDiscount.voucherCode && !values.promotion
                       }
                     >
                       {promoCodeDiscount?.voucherCode ? "Delete" : "Apply"}
@@ -206,9 +209,10 @@ export default function PromotionComponent({
 
               <Form.Group controlId="giftCardNumber" as={Col} xs="12">
                 <Button
-                  variant="primary"
+                  variant="green"
                   className={clsx(styles.btn, "w-100")}
                   onClick={handleApplyGiftCard}
+                  disabled={!values.giftCard.length}
                 >
                   Apply gift card
                 </Button>
