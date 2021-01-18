@@ -2,7 +2,6 @@ import { search } from "@sajari/server"
 import BrandRangeComponent from "../../../../../../components/Brand/BrandRange"
 import {
   getBrandRangeByUid,
-  listAllBrands,
   listAllBrandRangesOfCollection,
 } from "../../../../../../lib/prismic/api"
 import {
@@ -16,7 +15,10 @@ import {
   priceRangeFilter,
   ratingFilter,
 } from "../../../../../../lib/sajari/filter"
-import { mockupDataFilterBrand } from "../../../../../../services/brand"
+import {
+  listAllBrandService,
+  mockupDataFilterBrand,
+} from "../../../../../../services/brand"
 import { getDataForMainNav } from "../../../../../../services/mainNav"
 import { authenticationFromStamped } from "../../../../../../services/testimonial"
 import { SSRProvider, SearchProvider } from "@sajari/react-search-ui"
@@ -55,7 +57,7 @@ export async function getStaticProps({ params }) {
 
 export async function getStaticPaths() {
   const paths = []
-  const response = await listAllBrands()
+  const response = await listAllBrandService()
   const brandCollections = response.map((i) => ({
     uid: i.node._meta.uid,
     brandCollections: i.node.brand_collections,

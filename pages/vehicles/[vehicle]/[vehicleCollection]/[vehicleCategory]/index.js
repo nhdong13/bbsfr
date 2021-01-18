@@ -1,7 +1,6 @@
 import { search } from "@sajari/server"
 import VehicleCategoryComponent from "../../../../../components/Vehicles/VehicleCategory"
 import {
-  getAllVehicles,
   getVehicleCollectionByUid,
   getVehicleCategoryByUid,
 } from "../../../../../lib/prismic/api"
@@ -19,10 +18,11 @@ import {
 import { getDataForMainNav } from "../../../../../services/mainNav"
 import { authenticationFromStamped } from "../../../../../services/testimonial"
 import { SearchProvider, SSRProvider } from "@sajari/react-search-ui"
+import { listVehicleService } from "../../../../../services/vehicle"
 
 export async function getStaticPaths() {
   const paths = []
-  const vehicleList = await getAllVehicles()
+  const vehicleList = await listVehicleService()
   for (const vehicle of vehicleList || []) {
     let vehicleCollections = vehicle?.node?.collections || []
     for (const collection of vehicleCollections) {

@@ -32,7 +32,6 @@ const BrandComponent = ({ brandDirectory, brands, testimonials }) => {
       : "---"
   const titleSeo = page_heading_2.length > 0 ? page_heading_2[0].text : ""
   const jsonFAQ = convertSchemaFAQ({ faq, faq_title })
-
   return (
     <>
       <Head>
