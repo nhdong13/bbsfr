@@ -1,5 +1,5 @@
 import VehicleComponent from "../../../components/Vehicles/Vehicle"
-import { getAllVehicles, getVehicleByUid } from "../../../lib/prismic/api"
+import { getVehicleByUid } from "../../../lib/prismic/api"
 import { getDataForMainNav } from "../../../services/mainNav"
 import { authenticationFromStamped } from "../../../services/testimonial"
 import { search } from "@sajari/server"
@@ -12,10 +12,11 @@ import {
   priceRangeFilter,
   ratingFilter,
 } from "../../../lib/sajari/filter"
+import { listVehicleService } from "../../../services/vehicle"
 
 export async function getStaticPaths() {
   const paths = []
-  const vehicleList = await getAllVehicles()
+  const vehicleList = await listVehicleService()
   if (vehicleList.length > 0) {
     for (const vehicle of vehicleList) {
       if (vehicle?.node?._meta?.uid) {
