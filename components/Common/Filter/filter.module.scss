@@ -2,7 +2,7 @@
 @import "/styles/mixin";
 
 .containerFilter {
-  padding: 17px 18px;
+  padding: 16px 18px;
   box-sizing: border-box;
 
   .titleFilter {
@@ -39,33 +39,12 @@
     }
   }
 }
+.containerFilterOpen {
+  border-bottom: 0.5px solid #e5e5e4;
+}
 
 .sort_filter_by.sorting {
   margin-top: 1rem;
-}
-
-.button_sajari {
-  padding: 1rem 0;
-  background-color: #fff;
-
-  position: sticky;
-  width: 100%;
-  bottom: 0;
-  .modal_button {
-    padding: 0 0.5rem;
-  }
-  button {
-    height: 48px;
-    width: 100%;
-    border-radius: 8px;
-
-    font-family: Rajdhani;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 14px;
-    line-height: 18px;
-    text-align: center;
-  }
 }
 
 .sajari_checkbox {
@@ -79,40 +58,22 @@
   }
 }
 
-.sajari_combobox > div {
-  margin-top: 10px;
-  height: 48px;
-  border-radius: 24px;
-  background-color: #f6f6f6;
-  border: unset;
-
-  input {
-    font-size: 14px;
-    font-weight: 400;
-    padding-left: 21px;
-    border-color: #f6f6f6 !important;
-  }
-
-  input:focus {
-    border-color: #f6f6f6 !important;
-    border-radius: 24px;
-  }
-}
-.sajari_combobox > div:focus {
-  border-color: #f6f6f6 !important;
-  border-radius: 24px;
-}
-
-.sajari_combobox > div > div {
+.searchBrandFilter {
+  border: 0;
+  box-sizing: border-box;
   width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  svg {
-    width: 24px;
-    height: 24px;
-    background-image: url("/searchicon.svg");
-    path {
-      display: none;
-    }
+  box-sizing: border-box;
+  border-radius: 28px;
+  background-color: #F6F6F6;
+  background-image: url("/iconSearchGrey.svg");
+  background-position: right 15px bottom 13px;
+  background-repeat: no-repeat;
+  padding: 14px 21px;
+  color: #939393;
+  font-size: 12px;
+  min-height: 48px;
+  text {
+    font-size: 12px;
   }
 }
+
