@@ -12,13 +12,7 @@ const BackToPageBeforeDynamic = dynamic(() =>
 )
 
 const BrandHomeComponent = ({ brand, testimonials }) => {
-  const {
-    meta_description,
-    meta_title,
-    faq,
-    faq_title,
-    brand_hero_image,
-  } = brand
+  const { meta_title, faq, faq_title, brand_hero_image } = brand
   const jsonFAQ = convertSchemaFAQ({ faq, faq_title })
   const heading1 =
     brand && brand.page_heading_1 && brand.page_heading_1.length > 0
@@ -40,15 +34,18 @@ const BrandHomeComponent = ({ brand, testimonials }) => {
     <>
       <Head>
         <title>{meta_title || "Home"}</title>
-        <meta name="description" content={meta_description} />
+        <meta name="description" content={brand?.meta_description || ""} />
         <meta
           name="og:description"
           property="og:description"
-          content={meta_description}
+          content={meta_description || ""}
         />
-        <meta name="og:title" property="og:title" content={meta_title} />
+        <meta name="og:title" property="og:title" content={brand?.meta_title} />
         <meta name="twitter:title" content={meta_title} />
-        <meta name="twitter:description" content={meta_description} />
+        <meta
+          name="twitter:description"
+          content={brand?.meta_description || ""}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: jsonFAQ }}
