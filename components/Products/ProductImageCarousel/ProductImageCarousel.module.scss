@@ -3,14 +3,19 @@ $yellowColor: #FFB00F;
 .productPageImageContainer {
   position: relative;
   max-width: 640px;
+  width: 100%;
   @media(max-width: 768px) {
     width: 100%;
   }
 
   .productPageImage {
     min-height: 375px;
+    width: 100%;
     @media(max-width: 768px) {
-      min-height: 375px;
+      // min-height: 375px;
+      width: 100;
+      padding-top: 100%;
+      position: relative;
     }
   }
 
@@ -24,7 +29,7 @@ $yellowColor: #FFB00F;
     padding-right: 15px;
     display: inline-flex;
     width: 100%;
-    
+
     .categoryName {
       color: $yellowColor;
       text-transform: uppercase;
