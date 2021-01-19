@@ -1,6 +1,11 @@
 @import "/styles/variables.scss";
 
 .orderSumary {
+  .orderSumaryContainer {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
   .toggleButton {
     height: 48px;
     width: 100%;
