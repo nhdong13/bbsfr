@@ -1,7 +1,7 @@
 .containerNavBar {
   height: 64px;
   line-height: 64px;
-  
+
   .logoApp {
     position: relative;
     width: 134px;
@@ -15,7 +15,7 @@
       position: relative;
       width: 24px;
       height: 24px;
-      margin-right: 10px;
+      margin-right: 25px;
     }
 
     .iconHamburger {
@@ -23,7 +23,6 @@
       width: 24px;
       height: 24px;
       vertical-align: middle;
-      margin-right: 10px;
       cursor: pointer;
     }
   }
