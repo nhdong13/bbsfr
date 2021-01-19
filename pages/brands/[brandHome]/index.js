@@ -1,9 +1,12 @@
 import BrandHomeComponent from "../../../components/Brand/BrandHome"
-import { getBrandByUid, listAllBrands } from "../../../lib/prismic/api"
+import { getBrandByUid } from "../../../lib/prismic/api"
 import { search } from "@sajari/server"
 import { getDataForMainNav } from "../../../services/mainNav"
 import { authenticationFromStamped } from "../../../services/testimonial"
-import { mockupDataFilterBrand } from "../../../services/brand"
+import {
+  listAllBrandService,
+  mockupDataFilterBrand,
+} from "../../../services/brand"
 import { pipelineConfig, variablesConfig } from "../../../lib/sajari/config"
 import { SSRProvider, SearchProvider } from "@sajari/react-search-ui"
 import {
@@ -48,7 +51,7 @@ export async function getStaticProps({ params }) {
 
 export async function getStaticPaths() {
   const paths = []
-  const response = await listAllBrands()
+  const response = await listAllBrandService()
   const brandCollections = response.map((i) => ({
     uid: i.node._meta.uid,
   }))

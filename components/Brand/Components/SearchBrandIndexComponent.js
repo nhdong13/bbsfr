@@ -20,7 +20,7 @@ const SearchBrandIndexComponent = () => {
     <div className={styles.searchBrandIndexPosition}>
       <div className={styles.searchBrandIndex}>
         <Container fluid className={styles.searchBrandIndexContainer}>
-          <p className={styles.searchBrandIndexTitle}>Shop By Brand</p>
+          <p className={styles.searchBrandIndexTitle}>SHOP BY BRAND</p>
           <div
             className={
               brands && brands.length && brands.length > 0

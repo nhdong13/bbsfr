@@ -1,10 +1,10 @@
 import { combineReducers } from "redux"
-import { currentUser } from "./auth"
-import { currentDepartments } from "./departments";
+import { notify } from "./notify"
+import { currentDepartments } from "./departments"
 // COMBINED REDUCERS
 const reducers = {
-  currentUser: currentUser,
+  notify: notify,
   currentDepartments: currentDepartments,
-};
+}
 
 export default combineReducers(reducers)

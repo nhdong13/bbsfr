@@ -1,10 +1,10 @@
 import BrandCollectionComponent from "../../../../components/Brand/BrandCollection"
-import {
-  getBrandCollectionDetail,
-  listAllBrands as listAllBrandsCollection,
-} from "../../../../lib/prismic/api"
+import { getBrandCollectionDetail } from "../../../../lib/prismic/api"
 import { getDataForMainNav } from "../../../../services/mainNav"
-import { mockupDataFilterBrand } from "../../../../services/brand"
+import {
+  listAllBrandService,
+  mockupDataFilterBrand,
+} from "../../../../services/brand"
 import { search } from "@sajari/server"
 import { authenticationFromStamped } from "../../../../services/testimonial"
 import { pipelineConfig, variablesConfig } from "../../../../lib/sajari/config"
@@ -19,7 +19,7 @@ import {
 
 export async function getStaticPaths() {
   const paths = []
-  const response = await listAllBrandsCollection()
+  const response = await listAllBrandService()
   const brandCollections =
     response?.length > 0 &&
     response.map((i) => ({

@@ -1,14 +1,15 @@
 import BrandCategoryComponent from "../../../../../../components/Brand/BrandCategory"
-// import { brandCategoryAPI, getBrandCategoryByUid, getAllBrandCategories } from "lib/prismic/api"
 import { search } from "@sajari/server"
 import { getDataForMainNav } from "services/mainNav"
 import {
-  listAllBrands,
   getBrandCategoryByUid,
   getBrandCollectionDetail,
 } from "../../../../../../lib/prismic/api"
 import { authenticationFromStamped } from "../../../../../../services/testimonial"
-import { mockupDataFilterBrand } from "../../../../../../services/brand"
+import {
+  listAllBrandService,
+  mockupDataFilterBrand,
+} from "../../../../../../services/brand"
 import {
   pipelineConfig,
   variablesConfig,
@@ -56,7 +57,7 @@ export async function getStaticProps({ params }) {
 
 export async function getStaticPaths() {
   const paths = []
-  const brands = await listAllBrands()
+  const brands = await listAllBrandService()
   const brandHomes = brands.map((brand) => ({
     uid: brand.node._meta.uid,
     brandCollections: brand.node.brand_collections,
@@ -84,7 +85,6 @@ export async function getStaticPaths() {
       }
     }
   }
-
   return { paths, fallback: false }
 }
 

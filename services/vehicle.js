@@ -1,3 +1,5 @@
+import { getAllVehicles } from "../lib/prismic/api"
+
 export const groupBy = (listObj, key) => {
   return listObj.reduce((obj, item) => {
     ;(obj[item[key]] = obj[item[key]] || []).push(item)
@@ -26,4 +28,20 @@ export const generateMotorcyclesGroup = (data) => {
       })
   })
   return res
+}
+
+
+export const listVehicleService = async () => {
+  let listVehicles = []
+  let pageInfoTemp = {}
+
+  do {
+    const { vehicles, pageInfo } = await getAllVehicles(
+      100,
+      pageInfoTemp.endCursor || ""
+    )
+    pageInfoTemp = { ...pageInfo }
+    listVehicles = [...listVehicles, ...vehicles]
+  } while (pageInfoTemp?.endCursor && pageInfoTemp?.hasNextPage)
+  return listVehicles
 }

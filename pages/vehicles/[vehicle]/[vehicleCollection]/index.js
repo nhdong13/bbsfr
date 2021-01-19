@@ -1,9 +1,6 @@
 import { search } from "@sajari/server"
 import VehicleCollectionComponent from "../../../../components/Vehicles/VehicleCollection"
-import {
-  getAllVehicles,
-  getVehicleCollectionByUid,
-} from "../../../../lib/prismic/api"
+import { getVehicleCollectionByUid } from "../../../../lib/prismic/api"
 import { pipelineConfig, variablesConfig } from "../../../../lib/sajari/config"
 import {
   categoryFilter,
@@ -15,16 +12,19 @@ import {
 import { getDataForMainNav } from "../../../../services/mainNav"
 import { authenticationFromStamped } from "../../../../services/testimonial"
 import { SSRProvider, SearchProvider } from "@sajari/react-search-ui"
+import { listVehicleService } from "../../../../services/vehicle"
 
 export async function getStaticPaths() {
   const paths = []
-  const vehicleList = await getAllVehicles()
+  const vehicleList = await listVehicleService()
   for (const vehicle of vehicleList || []) {
     let vehicleCollections = vehicle?.node?.collections || []
     for (const collection of vehicleCollections) {
-      paths.push(
-        `/vehicles/${vehicle.node._meta.uid}/${collection.collection_slug}`
-      )
+      if (collection?.collection_slug) {
+        paths.push(
+          `/vehicles/${vehicle.node._meta.uid}/${collection.collection_slug}`
+        )
+      }
     }
   }
   return { paths, fallback: false }
