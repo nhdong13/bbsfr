@@ -25,14 +25,14 @@ export const renderStart = (
   const loop = () => {
     for (let i = 1; i <= max; i++) {
       if (i <= `${rate}`.split(".")[0]) {
-        el.push(container(i, `/icons/${starType}/start-full.svg`))
+        el.push(container(i, `/icons/${starType}/star-full.svg`))
       } else if (
         `${rate}`.includes(".") &&
         +`${rate}`.split(".")[0] + 1 === i
       ) {
-        el.push(container(i, `/icons/${starType}/start-path.svg`))
+        el.push(container(i, `/icons/${starType}/star-path.svg`))
       } else {
-        el.push(container(i, `/icons/${starType}/start-empty.svg`))
+        el.push(container(i, `/icons/${starType}/star-empty.svg`))
       }
     }
     return el
