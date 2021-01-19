@@ -38,9 +38,9 @@ const BrandHomeComponent = ({ brand, testimonials }) => {
         <meta
           name="og:description"
           property="og:description"
-          content={meta_description || ""}
+          content={brand?.meta_description || ""}
         />
-        <meta name="og:title" property="og:title" content={brand?.meta_title} />
+        <meta name="og:title" property="og:title" content={meta_title} />
         <meta name="twitter:title" content={meta_title} />
         <meta
           name="twitter:description"

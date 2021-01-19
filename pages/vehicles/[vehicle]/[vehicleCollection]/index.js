@@ -20,9 +20,11 @@ export async function getStaticPaths() {
   for (const vehicle of vehicleList || []) {
     let vehicleCollections = vehicle?.node?.collections || []
     for (const collection of vehicleCollections) {
-      paths.push(
-        `/vehicles/${vehicle.node._meta.uid}/${collection.collection_slug}`
-      )
+      if (collection?.collection_slug) {
+        paths.push(
+          `/vehicles/${vehicle.node._meta.uid}/${collection.collection_slug}`
+        )
+      }
     }
   }
   return { paths, fallback: false }
