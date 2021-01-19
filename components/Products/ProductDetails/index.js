@@ -1,7 +1,7 @@
 import { useProductDetails } from "@sdk/react";
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { Container, Row } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import ProductImageCarousel from "../ProductImageCarousel";
 import ProductVariant from "../ProductVariant";
 import ProductShipping from "../ProductShipping";
@@ -23,15 +23,15 @@ function ProductDetailsComponent ({ loading, product }) {
       { !loading && product &&
         <Container fluid className='product-details' >
           <Row>
-            <ProductImageCarousel />
+            <Col md={8} xs={12}>
+              <Row>
+                <ProductImageCarousel
+                  images={product.images}
+                  category={product.category}
+                />
+              </Row>
+            </Col>
           </Row>
-          <ProductVariant />
-          <ProductShipping />
-          <ProductDescription />
-          <ProductDelivery />
-          <ProductReturns />
-          <ProductCustomerReviews />
-          <AddToCart />
         </Container>
       }
     </>
