@@ -1,11 +1,14 @@
+@import "/styles/variables.scss";
+
 .containerNavBar {
   height: 64px;
   line-height: 64px;
-  
+  background-color: $black-background-color;
+
   .logoApp {
     position: relative;
     width: 134px;
-    height: 20px;
+    height: 21px;
   }
   .containerIcon {
     display: flex;
