@@ -5,7 +5,6 @@ import styles from "./Header.module.scss"
 import { useState } from "react"
 import NavModalComponent from "../Nav/NavigationModal"
 
-
 export default function Header({ dataNav }) {
   const [show, setShow] = useState(false)
   const handleClose = () => setShow(false)
@@ -13,12 +12,7 @@ export default function Header({ dataNav }) {
 
   return (
     <>
-      <Navbar
-        className={styles.containerNavBar}
-        bg="dark"
-        expand="lg"
-        variant="dark"
-      >
+      <Navbar className={styles.containerNavBar} expand="lg" variant="dark">
         <Link href="/">
           <a>
             <div className={styles.logoApp}>

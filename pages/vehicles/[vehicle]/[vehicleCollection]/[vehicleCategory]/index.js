@@ -26,13 +26,15 @@ export async function getStaticPaths() {
   for (const vehicle of vehicleList || []) {
     let vehicleCollections = vehicle?.node?.collections || []
     for (const collection of vehicleCollections) {
-      const collectionDetail = await getVehicleCollectionByUid(
-        collection?.collection_slug
-      )
-      for (const category of collectionDetail?.categories || []) {
-        paths.push(
-          `/vehicles/${vehicle.node._meta.uid}/${collection.collection_slug}/${category.category_slug}`
+      if (collection?.collection_slug) {
+        const collectionDetail = await getVehicleCollectionByUid(
+          collection.collection_slug
         )
+        for (const category of collectionDetail?.categories || []) {
+          paths.push(
+            `/vehicles/${vehicle.node._meta.uid}/${collection.collection_slug}/${category.category_slug}`
+          )
+        }
       }
     }
   }

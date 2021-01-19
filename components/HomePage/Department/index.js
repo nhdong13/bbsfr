@@ -1,13 +1,17 @@
-import Image from "next/image"
-import { Row, Container, Col } from "react-bootstrap"
+import Image from "next/image";
+import { Row, Container, Col } from "react-bootstrap";
 
-import CustomLink from "./custom_link"
-import styles from "../HomePage.module.scss"
+import CustomLink from "./custom_link";
+import styles from "../HomePage.module.scss";
 
 export default function Department(props) {
   return (
     <CustomLink slug={props.slug}>
-      <Container fluid className={styles.department}>
+      <Container
+        fluid
+        className={styles.department}
+        style={{ overflow: "hidden" }}
+      >
         <Row
           className={
             props.count % 2 != 0
@@ -32,18 +36,17 @@ export default function Department(props) {
           >
             {props.title}
           </div>
-          <div className={styles.department_image}>
-            <div className={styles.departmentImage}>
-              <Image
-                loading="lazy"
-                layout="fill"
-                src={props.image.url || ""}
-                alt={props.alt}
-              />
-            </div>
-          </div>
+          <div
+            className={styles.department_image}
+            style={{
+              backgroundImage: `url(${props.image.url || ""})`,
+              backgroundPosition: "revert",
+              backgroundSize: "cover",
+              backgroundRepeat: "no-repeat",
+            }}
+          ></div>
         </Row>
       </Container>
     </CustomLink>
-  )
+  );
 }
