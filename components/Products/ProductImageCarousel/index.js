@@ -38,7 +38,7 @@ function ProductImageCarousel({images, category}) {
                 <Image
                   layout="fill"
                   loading="lazy"
-                  alt={`img-${idx}`}
+                  alt={image.alt}
                   className={""}
                   src={image.url}
                 ></Image>
@@ -47,7 +47,7 @@ function ProductImageCarousel({images, category}) {
           })
         }
       </Slider>
-      <Row className={styles.categoryNameSliderIndex}>
+      <div className={styles.categoryNameSliderIndex}>
         <Col className={styles.categoryName} xs={6}>
           <Link href={`/${category.name}`}>
             { category.name }
@@ -56,7 +56,7 @@ function ProductImageCarousel({images, category}) {
         <Col className={styles.sliderIndex} xs={6}>
           <div className={styles.sliderIndexContent}>{activeSlide} / {imagesList.length}</div>
         </Col>
-      </Row>
+      </div>
     </div>
   )
 }

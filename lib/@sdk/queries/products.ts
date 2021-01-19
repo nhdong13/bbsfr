@@ -101,6 +101,7 @@ export const productDetails = gql`
       }
       images {
         id
+        alt
         url
       }
       attributes {
