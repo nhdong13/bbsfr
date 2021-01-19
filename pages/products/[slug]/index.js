@@ -10,7 +10,7 @@ export async function getStaticProps({ params }) {
   const apolloClient = initializeApollo();
   const response = await apolloClient.query({
     query: productDetails,
-    variables: {id: params.id}
+    variables: {slug: params.slug}
   });
 
   const { data, loading } = response;  
@@ -27,7 +27,7 @@ export async function getStaticProps({ params }) {
 export async function getStaticPaths() {
   return {
     paths: [
-      { params: { id: '*' } }
+      { params: { slug: '' } }
     ],
     fallback: 'blocking'
   };
