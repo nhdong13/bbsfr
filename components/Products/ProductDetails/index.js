@@ -11,6 +11,7 @@ import ProductReturns from "../ProductReturns";
 import ProductCustomerReviews from "../ProductCustomerReviews";
 import AddToCart from "../AddToCart";
 import LoadingSpinner from "../../LoadingSpinner";
+import styles from "./ProductDetails.module.scss"
 
 function ProductDetailsComponent ({ loading, product }) {
   return(
@@ -29,6 +30,13 @@ function ProductDetailsComponent ({ loading, product }) {
                   images={product.images}
                   category={product.category}
                 />
+              </Row>
+              <Row className={styles.productDescription}>
+                <Col xs={12}>
+                  <ProductDescription
+                    description={product.description}
+                  />
+                </Col>
               </Row>
             </Col>
           </Row>
