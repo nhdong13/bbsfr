@@ -213,3 +213,22 @@ input::placeholder,
   }
 }
 // End Modal Sajari Style
+
+// Custom modal open bottom
+.animate-bottom {
+  position: relative;
+  animation: animatebottom 0.4s;
+}
+
+@keyframes animatebottom {
+  from {
+    bottom: -300px;
+    opacity: 0;
+  }
+
+  to {
+    bottom: 0;
+    opacity: 1;
+  }
+}
+/*********************/
