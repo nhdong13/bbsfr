@@ -156,10 +156,11 @@ $padding-top-component: 55px;
 
     .department_image {
       position: absolute;
-      right: 0px;
-      top: 10%;
       // transform: translate(0%, -50%);
+      right: -39px;
       z-index: 2;
+      width: 215px;
+      height: 215px;
       div {
         // max-height: 100%;
         div {
