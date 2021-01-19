@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router'
+import Head from "next/head"
 import { productDetails } from "lib/@sdk/queries/products";
 import { initializeApollo } from "lib/apollo";
 
@@ -33,12 +34,27 @@ export async function getStaticPaths() {
 }
 
 function ProductDetails({product, loading}) {
-  const router = useRouter();
-  const { id } = router.query;
+  
+  const {
+    seoTitle,
+    seoDescription,
+  } = product
+
   return(
     <>
+      <Head>
+        <title>{seoTitle}</title>
+        <meta name="description" content={seoDescription} />
+        <meta
+          name="og:description"
+          property="og:description"
+          content={seoDescription}
+        />
+        <meta name="og:title" property="og:title" content={seoTitle} />
+        <meta name="twitter:title" content={seoTitle} />
+        <meta name="twitter:description" content={seoDescription} />
+      </Head>
       {
-        id &&
         <ProductDetailsComponent
           loading={loading}
           product={product}
