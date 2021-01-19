@@ -17,11 +17,22 @@ function ProductImageCarousel({images, category}) {
     afterChange: current => setActiveSlide(current + 1) // current start from 0
   };
 
+  const placeholderImage = {
+    alt: 'placeholder-image',
+    url: "/images/placeholder.jpg"
+  }
+
+  let imagesList = [placeholderImage];
+  
+  if (images.length) {
+    imagesList = images;
+  }
+
   return (
     <div className={styles.productPageImageContainer}>
       <Slider {...settings}>
         {
-          images.map((image, idx) => {
+          imagesList.map((image, idx) => {
             return <div className="position-relative w-100" key={idx}>
               <div className={styles.productPageImage}>
                 <Image
@@ -43,7 +54,7 @@ function ProductImageCarousel({images, category}) {
           </Link>
         </Col>
         <Col className={styles.sliderIndex} xs={6}>
-          <div className={styles.sliderIndexContent}>{activeSlide} / {images.length}</div>
+          <div className={styles.sliderIndexContent}>{activeSlide} / {imagesList.length}</div>
         </Col>
       </Row>
     </div>
