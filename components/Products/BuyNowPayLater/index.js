@@ -9,6 +9,7 @@ const BuyNowPayLaterModalDynamic = dynamic(() =>
 )
 
 const BuyNowPayLaterComponent = ({ dataProduct }) => {
+  console.log("Debug code dataProduct:", dataProduct);
   const [show, setShow] = useState(false)
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
