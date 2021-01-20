@@ -7,7 +7,6 @@ import ProductDetailsComponent from "../../../components/Products/ProductDetails
 import {
   initReviewOptions,
   initReviewSummaryOptions,
-  initQuestionOptions,
 } from "../../../services/product";
 
 export async function getStaticProps({ params }) {

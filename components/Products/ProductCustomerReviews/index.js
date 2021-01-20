@@ -1,14 +1,8 @@
-import CustomerReviewsTab from "../CustomerReviewsTab";
-import CustomerQuestionsTab from "../CustomerQuestionsTab";
-import { Tabs, Tab, Row, Col, Nav } from "react-bootstrap";
 import styles from "../ProductDetails.module.scss";
 import { renderStart } from "../../../services/renderStart";
 import { useState } from "react";
 import UserCommentComponent from "../Components/UserCommentComponent";
 
-const starValue = (i) => {
-  return i == 4 ? 8 : i == 3 ? 2 : i == 2 ? 10 : i == 1 ? 35 : 1668;
-};
 function ProductCustomerReviews({
   reviews = [],
   reviewSummary = {},

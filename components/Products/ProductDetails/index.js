@@ -13,7 +13,6 @@ import LoadingSpinner from "../../LoadingSpinner";
 import SectionDivider from "../Components/SectionDividerComponent";
 import styles from "../ProductDetails.module.scss";
 import { renderStart } from "../../../services/renderStart";
-import { reviewData } from "../../../services/product";
 
 function ProductDetailsComponent({
   loading,
@@ -43,6 +42,19 @@ function ProductDetailsComponent({
                   category={product.category}
                 />
               </Row>
+              <div className={styles.productTitle}>
+                <p className={styles.productName}>{product?.name}</p>
+                <div className={styles.reviewStar} onClick={scrollToComponent}>
+                  {renderStart(
+                    reviewSummary[0]?.rating,
+                    "15px",
+                    "15px",
+                    5,
+                    "reviewStar"
+                  )}
+                  <span>({reviewSummary[0]?.count})</span>
+                </div>
+              </div>
               <Row className={styles.productDescription}>
                 <Col xs={12}>
                   <ProductDescription description={product.description} />
@@ -50,24 +62,7 @@ function ProductDetailsComponent({
               </Row>
             </Col>
           </Row>
-          <div className={styles.productTitle}>
-            <p className={styles.productName}>{product?.name}</p>
-            <div className={styles.reviewStar} onClick={scrollToComponent}>
-              {renderStart(
-                reviewSummary[0]?.rating,
-                "15px",
-                "15px",
-                5,
-                "reviewStar"
-              )}
-              <span>({reviewSummary[0]?.count})</span>
-            </div>
-          </div>
-          {/* <ProductVariant />
-          <ProductShipping />
-          <ProductDescription />
-          <ProductDelivery />
-          <ProductReturns /> */}
+
           <SectionDivider />
           <div ref={reviewRef}>
             <ProductCustomerReviews
@@ -77,7 +72,6 @@ function ProductDetailsComponent({
             />
           </div>
           <SectionDivider />
-          {/* <AddToCart /> */}
         </Container>
       )}
     </>
