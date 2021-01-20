@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { Container, Row, Col } from "react-bootstrap";
 import ProductImageCarousel from "../ProductImageCarousel";
-import ProductVariant from "../ProductVariant";
+import SizeSelection from "../SizeSelection";
 import ProductShipping from "../ProductShipping";
 import ProductDescription from "../ProductDescription";
 import ProductDelivery from "../ProductDelivery";
@@ -14,6 +14,12 @@ import LoadingSpinner from "../../LoadingSpinner";
 import styles from "./ProductDetails.module.scss";
 
 function ProductDetailsComponent({ loading, product }) {
+  const { variants } = product;
+
+  const sizeVariants = variants.filter((variant) => {
+    return variant.attributes.find((i) => i.attribute.name === "Size");
+  });
+
   return (
     <>
       {loading && <LoadingSpinner show={loading}></LoadingSpinner>}
@@ -32,6 +38,9 @@ function ProductDetailsComponent({ loading, product }) {
                 <Col xs={12}>
                   <ProductDescription description={product.description} />
                 </Col>
+              </Row>
+              <Row>
+                <SizeSelection variants={sizeVariants} />
               </Row>
             </Col>
           </Row>
