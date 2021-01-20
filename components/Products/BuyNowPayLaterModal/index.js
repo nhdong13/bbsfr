@@ -1,16 +1,20 @@
-import { Container, Row, Col } from "react-bootstrap"
-import styles from "../ProductDetails.module.scss"
-import Image from "next/image"
-import { LOGO_PRODUCT_MODULE } from "../../../constant"
-import dynamic from "next/dynamic"
+import { Container, Row, Col } from "react-bootstrap";
+import styles from "../ProductDetails.module.scss";
+import Image from "next/image";
+import { LOGO_PRODUCT_MODULE } from "../../../constant";
+import dynamic from "next/dynamic";
 const KlarnaCostDynamic = dynamic(() =>
   import("./Components/KlarnaCostComponent")
-)
+);
 const KlarnaTextDynamic = dynamic(() =>
   import("./Components/KlarnaTextComponent")
-)
+);
+const KlarnaTextBottomDynamic = dynamic(() =>
+  import("./Components/KlarnaTextBottomComponent")
+);
 
-const BuyNowPayLaterModal = ({ handleClose }) => {
+const BuyNowPayLaterModal = ({ handleClose, price }) => {
+  console.log("Debug code price:", price);
   const sectionBody = [
     {
       title: "Shop now, pay later with Klarna",
@@ -53,10 +57,27 @@ const BuyNowPayLaterModal = ({ handleClose }) => {
         "Don’t see your question here? Check out Klarna’s full FAQ page.",
       type: "normal",
     },
-  ]
+  ];
+  const sectionBottom = [
+    {
+      title: "Is there a fee to use 4 interest-free instalments?",
+      context:
+        "There are no upfront fees when you follow the payment schedule. Please review product terms for applicable fees.",
+    },
+    {
+      title: "Will Klarna perform a credit check?",
+      context:
+        "When you choose 4 interest-free instalments, Klarna may order a credit report from a 3rd party. Please review product terms for more information on this.",
+    },
+    {
+      title: "How can I reach Klarna?",
+      context:
+        "You can reach Klarna anytime at https://www.klarna.com/au/customer-service/ or by downloading the Klarna App for 24/7 chat.",
+    },
+  ];
   return (
     <>
-      <Container fluid className={styles.containerModal}>
+      <div fluid className={styles.containerModal}>
         <div className={styles.containerContentModal}>
           <div className={styles.containerHeaderModal}>
             {/* Close */}
@@ -85,7 +106,7 @@ const BuyNowPayLaterModal = ({ handleClose }) => {
             {/* End Img */}
 
             {/* Cost */}
-            <Container className={styles.sectionCost}>
+            <Container fluid className={styles.sectionCost}>
               <KlarnaCostDynamic
                 contextLeft={"Total cost with Klarna"}
                 cost={"2"}
@@ -110,13 +131,25 @@ const BuyNowPayLaterModal = ({ handleClose }) => {
                       title={item.title}
                       context={item.context}
                     />
-                  )
+                  );
                 }
               })}
           </div>
+          <div className={styles.containerBottomModal}>
+            {sectionBottom &&
+              sectionBottom.map((item, index) => {
+                return (
+                  <KlarnaTextBottomDynamic
+                    key={index}
+                    title={item.title}
+                    context={item.context}
+                  />
+                );
+              })}
+          </div>
         </div>
-      </Container>
+      </div>
     </>
-  )
-}
-export default BuyNowPayLaterModal
+  );
+};
+export default BuyNowPayLaterModal;

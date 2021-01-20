@@ -40,20 +40,20 @@
   height: 100vh;
   width: 100%;
   background-color: #181818;
-  position: relative;
 
   .containerContentModal {
     width: 100%;
     background-color: #e6e6e4;
-    position: absolute;
-    height: 100vh;
+    // position: absolute;
+    margin-top: 54px;
+    height: auto;
     bottom: 0;
     left: 0;
     border-radius: 20px 20px 0 0;
 
     .containerHeaderModal {
       height: 178px;
-      width: 360px;
+      width: auto;
       border-radius: 20px 20px 0 0;
       background-color: #ffb3c7;
 
@@ -103,8 +103,8 @@
 
     .containerBodyModal {
       margin-top: 41px;
-
       .contextBodyTitle {
+        margin-top: 24px;
         letter-spacing: 0;
         @include font-family(Rajdhani, 21px, 600, $primary-text-color);
       }
@@ -113,6 +113,25 @@
         color: #181818;
         font-size: 12px;
         letter-spacing: 0;
+      }
+    }
+
+    .containerBottomModal {
+      margin-top: 24px;
+      .contextBodyTitle {
+        margin-top: 24px;
+        color: #181818;
+        font-size: 12px;
+        font-weight: bold;
+        letter-spacing: 0;
+        line-height: 20px;
+      }
+
+      .contextBodyText {
+        color: #181818;
+        font-size: 12px;
+        letter-spacing: 0;
+        line-height: 20px;
       }
     }
   }

@@ -1,6 +1,7 @@
 import { Container } from "react-bootstrap";
 import styles from "../../ProductDetails.module.scss";
-const KlarnaTextComponent = ({ title, context }) => {
+
+const KlarnaTextBottomComponent = ({ context, title }) => {
   return (
     <Container fluid>
       <div className={styles.contextBody}>
@@ -14,5 +15,4 @@ const KlarnaTextComponent = ({ title, context }) => {
     </Container>
   );
 };
-
-export default KlarnaTextComponent;
+export default KlarnaTextBottomComponent;
