@@ -1,29 +1,32 @@
-import Image from "next/image"
-import { renderStart } from "../../../services/renderStart"
-import styles from "../ProductDetails.module.scss"
+import Image from "next/image";
+import { renderStart } from "../../../services/renderStart";
+import styles from "../ProductDetails.module.scss";
 
-function UserCommentComponent({ user, comment, is_question = false }) {
+function UserCommentComponent({ reviewObj, is_question = false }) {
+  const { customer, review } = reviewObj;
   return (
     <div className={styles.userComment}>
       <div className={styles.userProfile}>
         <div className={styles.userAvatar}>RM</div>
-        {user?.is_verified ? (
+        {customer?.isSubscribed ? (
           <img src="/icons/user-verified.svg" className={styles.userVerified} />
         ) : null}
         <div>
-          {user?.name}
-          {user?.is_verified ? <span>Verified Buyer</span> : null}
+          {customer?.name}
+          {customer?.isSubscribed ? <span>Verified Buyer</span> : null}
         </div>
       </div>
       {is_question ? null : (
         <div className={styles.ratingLine}>
-          <div>{renderStart(5, "15px", "15px", 5, "reviewStar")}</div>
-          <span>{comment?.title}</span>
+          <div>
+            {renderStart(review?.rating, "15px", "15px", 5, "reviewStar")}
+          </div>
+          <span>{review?.title}</span>
         </div>
       )}
-      <div className={styles.commentContent}>{comment?.content}</div>
+      <div className={styles.commentContent}>{review?.body}</div>
     </div>
-  )
+  );
 }
 
-export default UserCommentComponent
+export default UserCommentComponent;
