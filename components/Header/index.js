@@ -1,20 +1,20 @@
-import { Navbar } from "react-bootstrap"
-import Image from "next/image"
-import Link from "next/link"
-import styles from "./Header.module.scss"
-import { useState } from "react"
-import NavModalComponent from "../Nav/NavigationModal"
+import { Navbar } from "react-bootstrap";
+import Image from "next/image";
+import Link from "next/link";
+import styles from "./Header.module.scss";
+import { useState } from "react";
+import NavModalComponent from "../Nav/NavigationModal";
 
 export default function Header({ dataNav }) {
-  const [show, setShow] = useState(false)
-  const handleClose = () => setShow(false)
-  const handleShow = () => setShow(true)
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   return (
     <>
       <Navbar className={styles.containerNavBar} expand="lg" variant="dark">
         <Link href="/">
-          <a>
+          <a className="mr-auto ml-0">
             <div className={styles.logoApp}>
               <Image
                 alt="logo-bbsfr-bikebiz"
@@ -43,5 +43,5 @@ export default function Header({ dataNav }) {
       </Navbar>
       <NavModalComponent dataNav={dataNav} show={show} onHide={handleClose} />
     </>
-  )
+  );
 }
