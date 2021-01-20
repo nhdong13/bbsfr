@@ -1,20 +1,28 @@
-import React from "react"
+import React, { useEffect } from "react"
 import styles from "./sorting.module.scss"
 import { useSorting } from "@sajari/react-hooks"
+import { useRouter } from "next/router"
 import { Radio, RadioGroup } from "@sajari/react-components"
 
-const SortingComponent = ({ setChanged }) => {
+const SortingComponent = ({ sortChanged, setSortChanged }) => {
   const { sorting, setSorting } = useSorting()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (sortChanged) {
+      router.events.on("routeChangeComplete", () => setSorting(""))
+    }
+  })
 
   return (
-    <div className="">
-      <div>
+    <>
+      <div className="">
         <RadioGroup
-          className={styles.radio_sajari}
           value={sorting}
+          className={styles.radio_sajari}
           onChange={(e) => {
             setSorting(e.target.value)
-            setChanged(true)
+            setSortChanged(true)
           }}
         >
           <Radio value="">Most relevant</Radio>
@@ -24,7 +32,7 @@ const SortingComponent = ({ setChanged }) => {
           <Radio value="-price">Price: High to Low</Radio>
         </RadioGroup>
       </div>
-    </div>
+    </>
   )
 }
 

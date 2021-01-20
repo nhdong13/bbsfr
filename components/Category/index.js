@@ -1,9 +1,7 @@
 import Head from "next/head"
-import { SearchProvider } from "@sajari/react-hooks"
 import dynamic from "next/dynamic"
 import { useRouter } from "next/router"
 import { convertSchemaFAQ } from "../../services/convertSchemaFAQ.js"
-
 const HeaderCategoryDynamic = dynamic(() =>
   import("../Collection/Components/HeaderCollectionComponent.js")
 )
@@ -19,13 +17,7 @@ const TestimonialsDynamic = dynamic(() =>
 )
 const SEODynamic = dynamic(() => import("../HomePage/SEO"))
 
-const CategoryComponent = ({
-  categoryData,
-  initialResponse,
-  pipeline,
-  testimonials,
-  variables,
-}) => {
+const CategoryComponent = ({ categoryData, testimonials }) => {
   const router = useRouter()
   const { meta_description, meta_title, faq, faq_title } = categoryData
   const jsonFAQ = convertSchemaFAQ({ faq, faq_title })
@@ -50,33 +42,18 @@ const CategoryComponent = ({
           dangerouslySetInnerHTML={{ __html: jsonFAQ }}
         />
       </Head>
-      <SearchProvider
-        search={{
-          pipeline,
-          variables,
-        }}
-        initialResponse={initialResponse}
-        searchOnLoad={!initialResponse}
-      >
-        <HeaderCategoryDynamic
-          pageHeading={
-            categoryData &&
-            categoryData.page_heading_1 &&
-            categoryData.page_heading_1.length > 0
-              ? categoryData.page_heading_1[0].text
-              : "Category"
-          }
-        />
-        <BackToPageBeforeDynamic
-          page={router.query.collection}
-          type="category"
-        />
-        <ResultDynamic
-          variables={variables}
-          pipeline={pipeline}
-          initialResponse={initialResponse}
-        />
-      </SearchProvider>
+
+      <HeaderCategoryDynamic
+        pageHeading={
+          categoryData &&
+          categoryData.page_heading_1 &&
+          categoryData.page_heading_1.length > 0
+            ? categoryData.page_heading_1[0].text
+            : "Category"
+        }
+      />
+      <BackToPageBeforeDynamic page={router.query.collection} type="category" />
+      <ResultDynamic />
       <TestimonialsDynamic testimonials={testimonials} type="category" />
       <FAQDynamic FAQ={{ faq, faq_title }} />
       <SEODynamic

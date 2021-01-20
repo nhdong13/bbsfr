@@ -23,6 +23,7 @@ const VehicleDynamic = dynamic(() =>
 const VehiclesComponent = ({ vehiclesDirectory, vehicles, testimonials }) => {
   const {
     page_heading_1,
+    page_heading_2,
     faq,
     faq_title,
     meta_title,
@@ -33,6 +34,10 @@ const VehiclesComponent = ({ vehiclesDirectory, vehicles, testimonials }) => {
     page_heading_1 && page_heading_1.length > 0 && page_heading_1[0].text
       ? page_heading_1[0].text
       : "---"
+  const titleSeo =
+    page_heading_2?.length > 0 && page_heading_2[0].text
+      ? page_heading_2[0].text
+      : ""
   const jsonFAQ = convertSchemaFAQ({ faq, faq_title })
   const generatedData = generateMotorcyclesGroup(vehicles)
   return (
@@ -82,7 +87,7 @@ const VehiclesComponent = ({ vehiclesDirectory, vehicles, testimonials }) => {
         type="vehicle directory"
       />
       <FAQDynamic FAQ={{ faq, faq_title }} />
-      <SEODynamic heading1={title} pageParagraph={page_paragraph || []} />
+      <SEODynamic heading1={titleSeo} pageParagraph={page_paragraph || []} />
     </>
   )
 }

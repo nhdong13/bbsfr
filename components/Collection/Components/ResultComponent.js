@@ -1,74 +1,82 @@
-import {
-  SearchProvider,
-  FieldDictionary,
-  FilterBuilder,
-} from "@sajari/react-search-ui"
 import React, { useState } from "react"
 import { Container, Modal, Button } from "react-bootstrap"
 import Image from "next/image"
-import {
-  countBooleanSortFilter,
-  listUpdate,
-} from "../../../services/collection"
 import styles from "../Collections.module.scss"
-import { useSearchContext, useResultsPerPage } from "@sajari/react-hooks"
+import { useSearchContext } from "@sajari/react-hooks"
 import dynamic from "next/dynamic"
-import { constants } from "../../../constant"
+import SortComponent from "./SortComponent"
+import FilterComponent from "./FilterComponent"
 
 const HeaderDynamic = dynamic(() => import("../../Header"))
 const PaginationDynamic = dynamic(() =>
   import("../../Common/PaginationComponent")
 )
 const ListProductsDynamic = dynamic(() => import("./ListProductsComponent"))
-const SortFilterDynamic = dynamic(() => import("./SortFilterComponent"))
 
-
-const ResultComponent = ({ pipeline, initialResponse, variables }) => {
+const ResultComponent = () => {
   const [show, setShow] = useState(false)
-  const [sortFilterChanged, setChanged] = useState(false)
-  const [countBol, setCountBol] = useState(0)
-  const [isSetResultPerPage, setIsResultPerPage] = useState(false)
-
-  // TOTO: wating for data from Prismic or Sajari
-  const [listSorting, setListSorting] = useState([
+  const [filterChanged, setFilterChanged] = useState(false)
+  const [sortChanged, setSortChanged] = useState(false)
+  const [openCollapseSort, setOpenCollapseSort] = useState(false)
+  const [arrFilter, setArrFilter] = useState([
     {
-      name: "Featured",
+      name: "brand",
       open: false,
+      title: "Brand",
     },
-  ])
-
-  const [listFilter, setListFilter] = useState([
-    { name: "Brand", open: false },
-    // { name: "Jacket Features", open: false },
-    // { name: "Jacket Material", open: false },
-    // { name: "Season", open: false },
-    // { name: "Ride Style", open: false },
-    // { name: "Price", open: false },
+    {
+      name: "priceRange",
+      open: false,
+      title: "Range ($)",
+    },
+    // {
+    //   name: "category",
+    //   open: false,
+    //   title: "Category",
+    // },
+    {
+      name: "rating",
+      open: false,
+      title: "Rating",
+    },
+    {
+      name: "color",
+      open: false,
+      title: "Color",
+    },
   ])
 
   const sortFilter = () => {
     setShow(!show)
   }
 
-  const setOpenFilterCollapse = (id, bol) => {
-    setListFilter(listUpdate(listFilter, id, bol))
-  }
-
-  const setOpenSortingCollapse = (id, bol) => {
-    setListSorting(listUpdate(listSorting, id, bol))
-  }
-
   //Handle Close Modal
   const handleClose = () => {
-    let count = countBooleanSortFilter(listFilter)
     setShow(false)
-    setChanged(false)
-    setCountBol(count)
+    setFilterChanged(false)
+    setSortChanged(false)
   }
 
+  const handleSetOpenCollapse = (name) => {
+    const mapArrFilter = arrFilter.map((i) => {
+      if (i.name === name) {
+        return {
+          ...i,
+          open: !i.open,
+        }
+      } else {
+        return { ...i }
+      }
+    })
+    setArrFilter(mapArrFilter)
+  }
+
+  const { results } = useSearchContext()
+
+  //Button show sort and filter
   const SortFilterButton = () => (
-    <Container fluid className={styles.filter_sort_sajari}>
-      <div className={styles.short_filter}>
+    <Container fluid className={styles.filterSortContainer}>
+      <div className={styles.shortFilter}>
         <div className={styles.title} onClick={sortFilter}>
           <div
             style={{
@@ -103,102 +111,50 @@ const ResultComponent = ({ pipeline, initialResponse, variables }) => {
           </div>
           <div>Filter</div>
         </div>
-        <div className={styles.horizontal_line}></div>
+        <div className={styles.horizontalLine}></div>
       </div>
     </Container>
   )
-
-  const { setResultsPerPage } = useResultsPerPage()
-  if (!isSetResultPerPage) {
-    setIsResultPerPage(true)
-    setResultsPerPage(constants.RESULT_PER_PAGE)
-  }
-
-  const { results } = useSearchContext()
-
-  const productTypeFilter = new FilterBuilder({
-    name: "type",
-    field: "brand",
-    count: true,
-    multi: true,
-  })
-
-  const priceFilter = new FilterBuilder({
-    name: "price",
-    options: {
-      High: "price >= 200",
-      Mid: "price >= 50",
-      Low: "price < 50",
-    },
-    multi: false,
-    initial: ["High"],
-  })
+  // ----------- //
 
   return (
     <>
       <SortFilterButton />
-      <SearchProvider
-        search={{
-          pipeline,
-          variables,
-          // filters: ["productTypeFilter", "priceFilter"],
-        }}
-        initialResponse={initialResponse}
-        searchOnLoad={!initialResponse}
-        customClassNames={{
-          filter: {
-            resetButton: "resetButtonFilter",
-            list: {
-              container: "listContainerFilter",
-              checkboxGroup: "checkboxGroupFilter",
-              searchFilter: "searchFilter",
-              toggleButton: "toggleButtonFilter",
-            },
-          },
-        }}
-      >
-        <Modal show={show} onHide={handleClose} className="short_filter_modal">
-          <HeaderDynamic />
-          {/*Sorting Feature*/}
-          <SortFilterDynamic
-            list={listSorting}
-            setOpen={setOpenSortingCollapse}
-            type="sort"
-            setChanged={setChanged}
-          />
-          {/* Filter feature */}
-          <SortFilterDynamic
-            list={listFilter}
-            setOpen={setOpenFilterCollapse}
-            type="filter"
-            setChanged={setChanged}
-          />
-          <div onClick={handleClose} className={styles.button_sajari}>
-            <div className={styles.modal_button}>
-              <Button
-                fixed="bottom"
-                variant={
-                  sortFilterChanged ||
-                  countBol != countBooleanSortFilter(listFilter)
-                    ? "secondary"
-                    : "primary"
-                }
-              >
-                {sortFilterChanged ||
-                countBol != countBooleanSortFilter(listFilter)
-                  ? "Apply"
-                  : "Cancel"}
-              </Button>
-            </div>
-          </div>
-        </Modal>
-        <ListProductsDynamic products={results} />
-        <PaginationDynamic
-          initialResponse={initialResponse}
-          pipeline={pipeline}
-          variables={variables}
+      <ListProductsDynamic products={results} />
+      <PaginationDynamic />
+
+      {/* ------------Modal sort filter------------- */}
+      <Modal show={show} onHide={handleClose} className="short_filter_modal">
+        <HeaderDynamic />
+
+        {/*Sorting Feature*/}
+        <SortComponent
+          sortChanged={sortChanged}
+          setSortChanged={setSortChanged}
+          openCollapseSort={openCollapseSort}
+          setOpenCollapseSort={setOpenCollapseSort}
         />
-      </SearchProvider>
+
+        {/* Filter feature */}
+        <FilterComponent
+          handleSetOpenCollapse={handleSetOpenCollapse}
+          arrFilter={arrFilter}
+          filterChanged={filterChanged}
+          setFilterChanged={setFilterChanged}
+        />
+
+        <div onClick={handleClose} className={styles.button_sajari}>
+          <div className={styles.modal_button}>
+            <Button
+              fixed="bottom"
+              variant={sortChanged || filterChanged ? "secondary" : "primary"}
+            >
+              {sortChanged || filterChanged ? "Apply" : "Cancel"}
+            </Button>
+          </div>
+        </div>
+      </Modal>
+      {/* ------------------------------------------ */}
     </>
   )
 }

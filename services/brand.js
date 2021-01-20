@@ -1,3 +1,5 @@
+import { listAllBrands } from "../lib/prismic/api"
+
 export const pad = (n) => {
   return n < 10 ? "0" + n : n
 }
@@ -55,10 +57,25 @@ export const mockupDataFilterBrand = () => {
   return brands[Math.floor(Math.random() * brands.length)]
 }
 
-
 export const convertDataShopByCollectionBrand = (arr) => {
   return arr?.map((item) => ({
     category_slug: item?.range_slug,
     category_title: item?.range_title,
   }))
+}
+
+export const listAllBrandService = async () => {
+  let listBrands = []
+  let pageInfoTemp = {}
+
+  do {
+    const { brands, pageInfo } = await listAllBrands(
+      100,
+      pageInfoTemp.endCursor || ""
+    )
+    pageInfoTemp = { ...pageInfo }
+    listBrands = [...listBrands, ...brands]
+  } while (pageInfoTemp?.endCursor && pageInfoTemp?.hasNextPage)
+
+  return listBrands
 }
