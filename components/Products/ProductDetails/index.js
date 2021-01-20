@@ -21,7 +21,7 @@ function ProductDetailsComponent({ loading, product }) {
       {!loading && product && (
         <Container fluid className="product-details">
           <Row>
-            <Col md={8} xs={12}>
+            <Col xs={12}>
               <Row>
                 <ProductImageCarousel
                   images={product.images}
