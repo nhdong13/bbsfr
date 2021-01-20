@@ -3,7 +3,7 @@ import { renderStart } from "../../../services/renderStart";
 import styles from "../ProductDetails.module.scss";
 
 function UserCommentComponent({ reviewObj, is_question = false }) {
-  const { customer, review } = reviewObj;
+  const { customer, review, question } = reviewObj;
   return (
     <div className={styles.userComment}>
       <div className={styles.userProfile}>
@@ -24,7 +24,9 @@ function UserCommentComponent({ reviewObj, is_question = false }) {
           <span>{review?.title}</span>
         </div>
       )}
-      <div className={styles.commentContent}>{review?.body}</div>
+      <div className={styles.commentContent}>
+        {is_question ? question?.message : review?.body}
+      </div>
     </div>
   );
 }

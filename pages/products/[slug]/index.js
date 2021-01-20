@@ -4,10 +4,10 @@ import { productDetails } from "lib/@sdk/queries/products";
 import { initializeApollo } from "lib/apollo";
 
 import ProductDetailsComponent from "../../../components/Products/ProductDetails";
-import { authenticationFromStamped } from "../../../services/testimonial";
 import {
   initReviewOptions,
   initReviewSummaryOptions,
+  initQuestionOptions,
 } from "../../../services/product";
 
 export async function getStaticProps({ params }) {
@@ -16,20 +16,26 @@ export async function getStaticProps({ params }) {
     query: productDetails,
     variables: { slug: params.slug },
   });
-  const requestOptions = initReviewSummaryOptions();
+  const requestOptions = initReviewOptions();
 
-  // hard-coding productID = 123. will fill product id later
+  // hard-coded productID = 123. will fill product id later
   const productID = 123;
   const reviewResponse = await fetch(
     `${process.env.STAMPED_REVIEW_API_URL}?search=${productID}`,
-    initReviewOptions()
+    requestOptions
   );
 
   const reviewSummaryResponse = await fetch(
     process.env.STAMPED_RATING_SUMMARY_API_URL,
     initReviewSummaryOptions()
   );
+
+  const questionResponse = await fetch(
+    `${process.env.STAMPED_QUESTION_API_URL}?search=`,
+    requestOptions
+  );
   const reviews = await reviewResponse.json();
+  const questions = await questionResponse.json();
   const reviewSummary = await reviewSummaryResponse.json();
 
   const { data, loading } = response;
@@ -39,6 +45,7 @@ export async function getStaticProps({ params }) {
       loading: loading,
       initialApolloState: apolloClient.cache.extract(),
       review: reviews,
+      question: questions,
       reviewSummary: reviewSummary,
     },
     revalidate: 1,
@@ -52,7 +59,7 @@ export async function getStaticPaths() {
   };
 }
 
-function ProductDetails({ product, loading, review, reviewSummary }) {
+function ProductDetails({ product, loading, review, reviewSummary, question }) {
   const { seoTitle, seoDescription } = product;
 
   return (
@@ -74,6 +81,7 @@ function ProductDetails({ product, loading, review, reviewSummary }) {
         product={product}
         review={review}
         reviewSummary={reviewSummary}
+        question={question}
       />
     </>
   );

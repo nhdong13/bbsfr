@@ -17,6 +17,24 @@ export function initReviewOptions() {
   return requestOptions;
 }
 
+export function initQuestionOptions() {
+  let username = process.env.STAMPED_PUBLIC_API_KEY;
+  let password = process.env.STAMPED_PRIVATE_API_KEY;
+  var myHeaders = new Headers({
+    Authorization:
+      "Basic " + Buffer.from(`${username}:${password}`).toString("base64"),
+    "Content-Type": "application/json",
+  });
+
+  var requestOptions = {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow",
+  };
+
+  return requestOptions;
+}
+
 export function initReviewSummaryOptions() {
   var requestOptions = {
     method: "POST",

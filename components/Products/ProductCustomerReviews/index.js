@@ -9,7 +9,11 @@ import UserCommentComponent from "../Components/UserCommentComponent";
 const starValue = (i) => {
   return i == 4 ? 8 : i == 3 ? 2 : i == 2 ? 10 : i == 1 ? 35 : 1668;
 };
-function ProductCustomerReviews({ reviews = [], reviewSummary = {} }) {
+function ProductCustomerReviews({
+  reviews = [],
+  reviewSummary = {},
+  questions = [],
+}) {
   const { breakdown, rating, count, countQuestions } = reviewSummary;
   const [active, setActive] = useState(true);
 
@@ -61,7 +65,7 @@ function ProductCustomerReviews({ reviews = [], reviewSummary = {} }) {
             className={active ? styles.unactiveTab : styles.activeTab}
             onClick={() => setActive(false)}
           >
-            Questions {countQuestions}
+            Questions {questions.length}
           </div>
         </div>
         <div>
@@ -75,24 +79,13 @@ function ProductCustomerReviews({ reviews = [], reviewSummary = {} }) {
             ))}
           </div>
           <div className={active ? "d-none" : ""}>
-            {/* <UserCommentComponent
-              user={{ name: "ndd", is_verified: true }}
-              comment={{
-                title: "Best quality",
-                content:
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas varius tortor nibh, sit amet tempor nibh finibus et. Aenean eu enim justo. Vestibulum aliquam hendrerit molestie. ",
-              }}
-              is_question={true}
-            />
-            <UserCommentComponent
-              user={{ name: "ndd", is_verified: true }}
-              comment={{
-                title: "Best quality",
-                content:
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas varius tortor nibh, sit amet tempor nibh finibus et. Aenean eu enim justo. Vestibulum aliquam hendrerit molestie. ",
-              }}
-              is_question={true}
-            /> */}
+            {questions.map((question, i) => (
+              <UserCommentComponent
+                key={i}
+                reviewObj={question}
+                is_question={true}
+              />
+            ))}
           </div>
         </div>
       </div>

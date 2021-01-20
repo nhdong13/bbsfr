@@ -123,6 +123,7 @@
         font-size: 16px;
         line-height: 28px;
         text-transform: capitalize;
+        margin-bottom: 5px;
 
         div {
           display: inline-block;
@@ -152,7 +153,6 @@
       }
       .ratingLine {
         display: flex;
-        margin-top: 5px;
         font-size: 16px;
         line-height: 28px;
         align-items: center;

@@ -15,14 +15,19 @@ import styles from "../ProductDetails.module.scss";
 import { renderStart } from "../../../services/renderStart";
 import { reviewData } from "../../../services/product";
 
-function ProductDetailsComponent({ loading, product, review, reviewSummary }) {
+function ProductDetailsComponent({
+  loading,
+  product,
+  review,
+  reviewSummary,
+  question,
+}) {
   const router = useRouter();
 
   const reviewRef = useRef(null);
   const scrollToComponent = () => {
     reviewRef.current.scrollIntoView({ behavior: "smooth" });
   };
-  const reviewToRender = reviewData(review.results, router, product.id);
 
   return (
     <>
@@ -63,6 +68,7 @@ function ProductDetailsComponent({ loading, product, review, reviewSummary }) {
             <ProductCustomerReviews
               reviews={review?.results}
               reviewSummary={reviewSummary[0] || {}}
+              questions={question?.results}
             />
           </div>
           <SectionDivider />
