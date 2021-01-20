@@ -36,12 +36,17 @@ function ProductDetailsComponent({
       {!loading && product && (
         <Container fluid className="product-details">
           <Row>
-            <Col md={8} xs={12}>
+            <Col xs={12}>
               <Row>
                 <ProductImageCarousel
                   images={product.images}
                   category={product.category}
                 />
+              </Row>
+              <Row className={styles.productDescription}>
+                <Col xs={12}>
+                  <ProductDescription description={product.description} />
+                </Col>
               </Row>
             </Col>
           </Row>

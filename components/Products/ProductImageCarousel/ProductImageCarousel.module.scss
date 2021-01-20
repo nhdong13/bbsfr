@@ -2,15 +2,28 @@ $yellowColor: #ffb00f;
 
 .productPageImageContainer {
   position: relative;
-  max-width: 640px;
+  width: 100%;
   @media (max-width: 768px) {
     width: 100%;
   }
 
-  .productPageImage {
+  .slider {
+    position: relative;
+    width: 100%;
     min-height: 375px;
     @media (max-width: 768px) {
-      min-height: 375px;
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-top: 100%;
+      border-bottom: 1px solid #d8d8d8;
+    }
+  }
+
+  .productPageImage {
+    width: 100%;
+    @media (max-width: 768px) {
+      width: 100%;
     }
   }
 
@@ -19,9 +32,7 @@ $yellowColor: #ffb00f;
   }
 
   .categoryNameSliderIndex {
-    margin-top: 20px;
-    padding-left: 15px;
-    padding-right: 15px;
+    padding: 12px 15px;
     display: inline-flex;
     width: 100%;
 
@@ -31,12 +42,15 @@ $yellowColor: #ffb00f;
       font-size: 12px;
       font-weight: bold;
       letter-spacing: 1px;
+      line-height: 20px;
+      padding-top: 4px;
       padding-left: 0;
       align-self: center;
     }
 
     .sliderIndex {
       text-align: right;
+      line-height: 24px;
 
       .sliderIndexContent {
         box-sizing: border-box;

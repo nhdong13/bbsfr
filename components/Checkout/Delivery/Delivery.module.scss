@@ -33,6 +33,16 @@
       padding-left: 17px;
       padding-right: 17px;
       margin-bottom: 8px;
+      border-radius: 10px;
+      background-color: $gray-button-background-color;
+      border: none;
+    }
+
+    .active {
+      border: 1px solid $secondary-button-background-color;
+      border-radius: 10px;
+      background-color: $primary-background-color;
+      box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.2);
     }
 
     .btnIcon {

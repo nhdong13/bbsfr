@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useDispatch } from "react-redux"
 import { Container, Form, Row } from "react-bootstrap"
 import { Formik } from "formik"
 import { useRouter } from "next/router"
@@ -15,9 +16,12 @@ import { EmailPasswordSchema } from "./validate"
 import { checkEmailExistedQuery } from "lib/queries"
 import { accountRegisterMutation } from "lib/mutations"
 import { MAX_TOASTS_ALLOWED } from "../constants"
+import { setNotify } from "redux/reducers/notify"
+
 import styles from "./CheckoutEmailPassword.module.scss"
 
 export default function CheckoutEmailPasswordComponent() {
+  const dispatch = useDispatch()
   const [activeStep, setActiveStep] = useState(1)
   const initialValues = {
     email: "",
@@ -76,6 +80,13 @@ export default function CheckoutEmailPasswordComponent() {
       bag.setErrors({ password: "Password does not match" })
     } else {
       router.push("/checkout/delivery")
+      if (data?.existedEmailChecking) return
+      dispatch(
+        setNotify({
+          type: "success",
+          message: `A new account has been successfully created for ${values.email}`,
+        })
+      )
     }
   }
 

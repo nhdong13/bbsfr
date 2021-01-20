@@ -83,6 +83,7 @@ export const productDetails = gql`
       ...BasicProductFields
       ...ProductPricingField
       descriptionJson
+      description
       category {
         id
         name

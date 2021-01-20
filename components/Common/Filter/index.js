@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import styles from "./filter.module.scss"
-import { Collapse } from "react-bootstrap"
+import { Collapse, Container } from "react-bootstrap"
 import Image from "next/image"
 import { useFilter } from "@sajari/react-hooks"
 import { useRouter } from "next/router"
@@ -86,6 +86,11 @@ const FilterRender = ({
             </div>
           </>
         </div>
+      )}
+      {!open && (
+        <Container fluid>
+          <div className={styles.containerFilterOpen}></div>
+        </Container>
       )}
     </>
   )

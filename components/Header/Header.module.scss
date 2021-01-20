@@ -1,11 +1,14 @@
+@import "/styles/variables.scss";
+
 .containerNavBar {
   height: 64px;
   line-height: 64px;
-  
+  background-color: $black-background-color;
+
   .logoApp {
     position: relative;
     width: 134px;
-    height: 20px;
+    height: 21px;
   }
   .containerIcon {
     display: flex;
@@ -15,7 +18,7 @@
       position: relative;
       width: 24px;
       height: 24px;
-      margin-right: 10px;
+      margin-right: 25px;
     }
 
     .iconHamburger {
@@ -23,7 +26,6 @@
       width: 24px;
       height: 24px;
       vertical-align: middle;
-      margin-right: 10px;
       cursor: pointer;
     }
   }

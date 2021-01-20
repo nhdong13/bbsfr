@@ -14,6 +14,10 @@ const ImagedHeaderDynamic = dynamic(() =>
 const SEODynamic = dynamic(() => import("../../HomePage/SEO"))
 const FAQDynamic = dynamic(() => import("../../HomePage/FAQ"))
 const TestimonialsDynamic = dynamic(() => import("../../HomePage/Testimonials"))
+const ResultDynamic = dynamic(() =>
+  import("../../Collection/Components/ResultComponent")
+)
+
 
 const BrandCollectionComponent = ({
   brandCollectionResponse,
@@ -72,6 +76,7 @@ const BrandCollectionComponent = ({
         page={router.query.brandHome}
         type="brandCollection"
       />
+      <ResultDynamic />
       <TestimonialsDynamic
         testimonials={testimonials}
         type="brand-collection"
