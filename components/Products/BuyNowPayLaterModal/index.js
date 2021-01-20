@@ -75,6 +75,7 @@ const BuyNowPayLaterModal = ({ handleClose, price }) => {
         "You can reach Klarna anytime at https://www.klarna.com/au/customer-service/ or by downloading the Klarna App for 24/7 chat.",
     },
   ];
+
   return (
     <>
       <div fluid className={styles.containerModal}>
