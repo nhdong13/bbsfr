@@ -1,6 +1,6 @@
 import { useProductDetails } from "@sdk/react";
-import { useEffect } from 'react'
-import { useRouter } from 'next/router'
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 import { Container, Row, Col } from "react-bootstrap";
 import ProductImageCarousel from "../ProductImageCarousel";
 import ProductVariant from "../ProductVariant";
@@ -11,17 +11,15 @@ import ProductReturns from "../ProductReturns";
 import ProductCustomerReviews from "../ProductCustomerReviews";
 import AddToCart from "../AddToCart";
 import LoadingSpinner from "../../LoadingSpinner";
+import styles from "./ProductDetails.module.scss";
 
-function ProductDetailsComponent ({ loading, product }) {
-  return(
+function ProductDetailsComponent({ loading, product }) {
+  return (
     <>
-      {
-        loading &&
-        <LoadingSpinner show={loading}></LoadingSpinner>
-      }
+      {loading && <LoadingSpinner show={loading}></LoadingSpinner>}
 
-      { !loading && product &&
-        <Container fluid className='product-details' >
+      {!loading && product && (
+        <Container fluid className="product-details">
           <Row>
             <Col md={8} xs={12}>
               <Row>
@@ -30,13 +28,17 @@ function ProductDetailsComponent ({ loading, product }) {
                   category={product.category}
                 />
               </Row>
+              <Row className={styles.productDescription}>
+                <Col xs={12}>
+                  <ProductDescription description={product.description} />
+                </Col>
+              </Row>
             </Col>
           </Row>
         </Container>
-      }
+      )}
     </>
-
-  )
+  );
 }
 
 export default ProductDetailsComponent;

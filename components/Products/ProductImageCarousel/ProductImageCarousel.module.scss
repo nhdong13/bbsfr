@@ -4,6 +4,8 @@ $yellowColor: #FFB00F;
   position: relative;
   max-width: 640px;
   width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
   @media(max-width: 768px) {
     width: 100%;
   }
@@ -13,7 +15,7 @@ $yellowColor: #FFB00F;
     width: 100%;
     @media(max-width: 768px) {
       // min-height: 375px;
-      width: 100;
+      width: 100% ;
       padding-top: 100%;
       position: relative;
     }
