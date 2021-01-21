@@ -1,4 +1,5 @@
 import ReadMore from "../../ReadMore";
+import { Container, Row, Col } from "react-bootstrap";
 import styles from "./ProductDescription.module.scss";
 
 function ProductDescription({ description }) {
@@ -10,10 +11,10 @@ function ProductDescription({ description }) {
   };
 
   return (
-    <div className={styles.productDetailsDescription}>
+    <Container className={styles.productDetailsDescription}>
       <div className={styles.title}>Product Details</div>
       <ReadMore settings={readMoreSettings}>{description}</ReadMore>
-    </div>
+    </Container>
   );
 }
 
