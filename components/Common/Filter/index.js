@@ -1,12 +1,12 @@
-import React, { useState } from "react"
-import styles from "./filter.module.scss"
-import { Collapse, Container } from "react-bootstrap"
-import Image from "next/image"
-import { useFilter } from "@sajari/react-hooks"
-import { useRouter } from "next/router"
-import FilterOptionComponent from "./FilterOptions"
-import FilterRatingOption from "./FilterRatingOption"
-import ColorFilter from "./FilterColorOptions"
+import React, { useEffect, useState } from "react";
+import styles from "./filter.module.scss";
+import { Collapse, Container } from "react-bootstrap";
+import Image from "next/image";
+import { useFilter } from "@sajari/react-hooks";
+import { useRouter } from "next/router";
+import FilterOptionComponent from "./FilterOptions";
+import FilterRatingOption from "./FilterRatingOption";
+import ColorFilter from "./FilterColorOptions";
 
 const FilterRender = ({
   name,
@@ -16,13 +16,16 @@ const FilterRender = ({
   filterChanged,
   setFilterChanged,
 }) => {
-  const router = useRouter()
-  const { multi, options, selected, setSelected, reset } = useFilter(name)
-  const [open, setOpen] = useState(isOpen)
+  const router = useRouter();
+  const { multi, options, selected, setSelected, reset } = useFilter(name);
+  const [open, setOpen] = useState(isOpen);
 
-  if (filterChanged) {
-    router.events.on("routeChangeComplete", () => reset())
-  }
+  useEffect(() => {
+    router.events.on("routeChangeComplete", () => reset());
+    return () => {
+      router.events.off("routeChangeComplete");
+    };
+  }, [filterChanged]);
 
   return (
     <>
@@ -31,8 +34,8 @@ const FilterRender = ({
           <>
             <div
               onClick={() => {
-                setOpen(!open)
-                handleSetOpenCollapse(name)
+                setOpen(!open);
+                handleSetOpenCollapse(name);
               }}
               className={styles.titleFilter}
             >
@@ -93,6 +96,6 @@ const FilterRender = ({
         </Container>
       )}
     </>
-  )
-}
-export default FilterRender
+  );
+};
+export default FilterRender;

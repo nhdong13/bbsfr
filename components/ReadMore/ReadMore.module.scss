@@ -1,0 +1,14 @@
+.readMoreContent {
+  width: 100%;
+  .gradientBackground {
+    height: 78px;
+    width: 100%;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0) 0%,
+      #ffffff 100%
+    );
+    position: absolute;
+    bottom: 18px;
+  }
+}

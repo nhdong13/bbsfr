@@ -1,20 +1,20 @@
-import dynamic from "next/dynamic"
-import Head from "next/head"
-import { convertSchemaFAQ } from "../../../services/convertSchemaFAQ"
-import ListCategoriesComponent from "../../Collection/Components/ListCategoriesComponent"
-import BackToPageBeforeComponent from "../../Common/BackPageComponent"
-import styles from "../Vehicles.module.scss"
-import ImagedHeaderComponent from "../../Brand/Components/ImagedHeaderComponent"
-import { useRouter } from "next/router"
+import dynamic from "next/dynamic";
+import Head from "next/head";
+import { convertSchemaFAQ } from "../../../services/convertSchemaFAQ";
+import ListCategoriesComponent from "../../Collection/Components/ListCategoriesComponent";
+import BackToPageBeforeComponent from "../../Common/BackPageComponent";
+import styles from "../Vehicles.module.scss";
+import ImagedHeaderComponent from "../../Brand/Components/ImagedHeaderComponent";
+import { useRouter } from "next/router";
 
 const ResultDynamic = dynamic(() =>
   import("../../Collection/Components/ResultComponent")
-)
-const FAQDynamic = dynamic(() => import("../../HomePage/FAQ"))
-const SEODynamic = dynamic(() => import("../../HomePage/SEO"))
+);
+const FAQDynamic = dynamic(() => import("../../HomePage/FAQ"));
+const SEODynamic = dynamic(() => import("../../HomePage/SEO"));
 const TestimonialsDynamic = dynamic(() =>
   import("../../HomePage/Testimonials/index")
-)
+);
 
 const VehicleCollectionComponent = ({ vehicleCollection, testimonials }) => {
   const {
@@ -26,17 +26,17 @@ const VehicleCollectionComponent = ({ vehicleCollection, testimonials }) => {
     page_paragraph,
     meta_description,
     categories,
-  } = vehicleCollection
+  } = vehicleCollection;
   const heading1 =
     page_heading_1 && page_heading_1.length > 0 && page_heading_1[0].text
       ? page_heading_1[0].text
-      : "---"
+      : "---";
   const heading2 =
     page_heading_2 && page_heading_2.length > 0 && page_heading_2[0].text
       ? page_heading_2[0].text
-      : "---"
-  const jsonFAQ = convertSchemaFAQ({ faq, faq_title })
-  const router = useRouter()
+      : "---";
+  const jsonFAQ = convertSchemaFAQ({ faq, faq_title });
+  const router = useRouter();
   return (
     <>
       <Head>
@@ -70,7 +70,10 @@ const VehicleCollectionComponent = ({ vehicleCollection, testimonials }) => {
         categories={categories}
         type="vehicleCollection"
       />
-      <BackToPageBeforeComponent page={router?.query?.vehicle} type="vehicle" />
+      <BackToPageBeforeComponent
+        page={`All ${router?.query?.vehicle} products`}
+        type="vehicle"
+      />
       <ResultDynamic />
       <TestimonialsDynamic
         testimonials={testimonials}
@@ -79,6 +82,6 @@ const VehicleCollectionComponent = ({ vehicleCollection, testimonials }) => {
       <FAQDynamic FAQ={{ faq, faq_title }} />
       <SEODynamic heading1={heading2} pageParagraph={page_paragraph || []} />
     </>
-  )
-}
-export default VehicleCollectionComponent
+  );
+};
+export default VehicleCollectionComponent;

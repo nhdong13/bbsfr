@@ -1,0 +1,79 @@
+.sizeSelectionContainer {
+  padding-top: 28px;
+  padding-bottom: 28px;
+  background-color: #fff;
+  border-bottom: 1px solid #e6e6e4;
+
+  .sizeTitle {
+    color: #181818;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 21px;
+  }
+
+  .sizeGroup {
+    display: inline-block;
+    text-align: right;
+    padding-right: 46px !important;
+
+    .sizeRuler {
+      margin-top: 2px;
+      width: 16px;
+      display: inline;
+    }
+
+    .sizeChart {
+      border-bottom: 1px solid #181818;
+      font-size: 12px;
+      display: inline;
+      margin-left: 6px;
+      float: right;
+      width: 55px;
+    }
+  }
+
+  .sizeCol {
+    padding: 4px;
+    &:nth-child(5n + 1) {
+      padding-left: 16px;
+    }
+
+    .sizeItem {
+      border: 1px solid #939393;
+      border-radius: 4px;
+      color: #181818;
+      cursor: pointer;
+      font-size: 16px;
+      text-transform: uppercase;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      line-height: 1;
+      text-align: center;
+      width: 56px;
+      height: 56px;
+      position: relative;
+
+      &.sizeDisabled {
+        border: 1px solid #cfcfcf;
+        color: #cfcfcf;
+
+        &:after {
+          content: "";
+          border-top: 1px solid #cfcfcf;
+          width: 62px;
+          transform: rotate(136deg);
+          transform-origin: 0% 0%;
+          position: absolute;
+          top: 7px;
+          right: -56px;
+        }
+      }
+
+      &.sizeActived {
+        background-color: #222;
+        color: #fff;
+      }
+    }
+  }
+}
