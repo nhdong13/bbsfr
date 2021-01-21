@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { useRouter } from "next/router";
 import { Container, Row, Col } from "react-bootstrap";
 import ProductImageCarousel from "../ProductImageCarousel";
-import ProductVariant from "../ProductVariant";
+import SizeSelector from "../SizeSelector";
 import ProductShipping from "../ProductShipping";
 import ProductDescription from "../ProductDescription";
 import ProductDelivery from "../ProductDelivery";
@@ -21,12 +21,16 @@ function ProductDetailsComponent({
   reviewSummary,
   question,
 }) {
-  const router = useRouter();
+  const { variants } = product;
 
   const reviewRef = useRef(null);
   const scrollToComponent = () => {
     reviewRef.current.scrollIntoView({ behavior: "smooth" });
   };
+
+  const sizeVariants = variants.filter((variant) => {
+    return variant.attributes.find((i) => i.attribute.name === "Size");
+  });
 
   return (
     <>
@@ -55,6 +59,10 @@ function ProductDetailsComponent({
                   <span>({reviewSummary[0]?.count})</span>
                 </div>
               </div>
+              <Row>
+                <SizeSelector variants={sizeVariants} />
+              </Row>
+              <SectionDivider />
               <Row className={styles.productDescription}>
                 <Col xs={12}>
                   <ProductDescription description={product.description} />
