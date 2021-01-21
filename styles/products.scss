@@ -1,15 +1,44 @@
 // Product Detail Page
 .product-details {
+  font-family: Rajdhani;
+  max-width: 920px;
+  background-color: #f6f6f6;
+  .container {
+    padding-left: 16px;
+    padding-right: 16px;
+
+    [class*="col-"] {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+  }
+
+  .slick-slider {
+    .slick-list {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 100%;
+
+      .slick-track {
+        height: 100%;
+        .slick-slide > div {
+          height: 100%;
+        }
+      }
+    }
+  }
+
   .slick-dots {
     bottom: 0;
     text-align: left;
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 16px;
+    padding-right: 16px;
     margin: 0;
     width: 100%;
     height: 50px;
     // width: 360px;
-    background: linear-gradient(180deg, #ffffff00 0%, #D8D8D8 100%);
+    background: linear-gradient(180deg, #ffffff00 0%, #d8d8d8 100%);
     display: flex !important;
     flex-direction: row;
     align-items: center;
@@ -37,6 +66,21 @@
           background-color: #222;
         }
       }
+    }
+  }
+
+  // Read more/less
+  .short-text {
+    position: relative;
+    .readMoreText {
+      display: block;
+      height: 18px;
+      width: 63px;
+      color: #181818 !important;
+      font-size: 14px;
+      font-weight: bold;
+      letter-spacing: 0;
+      line-height: 18px;
     }
   }
 }
