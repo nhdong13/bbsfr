@@ -1,8 +1,7 @@
-import { useRouter } from 'next/router'
-import Head from "next/head"
+import { useRouter } from "next/router";
+import Head from "next/head";
 import { productDetails } from "lib/@sdk/queries/products";
 import { initializeApollo } from "lib/apollo";
-
 
 import ProductDetailsComponent from "../../../components/Products/ProductDetails";
 
@@ -10,58 +9,50 @@ export async function getStaticProps({ params }) {
   const apolloClient = initializeApollo();
   const response = await apolloClient.query({
     query: productDetails,
-    variables: {slug: params.slug}
+    variables: { slug: params.slug },
   });
 
-  const { data, loading } = response;  
+  const { data, loading } = response;
   return {
-    props: { 
+    props: {
       product: data.product,
       loading: loading,
-      initialApolloState: apolloClient.cache.extract()
+      initialApolloState: apolloClient.cache.extract(),
     },
     revalidate: 1,
-  }
+  };
 }
 
 export async function getStaticPaths() {
   return {
-    paths: [
-      { params: { slug: '' } }
-    ],
-    fallback: 'blocking'
+    paths: [{ params: { slug: "" } }],
+    fallback: "blocking",
   };
 }
 
-function ProductDetails({product, loading}) {
-  
-  const {
-    seoTitle,
-    seoDescription,
-  } = product
+function ProductDetails({ product, loading }) {
+  const { seoTitle, seoDescription, description, name } = product;
 
-  return(
+  return (
     <>
       <Head>
-        <title>{seoTitle}</title>
-        <meta name="description" content={seoDescription} />
+        <title>{seoTitle || name}</title>
+        <meta name="description" content={seoDescription || description} />
         <meta
           name="og:description"
           property="og:description"
-          content={seoDescription}
+          content={seoDescription || description}
         />
-        <meta name="og:title" property="og:title" content={seoTitle} />
-        <meta name="twitter:title" content={seoTitle} />
-        <meta name="twitter:description" content={seoDescription} />
+        <meta name="og:title" property="og:title" content={seoTitle || name} />
+        <meta name="twitter:title" content={seoTitle || name} />
+        <meta
+          name="twitter:description"
+          content={seoDescription || description}
+        />
       </Head>
-      {
-        <ProductDetailsComponent
-          loading={loading}
-          product={product}
-        />
-      }
+      {<ProductDetailsComponent loading={loading} product={product} />}
     </>
-  )
+  );
 }
 
 export default ProductDetails;
