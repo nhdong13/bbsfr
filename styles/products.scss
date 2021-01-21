@@ -6,6 +6,11 @@
   .container {
     padding-left: 16px;
     padding-right: 16px;
+
+    [class*="col-"] {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
   }
 
   .slick-slider {
