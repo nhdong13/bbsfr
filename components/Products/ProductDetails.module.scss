@@ -1,0 +1,176 @@
+@import "/styles/variables.scss";
+@import "/styles/mixin";
+
+.sectionDivider {
+  width: 100vw;
+  height: 16px;
+  background-color: $department-category-color;
+  border-top: 1px solid #e6e6e4;
+  border-bottom: 1px solid #e6e6e4;
+  position: relative;
+  left: -15px;
+}
+.productTitle {
+  .productCategory {
+    line-height: 20px;
+    font-size: 12px;
+    line-height: 20px;
+    font-weight: 700;
+    color: $status-product-color;
+    text-transform: uppercase;
+  }
+  .productName {
+    @include font-family(Rajdhani, 26px, 500, $primary-text-color);
+    line-height: 26px;
+    padding-top: 9px;
+  }
+  .reviewStar {
+    padding-top: 11px;
+    display: flex;
+    span {
+      font-size: 12px;
+      line-height: 16px;
+      color: $secondary-text-color;
+      align-self: center;
+      padding-left: 4px;
+    }
+  }
+}
+// Customer review section
+.customerReviewSection {
+  padding-top: 30px;
+  padding-bottom: 100px;
+  .customerReviewTitle {
+    @include font-family(Rajdhani, 21px, 700, $primary-text-color);
+    line-height: 21px;
+    text-transform: uppercase;
+  }
+  .productOverallReviews {
+    .reviewScore {
+      padding-top: 8px;
+      .totalScore {
+        display: inline-block;
+        @include font-family(Rajdhani, 31px, 400, $primary-text-color);
+        line-height: 48px;
+      }
+      .reviewStar {
+        display: inline-block;
+        padding-left: 13px;
+      }
+    }
+    .overallReviewCounter {
+      font-size: 12px;
+      line-height: 20px;
+      margin-top: -10px;
+    }
+  }
+
+  //Product review counter
+  .reviewCounter {
+    margin-top: 17px;
+    .reviewCounterLine {
+      height: 20px;
+      div {
+        display: inline-block;
+      }
+      .ratingPercent {
+        margin: 0 6px 0 10px;
+        height: 100%;
+        .ratingFullPercent {
+          width: 146px;
+          height: 16px;
+          background-color: $light-gray-border;
+        }
+        .ratingCalculatedPercent {
+          position: absolute;
+          left: 112px;
+          height: 16px;
+          background-color: $status-product-color;
+        }
+      }
+      .ratingCount {
+        font-size: 12px;
+        line-height: 20px;
+        vertical-align: text-bottom;
+      }
+    }
+  }
+  //Customer reviews
+  .reviewList {
+    margin-top: 32px;
+    .tabHeader {
+      border-bottom: 1px solid $light-gray-border;
+      @include font-family(Rajdhani, 16px, 700, $primary-text-color);
+      line-height: 20px;
+      .activeTab {
+        display: inline-block;
+        border-bottom: 4px solid $primary-text-color;
+        margin-right: 32px;
+        padding-bottom: 10px;
+      }
+      .unactiveTab {
+        color: $secondary-text-color;
+        display: inline-block;
+        margin-right: 32px;
+      }
+    }
+    //User comment
+    .userComment {
+      display: block;
+      padding-top: 25px;
+      .userProfile {
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 28px;
+        text-transform: capitalize;
+        margin-bottom: 5px;
+
+        div {
+          display: inline-block;
+        }
+        .userVerified {
+          position: relative;
+          left: -17px;
+          top: 18px;
+        }
+        .userAvatar {
+          background-color: $department-category-color;
+          border: 1px solid $department-category-color;
+          border-radius: 50%;
+          width: 48px;
+          height: 48px;
+          padding: 14px 13px;
+          font-weight: 600;
+          line-height: 20px;
+          margin-right: 3px;
+          color: $secondary-text-color;
+        }
+        span {
+          color: #18a957;
+          font-weight: normal;
+          margin-left: 8px;
+        }
+      }
+      .ratingLine {
+        display: flex;
+        font-size: 16px;
+        line-height: 28px;
+        align-items: center;
+        span {
+          margin-left: 8px;
+        }
+      }
+      .commentContent {
+        padding-top: 3px;
+        font-size: 12px;
+        line-height: 20px;
+      }
+    }
+  }
+}
+.productDescription {
+  border-top: 1px solid #e6e6e4;
+  border-bottom: 1px solid #e6e6e4;
+  padding-top: 28px;
+  padding-bottom: 28px;
+}

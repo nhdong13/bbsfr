@@ -1,9 +1,12 @@
-import { useRouter } from "next/router";
 import Head from "next/head";
 import { productDetails } from "lib/@sdk/queries/products";
 import { initializeApollo } from "lib/apollo";
 
 import ProductDetailsComponent from "../../../components/Products/ProductDetails";
+import {
+  initReviewOptions,
+  initReviewSummaryOptions,
+} from "../../../services/product";
 
 export async function getStaticProps({ params }) {
   const apolloClient = initializeApollo();
@@ -11,6 +14,27 @@ export async function getStaticProps({ params }) {
     query: productDetails,
     variables: { slug: params.slug },
   });
+  const requestOptions = initReviewOptions();
+
+  // hard-coded productID = 123. will fill product id later
+  const productID = 123;
+  const reviewResponse = await fetch(
+    `${process.env.STAMPED_REVIEW_API_URL}?search=${productID}`,
+    requestOptions
+  );
+
+  const reviewSummaryResponse = await fetch(
+    process.env.STAMPED_RATING_SUMMARY_API_URL,
+    initReviewSummaryOptions()
+  );
+
+  const questionResponse = await fetch(
+    `${process.env.STAMPED_QUESTION_API_URL}?search=`,
+    requestOptions
+  );
+  const reviews = await reviewResponse.json();
+  const questions = await questionResponse.json();
+  const reviewSummary = await reviewSummaryResponse.json();
 
   const { data, loading } = response;
   return {
@@ -18,6 +42,9 @@ export async function getStaticProps({ params }) {
       product: data.product,
       loading: loading,
       initialApolloState: apolloClient.cache.extract(),
+      review: reviews,
+      question: questions,
+      reviewSummary: reviewSummary,
     },
     revalidate: 1,
   };
@@ -30,7 +57,7 @@ export async function getStaticPaths() {
   };
 }
 
-function ProductDetails({ product, loading }) {
+function ProductDetails({ product, loading, review, reviewSummary, question }) {
   const { seoTitle, seoDescription, description, name } = product;
 
   return (
@@ -43,14 +70,20 @@ function ProductDetails({ product, loading }) {
           property="og:description"
           content={seoDescription || description}
         />
-        <meta name="og:title" property="og:title" content={seoTitle || name} />
-        <meta name="twitter:title" content={seoTitle || name} />
+        <meta name="og:title" property="og:title" content={seoTitle} />
+        <meta name="twitter:title" content={seoTitle} />
         <meta
           name="twitter:description"
           content={seoDescription || description}
         />
       </Head>
-      {<ProductDetailsComponent loading={loading} product={product} />}
+      <ProductDetailsComponent
+        loading={loading}
+        product={product}
+        review={review}
+        reviewSummary={reviewSummary}
+        question={question}
+      />
     </>
   );
 }
