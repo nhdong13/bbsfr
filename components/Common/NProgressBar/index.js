@@ -1,38 +1,44 @@
-import Router from "next/router"
-import NProgress from "nprogress"
+import Router from "next/router";
+import NProgress from "nprogress";
 import { useEffect } from "react";
 
 const NProgressBarComponent = (props) => {
-  let timer = null
-  
+  let timer = null;
+
   const init = {
     color: "#ffb00f",
     startPosition: 0.3,
     stopDelayMs: 200,
     height: 3,
-  }
-  
+  };
+
   useEffect(() => {
-    const { options } = props
+    const { options } = props;
     if (options) {
-      NProgress.configure(options)
+      NProgress.configure(options);
     }
-    Router.events.on("routeChangeStart", routeChangeStart)
-    Router.events.on("routeChangeComplete", routeChangeEnd)
-    Router.events.on("routeChangeError", routeChangeEnd)
-  }, [])
+    Router.events.on("routeChangeStart", routeChangeStart);
+    Router.events.on("routeChangeComplete", routeChangeEnd);
+    Router.events.on("routeChangeError", routeChangeEnd);
+    
+    return function unSub() {
+      Router.events.off("routeChangeStart", routeChangeStart);
+      Router.events.off("routeChangeComplete", routeChangeEnd);
+      Router.events.off("routeChangeError", routeChangeEnd);
+    };
+  }, []);
 
   const routeChangeStart = () => {
-    NProgress.set(init.startPosition)
-    NProgress.start()
-  }
+    NProgress.set(init.startPosition);
+    NProgress.start();
+  };
 
   const routeChangeEnd = () => {
-    clearTimeout(timer)
+    clearTimeout(timer);
     timer = setTimeout(() => {
-      NProgress.done(true)
-    }, init.height)
-  }
+      NProgress.done(true);
+    }, init.height);
+  };
   return (
     <style jsx global>{`
       #nprogress {
@@ -60,6 +66,6 @@ const NProgressBarComponent = (props) => {
         transform: rotate(3deg) translate(0px, -4px);
       }
     `}</style>
-  )
-}
-export default NProgressBarComponent
+  );
+};
+export default NProgressBarComponent;
