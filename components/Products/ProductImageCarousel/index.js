@@ -35,13 +35,11 @@ function ProductImageCarousel({ images, category }) {
           return (
             <div className="position-relative w-100 h-100" key={idx}>
               <div className={styles.productPageImage}>
-                <Image
-                  layout="fill"
-                  loading="lazy"
+                <img
                   alt={image.alt}
                   className={styles.sliderImage}
                   src={image.url}
-                ></Image>
+                ></img>
               </div>
             </div>
           );
