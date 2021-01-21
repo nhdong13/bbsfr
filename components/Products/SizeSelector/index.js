@@ -22,7 +22,6 @@ function SizeSelector({ variants }) {
   };
 
   const [selectedVariant, setSelectedVariant] = useState(null);
-  console.log(variants);
   return (
     <Container className={styles.sizeSelectionContainer}>
       <Row>

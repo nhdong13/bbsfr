@@ -23,8 +23,14 @@ $yellowColor: #ffb00f;
 
   .productPageImage {
     width: 100%;
+    height: 100%;
+
     @media (max-width: 768px) {
       width: 100%;
+    }
+
+    .sliderImage {
+      height: 100%;
     }
   }
 

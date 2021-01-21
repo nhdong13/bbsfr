@@ -29,9 +29,7 @@ function ProductDetailsComponent({
     reviewRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
-  const sizeVariants = variants.filter((variant) => {
-    return variant.attributes.find((i) => i.attribute.name === "Size");
-  });
+  const sizeVariants = variants; // temp
 
   return (
     <>
