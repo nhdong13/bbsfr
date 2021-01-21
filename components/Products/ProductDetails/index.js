@@ -12,6 +12,7 @@ import ProductCustomerReviews from "../ProductCustomerReviews";
 import AddToCart from "../AddToCart";
 import LoadingSpinner from "../../LoadingSpinner";
 import styles from "./ProductDetails.module.scss";
+import Availability from "../Availability";
 
 function ProductDetailsComponent({ loading, product }) {
   const { variants } = product;
@@ -37,10 +38,11 @@ function ProductDetailsComponent({ loading, product }) {
               <Row>
                 <SizeSelector variants={sizeVariants} />
               </Row>
+              <Row>
+                <Availability />
+              </Row>
               <Row className={styles.productDescription}>
-                <Col xs={12}>
-                  <ProductDescription description={product.description} />
-                </Col>
+                <ProductDescription description={product.description} />
               </Row>
             </Col>
           </Row>

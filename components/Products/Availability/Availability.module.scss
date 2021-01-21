@@ -1,0 +1,36 @@
+.container {
+  background-color: #fff;
+  margin-top: 16px;
+  border-top: 1px solid #e6e6e4;
+  border-bottom: 1px solid #e6e6e4;
+  padding-top: 32px;
+  padding-bottom: 32px;
+
+  .icon {
+    height: 16px;
+    width: 24px;
+    float: left;
+    text-align: center;
+  }
+
+  .text {
+    margin-left: 10px;
+    color: #181818;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 18px;
+    text-transform: uppercase;
+  }
+
+  .dayDuration {
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 18px;
+    text-align: right;
+  }
+
+  .availableOnline {
+    margin-top: 10px;
+  }
+}

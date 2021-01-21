@@ -2,6 +2,11 @@
 .product-details {
   font-family: Rajdhani;
   max-width: 920px;
+  background-color: #f6f6f6;
+  .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
 
   .slick-slider {
     .slick-list {
@@ -22,8 +27,8 @@
   .slick-dots {
     bottom: 0;
     text-align: left;
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 16px;
+    padding-right: 16px;
     margin: 0;
     width: 100%;
     height: 50px;
