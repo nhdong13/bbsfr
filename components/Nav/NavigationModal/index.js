@@ -1,5 +1,5 @@
 import { Modal } from "react-bootstrap"
-import { useState } from "react"
+import { useEffect, useState } from "react";
 import styles from "./nav.module.scss"
 import Image from "next/image"
 import { useRouter } from "next/router"
@@ -15,26 +15,29 @@ const NavModalComponent = ({ show, onHide, dataNav }) => {
     department_slug: "/new-bikes",
   })
 
-  if (router?.events) {
-    router.events.on("routeChangeComplete", () => {
-      setElement({
-        name: "New Motorcycles",
-        active: true,
-        department_slug: "/new-bikes",
-      })
-      setElementLeft(
-        elementLeft.map((item, index) => {
-          if (index === 0) {
-            item.active = true
-          } else {
-            item.active = false
-          }
-          return item
-        })
-      )
-      onHide()
-    })
-  }
+ useEffect(() => {
+   router.events.on("routeChangeComplete", () => {
+     setElement({
+       name: "New Motorcycles",
+       active: true,
+       department_slug: "/new-bikes",
+     });
+     setElementLeft(
+       elementLeft.map((item, index) => {
+         if (index === 0) {
+           item.active = true;
+         } else {
+           item.active = false;
+         }
+         return item;
+       })
+     );
+     onHide();
+   });
+   return () => {
+     router.events.off("routeChangeComplete");
+   };
+ }, []);
 
   const [elementLeft, setElementLeft] = useState([
     { name: "New Motorcycles", active: true, department_slug: "/new-bikes" },
