@@ -294,6 +294,7 @@ $padding-top-component: 55px;
 //SEO
 .SEO {
   padding-top: $padding-top-component;
+  padding-bottom: 60px;
 
   .read_more {
     display: none;
@@ -307,6 +308,7 @@ $padding-top-component: 55px;
 
     color: $primary-text-color;
     cursor: pointer;
+    padding-top: 27px;
   }
   .page_paragraph {
     font-weight: 400;
@@ -323,7 +325,7 @@ $padding-top-component: 55px;
 
 //FAQ
 .FAQ {
-  padding-top: $padding-top-component;
+  padding-top: 60px;
   max-width: unset;
 
   .faqContent {
