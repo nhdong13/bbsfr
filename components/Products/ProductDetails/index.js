@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { Container, Row, Col } from "react-bootstrap";
 import ProductImageCarousel from "../ProductImageCarousel";
-import SizeSelection from "../SizeSelection";
+import SizeSelector from "../SizeSelector";
 import ProductShipping from "../ProductShipping";
 import ProductDescription from "../ProductDescription";
 import ProductDelivery from "../ProductDelivery";
@@ -34,13 +34,13 @@ function ProductDetailsComponent({ loading, product }) {
                   category={product.category}
                 />
               </Row>
+              <Row>
+                <SizeSelector variants={sizeVariants} />
+              </Row>
               <Row className={styles.productDescription}>
                 <Col xs={12}>
                   <ProductDescription description={product.description} />
                 </Col>
-              </Row>
-              <Row>
-                <SizeSelection variants={sizeVariants} />
               </Row>
             </Col>
           </Row>

@@ -1,9 +1,9 @@
 import { Container, Row, Col } from "react-bootstrap";
 import { useState } from "react";
 import Image from "next/image";
-import styles from "./SizeSelection.module.scss";
+import styles from "./SizeSelector.module.scss";
 
-function SizeSelection({ variants }) {
+function SizeSelector({ variants }) {
   const sortedvariants = () => {
     const order = ["S", "M", "L", "XL", "XXL"];
     return variants.sort((prev, next) => {
@@ -67,4 +67,4 @@ function SizeSelection({ variants }) {
   );
 }
 
-export default SizeSelection;
+export default SizeSelector;
