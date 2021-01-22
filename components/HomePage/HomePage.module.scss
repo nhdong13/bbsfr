@@ -4,6 +4,8 @@
 //Mixin
 @mixin paging_process_bar {
   .num_pages {
+    font-size: 10px;
+    padding-bottom: 8px;
     display: flex;
     .total_num_pages {
       color: #e5e5e5;
@@ -15,7 +17,7 @@
 
   .card {
     font-family: -apple-system, BlinkMacSystemFont, "Open Sans", sans-serif;
-    font-size: 5px;
+    font-size: 4px;
     font-weight: 800;
     height: 1em;
     padding: 0.5em 1em;
@@ -187,8 +189,8 @@ $padding-top-component: 55px;
   padding-top: $padding-top-component;
 
   .slider_custom {
-    padding-top: 35px;
-    padding-bottom: 30px;
+    padding-top: 48px;
+    padding-bottom: 48px;
   }
 
   .logo_custom {
