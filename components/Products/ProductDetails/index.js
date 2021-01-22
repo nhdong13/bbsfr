@@ -74,9 +74,9 @@ function ProductDetailsComponent({
               </Row>
               <Row ref={reviewRef}>
                 <ProductCustomerReviews
-                  reviews={review?.results}
+                  reviewResponse={review}
                   reviewSummary={reviewSummary[0] || {}}
-                  questions={question?.results}
+                  questionResponse={question}
                 />
               </Row>
             </Col>
