@@ -1,5 +1,5 @@
 import { Container } from "react-bootstrap";
-import styles from "../../ProductDetails.module.scss";
+import styles from "../../BuyNowPayLater/BuyNowPayLater.module.scss";
 
 const KlarnaTextBottomComponent = ({ context, title }) => {
   return (

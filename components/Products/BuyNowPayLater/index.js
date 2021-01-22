@@ -1,19 +1,18 @@
-import styles from "../ProductDetails.module.scss"
-import Image from "next/image"
-import { LOGO_PRODUCT_MODULE } from "../../../constant"
-import dynamic from "next/dynamic"
-import { Modal } from "react-bootstrap"
-import { useState } from "react"
+import styles from "./BuyNowPayLater.module.scss";
+import Image from "next/image";
+import { LOGO_PRODUCT_MODULE } from "../../../constant";
+import dynamic from "next/dynamic";
+import { useState } from "react";
+import ModalBottomBorderTopComponent from "../../Common/ModalOpenBottomStypeBorderTop";
 const BuyNowPayLaterModalDynamic = dynamic(() =>
   import("../BuyNowPayLaterModal")
-)
+);
 
 const BuyNowPayLaterComponent = ({ dataProduct }) => {
-  console.log("Debug code dataProduct:", dataProduct);
-  const [show, setShow] = useState(false)
-  const handleClose = () => setShow(false)
-  const handleShow = () => setShow(true)
-  const price = dataProduct?.pricing || {}
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const price = dataProduct?.pricing || {};
   return (
     <>
       <div className={styles.containerBuyNowPayLater}>
@@ -45,20 +44,10 @@ const BuyNowPayLaterComponent = ({ dataProduct }) => {
           </div>
         </div>
       </div>
-
-      {/* Modal  */}
-      <Modal
-        size="lg"
-        dialogClassName={styles.modalDialogClassNameBuyNow}
-        contentClassName="animate-bottom"
-        show={show}
-        onHide={handleClose}
-        aria-labelledby="contained-modal-title-vcenter"
-      >
+      <ModalBottomBorderTopComponent show={show} onHide={handleClose}>
         <BuyNowPayLaterModalDynamic price={price} handleClose={handleClose} />
-      </Modal>
-      {/* ***** */}
+      </ModalBottomBorderTopComponent>
     </>
-  )
-}
-export default BuyNowPayLaterComponent
+  );
+};
+export default BuyNowPayLaterComponent;

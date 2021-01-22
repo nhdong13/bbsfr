@@ -1,16 +1,14 @@
 import BuyNowPayLaterComponent from "../BuyNowPayLater";
 import { useRef } from "react";
-import { useRouter } from "next/router";
 import { Container, Row, Col } from "react-bootstrap";
 import ProductImageCarousel from "../ProductImageCarousel";
 import SizeSelector from "../SizeSelector";
-import ProductShipping from "../ProductShipping";
-import AddToCart from "../AddToCart";
 import LoadingSpinner from "../../LoadingSpinner";
 import Availability from "../Availability";
-import SectionDivider from "../Components/SectionDividerComponent";
 import styles from "../ProductDetails.module.scss";
 import { renderStart } from "../../../services/renderStart";
+import ProductDescription from "../ProductDescription";
+import ProductCustomerReviews from "../ProductCustomerReviews";
 
 function ProductDetailsComponent({
   loading,
@@ -61,6 +59,11 @@ function ProductDetailsComponent({
                 </Container>
               </Row>
               <Row>
+                <Container className={styles.productBuyNowMarginTop}>
+                  <BuyNowPayLaterComponent dataProduct={product} />
+                </Container>
+              </Row>
+              <Row>
                 <SizeSelector variants={sizeVariants} />
               </Row>
               <Row>
@@ -78,10 +81,6 @@ function ProductDetailsComponent({
               </Row>
             </Col>
           </Row>
-          <ProductVariant />
-          <ProductShipping />
-          <BuyNowPayLaterComponent dataProduct={product} />
-          <AddToCart />
         </Container>
       )}
     </>
