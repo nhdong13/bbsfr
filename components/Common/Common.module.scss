@@ -1,5 +1,8 @@
-$border-color: #e5e5e4;
+@import "/styles/variables.scss";
+@import "/styles/mixin";
 
+
+$border-color: #e5e5e4;
 .containerPagination {
   margin-top: 20px;
 }
@@ -11,4 +14,66 @@ $border-color: #e5e5e4;
   display: flex;
   font-size: 12px;
   text-transform: capitalize;
+}
+
+//Modal custom
+.modalDialogClassNameBuyNow {
+  max-width: unset;
+  margin: 0;
+
+  .containerModal {
+    height: 100vh;
+    width: 100%;
+    background-color: #181818;
+
+    .containerContentModal {
+      width: 100%;
+      background-color: #e6e6e4;
+      margin-top: 54px;
+      height: auto;
+      bottom: 0;
+      left: 0;
+      border-radius: 20px 20px 0 0;
+
+      .containerBodyModal {
+        margin-top: 41px;
+        .contextBodyTitle {
+          margin-top: 24px;
+          letter-spacing: 0;
+          @include font-family(Rajdhani, 21px, 600, $primary-text-color);
+        }
+
+        .contextBodyText {
+          color: #181818;
+          font-size: 12px;
+          letter-spacing: 0;
+        }
+      }
+
+      .containerBottomModal {
+        margin-top: 24px;
+        .contextBodyTitle {
+          margin-top: 24px;
+          color: #181818;
+          font-size: 12px;
+          font-weight: bold;
+          letter-spacing: 0;
+          line-height: 20px;
+        }
+
+        .contextBodyText {
+          color: #181818;
+          font-size: 12px;
+          letter-spacing: 0;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .modalDialogClassNameBuyNow {
+    margin: 0;
+    max-width: unset;
+  }
 }

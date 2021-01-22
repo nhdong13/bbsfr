@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import Head from "next/head";
 import { productDetails } from "lib/@sdk/queries/products";
 import { initializeApollo } from "lib/apollo";
