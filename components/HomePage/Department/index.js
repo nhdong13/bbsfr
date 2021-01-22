@@ -1,6 +1,4 @@
-import Image from "next/image";
 import { Row, Container, Col } from "react-bootstrap";
-
 import CustomLink from "./custom_link";
 import styles from "../HomePage.module.scss";
 
