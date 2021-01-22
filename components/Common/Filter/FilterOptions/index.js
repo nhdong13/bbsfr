@@ -5,8 +5,7 @@ import {
   RadioGroup,
   CheckboxGroup,
   Checkbox,
-  Combobox,
-} from "@sajari/react-components"
+} from "@sajari/react-components";
 
 const FilterOptionComponent = ({
   name,
