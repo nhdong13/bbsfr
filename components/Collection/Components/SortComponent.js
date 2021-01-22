@@ -1,8 +1,8 @@
-import React, { useState } from "react"
-import styles from "../Collections.module.scss"
-import { Collapse, Container } from "react-bootstrap"
-import Image from "next/image"
-import SortingComponent from "../../Common/Sorting"
+import React, { useState } from "react";
+import styles from "../Collections.module.scss";
+import { Collapse, Container } from "react-bootstrap";
+import Image from "next/image";
+import SortingComponent from "../../Common/Sorting";
 
 const SortComponent = ({
   openCollapseSort,
@@ -10,7 +10,7 @@ const SortComponent = ({
   sortChanged,
   setSortChanged,
 }) => {
-  const [open, setOpen] = useState(openCollapseSort)
+  const [open, setOpen] = useState(openCollapseSort);
   return (
     <>
       <div className={styles.sort_filter_by}>
@@ -18,8 +18,8 @@ const SortComponent = ({
         <div className={styles.group_heading}>
           <div
             onClick={() => {
-              setOpen(!open)
-              setOpenCollapseSort(!open)
+              setOpen(!open);
+              setOpenCollapseSort(!open);
             }}
             aria-controls="sort-collapse"
             aria-expanded={open}
@@ -30,8 +30,9 @@ const SortComponent = ({
                 <Image
                   src={open ? "/icons/subtract.svg" : "/icons/plus.svg"}
                   alt={open ? "Icon subtract" : "Icon plus"}
-                  loading="lazy"
-                  layout="fill"
+                  loading="eager"
+                  width="12"
+                  height="12"
                 ></Image>
               </div>
             </div>
@@ -55,7 +56,7 @@ const SortComponent = ({
         </Container>
       )}
     </>
-  )
-}
+  );
+};
 
-export default SortComponent
+export default SortComponent;

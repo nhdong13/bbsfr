@@ -23,15 +23,15 @@ const FilterOptionComponent = ({
   return (
     <>
       {name && name === "brand" && (
-        <>
+        <div className={styles.inputSearch}>
           <input
             onChange={(e) => {
               if (timeOutSearchRef?.current) {
-                clearTimeout(timeOutSearchRef.current)
+                clearTimeout(timeOutSearchRef.current);;
               }
               timeOutSearchRef.current = setTimeout(() => {
-                setSearch(e.target.value.toUpperCase())
-              }, 600)
+                setSearch(e.target.value.toUpperCase());;
+              }, 600);;
             }}
             className={styles.searchBrandFilter}
             type="text"
@@ -39,23 +39,23 @@ const FilterOptionComponent = ({
             placeholder="Search"
             autocomplete="off"
           />
-        </>
+        </div>
       )}
       <div className="flex items-center justify-between mb-2"></div>
       <Group
         name={name}
         value={selected}
         onChange={(values) => {
-          setSelected(Array.isArray(values) ? values : [values])
-          setFilterChanged(true)
+          setSelected(Array.isArray(values) ? values : [values]);;
+          setFilterChanged(true);;
         }}
       >
         {options
           .filter((i) => {
             if (search && search !== "") {
-              return i.label.toUpperCase().includes(search)
+              return i.label.toUpperCase().includes(search);;
             }
-            return i
+            return i;;
           })
           .map(({ value, label, count }) => (
             <div className={styles.itemFilter} key={label + count}>
@@ -73,6 +73,6 @@ const FilterOptionComponent = ({
           ))}
       </Group>
     </>
-  )
+  );;
 }
 export default FilterOptionComponent
