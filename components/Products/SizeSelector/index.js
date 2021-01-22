@@ -4,9 +4,10 @@ import Image from "next/image";
 import styles from "./SizeSelector.module.scss";
 
 function SizeSelector({ variants }) {
-  const sortedvariants = () => {
+  const newVariants = [...variants];
+  const sortedVariants = () => {
     const order = ["S", "M", "L", "XL", "XXL"];
-    return variants.sort((prev, next) => {
+    return newVariants.sort((prev, next) => {
       let prevName = prev.name.toUpperCase();
       let nextName = next.name.toUpperCase();
 
@@ -41,7 +42,7 @@ function SizeSelector({ variants }) {
         </Col>
       </Row>
       <Row>
-        {sortedvariants().map((variant) => {
+        {sortedVariants().map((variant) => {
           let itemClassName = variant.isAvailable
             ? styles.sizeItem
             : `${styles.sizeItem} ${styles.sizeDisabled}`;

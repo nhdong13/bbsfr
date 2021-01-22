@@ -1,11 +1,11 @@
-import { useState } from "react"
-import { Container, Row, Col, Form, Button } from "react-bootstrap"
-import Image from "next/image"
-import clsx from "clsx"
+import { useState } from "react";
+import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import Image from "next/image";
+import clsx from "clsx";
 
-import { MAX_QUANTITY } from "../constants"
-import ConfirmDeleteModal from "../ConfirmDeleteModal"
-import styles from "./CheckoutItem.module.scss"
+import { MAX_QUANTITY } from "../constants";
+import ConfirmDeleteModal from "../ConfirmDeleteModal";
+import styles from "./CheckoutItem.module.scss";
 
 export default function ItemComponent({
   name,
@@ -18,8 +18,8 @@ export default function ItemComponent({
   onQuantityChange,
   quantityAvailable,
 }) {
-  const size = attributes ? attributes[0]?.values[0] : {}
-  const [modalShow, setModalShow] = useState(false)
+  const size = attributes.length ? attributes[0]?.values[0] : {};
+  const [modalShow, setModalShow] = useState(false);
 
   return (
     <Container className={styles.item}>
@@ -109,5 +109,5 @@ export default function ItemComponent({
         </Col>
       </Row>
     </Container>
-  )
+  );
 }

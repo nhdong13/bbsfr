@@ -1,0 +1,49 @@
+@import "/styles/variables.scss";
+@import "/styles/mixin";
+
+.addToCard {
+  height: 48px;
+  line-height: 48px;
+  display: flex;
+  justify-content: space-between;
+  padding-right: 16px;
+  padding-left: 16px;
+
+  .addToCardPrice {
+    color: #181818;
+    font-family: Rajdhani;
+    font-size: 21px;
+    font-weight: bold;
+    letter-spacing: 0;
+    
+    sup {
+      color: #181818;
+      font-family: Rajdhani;
+      font-size: 10px !important;
+      font-weight: bold;
+      letter-spacing: 0;
+      top: -0.6em;
+    }
+  }
+
+  .addToCardButton {
+    border-radius: 24px;
+    background-color: #ffb00f;
+    height: 48px;
+    width: 156px;
+
+    .addToCardButtonCustom {
+      height: 48px;
+      width: 156px;
+      border-radius: 24px;
+      background-color: #ffb00f;
+      color: #181818;
+      font-family: Rajdhani;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0;
+      text-align: center;
+      border: unset;
+    }
+  }
+}

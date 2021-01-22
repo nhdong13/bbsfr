@@ -1,0 +1,187 @@
+@import "/styles/variables.scss";
+@import "/styles/mixin";
+
+/*  Buy Now Pay Later Component */
+.containerBuyNowPayLater {
+  .containerBuyNowPayLaterTitle {
+    color: $primary-text-color;
+    font-size: 12px;
+    letter-spacing: 0;
+    line-height: 20px;
+  }
+
+  .containerBuyNowPayLaterImg {
+    display: flex;
+    justify-content: flex-start;
+    cursor: pointer;
+
+    .itemImg {
+      margin-right: 8px;
+      position: relative;
+      width: 70px;
+      height: 32px;
+    }
+  }
+}
+
+.modalDialogClassNameBuyNow {
+  max-width: unset;
+  margin: 0;
+}
+
+@media only screen and (max-width: 576px) {
+  .modalDialogClassNameBuyNow {
+    margin: 0;
+    max-width: unset;
+  }
+}
+
+.containerHeaderModal {
+  height: 178px;
+  width: auto;
+  border-radius: 20px 20px 0 0;
+  background-color: #ffb3c7;
+
+  .closeModal {
+    padding: 15px 16px 8px 16px;
+    align-items: center;
+    display: flex;
+    position: absolute;
+    right: 0;
+    cursor: pointer;
+
+    .p {
+      line-height: 20px;
+      color: #181818;
+      font-size: 10px;
+      letter-spacing: 0;
+      text-align: right;
+    }
+  }
+
+  .sectionImgTitle {
+    padding: 39px 16px 16px;
+  }
+
+  .sectionCost {
+    .sectionCostText {
+      height: 32px;
+      line-height: 32px;
+
+      .sectionCostTextRight {
+        color: #181818;
+        font-family: Rajdhani;
+        font-size: 14px;
+        font-weight: bold;
+        letter-spacing: 0;
+      }
+      .sectionCostTextLeft {
+        font-family: Rajdhani;
+        font-size: 21px;
+        font-weight: 700;
+        letter-spacing: 0px;
+        text-align: right;
+        
+        sup {
+          color: #181818;
+          font-family: Rajdhani;
+          font-size: 10px !important;
+          font-weight: bold;
+          letter-spacing: 0;
+          top: -0.6em;
+        }
+      }
+    }
+  }
+}
+
+// -----------------------
+.containerBodyModal {
+  margin-top: 41px;
+  .contextBodyTitle {
+    margin-top: 24px;
+    letter-spacing: 0;
+    @include font-family(Rajdhani, 21px, 600, $primary-text-color);
+  }
+
+  .contextBodyText {
+    color: #181818;
+    font-size: 12px;
+    letter-spacing: 0;
+  }
+}
+
+// -----------------------
+.containerBottomModal {
+  margin-top: 24px;
+  .contextBodyTitle {
+    margin-top: 24px;
+    color: #181818;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 20px;
+  }
+
+  .contextBodyText {
+    color: #181818;
+    font-size: 12px;
+    letter-spacing: 0;
+  }
+}
+
+// -----------------------
+.containerKarnaCheckout {
+  padding-left: 16px;
+  padding-right: 16px;
+
+  .paddingTop {
+    padding-top: 32px;
+    display: flex;
+    justify-content: space-between;
+    .left {
+      width: 50%;
+      margin-right: 14px;
+    }
+    .right {
+      width: 50%;
+    }
+  }
+
+  .contextBodyTitle {
+    @extend .contextBodyTitle;
+  }
+  .BoxLeftBorder {
+    box-sizing: border-box;
+    min-height: 80px;
+    border: 1px solid #333333;
+    display: grid;
+    align-items: center;
+  }
+
+  .BoxRight {
+    min-height: 80px;
+    color: #181818;
+    font-size: 12px;
+    letter-spacing: 0;
+    line-height: 20px;
+  }
+  .margin {
+    margin-top: 13px;
+  }
+
+  .line {
+    width: 1px;
+    height: 13px;
+    margin: 0px auto;
+    background-color: black;
+  }
+}
+
+.containerAddToCard {
+  background-color: #e6e6e4;
+  position: sticky;
+  bottom: 0;
+  padding-top: 34px;
+  padding-bottom: 22px;
+}

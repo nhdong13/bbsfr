@@ -1,14 +1,14 @@
-import { useState } from "react"
-import { Container, InputGroup, Row, Col, Form, Button } from "react-bootstrap"
-import clsx from "clsx"
-import { useMutation } from "@apollo/client"
-import { useCart, useCheckout } from "@sdk/react"
-import { LocalRepository } from "@sdk/repository"
+import { useState } from "react";
+import { Container, InputGroup, Row, Col, Form, Button } from "react-bootstrap";
+import clsx from "clsx";
+import { useMutation } from "@apollo/client";
+import { useCart, useCheckout } from "@sdk/react";
+import { LocalRepository } from "@sdk/repository";
 
-import LoadingSpinner from "components/LoadingSpinner"
-import { voucherifyValidate } from "lib/mutations"
-import ErrorMessageWrapper from "../ErrorMessageWrapper"
-import styles from "../Checkout.module.scss"
+import LoadingSpinner from "components/LoadingSpinner";
+import { voucherifyValidate } from "lib/mutations";
+import ErrorMessageWrapper from "../ErrorMessageWrapper";
+import styles from "../Checkout.module.scss";
 
 export default function PromotionComponent({
   values,
@@ -19,20 +19,20 @@ export default function PromotionComponent({
   setFieldTouched,
   setFieldError,
 }) {
-  const [loading, setLoading] = useState(false)
-  const { items, subtotalPrice } = useCart()
+  const [loading, setLoading] = useState(false);
+  const { items, subtotalPrice } = useCart();
   const {
     addPromoCode,
     removePromoCode,
     promoCodeDiscount,
     load,
-  } = useCheckout()
-  const [validateVoucherify] = useMutation(voucherifyValidate)
-  const valid = promoCodeDiscount?.voucherCode
-  const repository = new LocalRepository()
+  } = useCheckout();
+  const [validateVoucherify] = useMutation(voucherifyValidate);
+  const valid = promoCodeDiscount?.voucherCode;
+  const repository = new LocalRepository();
 
   const handleApplyCode = async () => {
-    setLoading(true)
+    setLoading(true);
     const { data } = await validateVoucherify({
       variables: {
         input: {
@@ -43,23 +43,23 @@ export default function PromotionComponent({
             return {
               quantity: item.quantity,
               variantId: item.variant.id,
-            }
+            };
           }),
         },
       },
-    })
+    });
 
-    const { voucherify } = data.voucherifyValidate
+    const { voucherify } = data.voucherifyValidate;
 
     if (voucherify.valid === "true") {
-      const checkout = repository.getCheckout()
+      const checkout = repository.getCheckout();
       if (checkout?.id) {
-        await addPromoCode(values.promotion)
+        await addPromoCode(values.promotion);
       } else {
         const voucherifies = [
           ...(checkout.voucherifies || []),
           { ...voucherify, currentBalanceAmount: voucherify.discountAmount },
-        ]
+        ];
         repository.setCheckout({
           ...checkout,
           voucherifies,
@@ -70,40 +70,40 @@ export default function PromotionComponent({
             },
             voucherCode: values.promotion,
           },
-        })
-        await load()
+        });
+        await load();
       }
     } else {
-      setFieldTouched("promotion", true, false)
-      setFieldError("promotion", "Invalid promotion code")
+      setFieldTouched("promotion", true, false);
+      setFieldError("promotion", "Invalid promotion code");
     }
-    setLoading(false)
-  }
+    setLoading(false);
+  };
 
   const handleDeletePromoCode = async () => {
-    setLoading(true)
+    setLoading(true);
 
-    const checkout = repository.getCheckout()
+    const checkout = repository.getCheckout();
     if (checkout?.id) {
-      await removePromoCode(promoCodeDiscount.voucherCode)
+      await removePromoCode(promoCodeDiscount.voucherCode);
     } else {
       const voucherifies = checkout?.voucherifies?.filter(
         (card) => card.code !== promoCodeDiscount.voucherCode
-      )
+      );
       repository.setCheckout({
         ...checkout,
         voucherifies,
-        promoCodeDiscount: undefined,
-      })
-      await load()
+        promoCodeDiscount: {},
+      });
+      await load();
     }
 
-    setFieldValue("promotion", "")
-    setLoading(false)
-  }
+    setFieldValue("promotion", "");
+    setLoading(false);
+  };
 
   const handleApplyGiftCard = async () => {
-    setLoading(true)
+    setLoading(true);
     const { data } = await validateVoucherify({
       variables: {
         input: {
@@ -114,33 +114,33 @@ export default function PromotionComponent({
             return {
               quantity: item.quantity,
               variantId: item.variant.id,
-            }
+            };
           }),
         },
       },
-    })
+    });
 
-    const { voucherify } = data.voucherifyValidate
+    const { voucherify } = data.voucherifyValidate;
 
     if (voucherify.valid === "true") {
-      const checkout = repository.getCheckout()
+      const checkout = repository.getCheckout();
       if (checkout?.id) {
-        await addPromoCode(values.giftCard)
+        await addPromoCode(values.giftCard);
       } else {
         const voucherifies = [
           ...(checkout.voucherifies || []),
           { ...voucherify, currentBalanceAmount: voucherify.discountAmount },
-        ]
-        repository.setCheckout({ ...checkout, voucherifies })
-        await load()
+        ];
+        repository.setCheckout({ ...checkout, voucherifies });
+        await load();
       }
-      setFieldValue("giftCard", "")
+      setFieldValue("giftCard", "");
     } else {
-      setFieldTouched("giftCard", true, false)
-      setFieldError("giftCard", "Invalid Gift Card Number")
+      setFieldTouched("giftCard", true, false);
+      setFieldError("giftCard", "Invalid Gift Card Number");
     }
-    setLoading(false)
-  }
+    setLoading(false);
+  };
 
   return (
     <Row className={clsx(styles.promotionSection, "secondary-bg")}>
@@ -222,5 +222,5 @@ export default function PromotionComponent({
         </Row>
       </Container>
     </Row>
-  )
+  );
 }

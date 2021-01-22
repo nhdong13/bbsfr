@@ -562,10 +562,10 @@
     lodash "^4.17.15"
     lodash-es "^4.17.15"
 
-"@sajari/react-components@1.4.5", "@sajari/react-components@^1.4.5":
-  version "1.4.5"
-  resolved "https://registry.yarnpkg.com/@sajari/react-components/-/react-components-1.4.5.tgz#d9f75d96e1fbd4ed991b0e63946c897bdbce1a9a"
-  integrity sha512-ObQJyp52BY/mq/7CzcS675xXje7NLlnwuaT1do1UQVsMF9PlY3S7l0vddMM04NzpHWYpUd6686P9aqcS4VAIxw==
+"@sajari/react-components@1.4.7", "@sajari/react-components@^1.4.7":
+  version "1.4.7"
+  resolved "https://registry.yarnpkg.com/@sajari/react-components/-/react-components-1.4.7.tgz#5fe56d1e55af3bdadc933d937d71d5151bf482b3"
+  integrity sha512-VHGBESlOns25TKAa3eEvM/egA7WEvVzWgto8AGLmeNjnNcBSfqCJmhGDGJxzcVoiLQwuhd5eeqMGOVHY/5qEDw==
   dependencies:
     "@react-aria/button" "^3.3.0"
     "@react-aria/focus" "^3.2.3"
@@ -578,15 +578,15 @@
     "@sajari/react-sdk-utils" "^1.3.1"
     classnames "^2.2.6"
     color "^3.1.3"
-    downshift "^6.0.10"
+    downshift "^6.0.16"
     react-ranger "^2.1.0"
     smoothscroll-polyfill "^0.4.4"
     use-resize-observer "^7.0.0"
 
-"@sajari/react-hooks@1.3.0", "@sajari/react-hooks@^1.3.0":
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/@sajari/react-hooks/-/react-hooks-1.3.0.tgz#17c651798c28a78bc041ea245fd30a1359adb12e"
-  integrity sha512-U6/+vtQH/H8kRGKjrdDFQywBlvO+Z65KS6C5zvp/mw1JcsBgJSeb8xLIi57PZqG8wCVv3pgDf7azSgj856+6yQ==
+"@sajari/react-hooks@1.4.1", "@sajari/react-hooks@^1.4.1":
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/@sajari/react-hooks/-/react-hooks-1.4.1.tgz#d71e4e7ac8159050656d9059b85556e39e845fcd"
+  integrity sha512-GJjop8SycsUFODu01x7RfZzccssbHv64/d44WT8DA4s3/gj8QGkDxzmFOKHVZsfKd95Feax5sEYlGFMEa6mPyQ==
   dependencies:
     "@sajari/react-sdk-utils" "^1.3.1"
     "@sajari/sdk-js" "2.0.0-alpha.18"
@@ -607,14 +607,14 @@
     tailwindcss-truncate-multiline "^1.0.3"
     twin.macro "^1.12.1"
 
-"@sajari/react-search-ui@1.6.7":
-  version "1.6.7"
-  resolved "https://registry.yarnpkg.com/@sajari/react-search-ui/-/react-search-ui-1.6.7.tgz#83e439ec1e31855e6508d0b162adb484601f29d9"
-  integrity sha512-QxpxWoRPFVVn7tFVFoO2jIXFqy/HwVbtjQNCtBwgmDF9gX9tODZtSrW3RJqSdDsDWf5a+mNdOYmbR8qSNbN1cA==
+"@sajari/react-search-ui@1.7.3":
+  version "1.7.3"
+  resolved "https://registry.yarnpkg.com/@sajari/react-search-ui/-/react-search-ui-1.7.3.tgz#218744392dd8c74b2f469510aa4a5f449502415c"
+  integrity sha512-iGg5UYTQQIj4fQEteiCXmZ2UlwfARRzZ4KRi+qhhI7F6C7Qx4XpFD1yfj1wLF16r7uCF4C4E3KyquHCbasP5RA==
   dependencies:
     "@react-aria/utils" "3.5.0"
-    "@sajari/react-components" "^1.4.5"
-    "@sajari/react-hooks" "^1.3.0"
+    "@sajari/react-components" "^1.4.7"
+    "@sajari/react-hooks" "^1.4.1"
     "@sajari/react-sdk-utils" "^1.3.1"
     i18next "19.8.4"
     i18next-browser-languagedetector "^6.0.1"
@@ -626,12 +626,12 @@
   resolved "https://registry.yarnpkg.com/@sajari/sdk-js/-/sdk-js-2.0.0-alpha.18.tgz#049a28f81514cc2f5080a63f7dd592c09b716b1f"
   integrity sha512-yvUiiVlmtyJk8/5MkmzBoQEBYH6P4IXOWFx7t/0G0Xqh0yikfbuEI3OXTgW2jrFarRwyG09IMgqS5N4/5n99tw==
 
-"@sajari/server@1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@sajari/server/-/server-1.2.0.tgz#3e1e4d783e8de9cdbf6aa84dd5364358514cab46"
-  integrity sha512-ULOyiMDDZGL/eCpS/tAfm6MzZxo90GfLDbat4ykKH5C+Rk+TQim9jYix800roafeTpikjFydNZGHzjN3J58byw==
+"@sajari/server@1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@sajari/server/-/server-1.2.1.tgz#266259490b1feff427fcf34aaa8fb48ac4b0b9c6"
+  integrity sha512-aNDwf+DhTHI1gOasoX5lWBhynN3Ham4/HCoFkHON8TJPgW4SDeNya0JWJb7V0dMDW0JYp2M1aR2c8aUD9jVsxQ==
   dependencies:
-    "@sajari/react-hooks" "^1.3.0"
+    "@sajari/react-hooks" "^1.4.1"
     "@sajari/react-sdk-utils" "^1.3.1"
 
 "@tailwindcss/custom-forms@^0.2.1":
@@ -1322,13 +1322,6 @@ bl@^4.0.3:
     buffer "^5.5.0"
     inherits "^2.0.4"
     readable-stream "^3.4.0"
-
-block-stream@*:
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/block-stream/-/block-stream-0.0.9.tgz#13ebfe778a03205cfe03751481ebb4b3300c126a"
-  integrity sha1-E+v+d4oDIFz+A3UUgeu0szAMEmo=
-  dependencies:
-    inherits "~2.0.0"
 
 bluebird@^3.5.5:
   version "3.7.2"
@@ -2211,10 +2204,10 @@ domutils@^2.0.0:
     domelementtype "^2.0.1"
     domhandler "^3.3.0"
 
-downshift@^6.0.10:
-  version "6.0.10"
-  resolved "https://registry.yarnpkg.com/downshift/-/downshift-6.0.10.tgz#c0fdc353b286c0b5f8d93af80a2bce57d90854d5"
-  integrity sha512-TuUh448snXiOXrstL1q6s13xev2kWEHAuNlwzEHXRMhG7NbPgvzFvjYelwkaOSZ1dFNJjzRnpK6cbvUO7oHlMQ==
+downshift@^6.0.16:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/downshift/-/downshift-6.1.0.tgz#f008063d9b63935910d9db12ead07979ab51ce66"
+  integrity sha512-MnEJERij+1pTVAsOPsH3q9MJGNIZuu2sT90uxOCEOZYH6sEzkVGtUcTBVDRQkE8y96zpB7uEbRn24aE9VpHnZg==
   dependencies:
     "@babel/runtime" "^7.12.5"
     compute-scroll-into-view "^1.0.16"
@@ -2625,16 +2618,6 @@ fsevents@~2.1.2:
   resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-2.1.3.tgz"
   integrity sha512-Auw9a4AxqWpa9GUfj370BMPzzyncfBABW8Mab7BGWBYDj4Isgq+cDKtx0i6u9jcX9pQDnswsaaOTgTmA5pEjuQ==
 
-fstream@1.0.12, fstream@^1.0.12:
-  version "1.0.12"
-  resolved "https://registry.yarnpkg.com/fstream/-/fstream-1.0.12.tgz#4e8ba8ee2d48be4f7d0de505455548eae5932045"
-  integrity sha512-WvJ193OHa0GHPEL+AycEJgxvBEwyfRkN1vhjca23OaPVMCaLCXTd5qAu82AjTcgP1UJmytkOKb63Ypde7raDIg==
-  dependencies:
-    graceful-fs "^4.1.2"
-    inherits "~2.0.0"
-    mkdirp ">=0.5 0"
-    rimraf "2"
-
 function-bind@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.1.tgz"
@@ -2927,7 +2910,7 @@ inflight@^1.0.4:
     once "^1.3.0"
     wrappy "1"
 
-inherits@2, inherits@2.0.4, inherits@^2.0.1, inherits@^2.0.3, inherits@^2.0.4, inherits@~2.0.0, inherits@~2.0.1, inherits@~2.0.3, inherits@~2.0.4:
+inherits@2, inherits@2.0.4, inherits@^2.0.1, inherits@^2.0.3, inherits@^2.0.4, inherits@~2.0.1, inherits@~2.0.3, inherits@~2.0.4:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.4.tgz"
   integrity sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==
@@ -3522,7 +3505,7 @@ mkdirp-classic@^0.5.2, mkdirp-classic@^0.5.3:
   resolved "https://registry.yarnpkg.com/mkdirp-classic/-/mkdirp-classic-0.5.3.tgz#fa10c9115cc6d8865be221ba47ee9bed78601113"
   integrity sha512-gKLcREMhtuZRwRAfqP3RFW+TK4JqApVBtOIftVgjuABpAtpxhPGaDcfvbhNvD0B8iD1oUr/txX35NjcaY6Ns/A==
 
-"mkdirp@>=0.5 0", mkdirp@^0.5.1, mkdirp@^0.5.3:
+mkdirp@^0.5.1, mkdirp@^0.5.3:
   version "0.5.5"
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.5.5.tgz"
   integrity sha512-NKmAlESf6jMGym1++R0Ra7wvhV+wFW63FaSOFPwRahvea0gMUcGUhVeAg/0BC0wiv9ih5NYPB1Wn1UEI1/L+xQ==
@@ -3868,11 +3851,6 @@ p-try@^2.0.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/p-try/-/p-try-2.2.0.tgz"
   integrity sha512-R4nPAVTAU0B9D35/Gk3uJf/7XYbQcyohSKdvAxIRSNghFl4e71hVoGnBNQz9cWaXxO2I10KTC+3jMdvvoKw6dQ==
-
-paginator@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/paginator/-/paginator-1.0.0.tgz#7565702af9ab9616dca61fc22c70eba2a4357265"
-  integrity sha1-dWVwKvmrlhbcph/CLHDroqQ1cmU=
 
 pako@~1.0.2, pako@~1.0.5:
   version "1.0.11"
@@ -4232,7 +4210,7 @@ prop-types-extra@^1.1.0:
     react-is "^16.3.2"
     warning "^4.0.0"
 
-prop-types@15.7.2, "prop-types@15.x.x - 16.x.x", prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@15.7.2, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -4450,18 +4428,6 @@ react-is@^17.0.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.1.tgz#5b3531bd76a645a4c9fb6e693ed36419e3301339"
   integrity sha512-NAnt2iGDXohE5LI7uBnLnqvLQMtzhkiAOLXTmv+qnF9Ky7xAPcX8Up/xWIhxvLVGJvuLiNc4xQLtuqDRzb4fSA==
 
-react-js-pagination@^3.0.3:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/react-js-pagination/-/react-js-pagination-3.0.3.tgz#bc5504ad9fda2a13f59eca91c7b07966a39e1776"
-  integrity sha512-podyA6Rd0uxc8uQakXWXxnonoOPI6NnFOROXfc6qPKNYm44s+Bgpn0JkyflcfbHf/GFKahnL8JN8rxBHZiBskg==
-  dependencies:
-    classnames "^2.2.5"
-    fstream "1.0.12"
-    paginator "^1.0.0"
-    prop-types "15.x.x - 16.x.x"
-    react "15.x.x - 16.x.x"
-    tar "2.2.2"
-
 react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz"
@@ -4554,15 +4520,6 @@ react-transition-group@^4.3.0, react-transition-group@^4.4.1:
     "@babel/runtime" "^7.5.5"
     dom-helpers "^5.0.1"
     loose-envify "^1.4.0"
-    prop-types "^15.6.2"
-
-"react@15.x.x - 16.x.x":
-  version "16.14.0"
-  resolved "https://registry.yarnpkg.com/react/-/react-16.14.0.tgz#94d776ddd0aaa37da3eda8fc5b6b18a4c9a3114d"
-  integrity sha512-0X2CImDkJGApiAlcf0ODKIneSwBPhqJawOa5wCtKbu7ZECrmS26NvtSILynQ66cgkT/RJ4LidJOc3bUESwmU8g==
-  dependencies:
-    loose-envify "^1.1.0"
-    object-assign "^4.1.1"
     prop-types "^15.6.2"
 
 react@17.0.1:
@@ -4734,7 +4691,7 @@ rework@1.0.1:
     convert-source-map "^0.3.3"
     css "^2.0.0"
 
-rimraf@2, rimraf@^2.5.4, rimraf@^2.6.3, rimraf@^2.7.1:
+rimraf@^2.5.4, rimraf@^2.6.3, rimraf@^2.7.1:
   version "2.7.1"
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.7.1.tgz"
   integrity sha512-uWjbaKIK3T1OSVptzX7Nl6PvQ3qAGtKEtVRjRuazjfL3Bx5eI409VZSqgND+4UNnmzLVdPj9FqFJNPqBZFve4w==
@@ -5327,15 +5284,6 @@ tar-stream@^2.1.4:
     fs-constants "^1.0.0"
     inherits "^2.0.3"
     readable-stream "^3.1.1"
-
-tar@2.2.2:
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/tar/-/tar-2.2.2.tgz#0ca8848562c7299b8b446ff6a4d60cdbb23edc40"
-  integrity sha512-FCEhQ/4rE1zYv9rYXJw/msRqsnmlje5jHP6huWeBZ704jUTy02c5AZyWujpMR1ax6mVw9NyJMfuK2CMDWVIfgA==
-  dependencies:
-    block-stream "*"
-    fstream "^1.0.12"
-    inherits "2"
 
 terser-webpack-plugin@^1.4.3:
   version "1.4.5"
