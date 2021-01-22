@@ -1,25 +1,25 @@
-import React, { useState, useEffect } from "react"
-import { Container, Row, Col } from "react-bootstrap"
-import styles from "../HomePage.module.scss"
-import Slider from "react-slick"
-import { pad, chunks, checkID } from "../../../services/brand.js"
-import Image from "next/image"
-import Link from "next/link"
+import React, { useState, useEffect } from "react";
+import { Container, Row, Col } from "react-bootstrap";
+import styles from "../HomePage.module.scss";
+import Slider from "react-slick";
+import { pad, chunks, checkID } from "../../../services/brand.js";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function Brand(props) {
-  const [activeSlide, setSlide] = useState(1)
-  const [image_width, setImageWidth] = useState(100)
-  const [width, setWidth] = useState(100)
+  const [activeSlide, setSlide] = useState(1);
+  const [image_width, setImageWidth] = useState(100);
+  const [width, setWidth] = useState(100);
 
   useEffect(() => {
     // Update the document title using the browser API
-    let width = window.innerWidth
-    setImageWidth(width / 4.5)
-    setWidth(width - 30)
-  })
+    let width = window.innerWidth;
+    setImageWidth(width / 4.5);
+    setWidth(width - 30);
+  });
 
-  let brands = chunks(props.brands, 6)
-  let num_pages = Math.floor(props.brands.length / 6) + 1
+  let brands = chunks(props.brands, 6);
+  let num_pages = Math.floor(props.brands.length / 6) + 1;
   const settings = {
     infinite: true,
     speed: 500,
@@ -27,7 +27,7 @@ export default function Brand(props) {
     slidesToScroll: 1,
     arrows: false,
     beforeChange: (current, next) => {
-      setSlide(next + 1)
+      setSlide(next + 1);
     },
     responsive: [
       {
@@ -39,7 +39,7 @@ export default function Brand(props) {
         },
       },
     ],
-  }
+  };
   return (
     <Container fluid className={styles.brand} id="home_page_brand">
       <div className={styles.striped}></div>
@@ -54,10 +54,14 @@ export default function Brand(props) {
       <Slider {...settings} className={styles.slider_custom}>
         {brands.map((brand, index) => (
           <div key={index}>
-            <Row className="auto-clear">
+            <div className={styles.sliderShow}>
               {brand.map((b, id) =>
                 (id + 1) / 4 != 1 ? (
                   <Col
+                    style={{
+                      paddingLeft: "0px !important",
+                      paddingRight: "0px !important",
+                    }}
                     key={id}
                     className={`${styles.logo_custom} ${
                       styles.point_line_brand
@@ -68,8 +72,10 @@ export default function Brand(props) {
                         <div
                           style={{
                             position: "relative",
-                            width: `${image_width * 1.33}px`,
-                            height: `${image_width}px`,
+                            // width: `${image_width * 1.33}px`,
+                            // height: `${image_width}px`,
+                            width: "104px",
+                            height: "104px",
                           }}
                         >
                           <Image
@@ -86,6 +92,10 @@ export default function Brand(props) {
                   [
                     <div className="w-100" key={-id.toString()}></div>,
                     <Col
+                      style={{
+                        paddingLeft: "0px !important",
+                        paddingRight: "0px !important",
+                      }}
                       key={id}
                       className={`${styles.logo_custom} ${
                         styles.point_line_brand
@@ -96,8 +106,10 @@ export default function Brand(props) {
                           <div
                             style={{
                               position: "relative",
-                              width: `${image_width * 1.33}px`,
-                              height: `${image_width}px`,
+                              width: "104px",
+                              height: "104px",
+                              // width: `${image_width * 1.33}px`,
+                              // height: `${image_width}px`,
                             }}
                           >
                             <Image
@@ -113,7 +125,7 @@ export default function Brand(props) {
                   ]
                 )
               )}
-            </Row>
+            </div>
             <h3 className="d-none"></h3>
           </div>
         ))}
@@ -134,5 +146,5 @@ export default function Brand(props) {
         ))}
       </div>
     </Container>
-  )
+  );
 }
