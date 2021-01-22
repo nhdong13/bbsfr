@@ -63,6 +63,7 @@ $padding-top-component: 55px;
     .main_group {
       height: 216px;
       align-items: center;
+      display: grid;
     }
 
     .group_left {
@@ -88,13 +89,10 @@ $padding-top-component: 55px;
       font-style: normal;
       font-weight: bold;
       font-size: 200px;
-
       color: $department-category-color;
       line-height: 140px;
-
       text-transform: uppercase;
       white-space: nowrap;
-
       position: absolute;
       overflow: hidden;
       right: 0px;
@@ -115,23 +113,21 @@ $padding-top-component: 55px;
     }
 
     .status_product {
-      padding-bottom: 5px;
+      padding-bottom: 8px;
       font-style: normal;
       font-weight: bold;
       font-size: 10px;
       line-height: 16px;
       /* identical to box height, or 160% */
-
       letter-spacing: 1px;
       text-transform: uppercase;
-
       color: $status-product-color;
     }
 
     .shop_group {
       display: flex;
       align-items: center;
-      padding-top: 20px;
+      padding-top: 24px;
 
       .triangle_right {
         width: 0;
@@ -149,7 +145,6 @@ $padding-top-component: 55px;
         font-size: 14px;
         line-height: 18px;
         /* identical to box height */
-
         color: $primary-text-color;
       }
     }
@@ -161,8 +156,9 @@ $padding-top-component: 55px;
       z-index: 2;
       width: 215px;
       height: 215px;
+      top: 0;
+      
       div {
-        // max-height: 100%;
         div {
           position: unset !important;
         }
