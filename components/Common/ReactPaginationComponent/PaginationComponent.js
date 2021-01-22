@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { Col, Row } from "react-bootstrap";
-import styles from "../ProductDetails.module.scss";
+import styles from "../../Products/ProductDetails.module.scss";
 import ReactPaginate from "react-paginate";
 import Image from "next/image";
 import { useState } from "react";
 
-function ReviewPaginationComponent({ currPage, totalPage }) {
+function PaginationComponent({ currPage, totalPage }) {
   const [activePage, setActivePage] = useState(currPage);
   const handlePageChange = (pageNumber) => {
     setActivePage(pageNumber);
@@ -43,4 +43,4 @@ function ReviewPaginationComponent({ currPage, totalPage }) {
   );
 }
 
-export default ReviewPaginationComponent;
+export default PaginationComponent;

@@ -3,7 +3,7 @@ import { renderStart } from "../../../services/renderStart";
 import { useState } from "react";
 import UserCommentComponent from "../Components/UserCommentComponent";
 import { Container } from "react-bootstrap";
-import ReviewPaginationComponent from "../Components/ReviewPaginationComponent";
+import ReviewPaginationComponent from "../../Common/ReactPaginationComponent/PaginationComponent";
 
 function ProductCustomerReviews({
   reviewResponse,
