@@ -54,7 +54,7 @@
 $padding-top-department: 60px;
 $border_brand_color: #e5e5e5;
 $vertical_border: 2.5px;
-$padding-top-component: 55px;
+$padding-top-component: 88px;
 
 .homepageContainer {
   //Department
@@ -159,7 +159,7 @@ $padding-top-component: 55px;
       width: 215px;
       height: 215px;
       top: 0;
-      
+
       div {
         div {
           position: unset !important;
@@ -191,13 +191,16 @@ $padding-top-component: 55px;
   .slider_custom {
     padding-top: 48px;
     padding-bottom: 48px;
+
+    .sliderShow{
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
   }
 
   .logo_custom {
-    padding-top: 15px;
-    padding-bottom: 15px;
     cursor: pointer;
-
     display: flex;
     justify-content: center;
   }
@@ -230,34 +233,13 @@ $padding-top-component: 55px;
   @include paging_process_bar;
 }
 
-@media only screen and (max-width: 425px) {
-  .brand {
-    .logo_custom {
-      padding-left: 0px;
-      padding-top: 20px;
-      padding-bottom: 20px;
-      padding-right: 0px;
-    }
-  }
-}
-
-@media only screen and (max-width: 375px) {
-  .brand {
-    .logo_custom {
-      padding-left: 0px;
-      padding-top: 10px;
-      padding-bottom: 10px;
-      padding-right: 0px;
-    }
-  }
-}
-
 .text_heading_line_40 {
+  min-width: 170px;
   font-family: Rajdhani;
   font-style: normal;
   font-weight: bold;
   font-size: 26px;
-  line-height: 40px;
+  line-height: 26px;
   /* identical to box height, or 154% */
 
   // text-align: center;
@@ -323,7 +305,7 @@ $padding-top-component: 55px;
 
 //FAQ
 .FAQ {
-  padding-top: 60px;
+  padding-top: $padding-top-component;
   max-width: unset;
 
   .faqContent {
@@ -461,7 +443,7 @@ $padding-top-component: 55px;
 
 //testimonials
 .padding_testimonials {
-  padding-top: 50px;
+  padding-top: $padding-top-component;
   .testimonials {
     background-color: $primary-text-color;
     height: auto;
