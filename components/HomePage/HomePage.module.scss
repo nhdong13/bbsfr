@@ -192,7 +192,7 @@ $padding-top-component: 88px;
     padding-top: 48px;
     padding-bottom: 48px;
 
-    .sliderShow{
+    .sliderShow {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
@@ -273,8 +273,8 @@ $padding-top-component: 88px;
 
 //SEO
 .SEO {
-  padding-top: $padding-top-component;
-  padding-bottom: 60px;
+  padding-top: 64px;
+  padding-bottom: 56px;
 
   .read_more {
     display: none;
@@ -288,7 +288,7 @@ $padding-top-component: 88px;
 
     color: $primary-text-color;
     cursor: pointer;
-    padding-top: 27px;
+    padding-top: 28px;
   }
   .page_paragraph {
     font-weight: 400;
@@ -305,7 +305,7 @@ $padding-top-component: 88px;
 
 //FAQ
 .FAQ {
-  padding-top: $padding-top-component;
+  padding-top: 64px;
   max-width: unset;
 
   .faqContent {
@@ -313,8 +313,8 @@ $padding-top-component: 88px;
 
     .question {
       height: auto;
-      padding-top: 10px;
-      padding-bottom: 9px;
+      padding-top: 16px;
+      padding-bottom: 16px;
       &:hover {
         cursor: pointer;
       }
@@ -326,6 +326,7 @@ $padding-top-component: 88px;
           font-style: normal;
           letter-spacing: 0px;
           text-align: left;
+          line-height: 20px;
           @include font-family(Rajdhani, 16px, 600, $primary-text-color);
         }
 
