@@ -195,27 +195,28 @@ $bg-sort-filter: #f6f6f6;
 }
 
 .button_sajari {
-  padding: 1rem 0;
+  padding: 16px 0;
   background-color: #fff;
   position: sticky;
   width: 100%;
   bottom: 0;
 
   .modal_button {
-    padding: 0 0.5rem;
+    padding: 0 8px;
   }
 
   button {
     height: 48px;
     width: 100%;
     border-radius: 8px;
-
     font-family: Rajdhani;
     font-style: normal;
     font-weight: bold;
     font-size: 14px;
     line-height: 18px;
     text-align: center;
+    padding: 16px;
+    box-sizing: border-box;
   }
 }
 .sajari_checkbox {
