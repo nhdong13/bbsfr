@@ -1,11 +1,11 @@
-import { Col, Collapse } from "react-bootstrap"
-import styles from "../Vehicles.module.scss"
-import { useState } from "react"
-import Image from "next/image"
-import YearGroupedComponent from "./YearGroupedComponent"
+import { Col, Collapse } from "react-bootstrap";
+import styles from "../Vehicles.module.scss";
+import { useState } from "react";
+import Image from "next/image";
+import YearGroupedComponent from "./YearGroupedComponent";
 
 const MakeGroupedComponent = ({ title, vehicle, noBorder }) => {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
   return (
     <>
       <div
@@ -21,7 +21,14 @@ const MakeGroupedComponent = ({ title, vehicle, noBorder }) => {
         }
       >
         <div className="d-flex">
-          <Col xs={10} sm={10} md={10} lg={11} xl={11} className="pl-0">
+          <Col
+            xs={10}
+            sm={10}
+            md={10}
+            lg={11}
+            xl={11}
+            style={{ paddingLeft: "0px !important" }}
+          >
             <div>{title}</div>
           </Col>
           <Col xs={2} sm={2} md={2} lg={1} xl={1} className="h-100">
@@ -48,6 +55,6 @@ const MakeGroupedComponent = ({ title, vehicle, noBorder }) => {
         </div>
       </Collapse>
     </>
-  )
-}
-export default MakeGroupedComponent
+  );
+};
+export default MakeGroupedComponent;
