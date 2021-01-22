@@ -3,12 +3,15 @@ import { renderStart } from "../../../services/renderStart";
 import { useState } from "react";
 import UserCommentComponent from "../Components/UserCommentComponent";
 import { Container } from "react-bootstrap";
+import ReviewPaginationComponent from "../../Common/ReactPaginationComponent/PaginationComponent";
 
 function ProductCustomerReviews({
-  reviews = [],
+  reviewResponse,
   reviewSummary = {},
-  questions = [],
+  questionResponse,
 }) {
+  const reviews = reviewResponse?.results || [];
+  const questions = questionResponse?.results || [];
   const { breakdown, rating, count, countQuestions } = reviewSummary;
   const [active, setActive] = useState(true);
 
@@ -72,6 +75,10 @@ function ProductCustomerReviews({
                 is_question={false}
               />
             ))}
+            <ReviewPaginationComponent
+              currPage={reviewResponse?.page}
+              totalPage={reviewResponse?.totalPages}
+            />
           </div>
           <div className={active ? "d-none" : ""}>
             {questions.map((question, i) => (
@@ -81,6 +88,10 @@ function ProductCustomerReviews({
                 is_question={true}
               />
             ))}
+            <ReviewPaginationComponent
+              currPage={questionResponse?.page}
+              totalPage={questionResponse?.totalPages}
+            />
           </div>
         </div>
       </div>

@@ -1,24 +1,24 @@
-import dynamic from "next/dynamic"
-import Head from "next/head"
-import { convertSchemaFAQ } from "../../services/convertSchemaFAQ"
-import { generateMotorcyclesGroup } from "../../services/vehicle"
-import styles from "./Vehicles.module.scss"
+import dynamic from "next/dynamic";
+import Head from "next/head";
+import { convertSchemaFAQ } from "../../services/convertSchemaFAQ";
+import { generateMotorcyclesGroup } from "../../services/vehicle";
+import styles from "./Vehicles.module.scss";
 
 const SearchIndexDynamic = dynamic(() =>
   import("./Components/SearchVehiclesIndexComponent")
-)
+);
 const HeaderIndexDynamic = dynamic(() =>
   import("./Components/HeaderVehiclesIndexComponent")
-)
+);
 
-const FAQDynamic = dynamic(() => import("../HomePage/FAQ"))
-const SEODynamic = dynamic(() => import("../HomePage/SEO"))
+const FAQDynamic = dynamic(() => import("../HomePage/FAQ"));
+const SEODynamic = dynamic(() => import("../HomePage/SEO"));
 const TestimonialsDynamic = dynamic(() =>
   import("../HomePage/Testimonials/index")
-)
+);
 const VehicleDynamic = dynamic(() =>
   import("./Components/MakeGroupedComponent")
-)
+);
 
 const VehiclesComponent = ({ vehiclesDirectory, vehicles, testimonials }) => {
   const {
@@ -29,17 +29,17 @@ const VehiclesComponent = ({ vehiclesDirectory, vehicles, testimonials }) => {
     meta_title,
     page_paragraph,
     meta_description,
-  } = vehiclesDirectory
+  } = vehiclesDirectory;
   const title =
     page_heading_1 && page_heading_1.length > 0 && page_heading_1[0].text
       ? page_heading_1[0].text
-      : "---"
+      : "---";
   const titleSeo =
     page_heading_2?.length > 0 && page_heading_2[0].text
       ? page_heading_2[0].text
-      : ""
-  const jsonFAQ = convertSchemaFAQ({ faq, faq_title })
-  const generatedData = generateMotorcyclesGroup(vehicles)
+      : "";
+  const jsonFAQ = convertSchemaFAQ({ faq, faq_title });
+  const generatedData = generateMotorcyclesGroup(vehicles);
   return (
     <>
       <Head>
@@ -89,6 +89,6 @@ const VehiclesComponent = ({ vehiclesDirectory, vehicles, testimonials }) => {
       <FAQDynamic FAQ={{ faq, faq_title }} />
       <SEODynamic heading1={titleSeo} pageParagraph={page_paragraph || []} />
     </>
-  )
-}
-export default VehiclesComponent
+  );
+};
+export default VehiclesComponent;
