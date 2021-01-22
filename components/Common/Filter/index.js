@@ -46,8 +46,9 @@ const FilterRender = ({
                 <Image
                   src={open ? "/icons/subtract.svg" : "/icons/plus.svg"}
                   alt={open ? "Icon subtract" : "Icon plus"}
-                  loading="lazy"
-                  layout="fill"
+                  loading="eager"
+                  width="12"
+                  height="12"
                 ></Image>
               </div>
             </div>
